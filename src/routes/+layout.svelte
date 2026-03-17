@@ -1,11 +1,11 @@
 <script lang="ts">
-	import favicon from '$lib/assets/favicon.svg';
+    import { DiagramProvider, Diagram } from "c4ke-lib";
 
-	let { children } = $props();
+    // let { children } = $props();
 </script>
 
-<svelte:head>
-	<link rel="icon" href={favicon} />
-</svelte:head>
+<DiagramProvider diagrams={[]}>
+    <Diagram class="w-screen h-screen" />
+</DiagramProvider>
 
-{@render children()}
+<!-- {@render children()} -->

@@ -1,4 +1,9 @@
+import { Relationship } from "./relationship.js";
+
 export interface DiagramModel {
-    title: string;
+    id: string;
+    title?: string;
     description?: string;
+    elements: Element[];
+    relationships: Relationship[];
 }

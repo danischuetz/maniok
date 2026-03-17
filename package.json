@@ -24,6 +24,7 @@
     },
     "dependencies": {
         "@tailwindcss/vite": "^4.2.1",
+        "c4ke-lib": "file:packages/c4ke-lib",
         "lucide-svelte": "^0.577.0",
         "tailwindcss": "^4.2.1"
     }
