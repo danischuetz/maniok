@@ -1,16 +1,16 @@
 <script lang="ts">
-    import { setContext, Snippet } from "svelte";
-    import { DiagramModel } from "../model/diagrammodel";
+    import { setContext, Snippet } from "svelte"
+    import { DiagramModel } from "../model/diagrammodel"
 
     interface Props {
-        diagrams: DiagramModel[];
-        children?: Snippet;
+        diagrams: DiagramModel[]
+        children?: Snippet
     }
 
-    let { diagrams, children }: Props = $props();
+    let { diagrams, children }: Props = $props()
 
-    setContext("diagrams", () => diagrams);
-    setContext("selectedDiagramIndex", 0);
+    setContext("diagrams", () => diagrams)
+    setContext("selectedDiagramIndex", 0)
 </script>
 
 {@render children?.()}
