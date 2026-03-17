@@ -1,20 +1,20 @@
 <script lang="ts">
-    import { getContext } from "svelte";
-    import { DiagramModel } from "../model/diagrammodel";
+    import { getContext } from "svelte"
+    import { DiagramModel } from "../model/diagrammodel"
 
     interface Props {
-        class: string;
+        class: string
     }
 
-    let { class: className }: Props = $props();
+    let { class: className }: Props = $props()
 
-    const diagrams: DiagramModel[] = getContext("diagrams");
-    const selectedDiagramIndex: number = getContext("selectedDiagramIndex");
+    const diagrams: DiagramModel[] = getContext("diagrams")
+    const selectedDiagramIndex: number = getContext("selectedDiagramIndex")
 
     const selectedDiagram: DiagramModel | undefined =
         diagrams.length > selectedDiagramIndex
             ? diagrams[selectedDiagramIndex]
-            : undefined;
+            : undefined
 </script>
 
 <div class="flex justify-center items-center {className}">

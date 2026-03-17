@@ -1,4 +1,4 @@
-import { z } from "zod";
+import { z } from "zod"
 
 const relationshipSchema = z.object({
     id: z.string(),
@@ -6,7 +6,7 @@ const relationshipSchema = z.object({
     sourceId: z.string(),
     destinationId: z.string(),
     description: z.string().optional(),
-});
+})
 
 const elementSchema = z.object({
     id: z.string(),
@@ -15,30 +15,30 @@ const elementSchema = z.object({
     technology: z.string().optional(),
     relationships: z.array(relationshipSchema).optional(),
     tags: z.string().optional(),
-});
+})
 
-const personSchema = elementSchema;
-const componentSchema = elementSchema;
+const personSchema = elementSchema
+const componentSchema = elementSchema
 
 const containerSchema = elementSchema.extend({
     components: z.array(componentSchema).optional(),
-});
+})
 
 const softwareSystemSchema = elementSchema.extend({
     containers: z.array(containerSchema).optional(),
-});
+})
 
 const viewElementSchema = z.object({
     id: z.string(),
-});
+})
 
 const viewRelationshipSchema = z.object({
     id: z.string(),
-});
+})
 
 const automaticLayoutSchema = z.object({
     rankDirection: z.enum(["TopBottom", "LeftRight", "BottomTop", "RightLeft"]),
-});
+})
 
 const viewBaseSchema = z.object({
     key: z.string(),
@@ -47,24 +47,24 @@ const viewBaseSchema = z.object({
     elements: z.array(viewElementSchema).optional(),
     relationships: z.array(viewRelationshipSchema).optional(),
     automaticLayout: automaticLayoutSchema.optional(),
-});
+})
 
 const systemContextViewSchema = viewBaseSchema.extend({
     softwareSystemId: z.string(),
-});
+})
 
 const containerViewSchema = viewBaseSchema.extend({
     softwareSystemId: z.string(),
-});
+})
 
 const componentViewSchema = viewBaseSchema.extend({
     containerId: z.string(),
-});
+})
 
 const modelSchema = z.object({
     people: z.array(personSchema).optional(),
     softwareSystems: z.array(softwareSystemSchema).optional(),
-});
+})
 
 export const workspaceSchema = z.object({
     id: z.number().int(),
@@ -79,20 +79,20 @@ export const workspaceSchema = z.object({
             componentViews: z.array(componentViewSchema).optional(),
         })
         .optional(),
-});
+})
 
-export type Element = z.infer<typeof elementSchema>;
-export type Relationship = z.infer<typeof relationshipSchema>;
-export type Person = z.infer<typeof personSchema>;
-export type Component = z.infer<typeof componentSchema>;
-export type Container = z.infer<typeof containerSchema>;
-export type SoftwareSystem = z.infer<typeof softwareSystemSchema>;
-export type ViewElement = z.infer<typeof viewElementSchema>;
-export type ViewRelationship = z.infer<typeof viewRelationshipSchema>;
-export type AutomaticLayout = z.infer<typeof automaticLayoutSchema>;
-export type View = z.infer<typeof viewBaseSchema>;
-export type SystemContextView = z.infer<typeof systemContextViewSchema>;
-export type ContainerView = z.infer<typeof containerViewSchema>;
-export type ComponentView = z.infer<typeof componentViewSchema>;
-export type Model = z.infer<typeof modelSchema>;
-export type Workspace = z.infer<typeof workspaceSchema>;
+export type SzrElement = z.infer<typeof elementSchema>
+export type SzrRelationship = z.infer<typeof relationshipSchema>
+export type SzrPerson = z.infer<typeof personSchema>
+export type SzrComponent = z.infer<typeof componentSchema>
+export type SzrContainer = z.infer<typeof containerSchema>
+export type SzrSoftwareSystem = z.infer<typeof softwareSystemSchema>
+export type SzrViewElement = z.infer<typeof viewElementSchema>
+export type SzrViewRelationship = z.infer<typeof viewRelationshipSchema>
+export type SzrAutomaticLayout = z.infer<typeof automaticLayoutSchema>
+export type SzrView = z.infer<typeof viewBaseSchema>
+export type SzrSystemContextView = z.infer<typeof systemContextViewSchema>
+export type SzrContainerView = z.infer<typeof containerViewSchema>
+export type SzrComponentView = z.infer<typeof componentViewSchema>
+export type SzrModel = z.infer<typeof modelSchema>
+export type SzrWorkspace = z.infer<typeof workspaceSchema>

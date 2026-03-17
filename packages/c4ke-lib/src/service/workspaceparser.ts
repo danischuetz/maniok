@@ -1,10 +1,10 @@
-import { workspaceSchema } from "../model/workspace.js";
+import { SzrWorkspace, workspaceSchema } from "../model/szr/szrworkspace.js"
 
 class WorkspaceParser {
-    parseWorkspaceJson(fileContent: string) {
-        const workspaceJson = JSON.parse(fileContent);
-        workspaceSchema.parse(workspaceJson);
+    parse(workspaceJsonFileContents: string): SzrWorkspace {
+        const workspaceJson = JSON.parse(workspaceJsonFileContents)
+        return workspaceSchema.parse(workspaceJson)
     }
 }
 
-export const workspaceParser = new WorkspaceParser();
+export const workspaceParser = new WorkspaceParser()
