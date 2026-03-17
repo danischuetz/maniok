@@ -13,7 +13,7 @@ workspace {
                 java-wrapper = component "Java Wrapper" "Packages a java runtime with java code to make it usable as a node module" "node.js"
             }
 
-            c4ke-lib = container "c4ke-lib" "Core logic and components to view and navigate diagrams from workspace.json objects" "node.js" {
+            c4ke-lib = container "c4ke-lib" "Core logic and components to view and navigate documentation described by a Structurizr workspace object" "node.js" {
                 c4ke-lib-api = component "API"
                 c4ke-lib-diagram = component "Diagram" "Renders diagrams"
                 c4ke-lib-diagramparser = component "Diagram Parser" "Creates array of diagrams from workspace object"
