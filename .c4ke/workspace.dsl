@@ -7,7 +7,7 @@ workspace {
         c4ke = softwareSystem "c4ke" "A software system to minimize friction when creating, maintaining and consuming technical software documentation" {
             !docs docs
 
-            c4ke-webapp = container "c4ke-webapp" "A web application suited to consumers of technical software documentation" "SvelteKit"
+            c4ke-webapp = container "c4ke-webapp" "A web application for consumers of technical software documentation written using the Structurizr DSL" "SvelteKit"
             
             c4ke-dsl-exporter = container "dsl-exporter" "Exports structurizr documentation to a workspace.json object" "node.js" {
                 java-wrapper = component "Java Wrapper" "Packages a java runtime with java code to make it usable as a node module" "node.js"
