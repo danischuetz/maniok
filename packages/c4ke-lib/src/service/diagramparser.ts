@@ -1,14 +1,270 @@
-import { DiagramModel } from "../../dist/index.js"
-import { SzrWorkspace } from "../model/szr/szrworkspace.js"
+import {
+    DiagramModel,
+    Element,
+    ElementType,
+    Relationship,
+} from "../../dist/index.js"
+import { Direction } from "../../dist/model/diagram/direction.js"
+import {
+    SzrElement,
+    SzrModel,
+    SzrRelationship,
+    SzrView,
+    SzrWorkspace,
+} from "../model/szr/szrworkspace.js"
 
-class DiagramParser {
-    parse(workspace: SzrWorkspace): DiagramModel[] {
+const enum ViewType {
+    SystemContextView = "SystemContextView",
+    ContainerView = "ContainerView",
+    ComponentView = "ComponentView",
+}
+
+export class DiagramParser {
+    static parse(workspace: SzrWorkspace): DiagramModel[] {
         const diagrams: DiagramModel[] = []
 
-        workspace.views?.systemContextViews?.forEach(view => {})
-        workspace.views?.containerViews?.forEach(view => {})
-        workspace.views?.componentViews?.forEach(view => {})
+        workspace.views?.systemContextViews?.forEach(view => {
+            const diagramModel = DiagramParser.buildDiagramModel(
+                workspace.model,
+                view,
+                ViewType.SystemContextView,
+                view.softwareSystemId,
+            )
+            diagrams.push(diagramModel)
+        })
+
+        workspace.views?.containerViews?.forEach(view => {
+            const diagramModel = DiagramParser.buildDiagramModel(
+                workspace.model,
+                view,
+                ViewType.ContainerView,
+                view.softwareSystemId,
+            )
+            diagrams.push(diagramModel)
+        })
+
+        workspace.views?.componentViews?.forEach(view => {
+            const diagramModel = DiagramParser.buildDiagramModel(
+                workspace.model,
+                view,
+                ViewType.ComponentView,
+                view.containerId,
+            )
+            diagrams.push(diagramModel)
+        })
 
         return diagrams
+    }
+
+    /**
+     *
+     * @param view A view
+     * @param type the view type
+     * @param coreElementId E.g. the softwareSystemId in a container view or the containerId in a componentView
+     */
+    private static buildDiagramModel(
+        model: SzrModel,
+        view: SzrView,
+        type: ViewType,
+        coreElementId: string,
+    ): DiagramModel {
+        let elements: Element[] = []
+
+        for (const person of model.people ?? []) {
+            if (view.elements?.find(e => e.id === person.id)) {
+                let personElement: Element = DiagramParser.createElement(
+                    person,
+                    ElementType.Person,
+                )
+                elements.push(personElement)
+            }
+        }
+
+        if (type === ViewType.SystemContextView) {
+            for (const softwareSystem of model.softwareSystems ?? []) {
+                if (view.elements?.find(e => e.id === softwareSystem.id)) {
+                    let softwareSystemElement: Element =
+                        DiagramParser.createElement(
+                            softwareSystem,
+                            ElementType.SoftwareSystem,
+                        )
+                    elements.push(softwareSystemElement)
+                }
+            }
+        }
+
+        if (type === ViewType.ContainerView) {
+            for (const softwareSystem of model.softwareSystems ?? []) {
+                if (softwareSystem.id === coreElementId) {
+                    let softwareSystemElement: Element =
+                        DiagramParser.createElement(
+                            softwareSystem,
+                            ElementType.SoftwareSystem,
+                        )
+                    for (const container of softwareSystem.containers ?? []) {
+                        if (view.elements?.find(e => e.id === container.id)) {
+                            let containerElement: Element =
+                                DiagramParser.createElement(
+                                    container,
+                                    ElementType.Container,
+                                )
+                            softwareSystemElement.children.push(
+                                containerElement,
+                            )
+                        }
+                    }
+                } else if (
+                    view.elements?.find(e => e.id === softwareSystem.id)
+                ) {
+                    let softwareSystemElement: Element =
+                        DiagramParser.createElement(
+                            softwareSystem,
+                            ElementType.SoftwareSystem,
+                        )
+                    elements.push(softwareSystemElement)
+                }
+            }
+        }
+
+        if (type === ViewType.ComponentView) {
+            for (const softwareSystem of model.softwareSystems ?? []) {
+                let isCoreSoftwareSystem = false
+                for (const container of softwareSystem.containers ?? []) {
+                    if (container.id === coreElementId) {
+                        isCoreSoftwareSystem = true
+
+                        let softwareSystemElement: Element =
+                            DiagramParser.createElement(
+                                softwareSystem,
+                                ElementType.SoftwareSystem,
+                            )
+
+                        let containerElement: Element =
+                            DiagramParser.createElement(
+                                container,
+                                ElementType.Container,
+                            )
+
+                        for (const component of container.components ?? []) {
+                            if (
+                                view.elements?.find(e => e.id === component.id)
+                            ) {
+                                let componentElement: Element =
+                                    DiagramParser.createElement(
+                                        component,
+                                        ElementType.Component,
+                                    )
+                                containerElement.children.push(componentElement)
+                            }
+                        }
+
+                        softwareSystemElement.children.push(containerElement)
+                        elements.push(softwareSystemElement)
+                    }
+                }
+
+                if (!isCoreSoftwareSystem) {
+                    if (view.elements?.find(e => e.id === softwareSystem.id)) {
+                        let softwareSystemElement: Element =
+                            DiagramParser.createElement(
+                                softwareSystem,
+                                ElementType.SoftwareSystem,
+                            )
+                        elements.push(softwareSystemElement)
+                    }
+                }
+            }
+        }
+
+        let relationships: Relationship[] = []
+        for (const softwareSystem of model.softwareSystems ?? []) {
+            for (const relationship of softwareSystem.relationships ?? []) {
+                if (view.relationships?.find(r => r.id === relationship.id)) {
+                    relationships.push(
+                        DiagramParser.createRelationship(relationship),
+                    )
+                }
+            }
+
+            for (const container of softwareSystem.containers ?? []) {
+                for (const relationship of container.relationships ?? []) {
+                    if (
+                        view.relationships?.find(r => r.id === relationship.id)
+                    ) {
+                        relationships.push(
+                            DiagramParser.createRelationship(relationship),
+                        )
+                    }
+                }
+
+                for (const component of container.components ?? []) {
+                    for (const relationship of component.relationships ?? []) {
+                        if (
+                            view.relationships?.find(
+                                r => r.id === relationship.id,
+                            )
+                        ) {
+                            relationships.push(
+                                DiagramParser.createRelationship(relationship),
+                            )
+                        }
+                    }
+                }
+            }
+        }
+
+        return {
+            id: view.key,
+            title: view.name,
+            direction: DiagramParser.getDirection(view),
+            elements: elements,
+            relationships: relationships,
+        }
+    }
+
+    private static createElement(
+        szrElement: SzrElement,
+        type: ElementType,
+    ): Element {
+        return {
+            id: szrElement.id,
+            position: { x: 0, y: 0 },
+            size: { width: 100, height: 50 },
+            metadata: {
+                title: szrElement.name,
+                description: szrElement.description,
+                technology: szrElement.technology,
+                tags: szrElement.tags,
+                type: type,
+            },
+            children: [],
+        }
+    }
+
+    private static createRelationship(
+        szrRelationship: SzrRelationship,
+    ): Relationship {
+        return {
+            id: szrRelationship.id,
+            sourceId: szrRelationship.sourceId,
+            targetId: szrRelationship.destinationId,
+            description: szrRelationship.description,
+        }
+    }
+
+    private static getDirection(view: SzrView): Direction {
+        const rankDirection = view.automaticLayout?.rankDirection
+        switch (rankDirection) {
+            case "LeftRight":
+                return Direction.LeftRight
+            case "RightLeft":
+                return Direction.RightLeft
+            case "TopBottom":
+                return Direction.TopBottom
+            case "BottomTop":
+                return Direction.BottomTop
+            default:
+                return Direction.LeftRight
+        }
     }
 }
