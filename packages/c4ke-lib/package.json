@@ -1,0 +1,27 @@
+{
+    "name": "c4ke-lib",
+    "version": "1.0.0",
+    "description": "Core logic and components to view and navigate documentation described by a Structurizr workspace object",
+    "license": "MIT",
+    "author": "Daniel Schütz",
+    "type": "module",
+    "main": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "scripts": {
+        "build": "tsc -p tsconfig.json",
+        "test": "vitest"
+    },
+    "devDependencies": {
+        "typescript": "^5.9.3",
+        "vitest": "^4.1.0"
+    },
+    "dependencies": {
+        "svelte": "^5.53.12"
+    }
+}
