@@ -15,12 +15,19 @@ For public repositories:
 - Download the [zipped template](https://github.com/danischuetz/c4ke-webapp/templates/c4ke), which contains the documentation you are currently reading
 - Extract it to the .c4ke folder
 - Commit the changes
-- Visit c4ke.io/github/<yourorganization>/<yourrepository>
+- Visit c4ke.io/github/\<your organization\>/\<your repository\>
 - Et voila, your documentation is online!
 
-# Private repositories
+# Current Restrictions
 
-This is a very minimal MVP and only works for public repositories right now but supporting private documentation is the very next step.
+This is a very minimal MVP and only works for public GitHub repositories right now (Making the functionality available for private repositories is the very next step, see [Private Repositories] (#id_privaterepos)).
+
+Besides that, the following restrictions currently apply:
+
+- C4/Structurizr DSL only partially supported
+- Support for GitHub hosted repositories only
+
+## Private repositories {#id_privaterepos}
 
 In addition to the steps in quick start:
 
