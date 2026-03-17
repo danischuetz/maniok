@@ -5,19 +5,25 @@
     "license": "MIT",
     "author": "Daniel Schütz",
     "type": "module",
-    "main": "dist/index.js",
-    "types": "dist/index.d.ts",
+    "svelte": "./dist/index.js",
+    "types": "./dist/index.d.ts",
     "exports": {
         ".": {
             "types": "./dist/index.d.ts",
-            "import": "./dist/index.js"
+            "svelte": "./dist/index.js"
         }
     },
     "scripts": {
-        "build": "tsc -p tsconfig.json",
+        "build": "svelte-package -i src",
+        "prepare": "npm run build",
         "test": "vitest"
     },
+    "files": [
+        "dist"
+    ],
     "devDependencies": {
+        "@sveltejs/package": "^2.5.7",
+        "@sveltejs/vite-plugin-svelte": "^7.0.0",
         "typescript": "^5.9.3",
         "vitest": "^4.1.0"
     },
