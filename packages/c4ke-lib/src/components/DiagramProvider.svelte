@@ -1,6 +1,6 @@
 <script lang="ts">
-    import { setContext, Snippet } from "svelte"
-    import { DiagramModel } from "../model/diagrammodel"
+    import { setContext, type Snippet } from "svelte"
+    import { type DiagramModel } from "../model/diagram/diagrammodel"
 
     interface Props {
         diagrams: DiagramModel[]

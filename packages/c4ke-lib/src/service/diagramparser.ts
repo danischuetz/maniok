@@ -1,11 +1,7 @@
-import {
-    DiagramModel,
-    Element,
-    ElementType,
-    Relationship,
-} from "../../dist/index.js"
+import type { DiagramModel, Element, Relationship } from "../../dist/index.js"
+import { ElementType } from "../../dist/index.js"
 import { Direction } from "../../dist/model/diagram/direction.js"
-import {
+import type {
     SzrElement,
     SzrModel,
     SzrRelationship,
@@ -68,6 +64,8 @@ export class DiagramParser {
         type: ViewType,
         coreElementId: string,
     ): DiagramModel {
+        // TODO: Refactor!
+
         let elements: Element[] = []
 
         for (const person of model.people ?? []) {

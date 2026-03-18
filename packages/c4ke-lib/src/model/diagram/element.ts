@@ -1,4 +1,4 @@
-import { ElementMetaData } from "./elementmetadata.js"
+import { type ElementMetaData } from "./elementmetadata.js"
 
 export interface Element {
     id: string

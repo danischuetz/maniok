@@ -1,6 +1,6 @@
 import { Direction } from "./direction.js"
-import { Relationship } from "./relationship.js"
-import { Element } from "./element.js"
+import { type Relationship } from "./relationship.js"
+import { type Element } from "./element.js"
 
 export interface DiagramModel {
     id: string

@@ -1,4 +1,7 @@
-import { SzrWorkspace, workspaceSchema } from "../model/szr/szrworkspace.js"
+import {
+    type SzrWorkspace,
+    workspaceSchema,
+} from "../model/szr/szrworkspace.js"
 
 export class WorkspaceParser {
     static parse(workspaceJsonFileContents: string): SzrWorkspace {
