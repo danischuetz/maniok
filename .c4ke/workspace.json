@@ -3,7 +3,7 @@
   "description" : "Description",
   "documentation" : { },
   "id" : 1,
-  "lastModifiedDate" : "2026-03-17T09:44:56Z",
+  "lastModifiedDate" : "2026-03-18T11:02:27Z",
   "model" : {
     "people" : [ {
       "id" : "1",
@@ -72,7 +72,7 @@
     } ],
     "softwareSystems" : [ {
       "containers" : [ {
-        "description" : "A web application suited to consumers of technical software documentation",
+        "description" : "A web application for consumers of technical software documentation written using the Structurizr DSL",
         "documentation" : { },
         "id" : "4",
         "name" : "c4ke-webapp",
@@ -244,7 +244,7 @@
           },
           "tags" : "Element,Component"
         } ],
-        "description" : "Core logic and components to view and navigate diagrams from workspace.json objects",
+        "description" : "Core logic and components to view and navigate documentation described by a Structurizr workspace object",
         "documentation" : { },
         "id" : "7",
         "name" : "c4ke-lib",
@@ -286,7 +286,7 @@
           "order" : 1,
           "title" : ""
         }, {
-          "content" : "# Core Library\n\nThe core library provides logic and Svelte components to display C4 diagrams and documents parsed from workspace.json objects.\n\n## Diagrams display and navigation\n\n```\n<script lang=\"ts\">\n    import { Diagram, DiagramNavigation, DiagramProvider, parseWorkspace } from 'c4ke-diagramlib'\n    import type { DiagramModel } from 'c4ke-diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let diagrams: DiagramModel[] = $derived(parseWorkspace(workspace))\n</script>\n\n<DiagramProvider>\n    <DiagramNavigation />\n    <Diagram />\n</DiagramProvider>\n\n```\n",
+          "content" : "# Core Library\n\nThe core library provides logic and Svelte components to display C4 diagrams and documents parsed from workspace.json objects.\n\n## Usage\n\n### Diagrams - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Diagram, DiagramNavigation, DiagramProvider, parseDiagrams } from 'c4ke-diagramlib'\n    import type { DiagramModel } from 'c4ke-diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let diagrams: DiagramModel[] = $derived(parseDiagrams(workspace))\n</script>\n\n<DiagramProvider {diagrams}>\n    <DiagramNavigation />\n    <Diagram />\n</DiagramProvider>\n\n```\n\n### Documents - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Document, DocumentNavigation, DocumentProvider, parseDocument } from 'c4ke-diagramlib'\n    import type { DocumentModel } from 'c4ke-diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let document: DocumentModel[] = $derived(parseDocument(workspace))\n</script>\n\n<DocumentProvider {document}>\n    <DocumentNavigation />\n    <Document />\n</DocumentProvider>\n```\n\n## Architecture\n\n### Notes\n\n- Actual component layer (Svelte) ideally should not handle state or logic in any way\n\n### Logic Layer\n\n- Parse workspace.json to diagram model\n- Parse workspace.json to document model\n- Calculate layout for diagram model\n- Navigation state handling for\n  - diagrams\n  - documents\n\n### Component Layer\n\n- Diagram\n  - Draws nodes, edges and edge labels as defined in the DiagramModel\n  - Triggers the calculation of DiagramModel layout\n- DiagramNavigation\n  - Triggers selection of the current diagram\n- Document\n  - Renders the markdown document according to the current navigation state\n- DocumentNavigation\n  - Triggers selected section or heading within the document\n\n### Style Layer\n",
           "filename" : "1_corelibrary.md",
           "format" : "Markdown",
           "order" : 2,

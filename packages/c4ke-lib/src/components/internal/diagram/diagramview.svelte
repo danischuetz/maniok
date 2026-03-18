@@ -24,10 +24,8 @@
     const { fitView } = useSvelteFlow()
 
     $effect(() => {
-        nodes = XYFlow.toNodes(diagram.elements)
-        edges = XYFlow.toEdges(diagram.relationships)
-
-        XYFlow.setSourceAndTargetPositions(nodes, edges, diagram.direction)
+        nodes = [...XYFlow.toNodes(diagram.elements)]
+        edges = [...XYFlow.toEdges(diagram.relationships)]
 
         // We need to do this in order to make sure the elements have been rendered before we can layout them.
         // Otherwise, the layout will be wrong because the elements have no dimensions.
@@ -45,6 +43,7 @@
 
     async function initialize() {
         fitView({ padding: 0.05 })
+        XYFlow.setSourceAndTargetPositions(nodes, edges, diagram.direction)
     }
 </script>
 

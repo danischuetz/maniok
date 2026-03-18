@@ -3,3 +3,9 @@
  @import '@skeletonlabs/skeleton';
  @import '@skeletonlabs/skeleton-svelte';
  @import '@skeletonlabs/skeleton/themes/vox';
+
+ @import '@xyflow/svelte/dist/style.css';
+
+ .svelte-flow {
+     --background-color-default: transparent;
+ }
