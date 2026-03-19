@@ -1,13 +1,10 @@
 <script lang="ts">
-    import {
-        SvelteFlow,
-        useSvelteFlow,
-        type Node,
-        type Edge,
-    } from "@xyflow/svelte"
+    import { SvelteFlow, useSvelteFlow, type Node, type Edge } from '@xyflow/svelte'
 
-    import type { DiagramModel } from "../../../model/diagram/diagrammodel.js"
-    import { XYFlow } from "../../../util/xyflow"
+    import type { DiagramModel } from '../../../model/diagram/diagrammodel'
+    import { XYFlow } from '../../../util/xyflow'
+    import { LayoutEngine } from '../../../service/layoutengine'
+    import ElementComponent from './element.svelte'
 
     interface Props {
         class?: string
@@ -20,6 +17,10 @@
     let edges: Edge[] = $state.raw([])
 
     let containerElement: HTMLElement | undefined = $state()
+
+    const nodeTypes = {
+        element: ElementComponent
+    }
 
     const { fitView } = useSvelteFlow()
 
@@ -42,11 +43,16 @@
     })
 
     async function initialize() {
-        fitView({ padding: 0.05 })
+        const layoutEngine = new LayoutEngine()
+        layoutEngine.layout(diagram)
+
+        nodes = [...XYFlow.toNodes(diagram.elements)]
+
         XYFlow.setSourceAndTargetPositions(nodes, edges, diagram.direction)
+        fitView({ padding: 0.05 })
     }
 </script>
 
 <div bind:this={containerElement} class={className}>
-    <SvelteFlow bind:nodes bind:edges fitView></SvelteFlow>
+    <SvelteFlow bind:nodes bind:edges fitView {nodeTypes}></SvelteFlow>
 </div>

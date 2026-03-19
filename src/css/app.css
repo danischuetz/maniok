@@ -9,3 +9,27 @@
  .svelte-flow {
      --background-color-default: transparent;
  }
+
+ .svelte-flow__edge-label {
+     @apply bg-black text-white w-28 text-[12px] p-0.5 m-0 rounded;
+ }
+
+ .svelte-flow__node-element {
+     @apply drop-shadow-lg drop-shadow-black/20;
+ }
+
+ .element-body {
+     @apply bg-black rounded w-64 p-2;
+ }
+
+ .element-name {
+     @apply text-xl font-bold text-white;
+ }
+
+ .element-type {
+     @apply text-[8px] text-gray-400 text-left;
+ }
+
+ .element-description {
+     @apply text-xs font-light text-gray-300 leading-tight;
+ }
