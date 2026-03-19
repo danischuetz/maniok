@@ -3,7 +3,7 @@
 
     import type { DiagramModel } from '../../../model/diagram/diagrammodel'
     import { XYFlowUtils } from '../../../util/xyflowutils'
-    import { LayoutEngine } from '../../../service/layoutengine'
+    import { LayoutService } from '../../../service/layoutservice'
     import ElementComponent from './element.svelte'
     import GroupComponent from './group.svelte'
     import type { LayoutModel } from '../../../model/layout/layoutmodel'
@@ -49,7 +49,7 @@
 
     async function layoutNodes() {
         const layoutModel: LayoutModel = XYFlowUtils.toLayoutModel(nodes, edges, diagram.direction)
-        const layoutEngine = new LayoutEngine()
+        const layoutEngine = new LayoutService()
         layoutEngine.layout(layoutModel)
 
         nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]

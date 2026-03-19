@@ -7,8 +7,8 @@ export type * from './model/szr/szrworkspace'
 export { ElementType } from './model/diagram/elementtype'
 export { Direction } from './model/shared/direction'
 
-export { WorkspaceParser } from './service/workspaceparser'
-export { DiagramParser } from './service/diagramparser'
+export { WorkspaceService } from './service/workspaceservice'
+export { DiagramService } from './service/diagramservice'
 
 export { default as Diagram } from './components/diagram.svelte'
 export { default as DiagramProvider } from './components/diagramprovider.svelte'
