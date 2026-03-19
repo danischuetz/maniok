@@ -73,8 +73,9 @@ export class LayoutEngine {
     }
 
     private fitGroups(elements: LayoutElement[], graph: Dagre.graphlib.Graph): void {
-        const groups = elements.filter((e) => graph.children(e.id).length > 0)
-        groups.forEach((group) => {
+        let groups: LayoutElement[] = elements.filter((e) => graph.children(e.id).length > 0)
+
+        groups.reverse().forEach((group) => {
             const children: LayoutElement[] = elements.filter((e) => e.parentId === group.id)
             let bounds = this.calculateBounds(children)
             bounds = this.applyMargin(bounds)

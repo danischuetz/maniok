@@ -34,7 +34,6 @@ export class XYFlowUtils {
         const layoutElements: LayoutElement[] = nodes.map((node) => ({
             id: node.id,
             parentId: node.parentId,
-            type: node.type!,
             x: node.type === 'group' ? 1 : 0,
             y: node.type === 'group' ? 1 : 0,
             width: node.measured?.width ?? 10,
