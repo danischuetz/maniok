@@ -1,4 +1,4 @@
-import { Direction } from './direction'
+import { Direction } from '../shared/direction'
 import { type Relationship } from './relationship'
 import { type Element } from './element'
 

@@ -2,7 +2,7 @@ import type { DiagramModel } from '../model/diagram/diagrammodel'
 import { type Element } from '../model/diagram/element'
 import { ElementType } from '../model/diagram/elementtype'
 import { type Relationship } from '../model/diagram/relationship'
-import { Direction } from '../model/diagram/direction'
+import { Direction } from '../model/shared/direction'
 import type {
     SzrElement,
     SzrModel,
@@ -128,10 +128,6 @@ export class DiagramParser {
     private static createElement(szrElement: SzrElement, type: ElementType): Element {
         return {
             id: szrElement.id,
-            x: 0,
-            y: 0,
-            width: 100,
-            height: 50,
             metaData: {
                 title: szrElement.name,
                 description: szrElement.description,

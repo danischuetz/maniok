@@ -1,7 +1,55 @@
 import { type Node, type Edge, Position } from '@xyflow/svelte'
-import { type Element, type Relationship, Direction } from '../../dist/index'
+import { type Element } from '../model/diagram/element'
+import { type Relationship } from '../model/diagram/relationship'
+import { Direction } from '../model/shared/direction'
+import type { LayoutModel } from '../model/layout/layoutmodel'
+import type { LayoutElement } from '../model/layout/layoutelement'
+import type { LayoutEdge } from '../model/layout/layoutedge'
+import type { DiagramModel } from '../model/diagram/diagrammodel'
 
 export class XYFlowUtils {
+    static toNodesAndEdges(diagram: DiagramModel): { nodes: Node[]; edges: Edge[] } {
+        const nodes = this.toNodes(diagram.elements)
+        const edges = this.toEdges(diagram.relationships)
+        this.setSourceAndTargetPositions(nodes, edges, diagram.direction)
+        return { nodes, edges }
+    }
+
+    static applyLayoutToNodes(nodes: Node[], layoutModel: LayoutModel): Node[] {
+        return nodes.map((node) => {
+            const layoutElement = layoutModel.layoutElements.find((e) => e.id === node.id)!
+            return {
+                ...node,
+                position: {
+                    x: layoutElement.x,
+                    y: layoutElement.y
+                }
+            }
+        })
+    }
+
+    static toLayoutModel(nodes: Node[], edges: Edge[], direction: Direction): LayoutModel {
+        const layoutElements: LayoutElement[] = nodes.map((node) => ({
+            id: node.id,
+            parentId: node.parentId,
+            x: 0,
+            y: 0,
+            width: node.measured?.width ?? 10,
+            height: node.measured?.height ?? 10
+        }))
+
+        const layoutEdges: LayoutEdge[] = edges.map((edge) => ({
+            sourceId: edge.source,
+            targetId: edge.target
+        }))
+
+        return {
+            layoutElements,
+            layoutEdges,
+            direction
+        }
+    }
+
     static toNodes(elements: Element[], parentId?: string): Node[] {
         let nodes: Node[] = []
         for (const element of elements) {
@@ -13,11 +61,11 @@ export class XYFlowUtils {
                     metaData: element.metaData
                 },
                 position: {
-                    x: element.x,
-                    y: element.y
+                    x: 0,
+                    y: 0
                 },
-                width: element.width,
-                height: element.height
+                width: 0,
+                height: 0
             })
 
             if (element.children.length > 0) {
