@@ -18,7 +18,7 @@ const margin = {
     left: 10
 }
 
-export class LayoutEngine {
+export class LayoutService {
     layout(layoutModel: LayoutModel) {
         const graph = new Dagre.graphlib.Graph({
             compound: true

@@ -16,22 +16,23 @@ export enum DiagramType {
     ContainerDiagram = 'ContainerDiagram',
     ComponentDiagram = 'ComponentDiagram'
 }
-export class DiagramParser {
+
+export class DiagramService {
     static parse(workspace: SzrWorkspace): DiagramModel[] {
         const diagrams: DiagramModel[] = []
 
         workspace.views?.systemContextViews?.forEach((view) => {
-            const diagramModel = DiagramParser.buildDiagramModel(workspace.model, view)
+            const diagramModel = DiagramService.buildDiagramModel(workspace.model, view)
             diagrams.push(diagramModel)
         })
 
         workspace.views?.containerViews?.forEach((view) => {
-            const diagramModel = DiagramParser.buildDiagramModel(workspace.model, view)
+            const diagramModel = DiagramService.buildDiagramModel(workspace.model, view)
             diagrams.push(diagramModel)
         })
 
         workspace.views?.componentViews?.forEach((view) => {
-            const diagramModel = DiagramParser.buildDiagramModel(workspace.model, view)
+            const diagramModel = DiagramService.buildDiagramModel(workspace.model, view)
             diagrams.push(diagramModel)
         })
 
@@ -49,24 +50,24 @@ export class DiagramParser {
 
         for (const person of model.people ?? []) {
             if (view.elements?.find((e) => e.id === person.id)) {
-                elements.push(DiagramParser.createElement(person, ElementType.Person))
+                elements.push(DiagramService.createElement(person, ElementType.Person))
             }
         }
 
         for (const softwareSystem of model.softwareSystems ?? []) {
-            const softwareSystemElement = DiagramParser.createElement(
+            const softwareSystemElement = DiagramService.createElement(
                 softwareSystem,
                 ElementType.SoftwareSystem
             )
 
             for (const container of softwareSystem.containers ?? []) {
-                const containerElement = DiagramParser.createElement(
+                const containerElement = DiagramService.createElement(
                     container,
                     ElementType.Container
                 )
 
                 for (const component of container.components ?? []) {
-                    const componentElement = DiagramParser.createElement(
+                    const componentElement = DiagramService.createElement(
                         component,
                         ElementType.Component
                     )
@@ -96,7 +97,7 @@ export class DiagramParser {
         for (const person of model.people ?? []) {
             for (const relationship of person.relationships ?? []) {
                 if (view.relationships?.find((r) => r.id === relationship.id)) {
-                    relationships.push(DiagramParser.createRelationship(relationship))
+                    relationships.push(DiagramService.createRelationship(relationship))
                 }
             }
         }
@@ -104,21 +105,21 @@ export class DiagramParser {
         for (const softwareSystem of model.softwareSystems ?? []) {
             for (const relationship of softwareSystem.relationships ?? []) {
                 if (view.relationships?.find((r) => r.id === relationship.id)) {
-                    relationships.push(DiagramParser.createRelationship(relationship))
+                    relationships.push(DiagramService.createRelationship(relationship))
                 }
             }
 
             for (const container of softwareSystem.containers ?? []) {
                 for (const relationship of container.relationships ?? []) {
                     if (view.relationships?.find((r) => r.id === relationship.id)) {
-                        relationships.push(DiagramParser.createRelationship(relationship))
+                        relationships.push(DiagramService.createRelationship(relationship))
                     }
                 }
 
                 for (const component of container.components ?? []) {
                     for (const relationship of component.relationships ?? []) {
                         if (view.relationships?.find((r) => r.id === relationship.id)) {
-                            relationships.push(DiagramParser.createRelationship(relationship))
+                            relationships.push(DiagramService.createRelationship(relationship))
                         }
                     }
                 }
@@ -128,7 +129,7 @@ export class DiagramParser {
         return {
             id: view.key,
             title: view.name,
-            direction: DiagramParser.getDirection(view),
+            direction: DiagramService.getDirection(view),
             elements: elements,
             relationships: relationships
         }
