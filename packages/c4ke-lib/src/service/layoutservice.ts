@@ -14,7 +14,7 @@ interface Bounds {
 const margin = {
     top: 10,
     right: 10,
-    bottom: 40,
+    bottom: 10,
     left: 10
 }
 
@@ -31,7 +31,7 @@ export class LayoutService {
                 layoutModel.direction === Direction.RightLeft
                     ? 40
                     : 30,
-            ranker: 'network-simplex', // network-simplex, tight-tree or longest-path
+            ranker: 'longest-path', // network-simplex, tight-tree or longest-path
             align: 'UL'
         })
 
@@ -82,8 +82,13 @@ export class LayoutService {
 
             group.x = bounds.minX
             group.y = bounds.minY
-            group.width = bounds.maxX
-            group.height = bounds.maxY
+            group.width = bounds.maxX - bounds.minX
+            group.height = bounds.maxY - bounds.minY
+
+            children.forEach((child) => {
+                child.x = child.x - bounds.minX
+                child.y = child.y - bounds.minY
+            })
         })
     }
 

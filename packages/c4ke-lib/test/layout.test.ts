@@ -1,7 +1,6 @@
 import { describe, it, expect, beforeAll } from 'vitest'
 import { Direction } from '../src/model/shared/direction'
-import { DiagramModel } from '../src/model/diagram/diagrammodel'
-import { LayoutEngine } from '../src/service/layoutengine'
+import { LayoutService } from '../src/service/layoutservice'
 
 import { createFlatLayout, createNestedLayout, createNestedNestedLayout } from './utils/testLayouts'
 import { LayoutModel } from '../src/model/layout/layoutmodel'
@@ -12,7 +11,7 @@ for (const direction of Object.values(Direction)) {
 
         beforeAll(() => {
             layoutModel = createFlatLayout(direction)
-            const layoutEngine = new LayoutEngine()
+            const layoutEngine = new LayoutService()
             layoutEngine.layout(layoutModel)
         })
 
@@ -38,11 +37,12 @@ for (const direction of Object.values(Direction)) {
     })
 }
 
+/** Important: Nested elements are positioned relative to their parent */
 describe('NestedDiagrams', () => {
     let layoutModel: LayoutModel
 
     beforeAll(() => {
-        const layoutEngine = new LayoutEngine()
+        const layoutEngine = new LayoutService()
         layoutModel = createNestedLayout(Direction.LeftRight)
         layoutEngine.layout(layoutModel)
     })
@@ -52,15 +52,15 @@ describe('NestedDiagrams', () => {
         const child1 = layoutModel.layoutElements.find((e) => e.id === '2.1')!
         const child2 = layoutModel.layoutElements.find((e) => e.id === '2.2')!
 
-        expect(child1.x).toBeGreaterThanOrEqual(parent.x)
-        expect(child1.y).toBeGreaterThanOrEqual(parent.y)
-        expect(child1.x + child1.width).toBeLessThanOrEqual(parent.x + parent.width)
-        expect(child1.y + child1.height).toBeLessThanOrEqual(parent.y + parent.height)
+        expect(child1.x).toBeGreaterThanOrEqual(0)
+        expect(child1.y).toBeGreaterThanOrEqual(0)
+        expect(child1.x + child1.width).toBeLessThanOrEqual(parent.width)
+        expect(child1.y + child1.height).toBeLessThanOrEqual(parent.height)
 
-        expect(child2.x).toBeGreaterThanOrEqual(parent.x)
-        expect(child2.y).toBeGreaterThanOrEqual(parent.y)
-        expect(child2.x + child2.width).toBeLessThanOrEqual(parent.x + parent.width)
-        expect(child2.y + child2.height).toBeLessThanOrEqual(parent.y + parent.height)
+        expect(child2.x).toBeGreaterThanOrEqual(0)
+        expect(child2.y).toBeGreaterThanOrEqual(0)
+        expect(child2.x + child2.width).toBeLessThanOrEqual(parent.width)
+        expect(child2.y + child2.height).toBeLessThanOrEqual(parent.height)
     })
 })
 
@@ -68,7 +68,7 @@ describe('NestedNestedDiagrams', () => {
     let layoutModel: LayoutModel
 
     beforeAll(() => {
-        const layoutEngine = new LayoutEngine()
+        const layoutEngine = new LayoutService()
         layoutModel = createNestedNestedLayout(Direction.LeftRight)
         layoutEngine.layout(layoutModel)
     })
@@ -80,24 +80,24 @@ describe('NestedNestedDiagrams', () => {
         const nestedChild1 = layoutModel.layoutElements.find((e) => e.id === '2.2.1')!
         const nestedChild2 = layoutModel.layoutElements.find((e) => e.id === '2.2.2')!
 
-        expect(child1.x).toBeGreaterThanOrEqual(parent.x)
-        expect(child1.y).toBeGreaterThanOrEqual(parent.y)
-        expect(child1.x + child1.width).toBeLessThanOrEqual(parent.x + parent.width)
-        expect(child1.y + child1.height).toBeLessThanOrEqual(parent.y + parent.height)
+        expect(child1.x).toBeGreaterThanOrEqual(0)
+        expect(child1.y).toBeGreaterThanOrEqual(0)
+        expect(child1.x + child1.width).toBeLessThanOrEqual(parent.width)
+        expect(child1.y + child1.height).toBeLessThanOrEqual(parent.height)
 
-        expect(child2.x).toBeGreaterThanOrEqual(parent.x)
-        expect(child2.y).toBeGreaterThanOrEqual(parent.y)
-        expect(child2.x + child2.width).toBeLessThanOrEqual(parent.x + parent.width)
-        expect(child2.y + child2.height).toBeLessThanOrEqual(parent.y + parent.height)
+        expect(child2.x).toBeGreaterThanOrEqual(0)
+        expect(child2.y).toBeGreaterThanOrEqual(0)
+        expect(child2.x + child2.width).toBeLessThanOrEqual(parent.width)
+        expect(child2.y + child2.height).toBeLessThanOrEqual(parent.height)
 
-        expect(nestedChild1.x).toBeGreaterThanOrEqual(child2.x)
-        expect(nestedChild1.y).toBeGreaterThanOrEqual(child2.y)
-        expect(nestedChild1.x + nestedChild1.width).toBeLessThanOrEqual(child2.x + child2.width)
-        expect(nestedChild1.y + nestedChild1.height).toBeLessThanOrEqual(child2.y + child2.height)
+        expect(nestedChild1.x).toBeGreaterThanOrEqual(0)
+        expect(nestedChild1.y).toBeGreaterThanOrEqual(0)
+        expect(nestedChild1.x + nestedChild1.width).toBeLessThanOrEqual(child2.width)
+        expect(nestedChild1.y + nestedChild1.height).toBeLessThanOrEqual(child2.height)
 
-        expect(nestedChild2.x).toBeGreaterThanOrEqual(child2.x)
-        expect(nestedChild2.y).toBeGreaterThanOrEqual(child2.y)
-        expect(nestedChild2.x + nestedChild2.width).toBeLessThanOrEqual(child2.x + child2.width)
-        expect(nestedChild2.y + nestedChild2.height).toBeLessThanOrEqual(child2.y + child2.height)
+        expect(nestedChild2.x).toBeGreaterThanOrEqual(0)
+        expect(nestedChild2.y).toBeGreaterThanOrEqual(0)
+        expect(nestedChild2.x + nestedChild2.width).toBeLessThanOrEqual(child2.width)
+        expect(nestedChild2.y + nestedChild2.height).toBeLessThanOrEqual(child2.height)
     })
 })

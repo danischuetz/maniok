@@ -7,7 +7,7 @@
 </script>
 
 <div
-    class="absolute flex flex-col justify-end items-start cgroup-container"
+    class="absolute flex flex-col justify-end items-start"
     style="width: {width}px; height: {height}px;"
     role="group"
 ></div>
