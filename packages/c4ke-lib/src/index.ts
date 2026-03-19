@@ -5,7 +5,7 @@ export type { Relationship } from './model/diagram/relationship'
 export type * from './model/szr/szrworkspace'
 
 export { ElementType } from './model/diagram/elementtype'
-export { Direction } from './model/diagram/direction'
+export { Direction } from './model/shared/direction'
 
 export { WorkspaceParser } from './service/workspaceparser'
 export { DiagramParser } from './service/diagramparser'

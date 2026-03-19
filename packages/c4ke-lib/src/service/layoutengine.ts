@@ -1,5 +1,8 @@
 import Dagre from '@dagrejs/dagre'
-import { Direction, type DiagramModel, type Element, type Relationship } from '../../dist/index'
+import { Direction } from '../model/shared/direction'
+import type { LayoutModel } from '../model/layout/layoutmodel'
+import type { LayoutElement } from '../model/layout/layoutelement'
+import type { LayoutEdge } from '../model/layout/layoutedge'
 
 interface Bounds {
     minX: number
@@ -16,16 +19,16 @@ const margin = {
 }
 
 export class LayoutEngine {
-    layout(diagram: DiagramModel) {
+    layout(layoutModel: LayoutModel) {
         const graph = new Dagre.graphlib.Graph({
             compound: true
         })
 
         graph.setGraph({
-            rankdir: diagram.direction,
+            rankdir: layoutModel.direction,
             ranksep:
-                diagram.direction === Direction.LeftRight ||
-                diagram.direction === Direction.RightLeft
+                layoutModel.direction === Direction.LeftRight ||
+                layoutModel.direction === Direction.RightLeft
                     ? 40
                     : 30,
             ranker: 'network-simplex', // network-simplex, tight-tree or longest-path
@@ -34,71 +37,60 @@ export class LayoutEngine {
 
         graph.setDefaultEdgeLabel(() => ({}))
 
-        this.addRelationships(graph, diagram.relationships)
-        this.addElements(graph, diagram.elements)
+        this.addEdges(graph, layoutModel.layoutEdges)
+        this.addElements(graph, layoutModel.layoutElements)
 
         Dagre.layout(graph)
 
-        this.updateElements(diagram.elements, graph)
-        diagram.elements.forEach((element) => this.fitAroundChildren(element))
+        this.updateElements(layoutModel.layoutElements, graph)
+        this.fitGroups(layoutModel.layoutElements, graph)
     }
 
-    private addRelationships(graph: Dagre.graphlib.Graph, relationships: Relationship[]): void {
-        relationships.forEach((relationship) =>
-            graph.setEdge(relationship.sourceId, relationship.targetId, {
+    private addEdges(graph: Dagre.graphlib.Graph, edges: LayoutEdge[]): void {
+        edges.forEach((edge) =>
+            graph.setEdge(edge.sourceId, edge.targetId, {
                 minlen: 5
             })
         )
     }
 
-    private addElements(graph: Dagre.graphlib.Graph, elements: Element[], parentId?: string): void {
+    private addElements(graph: Dagre.graphlib.Graph, elements: LayoutElement[]): void {
         elements.forEach((element) => {
             graph.setNode(element.id, {
-                ...element,
                 width: element.width,
                 height: element.height
             })
-            if (parentId) graph.setParent(element.id, parentId)
-            if (element.children.length > 0) {
-                this.addElements(graph, element.children, element.id)
-            }
+            if (element.parentId) graph.setParent(element.id, element.parentId)
         })
     }
 
-    private updateElements(elements: Element[], graph: Dagre.graphlib.Graph): void {
+    private updateElements(elements: LayoutElement[], graph: Dagre.graphlib.Graph): void {
         elements.forEach((element) => {
             const node = graph.node(element.id)
-            if (node) this.updateElementCoordinates(element, node)
-            if (element.children.length > 0) {
-                this.updateElements(element.children, graph)
-            }
+            element.x = node.x - element.width / 2
+            element.y = node.y - element.height / 2
         })
     }
 
-    private updateElementCoordinates(element: Element, node: Dagre.Node): void {
-        element.x = node.x - element.width / 2
-        element.y = node.y - element.height / 2
+    private fitGroups(elements: LayoutElement[], graph: Dagre.graphlib.Graph): void {
+        const groups = elements.filter((e) => graph.children(e.id).length > 0)
+        groups.forEach((group) => {
+            const children: LayoutElement[] = elements.filter((e) => e.parentId === group.id)
+            let bounds = this.calculateBounds(children)
+            bounds = this.applyMargin(bounds)
+
+            group.x = bounds.minX
+            group.y = bounds.minY
+            group.width = bounds.maxX
+            group.height = bounds.maxY
+        })
     }
 
-    private fitAroundChildren(element: Element): void {
-        if (element.children.length > 0) {
-            for (const child of element.children) {
-                this.fitAroundChildren(child)
-            }
-            const bounds = this.calculateBounds(element.children)
-            this.applyMargin(bounds)
-            element.x = bounds.minX
-            element.y = bounds.minY
-            element.width = bounds.maxX - bounds.minX
-            element.height = bounds.maxY - bounds.minY
-        }
-    }
-
-    private calculateBounds(children: Element[]): Bounds {
-        const minX = Math.min(...children.map((child) => child.x))
-        const minY = Math.min(...children.map((child) => child.y))
-        const maxX = Math.max(...children.map((child) => child.x + child.width))
-        const maxY = Math.max(...children.map((child) => child.y + child.height))
+    private calculateBounds(elements: LayoutElement[]): Bounds {
+        const minX = Math.min(...elements.map((element) => element.x))
+        const minY = Math.min(...elements.map((element) => element.y))
+        const maxX = Math.max(...elements.map((element) => element.x + element.width))
+        const maxY = Math.max(...elements.map((element) => element.y + element.height))
 
         return {
             minX: minX,

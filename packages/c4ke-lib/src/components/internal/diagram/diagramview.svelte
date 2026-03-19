@@ -5,6 +5,8 @@
     import { XYFlowUtils } from '../../../util/xyflowutils'
     import { LayoutEngine } from '../../../service/layoutengine'
     import ElementComponent from './element.svelte'
+    import { DiagramUtils } from '../../../util/diagramutils'
+    import type { LayoutModel } from '../../../model/layout/layoutmodel'
 
     interface Props {
         class?: string
@@ -24,14 +26,18 @@
 
     const { fitView } = useSvelteFlow()
 
+    // Update Nodes and Edges whenever the diagram changes
     $effect(() => {
-        nodes = [...XYFlowUtils.toNodes(diagram.elements)]
-        edges = [...XYFlowUtils.toEdges(diagram.relationships)]
+        console.log('Updating nodes and edges for diagram:', diagram)
+        const { nodes: newNodes, edges: newEdges } = XYFlowUtils.toNodesAndEdges(diagram)
+        nodes = [...newNodes]
+        edges = [...newEdges]
 
         // We need to do this in order to make sure the elements have been rendered before we can layout them.
         // Otherwise, the layout will be wrong because the elements have no dimensions.
         requestAnimationFrame(() => {
-            requestAnimationFrame(() => initialize())
+            console.log('First animation frame...')
+            requestAnimationFrame(() => layoutNodes())
         })
     })
 
@@ -42,13 +48,17 @@
         return () => resizeObserver.disconnect()
     })
 
-    async function initialize() {
+    async function layoutNodes() {
+        console.log('Starting layout with nodes:', nodes, 'and edges:', edges)
+
+        const layoutModel: LayoutModel = XYFlowUtils.toLayoutModel(nodes, edges, diagram.direction)
         const layoutEngine = new LayoutEngine()
-        layoutEngine.layout(diagram)
+        layoutEngine.layout(layoutModel)
 
-        nodes = [...XYFlowUtils.toNodes(diagram.elements)]
+        console.log('Layout model after layout:', layoutModel)
 
-        XYFlowUtils.setSourceAndTargetPositions(nodes, edges, diagram.direction)
+        nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]
+
         fitView({ padding: 0.05 })
     }
 </script>
@@ -56,4 +66,3 @@
 <div bind:this={containerElement} class={className}>
     <SvelteFlow bind:nodes bind:edges fitView {nodeTypes}></SvelteFlow>
 </div>
-XYFlowUtilsXYFlowUtils
