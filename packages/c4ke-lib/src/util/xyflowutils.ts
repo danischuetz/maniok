@@ -1,7 +1,7 @@
 import { type Node, type Edge, Position } from '@xyflow/svelte'
 import { type Element, type Relationship, Direction } from '../../dist/index'
 
-export class XYFlow {
+export class XYFlowUtils {
     static toNodes(elements: Element[], parentId?: string): Node[] {
         let nodes: Node[] = []
         for (const element of elements) {
@@ -21,7 +21,7 @@ export class XYFlow {
             })
 
             if (element.children.length > 0) {
-                nodes = [nodes, ...this.toNodes(element.children, element.id)]
+                nodes = [...nodes, ...this.toNodes(element.children, element.id)]
             }
         }
         return nodes

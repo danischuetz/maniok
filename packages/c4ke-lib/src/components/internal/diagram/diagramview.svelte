@@ -2,7 +2,7 @@
     import { SvelteFlow, useSvelteFlow, type Node, type Edge } from '@xyflow/svelte'
 
     import type { DiagramModel } from '../../../model/diagram/diagrammodel'
-    import { XYFlow } from '../../../util/xyflow'
+    import { XYFlowUtils } from '../../../util/xyflowutils'
     import { LayoutEngine } from '../../../service/layoutengine'
     import ElementComponent from './element.svelte'
 
@@ -25,8 +25,8 @@
     const { fitView } = useSvelteFlow()
 
     $effect(() => {
-        nodes = [...XYFlow.toNodes(diagram.elements)]
-        edges = [...XYFlow.toEdges(diagram.relationships)]
+        nodes = [...XYFlowUtils.toNodes(diagram.elements)]
+        edges = [...XYFlowUtils.toEdges(diagram.relationships)]
 
         // We need to do this in order to make sure the elements have been rendered before we can layout them.
         // Otherwise, the layout will be wrong because the elements have no dimensions.
@@ -46,9 +46,9 @@
         const layoutEngine = new LayoutEngine()
         layoutEngine.layout(diagram)
 
-        nodes = [...XYFlow.toNodes(diagram.elements)]
+        nodes = [...XYFlowUtils.toNodes(diagram.elements)]
 
-        XYFlow.setSourceAndTargetPositions(nodes, edges, diagram.direction)
+        XYFlowUtils.setSourceAndTargetPositions(nodes, edges, diagram.direction)
         fitView({ padding: 0.05 })
     }
 </script>
@@ -56,3 +56,4 @@
 <div bind:this={containerElement} class={className}>
     <SvelteFlow bind:nodes bind:edges fitView {nodeTypes}></SvelteFlow>
 </div>
+XYFlowUtilsXYFlowUtils
