@@ -1,11 +1,5 @@
 import Dagre from '@dagrejs/dagre'
-import { type Edge, type Node } from '@xyflow/svelte'
 import { Direction, type DiagramModel, type Element, type Relationship } from '../../dist/index'
-
-interface Group {
-    node: Node
-    children: Node[]
-}
 
 interface Bounds {
     minX: number
@@ -14,14 +8,7 @@ interface Bounds {
     maxY: number
 }
 
-interface Margin {
-    top: number
-    right: number
-    bottom: number
-    left: number
-}
-
-const defaultMargin: Margin = {
+const margin = {
     top: 10,
     right: 10,
     bottom: 40,
@@ -53,45 +40,7 @@ export class LayoutEngine {
         Dagre.layout(graph)
 
         this.updateElements(diagram.elements, graph)
-
-        // nodes = nodes.map(node => {
-        //     if (node.type === "group" || node.type === "customgroup")
-        //         return node
-
-        //     const position = graph.node(node.id)
-
-        //     // Dagre nodes are positioned based on their center, flow nodes are positioned based on their top left corner
-        //     // We want the start alignment of the nodes though, so we only update cross direction
-
-        //     let x = position.x
-        //     let y = position.y
-        //     switch (layoutDirection) {
-        //         case LayoutDirection.TopBottom:
-        //             x = position.x - (node.measured?.width ?? 0) / 2
-        //             break
-        //         case LayoutDirection.LeftRight:
-        //             y = position.y - (node.measured?.height ?? 0) / 2
-        //             break
-        //         case LayoutDirection.BottomTop:
-        //             x = position.x - (node.measured?.width ?? 0) / 2
-        //             y = position.y - (node.measured?.height ?? 0)
-        //             break
-        //         case LayoutDirection.RightLeft:
-        //             x = position.x - (node.measured?.width ?? 0)
-        //             y = position.y - (node.measured?.height ?? 0) / 2
-        //             break
-        //     }
-
-        //     return {
-        //         ...node,
-        //         position: { x, y },
-        //     }
-        // })
-
-        // return Promise.resolve({
-        //     nodes: this.fitGroupsAroundChildren(nodes),
-        //     edges,
-        // })
+        diagram.elements.forEach((element) => this.fitAroundChildren(element))
     }
 
     private addRelationships(graph: Dagre.graphlib.Graph, relationships: Relationship[]): void {
@@ -119,104 +68,143 @@ export class LayoutEngine {
     private updateElements(elements: Element[], graph: Dagre.graphlib.Graph): void {
         elements.forEach((element) => {
             const node = graph.node(element.id)
-            if (node) {
-                element.x = node.x
-                element.y = node.y
-            }
+            if (node) this.updateElementCoordinates(element, node)
             if (element.children.length > 0) {
                 this.updateElements(element.children, graph)
             }
         })
     }
 
-    private collectGroups(nodes: Node[]): Group[] {
-        return nodes
-            .filter((node) => node.type === 'customgroup')
-            .map((groupNode) => ({
-                node: groupNode,
-                children: nodes.filter((node) => node.parentId === groupNode.id)
-            }))
+    private updateElementCoordinates(element: Element, node: Dagre.Node): void {
+        element.x = node.x - element.width / 2
+        element.y = node.y - element.height / 2
     }
 
-    private calculateGroupBounds(group: Group, margin: Margin): Bounds {
-        const { children } = group
-        if (children.length === 0) return { minX: 0, minY: 0, maxX: 0, maxY: 0 }
-
-        const minX = Math.min(...children.map((child) => child.position.x))
-        const minY = Math.min(...children.map((child) => child.position.y))
-        const maxX = Math.max(
-            ...children.map(
-                (child) => child.position.x + (child.width ?? child.measured?.width ?? 0)
-            )
-        )
-        const maxY = Math.max(
-            ...children.map(
-                (child) => child.position.y + (child.height ?? child.measured?.height ?? 0)
-            )
-        )
-        return {
-            minX: minX - margin.left,
-            minY: minY - margin.top,
-            maxX: maxX + margin.right,
-            maxY: maxY + margin.bottom
+    private fitAroundChildren(element: Element): void {
+        if (element.children.length > 0) {
+            for (const child of element.children) {
+                this.fitAroundChildren(child)
+            }
+            const bounds = this.calculateBounds(element.children)
+            this.applyMargin(bounds)
+            element.x = bounds.minX
+            element.y = bounds.minY
+            element.width = bounds.maxX - bounds.minX
+            element.height = bounds.maxY - bounds.minY
         }
     }
 
-    private getGroupDepth(groupId: string, nodes: Node[]): number {
-        const group = nodes.find((n) => n.id === groupId)
-        if (!group || !group.parentId) return 0
-        return 1 + this.getGroupDepth(group.parentId, nodes)
+    private calculateBounds(children: Element[]): Bounds {
+        const minX = Math.min(...children.map((child) => child.x))
+        const minY = Math.min(...children.map((child) => child.y))
+        const maxX = Math.max(...children.map((child) => child.x + child.width))
+        const maxY = Math.max(...children.map((child) => child.y + child.height))
+
+        return {
+            minX: minX,
+            minY: minY,
+            maxX: maxX,
+            maxY: maxY
+        }
     }
 
-    private fitGroupsAroundChildren(nodes: Node[]): Node[] {
-        const groups: Group[] = this.collectGroups(nodes)
-        const updatedNodes = [...nodes]
-
-        // Sort groups by depth (deepest first) to process nested groups from inside out
-        const sortedGroups = groups.sort((a, b) => {
-            const depthA = this.getGroupDepth(a.node.id, nodes)
-            const depthB = this.getGroupDepth(b.node.id, nodes)
-            return depthB - depthA // Deeper groups first
-        })
-
-        sortedGroups.forEach((group: Group) => {
-            // Get current children from updatedNodes to use latest positions
-            const currentChildren = updatedNodes.filter((n) => n.parentId === group.node.id)
-            const groupWithCurrentChildren = {
-                node: group.node,
-                children: currentChildren
-            }
-
-            const bounds: Bounds = this.calculateGroupBounds(
-                groupWithCurrentChildren,
-                defaultMargin
-            )
-
-            const nodeIndex = updatedNodes.findIndex((n) => n.id === group.node.id)
-            if (nodeIndex !== -1) {
-                updatedNodes[nodeIndex] = {
-                    ...updatedNodes[nodeIndex],
-                    position: { x: bounds.minX, y: bounds.minY },
-                    width: bounds.maxX - bounds.minX,
-                    height: bounds.maxY - bounds.minY
-                }
-            }
-
-            // Convert children positions to be relative to the group
-            currentChildren.forEach((child) => {
-                const childIndex = updatedNodes.findIndex((n) => n.id === child.id)
-                if (childIndex !== -1) {
-                    updatedNodes[childIndex] = {
-                        ...updatedNodes[childIndex],
-                        position: {
-                            x: child.position.x - bounds.minX,
-                            y: child.position.y - bounds.minY
-                        }
-                    }
-                }
-            })
-        })
-
-        return updatedNodes
+    private applyMargin(bounds: Bounds): Bounds {
+        return {
+            minX: bounds.minX - margin.left,
+            minY: bounds.minY - margin.top,
+            maxX: bounds.maxX + margin.right,
+            maxY: bounds.maxY + margin.bottom
+        }
     }
+
+    // private collectGroups(nodes: Node[]): Group[] {
+    //     return nodes
+    //         .filter((node) => node.type === 'customgroup')
+    //         .map((groupNode) => ({
+    //             node: groupNode,
+    //             children: nodes.filter((node) => node.parentId === groupNode.id)
+    //         }))
+    // }
+
+    // private calculateGroupBounds(group: Group, margin: Margin): Bounds {
+    //     const { children } = group
+    //     if (children.length === 0) return { minX: 0, minY: 0, maxX: 0, maxY: 0 }
+
+    //     const minX = Math.min(...children.map((child) => child.position.x))
+    //     const minY = Math.min(...children.map((child) => child.position.y))
+    //     const maxX = Math.max(
+    //         ...children.map(
+    //             (child) => child.position.x + (child.width ?? child.measured?.width ?? 0)
+    //         )
+    //     )
+    //     const maxY = Math.max(
+    //         ...children.map(
+    //             (child) => child.position.y + (child.height ?? child.measured?.height ?? 0)
+    //         )
+    //     )
+    //     return {
+    //         minX: minX - margin.left,
+    //         minY: minY - margin.top,
+    //         maxX: maxX + margin.right,
+    //         maxY: maxY + margin.bottom
+    //     }
+    // }
+
+    // private getGroupDepth(groupId: string, nodes: Node[]): number {
+    //     const group = nodes.find((n) => n.id === groupId)
+    //     if (!group || !group.parentId) return 0
+    //     return 1 + this.getGroupDepth(group.parentId, nodes)
+    // }
+
+    // private fitGroupsAroundChildren(nodes: Node[]): Node[] {
+    //     const groups: Group[] = this.collectGroups(nodes)
+    //     const updatedNodes = [...nodes]
+
+    //     // Sort groups by depth (deepest first) to process nested groups from inside out
+    //     const sortedGroups = groups.sort((a, b) => {
+    //         const depthA = this.getGroupDepth(a.node.id, nodes)
+    //         const depthB = this.getGroupDepth(b.node.id, nodes)
+    //         return depthB - depthA // Deeper groups first
+    //     })
+
+    //     sortedGroups.forEach((group: Group) => {
+    //         // Get current children from updatedNodes to use latest positions
+    //         const currentChildren = updatedNodes.filter((n) => n.parentId === group.node.id)
+    //         const groupWithCurrentChildren = {
+    //             node: group.node,
+    //             children: currentChildren
+    //         }
+
+    //         const bounds: Bounds = this.calculateGroupBounds(
+    //             groupWithCurrentChildren,
+    //             defaultMargin
+    //         )
+
+    //         const nodeIndex = updatedNodes.findIndex((n) => n.id === group.node.id)
+    //         if (nodeIndex !== -1) {
+    //             updatedNodes[nodeIndex] = {
+    //                 ...updatedNodes[nodeIndex],
+    //                 position: { x: bounds.minX, y: bounds.minY },
+    //                 width: bounds.maxX - bounds.minX,
+    //                 height: bounds.maxY - bounds.minY
+    //             }
+    //         }
+
+    //         // Convert children positions to be relative to the group
+    //         currentChildren.forEach((child) => {
+    //             const childIndex = updatedNodes.findIndex((n) => n.id === child.id)
+    //             if (childIndex !== -1) {
+    //                 updatedNodes[childIndex] = {
+    //                     ...updatedNodes[childIndex],
+    //                     position: {
+    //                         x: child.position.x - bounds.minX,
+    //                         y: child.position.y - bounds.minY
+    //                     }
+    //                 }
+    //             }
+    //         })
+    //     })
+
+    //     return updatedNodes
+    // }
 }
