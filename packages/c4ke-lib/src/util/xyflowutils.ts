@@ -23,7 +23,9 @@ export class XYFlowUtils {
                 position: {
                     x: layoutElement.x,
                     y: layoutElement.y
-                }
+                },
+                width: layoutElement.width,
+                height: layoutElement.height
             }
         })
     }
@@ -32,8 +34,9 @@ export class XYFlowUtils {
         const layoutElements: LayoutElement[] = nodes.map((node) => ({
             id: node.id,
             parentId: node.parentId,
-            x: 0,
-            y: 0,
+            type: node.type!,
+            x: node.type === 'group' ? 1 : 0,
+            y: node.type === 'group' ? 1 : 0,
             width: node.measured?.width ?? 10,
             height: node.measured?.height ?? 10
         }))
@@ -56,7 +59,7 @@ export class XYFlowUtils {
             nodes.push({
                 id: element.id,
                 parentId: parentId,
-                type: 'element',
+                type: element.children.length > 0 ? 'group' : 'element',
                 data: {
                     metaData: element.metaData
                 },
