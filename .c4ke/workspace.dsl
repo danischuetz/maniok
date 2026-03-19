@@ -51,6 +51,7 @@ workspace {
         c4ke-webapp -> c4ke-lib-api "Use logic & components to present workspace diagrams & documents"
 
         c4ke-preview -> c4ke-lib-api "Use logic & components to present workspace diagrams & documents"
+        c4ke-preview -> c4ke-dsl-exporter "Run export on save"
         
         c4ke-lib-api -> c4ke-lib-diagram "expose component"
         c4ke-lib-api -> c4ke-lib-diagramparser "expose parser"

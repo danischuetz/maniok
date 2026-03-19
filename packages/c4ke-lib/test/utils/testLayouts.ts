@@ -2,6 +2,7 @@ import { Direction } from '../../src/model/shared/direction'
 import { type LayoutModel } from '../../src/model/layout/layoutmodel'
 import { type LayoutElement } from '../../src/model/layout/layoutelement'
 import { LayoutEdge } from '../../src/model/layout/layoutedge'
+import { create } from 'node:domain'
 
 export function createElement(id: string, parentId: string | null = null): LayoutElement {
     return {
@@ -37,6 +38,22 @@ export function createNestedLayout(direction: Direction): LayoutModel {
             createElement('2'),
             createElement('2.1', '2'),
             createElement('2.2', '2'),
+            createElement('3')
+        ],
+        layoutEdges: [createEdge('1', '2.1'), createEdge('2.1', '3')]
+    }
+}
+
+export function createNestedNestedLayout(direction: Direction): LayoutModel {
+    return {
+        direction: direction,
+        layoutElements: [
+            createElement('1'),
+            createElement('2'),
+            createElement('2.1', '2'),
+            createElement('2.2', '2'),
+            createElement('2.2.1', '2.2'),
+            createElement('2.2.2', '2.2'),
             createElement('3')
         ],
         layoutEdges: [createEdge('1', '2.1'), createEdge('2.1', '3')]

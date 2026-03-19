@@ -2,8 +2,7 @@
   "configuration" : { },
   "description" : "Description",
   "documentation" : { },
-  "id" : 1,
-  "lastModifiedDate" : "2026-03-18T11:02:27Z",
+  "id" : 0,
   "model" : {
     "people" : [ {
       "id" : "1",
@@ -138,37 +137,37 @@
           "relationships" : [ {
             "description" : "expose component",
             "destinationId" : "9",
-            "id" : "39",
+            "id" : "40",
             "sourceId" : "8",
             "tags" : "Relationship"
           }, {
             "description" : "expose parser",
             "destinationId" : "10",
-            "id" : "40",
-            "sourceId" : "8",
-            "tags" : "Relationship"
-          }, {
-            "description" : "expose component",
-            "destinationId" : "11",
             "id" : "41",
             "sourceId" : "8",
             "tags" : "Relationship"
           }, {
             "description" : "expose component",
-            "destinationId" : "13",
+            "destinationId" : "11",
             "id" : "42",
+            "sourceId" : "8",
+            "tags" : "Relationship"
+          }, {
+            "description" : "expose component",
+            "destinationId" : "13",
+            "id" : "43",
             "sourceId" : "8",
             "tags" : "Relationship"
           }, {
             "description" : "expose parser",
             "destinationId" : "14",
-            "id" : "43",
+            "id" : "44",
             "sourceId" : "8",
             "tags" : "Relationship"
           }, {
             "description" : "expose component",
             "destinationId" : "15",
-            "id" : "44",
+            "id" : "45",
             "sourceId" : "8",
             "tags" : "Relationship"
           } ],
@@ -184,7 +183,7 @@
           "relationships" : [ {
             "description" : "calculate layout",
             "destinationId" : "12",
-            "id" : "45",
+            "id" : "46",
             "sourceId" : "9",
             "tags" : "Relationship"
           } ],
@@ -273,6 +272,12 @@
           "id" : "38",
           "linkedRelationshipId" : "37",
           "sourceId" : "16"
+        }, {
+          "description" : "Run export on save",
+          "destinationId" : "5",
+          "id" : "39",
+          "sourceId" : "16",
+          "tags" : "Relationship"
         } ],
         "tags" : "Element,Container",
         "technology" : "node.js"
@@ -353,7 +358,7 @@
         "relationships" : [ {
           "description" : "retrieve .c4ke/workspace.json",
           "destinationId" : "22",
-          "id" : "46",
+          "id" : "47",
           "sourceId" : "21",
           "tags" : "Relationship"
         } ],
@@ -388,11 +393,13 @@
   "views" : {
     "componentViews" : [ {
       "automaticLayout" : {
-        "edgeSeparation" : 50,
-        "nodeSeparation" : 50,
-        "rankDirection" : "LeftRight",
-        "rankSeparation" : 100,
-        "vertices" : true
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
       },
       "containerId" : "7",
       "elements" : [ {
@@ -446,8 +453,6 @@
       }, {
         "id" : "37"
       }, {
-        "id" : "39"
-      }, {
         "id" : "40"
       }, {
         "id" : "41"
@@ -459,14 +464,18 @@
         "id" : "44"
       }, {
         "id" : "45"
+      }, {
+        "id" : "46"
       } ]
     }, {
       "automaticLayout" : {
-        "edgeSeparation" : 50,
-        "nodeSeparation" : 50,
-        "rankDirection" : "LeftRight",
-        "rankSeparation" : 100,
-        "vertices" : true
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
       },
       "containerId" : "5",
       "elements" : [ {
@@ -481,16 +490,19 @@
       "order" : 6
     } ],
     "configuration" : {
+      "branding" : { },
       "styles" : { },
       "terminology" : { }
     },
     "containerViews" : [ {
       "automaticLayout" : {
-        "edgeSeparation" : 50,
-        "nodeSeparation" : 50,
-        "rankDirection" : "LeftRight",
-        "rankSeparation" : 100,
-        "vertices" : true
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
       },
       "elements" : [ {
         "id" : "1",
@@ -538,15 +550,19 @@
         "id" : "36"
       }, {
         "id" : "38"
+      }, {
+        "id" : "39"
       } ],
       "softwareSystemId" : "3"
     }, {
       "automaticLayout" : {
-        "edgeSeparation" : 50,
-        "nodeSeparation" : 50,
-        "rankDirection" : "LeftRight",
-        "rankSeparation" : 100,
-        "vertices" : true
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
       },
       "elements" : [ {
         "id" : "2",
@@ -577,16 +593,18 @@
       }, {
         "id" : "33"
       }, {
-        "id" : "46"
+        "id" : "47"
       } ],
       "softwareSystemId" : "20"
     }, {
       "automaticLayout" : {
-        "edgeSeparation" : 50,
-        "nodeSeparation" : 50,
-        "rankDirection" : "LeftRight",
-        "rankSeparation" : 100,
-        "vertices" : true
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
       },
       "elements" : [ {
         "id" : "2",
@@ -613,11 +631,13 @@
     } ],
     "systemContextViews" : [ {
       "automaticLayout" : {
-        "edgeSeparation" : 50,
-        "nodeSeparation" : 50,
-        "rankDirection" : "LeftRight",
-        "rankSeparation" : 100,
-        "vertices" : true
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
       },
       "elements" : [ {
         "id" : "1",
