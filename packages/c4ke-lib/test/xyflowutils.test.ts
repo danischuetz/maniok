@@ -1,4 +1,4 @@
-import { describe, it, expect, beforeAll } from 'vitest'
+import { describe, it, expect } from 'vitest'
 import { createNestedDiagram } from './utils/testDiagrams'
 import { XYFlowUtils } from '../src/util/xyflowutils'
 import { Edge, Node } from '@xyflow/svelte'

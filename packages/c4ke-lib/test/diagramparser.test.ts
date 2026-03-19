@@ -1,10 +1,10 @@
 import { describe, it, expect } from 'vitest'
 import { testWorkspace } from './data/testworkspace'
 import { type DiagramModel } from '../src/model/diagram/diagrammodel'
-import { DiagramParser } from '../src/service/diagramparser'
+import { DiagramService } from '../src/service/diagramservice'
 import { DiagramUtils } from '../src/util/diagramutils'
 
-const diagrams: DiagramModel[] = DiagramParser.parse(testWorkspace)
+const diagrams: DiagramModel[] = DiagramService.parse(testWorkspace)
 
 const systemContextDiagramId: string = testWorkspace.views!.systemContextViews![0].key
 const containerDiagramId: string = testWorkspace.views!.containerViews![0].key
