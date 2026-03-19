@@ -92,6 +92,15 @@ export class DiagramParser {
         }
 
         let relationships: Relationship[] = []
+
+        for (const person of model.people ?? []) {
+            for (const relationship of person.relationships ?? []) {
+                if (view.relationships?.find((r) => r.id === relationship.id)) {
+                    relationships.push(DiagramParser.createRelationship(relationship))
+                }
+            }
+        }
+
         for (const softwareSystem of model.softwareSystems ?? []) {
             for (const relationship of softwareSystem.relationships ?? []) {
                 if (view.relationships?.find((r) => r.id === relationship.id)) {
