@@ -1,5 +1,5 @@
-import { type Node, type Edge, Position } from "@xyflow/svelte"
-import { type Element, type Relationship, Direction } from "../../dist/index.js"
+import { type Node, type Edge, Position } from '@xyflow/svelte'
+import { type Element, type Relationship, Direction } from '../../dist/index'
 
 export class XYFlow {
     static toNodes(elements: Element[], parentId?: string): Node[] {
@@ -8,15 +8,16 @@ export class XYFlow {
             nodes.push({
                 id: element.id,
                 parentId: parentId,
+                type: 'element',
                 data: {
-                    metadata: element.metadata,
+                    metaData: element.metaData
                 },
                 position: {
-                    x: element.position.x,
-                    y: element.position.y,
+                    x: element.x,
+                    y: element.y
                 },
-                width: element.size.width,
-                height: element.size.height,
+                width: element.width,
+                height: element.height
             })
 
             if (element.children.length > 0) {
@@ -27,22 +28,18 @@ export class XYFlow {
     }
 
     static toEdges(relationships: Relationship[]): Edge[] {
-        return relationships.map(relationship => ({
+        return relationships.map((relationship) => ({
             id: relationship.id,
             source: relationship.sourceId,
             target: relationship.targetId,
-            label: relationship.description ?? "",
+            label: relationship.description ?? ''
         }))
     }
 
-    static setSourceAndTargetPositions(
-        nodes: Node[],
-        edges: Edge[],
-        direction: Direction,
-    ): void {
-        edges.forEach(edge => {
-            const sourceNode = nodes.find(node => node.id === edge.source)
-            const targetNode = nodes.find(node => node.id === edge.target)
+    static setSourceAndTargetPositions(nodes: Node[], edges: Edge[], direction: Direction): void {
+        edges.forEach((edge) => {
+            const sourceNode = nodes.find((node) => node.id === edge.source)
+            const targetNode = nodes.find((node) => node.id === edge.target)
 
             switch (direction) {
                 case Direction.LeftRight:

@@ -1,0 +1,811 @@
+import { SzrWorkspace } from '../../src/model/szr/szrworkspace'
+
+export const testWorkspace: SzrWorkspace = {
+    configuration: {},
+    description: 'Description',
+    documentation: {},
+    id: 1,
+    lastModifiedDate: '2026-03-18T11:02:27Z',
+    model: {
+        people: [
+            {
+                id: '1',
+                name: 'Viewer',
+                properties: {
+                    'structurizr.dsl.identifier': 'editor'
+                },
+                relationships: [
+                    {
+                        description: 'inspect and navigate documentation',
+                        destinationId: '4',
+                        id: '23',
+                        sourceId: '1',
+                        tags: 'Relationship'
+                    },
+                    {
+                        description: 'inspect and navigate documentation',
+                        destinationId: '3',
+                        id: '24',
+                        linkedRelationshipId: '23',
+                        sourceId: '1'
+                    }
+                ],
+                tags: 'Element,Person'
+            },
+            {
+                id: '2',
+                name: 'Editor',
+                properties: {
+                    'structurizr.dsl.identifier': 'editor'
+                },
+                relationships: [
+                    {
+                        description: 'check syntax',
+                        destinationId: '19',
+                        id: '25',
+                        sourceId: '2',
+                        tags: 'Relationship'
+                    },
+                    {
+                        description: 'check syntax',
+                        destinationId: '17',
+                        id: '26',
+                        linkedRelationshipId: '25',
+                        sourceId: '2'
+                    },
+                    {
+                        description: 'inspect rendered version',
+                        destinationId: '16',
+                        id: '27',
+                        sourceId: '2',
+                        tags: 'Relationship'
+                    },
+                    {
+                        description: 'inspect rendered version',
+                        destinationId: '3',
+                        id: '28',
+                        linkedRelationshipId: '27',
+                        sourceId: '2'
+                    },
+                    {
+                        description: 'push changes',
+                        destinationId: '22',
+                        id: '29',
+                        sourceId: '2',
+                        tags: 'Relationship'
+                    },
+                    {
+                        description: 'push changes',
+                        destinationId: '20',
+                        id: '30',
+                        linkedRelationshipId: '29',
+                        sourceId: '2'
+                    }
+                ],
+                tags: 'Element,Person'
+            }
+        ],
+        softwareSystems: [
+            {
+                containers: [
+                    {
+                        description:
+                            'A web application for consumers of technical software documentation written using the Structurizr DSL',
+                        documentation: {},
+                        id: '4',
+                        name: 'c4ke-webapp',
+                        properties: {
+                            'structurizr.dsl.identifier': 'c4ke-webapp'
+                        },
+                        relationships: [
+                            {
+                                description:
+                                    'retrieve .c4ke/workspace.json from client repo at given URL',
+                                destinationId: '21',
+                                id: '31',
+                                sourceId: '4',
+                                tags: 'Relationship'
+                            },
+                            {
+                                description:
+                                    'retrieve .c4ke/workspace.json from client repo at given URL',
+                                destinationId: '20',
+                                id: '32',
+                                linkedRelationshipId: '31',
+                                sourceId: '4'
+                            },
+                            {
+                                description:
+                                    'Use logic & components to present workspace diagrams & documents',
+                                destinationId: '8',
+                                id: '35',
+                                sourceId: '4',
+                                tags: 'Relationship'
+                            },
+                            {
+                                description:
+                                    'Use logic & components to present workspace diagrams & documents',
+                                destinationId: '7',
+                                id: '36',
+                                linkedRelationshipId: '35',
+                                sourceId: '4'
+                            }
+                        ],
+                        tags: 'Element,Container',
+                        technology: 'SvelteKit'
+                    },
+                    {
+                        components: [
+                            {
+                                description:
+                                    'Packages a java runtime with java code to make it usable as a node module',
+                                documentation: {},
+                                id: '6',
+                                name: 'Java Wrapper',
+                                properties: {
+                                    'structurizr.dsl.identifier': 'java-wrapper'
+                                },
+                                tags: 'Element,Component',
+                                technology: 'node.js'
+                            }
+                        ],
+                        description: 'Exports structurizr documentation to a workspace.json object',
+                        documentation: {},
+                        id: '5',
+                        name: 'dsl-exporter',
+                        properties: {
+                            'structurizr.dsl.identifier': 'c4ke-dsl-exporter'
+                        },
+                        tags: 'Element,Container',
+                        technology: 'node.js'
+                    },
+                    {
+                        components: [
+                            {
+                                documentation: {},
+                                id: '8',
+                                name: 'API',
+                                properties: {
+                                    'structurizr.dsl.identifier': 'c4ke-lib-api'
+                                },
+                                relationships: [
+                                    {
+                                        description: 'expose component',
+                                        destinationId: '9',
+                                        id: '39',
+                                        sourceId: '8',
+                                        tags: 'Relationship'
+                                    },
+                                    {
+                                        description: 'expose parser',
+                                        destinationId: '10',
+                                        id: '40',
+                                        sourceId: '8',
+                                        tags: 'Relationship'
+                                    },
+                                    {
+                                        description: 'expose component',
+                                        destinationId: '11',
+                                        id: '41',
+                                        sourceId: '8',
+                                        tags: 'Relationship'
+                                    },
+                                    {
+                                        description: 'expose component',
+                                        destinationId: '13',
+                                        id: '42',
+                                        sourceId: '8',
+                                        tags: 'Relationship'
+                                    },
+                                    {
+                                        description: 'expose parser',
+                                        destinationId: '14',
+                                        id: '43',
+                                        sourceId: '8',
+                                        tags: 'Relationship'
+                                    },
+                                    {
+                                        description: 'expose component',
+                                        destinationId: '15',
+                                        id: '44',
+                                        sourceId: '8',
+                                        tags: 'Relationship'
+                                    }
+                                ],
+                                tags: 'Element,Component'
+                            },
+                            {
+                                description: 'Renders diagrams',
+                                documentation: {},
+                                id: '9',
+                                name: 'Diagram',
+                                properties: {
+                                    'structurizr.dsl.identifier': 'c4ke-lib-diagram'
+                                },
+                                relationships: [
+                                    {
+                                        description: 'calculate layout',
+                                        destinationId: '12',
+                                        id: '45',
+                                        sourceId: '9',
+                                        tags: 'Relationship'
+                                    }
+                                ],
+                                tags: 'Element,Component'
+                            },
+                            {
+                                description: 'Creates array of diagrams from workspace object',
+                                documentation: {},
+                                id: '10',
+                                name: 'Diagram Parser',
+                                properties: {
+                                    'structurizr.dsl.identifier': 'c4ke-lib-diagramparser'
+                                },
+                                tags: 'Element,Component'
+                            },
+                            {
+                                description: 'Allows users to navigate diagrams',
+                                documentation: {},
+                                id: '11',
+                                name: 'Diagram Navigation',
+                                properties: {
+                                    'structurizr.dsl.identifier': 'c4ke-lib-diagramnavigation'
+                                },
+                                tags: 'Element,Component'
+                            },
+                            {
+                                description:
+                                    'Calculates the layout of diagram elements according to the contents and relationships',
+                                documentation: {},
+                                id: '12',
+                                name: 'Layout Engine',
+                                properties: {
+                                    'structurizr.dsl.identifier': 'c4ke-lib-layoutEngine'
+                                },
+                                tags: 'Element,Component'
+                            },
+                            {
+                                description: 'Renders documentation written in Markdown',
+                                documentation: {},
+                                id: '13',
+                                name: 'Document',
+                                properties: {
+                                    'structurizr.dsl.identifier': 'c4ke-lib-document'
+                                },
+                                tags: 'Element,Component'
+                            },
+                            {
+                                description: 'Creates array of diagrams from workspace object',
+                                documentation: {},
+                                id: '14',
+                                name: 'Workspace Parser',
+                                properties: {
+                                    'structurizr.dsl.identifier': 'c4ke-lib-documentparser'
+                                },
+                                tags: 'Element,Component'
+                            },
+                            {
+                                description: 'Allows users to navigate written documentation',
+                                documentation: {},
+                                id: '15',
+                                name: 'Document Navigation',
+                                properties: {
+                                    'structurizr.dsl.identifier': 'c4ke-lib-documentnavigation'
+                                },
+                                tags: 'Element,Component'
+                            }
+                        ],
+                        description:
+                            'Core logic and components to view and navigate documentation described by a Structurizr workspace object',
+                        documentation: {},
+                        id: '7',
+                        name: 'c4ke-lib',
+                        properties: {
+                            'structurizr.dsl.identifier': 'c4ke-lib'
+                        },
+                        tags: 'Element,Container',
+                        technology: 'node.js'
+                    },
+                    {
+                        description:
+                            'VSCode Extension. Renders the documentation into a webview as it would be presented in the webapp',
+                        documentation: {},
+                        id: '16',
+                        name: 'c4ke-preview',
+                        properties: {
+                            'structurizr.dsl.identifier': 'c4ke-preview'
+                        },
+                        relationships: [
+                            {
+                                description:
+                                    'Use logic & components to present workspace diagrams & documents',
+                                destinationId: '8',
+                                id: '37',
+                                sourceId: '16',
+                                tags: 'Relationship'
+                            },
+                            {
+                                description:
+                                    'Use logic & components to present workspace diagrams & documents',
+                                destinationId: '7',
+                                id: '38',
+                                linkedRelationshipId: '37',
+                                sourceId: '16'
+                            }
+                        ],
+                        tags: 'Element,Container',
+                        technology: 'node.js'
+                    }
+                ],
+                description:
+                    'A software system to minimize friction when creating, maintaining and consuming technical software documentation',
+                documentation: {
+                    sections: [
+                        {
+                            content:
+                                '# Introduction\n\nC4ke minimizes the friction in creating, maintaining and consuming software documentation for developers.\n\n- Create and maintain useful documentation quickly, simply and without compromising security\n- Use your favorite IDE and existing AI-tooling to write good and complete documentation faster\n\nIt utilizes the Structurizr DSL (Domain Specific Language) and tooling to describe systems in diagrams and text using the C4 model for software system abstractions. Written documentation is edited in Markdown and can be associated with elements of the C4 models.\n\nTo create easy-to-read and well designed diagrams, the dagrejs library is used to layout C4 elements and groups logically, enabling xyflow to render diagram elements, labels and connections.\n\n# Quick Start\n\nFor public repositories:\n\n- In a repository root, create a folder called ".c4ke"\n- Download the [zipped template](https://github.com/danischuetz/c4ke-webapp/templates/c4ke), which contains the documentation you are currently reading\n- Extract it to the .c4ke folder\n- Commit the changes\n- Visit c4ke.io/github/\\<your organization\\>/\\<your repository\\>\n- Et voila, your documentation is online!\n\n# Current Restrictions\n\nThis is a very minimal MVP and only works for public GitHub repositories right now (Making the functionality available for private repositories is the very next step, see [Private Repositories] (#id_privaterepos)).\n\nBesides that, the following restrictions currently apply:\n\n- C4/Structurizr DSL only partially supported\n- Support for GitHub hosted repositories only\n\n## Private repositories {#id_privaterepos}\n\nIn addition to the steps in quick start:\n\n- You/your org need to install the c4ke Github App for the repo\'s to be documented\n  - This is very restricted and only needs read access to a single file in each repo: .c4ke/workspace.json\n- Viewers of the documentation have to register/log in to c4ke.io and can then connect to their GitHub\n  account which will allow them to access the documentation.\n\n# Editing tips\n\n## Describe your system\n\n## Add written documentation\n\n# Users and use cases\n\n## Viewer\n\n## Editor\n',
+                            filename: '0_introduction.md',
+                            format: 'Markdown',
+                            order: 1,
+                            title: ''
+                        },
+                        {
+                            content:
+                                "# Core Library\n\nThe core library provides logic and Svelte components to display C4 diagrams and documents parsed from workspace.json objects.\n\n## Usage\n\n### Diagrams - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Diagram, DiagramNavigation, DiagramProvider, parseDiagrams } from 'c4ke-diagramlib'\n    import type { DiagramModel } from 'c4ke-diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let diagrams: DiagramModel[] = $derived(parseDiagrams(workspace))\n</script>\n\n<DiagramProvider {diagrams}>\n    <DiagramNavigation />\n    <Diagram />\n</DiagramProvider>\n\n```\n\n### Documents - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Document, DocumentNavigation, DocumentProvider, parseDocument } from 'c4ke-diagramlib'\n    import type { DocumentModel } from 'c4ke-diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let document: DocumentModel[] = $derived(parseDocument(workspace))\n</script>\n\n<DocumentProvider {document}>\n    <DocumentNavigation />\n    <Document />\n</DocumentProvider>\n```\n\n## Architecture\n\n### Notes\n\n- Actual component layer (Svelte) ideally should not handle state or logic in any way\n\n### Logic Layer\n\n- Parse workspace.json to diagram model\n- Parse workspace.json to document model\n- Calculate layout for diagram model\n- Navigation state handling for\n  - diagrams\n  - documents\n\n### Component Layer\n\n- Diagram\n  - Draws nodes, edges and edge labels as defined in the DiagramModel\n  - Triggers the calculation of DiagramModel layout\n- DiagramNavigation\n  - Triggers selection of the current diagram\n- Document\n  - Renders the markdown document according to the current navigation state\n- DocumentNavigation\n  - Triggers selected section or heading within the document\n\n### Style Layer\n",
+                            filename: '1_corelibrary.md',
+                            format: 'Markdown',
+                            order: 2,
+                            title: ''
+                        }
+                    ]
+                },
+                id: '3',
+                name: 'c4ke',
+                properties: {
+                    'structurizr.dsl.identifier': 'c4ke'
+                },
+                relationships: [
+                    {
+                        description: 'retrieve .c4ke/workspace.json from client repo at given URL',
+                        destinationId: '21',
+                        id: '33',
+                        linkedRelationshipId: '31',
+                        sourceId: '3'
+                    },
+                    {
+                        description: 'retrieve .c4ke/workspace.json from client repo at given URL',
+                        destinationId: '20',
+                        id: '34',
+                        linkedRelationshipId: '31',
+                        sourceId: '3'
+                    }
+                ],
+                tags: 'Element,Software System'
+            },
+            {
+                containers: [
+                    {
+                        description: 'Exports documentation to workspace.json object',
+                        documentation: {},
+                        id: '18',
+                        name: 'Structurizr Export',
+                        properties: {
+                            'structurizr.dsl.identifier': 'structurizr-export'
+                        },
+                        tags: 'Element,Container',
+                        technology: 'Java'
+                    },
+                    {
+                        description:
+                            'VSCode Extension. Provides syntax highlighting for the Structurizr DSL',
+                        documentation: {},
+                        id: '19',
+                        name: 'Structurizr Extension',
+                        properties: {
+                            'structurizr.dsl.identifier': 'structurizrExtension'
+                        },
+                        tags: 'Element,Container',
+                        technology: 'node.js'
+                    }
+                ],
+                description:
+                    'Defines the Structurizr DSL and parses structurizr documentation to workspace objects',
+                documentation: {},
+                id: '17',
+                name: 'Structurizr',
+                properties: {
+                    'structurizr.dsl.identifier': 'structurizr'
+                },
+                tags: 'Element,Software System,Java'
+            },
+            {
+                containers: [
+                    {
+                        documentation: {},
+                        id: '21',
+                        name: 'GitHub API',
+                        properties: {
+                            'structurizr.dsl.identifier': 'github-api'
+                        },
+                        relationships: [
+                            {
+                                description: 'retrieve .c4ke/workspace.json',
+                                destinationId: '22',
+                                id: '46',
+                                sourceId: '21',
+                                tags: 'Relationship'
+                            }
+                        ],
+                        tags: 'Element,Container'
+                    },
+                    {
+                        description: 'Contains a .c4ke documentation directory',
+                        documentation: {},
+                        id: '22',
+                        name: 'Client Repository',
+                        properties: {
+                            'structurizr.dsl.identifier': 'github-client-repo'
+                        },
+                        tags: 'Element,Container',
+                        technology: 'GitHub Repo'
+                    }
+                ],
+                documentation: {},
+                id: '20',
+                name: 'GitHub',
+                properties: {
+                    'structurizr.dsl.identifier': 'github'
+                },
+                tags: 'Element,Software System'
+            }
+        ]
+    },
+    name: 'Name',
+    properties: {
+        'structurizr.inspection.error': '49',
+        'structurizr.inspection.info': '0',
+        'structurizr.inspection.ignore': '0',
+        'structurizr.inspection.warning': '0'
+    },
+    views: {
+        componentViews: [
+            {
+                automaticLayout: {
+                    edgeSeparation: 50,
+                    nodeSeparation: 50,
+                    rankDirection: 'LeftRight',
+                    rankSeparation: 100,
+                    vertices: true
+                },
+                containerId: '7',
+                elements: [
+                    {
+                        id: '4',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '8',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '9',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '10',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '11',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '12',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '13',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '14',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '15',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '16',
+                        x: 0,
+                        y: 0
+                    }
+                ],
+                externalContainerBoundariesVisible: false,
+                generatedKey: true,
+                key: 'Component-001',
+                name: 'Component View: c4ke - c4ke-lib',
+                order: 5,
+                relationships: [
+                    {
+                        id: '35'
+                    },
+                    {
+                        id: '37'
+                    },
+                    {
+                        id: '39'
+                    },
+                    {
+                        id: '40'
+                    },
+                    {
+                        id: '41'
+                    },
+                    {
+                        id: '42'
+                    },
+                    {
+                        id: '43'
+                    },
+                    {
+                        id: '44'
+                    },
+                    {
+                        id: '45'
+                    }
+                ]
+            },
+            {
+                automaticLayout: {
+                    edgeSeparation: 50,
+                    nodeSeparation: 50,
+                    rankDirection: 'LeftRight',
+                    rankSeparation: 100,
+                    vertices: true
+                },
+                containerId: '5',
+                elements: [
+                    {
+                        id: '6',
+                        x: 0,
+                        y: 0
+                    }
+                ],
+                externalContainerBoundariesVisible: false,
+                generatedKey: true,
+                key: 'Component-002',
+                name: 'Component View: c4ke - dsl-exporter',
+                order: 6
+            }
+        ],
+        configuration: {
+            styles: {},
+            terminology: {}
+        },
+        containerViews: [
+            {
+                automaticLayout: {
+                    edgeSeparation: 50,
+                    nodeSeparation: 50,
+                    rankDirection: 'LeftRight',
+                    rankSeparation: 100,
+                    vertices: true
+                },
+                elements: [
+                    {
+                        id: '1',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '2',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '4',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '5',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '7',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '16',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '20',
+                        x: 0,
+                        y: 0
+                    }
+                ],
+                externalSoftwareSystemBoundariesVisible: false,
+                generatedKey: true,
+                key: 'Container-001',
+                name: 'Container View: c4ke',
+                order: 2,
+                relationships: [
+                    {
+                        id: '23'
+                    },
+                    {
+                        id: '27'
+                    },
+                    {
+                        id: '30'
+                    },
+                    {
+                        id: '32'
+                    },
+                    {
+                        id: '36'
+                    },
+                    {
+                        id: '38'
+                    }
+                ],
+                softwareSystemId: '3'
+            },
+            {
+                automaticLayout: {
+                    edgeSeparation: 50,
+                    nodeSeparation: 50,
+                    rankDirection: 'LeftRight',
+                    rankSeparation: 100,
+                    vertices: true
+                },
+                elements: [
+                    {
+                        id: '2',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '3',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '21',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '22',
+                        x: 0,
+                        y: 0
+                    }
+                ],
+                externalSoftwareSystemBoundariesVisible: false,
+                generatedKey: true,
+                key: 'Container-002',
+                name: 'Container View: GitHub',
+                order: 3,
+                relationships: [
+                    {
+                        id: '28'
+                    },
+                    {
+                        id: '29'
+                    },
+                    {
+                        id: '33'
+                    },
+                    {
+                        id: '46'
+                    }
+                ],
+                softwareSystemId: '20'
+            },
+            {
+                automaticLayout: {
+                    edgeSeparation: 50,
+                    nodeSeparation: 50,
+                    rankDirection: 'LeftRight',
+                    rankSeparation: 100,
+                    vertices: true
+                },
+                elements: [
+                    {
+                        id: '2',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '18',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '19',
+                        x: 0,
+                        y: 0
+                    }
+                ],
+                externalSoftwareSystemBoundariesVisible: false,
+                generatedKey: true,
+                key: 'Container-003',
+                name: 'Container View: Structurizr',
+                order: 4,
+                relationships: [
+                    {
+                        id: '25'
+                    }
+                ],
+                softwareSystemId: '17'
+            }
+        ],
+        systemContextViews: [
+            {
+                automaticLayout: {
+                    edgeSeparation: 50,
+                    nodeSeparation: 50,
+                    rankDirection: 'LeftRight',
+                    rankSeparation: 100,
+                    vertices: true
+                },
+                elements: [
+                    {
+                        id: '1',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '2',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '3',
+                        x: 0,
+                        y: 0
+                    },
+                    {
+                        id: '20',
+                        x: 0,
+                        y: 0
+                    }
+                ],
+                enterpriseBoundaryVisible: true,
+                generatedKey: true,
+                key: 'SystemContext-001',
+                name: 'System Context View: c4ke',
+                order: 1,
+                relationships: [
+                    {
+                        id: '24'
+                    },
+                    {
+                        id: '28'
+                    },
+                    {
+                        id: '30'
+                    },
+                    {
+                        id: '34'
+                    }
+                ],
+                softwareSystemId: '3'
+            }
+        ]
+    }
+}

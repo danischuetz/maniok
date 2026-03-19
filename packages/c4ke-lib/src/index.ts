@@ -1,14 +1,14 @@
-export type { DiagramModel } from "./model/diagram/diagrammodel.js"
-export type { Element } from "./model/diagram/element.js"
-export type { ElementMetaData } from "./model/diagram/elementmetadata.js"
-export type { Relationship } from "./model/diagram/relationship.js"
-export type * from "./model/szr/szrworkspace.js"
+export type { DiagramModel } from './model/diagram/diagrammodel'
+export type { Element } from './model/diagram/element'
+export type { ElementMetaData } from './model/diagram/elementmetadata'
+export type { Relationship } from './model/diagram/relationship'
+export type * from './model/szr/szrworkspace'
 
-export { ElementType } from "./model/diagram/elementtype.js"
-export { Direction } from "./model/diagram/direction.js"
+export { ElementType } from './model/diagram/elementtype'
+export { Direction } from './model/diagram/direction'
 
-export { WorkspaceParser } from "./service/workspaceparser.js"
-export { DiagramParser } from "./service/diagramparser.js"
+export { WorkspaceParser } from './service/workspaceparser'
+export { DiagramParser } from './service/diagramparser'
 
-export { default as Diagram } from "./components/diagram.svelte"
-export { default as DiagramProvider } from "./components/diagramprovider.svelte"
+export { default as Diagram } from './components/diagram.svelte'
+export { default as DiagramProvider } from './components/diagramprovider.svelte'

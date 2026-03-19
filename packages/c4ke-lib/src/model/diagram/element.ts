@@ -1,15 +1,11 @@
-import { type ElementMetaData } from "./elementmetadata.js"
+import { type ElementMetaData } from './elementmetadata'
 
 export interface Element {
     id: string
-    position: {
-        x: number
-        y: number
-    }
-    size: {
-        width: number
-        height: number
-    }
-    metadata: ElementMetaData
+    x: number
+    y: number
+    width: number
+    height: number
+    metaData: ElementMetaData
     children: Element[]
 }

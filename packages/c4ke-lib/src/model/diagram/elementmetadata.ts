@@ -1,4 +1,4 @@
-import { ElementType } from "./elementtype.js"
+import { ElementType } from './elementtype'
 
 export interface ElementMetaData {
     title?: string
