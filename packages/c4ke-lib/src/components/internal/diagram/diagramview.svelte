@@ -5,7 +5,7 @@
     import { XYFlowUtils } from '../../../util/xyflowutils'
     import { LayoutEngine } from '../../../service/layoutengine'
     import ElementComponent from './element.svelte'
-    import { DiagramUtils } from '../../../util/diagramutils'
+    import GroupComponent from './group.svelte'
     import type { LayoutModel } from '../../../model/layout/layoutmodel'
 
     interface Props {
@@ -21,14 +21,14 @@
     let containerElement: HTMLElement | undefined = $state()
 
     const nodeTypes = {
-        element: ElementComponent
+        element: ElementComponent,
+        group: GroupComponent
     }
 
     const { fitView } = useSvelteFlow()
 
     // Update Nodes and Edges whenever the diagram changes
     $effect(() => {
-        console.log('Updating nodes and edges for diagram:', diagram)
         const { nodes: newNodes, edges: newEdges } = XYFlowUtils.toNodesAndEdges(diagram)
         nodes = [...newNodes]
         edges = [...newEdges]
@@ -36,7 +36,6 @@
         // We need to do this in order to make sure the elements have been rendered before we can layout them.
         // Otherwise, the layout will be wrong because the elements have no dimensions.
         requestAnimationFrame(() => {
-            console.log('First animation frame...')
             requestAnimationFrame(() => layoutNodes())
         })
     })
@@ -49,13 +48,9 @@
     })
 
     async function layoutNodes() {
-        console.log('Starting layout with nodes:', nodes, 'and edges:', edges)
-
         const layoutModel: LayoutModel = XYFlowUtils.toLayoutModel(nodes, edges, diagram.direction)
         const layoutEngine = new LayoutEngine()
         layoutEngine.layout(layoutModel)
-
-        console.log('Layout model after layout:', layoutModel)
 
         nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]
 
