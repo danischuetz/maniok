@@ -12,6 +12,29 @@
     @apply [clip:rect(0,0,0,0)] [clip-path:inset(100%)];
 }
 
+/* App */
+.app-container {
+   @apply bg-surface-200-800;
+}
+
+/* Diagram Navigation */
+.nav-container {
+    @apply flex flex-col gap-8 p-8 bg-surface-50-950;
+}
+
+.nav-category {
+    @apply text-xs font-bold text-surface-600-400;
+}
+
+.nav-selectable {
+    @apply btn pl-2 justify-start text-surface-900-100 rounded;
+}
+
+.nav-selected {
+    @apply btn pl-2 justify-start text-surface-700-300 rounded;
+}
+
+/* Diagram */
 .svelte-flow {
     --background-color-default: transparent;
 }
@@ -25,7 +48,7 @@
 }
 
 .svelte-flow__node-group {
-    @apply drop-shadow-lg drop-shadow-black/20 bg-surface-300-700;    
+    @apply drop-shadow-lg drop-shadow-black/20 bg-surface-300-700/50 border-surface-500;    
 }
 
 .element-body {
