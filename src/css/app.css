@@ -6,6 +6,11 @@
 
 @import '@xyflow/svelte/dist/style.css';
 
+/* Common */
+.lucide-icon {
+    @apply size-6 m-2
+}
+
 /* Accessibility: Hide elements visually but keep them for screen readers */
 .a11y-hidden {
     @apply absolute w-px h-px overflow-hidden whitespace-nowrap border-0 -m-1 p-0;
@@ -19,7 +24,7 @@
 
 /* Diagram Navigation */
 .nav-container {
-    @apply flex flex-col gap-8 p-8 bg-surface-50-950;
+    @apply gap-8 px-2 py-8 xl:px-4 2xl:px-8 bg-surface-50-950;
 }
 
 .nav-category {
@@ -27,11 +32,11 @@
 }
 
 .nav-selectable {
-    @apply btn pl-2 justify-start text-surface-900-100 rounded;
+    @apply btn p-0 py-1 pl-2 justify-start text-surface-900-100 rounded;
 }
 
 .nav-selected {
-    @apply btn pl-2 justify-start text-surface-700-300 rounded;
+    @apply btn p-0 py-1 pl-2 justify-start text-surface-700-300 rounded;
 }
 
 /* Diagram */

@@ -397,7 +397,7 @@
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
-        "rankDirection" : "TopBottom",
+        "rankDirection" : "LeftRight",
         "rankSeparation" : 300,
         "vertices" : false
       },

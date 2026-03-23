@@ -9,7 +9,7 @@
     let { class: className }: Props = $props()
 </script>
 
-<div class="flex justify-center items-center {className}">
+<div class={className}>
     {#if !$selectedDiagram}
         <h1 class="text-gray-500">No diagram selected</h1>
     {:else}

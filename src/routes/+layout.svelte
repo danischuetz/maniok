@@ -5,7 +5,8 @@
         type SzrWorkspace,
         DiagramService,
         type DiagramModel,
-        DiagramNavigation
+        DiagramNavigation,
+        DiagramNavigationPopup
     } from 'c4ke-lib'
     import { WorkspaceService } from 'c4ke-lib'
     import type { LayoutProps } from './$types'
@@ -17,10 +18,15 @@
     let diagrams: DiagramModel[] = $derived(DiagramService.parse(workspace))
 </script>
 
-<div class="w-screen h-screen flex flex-row app-container">
+<div class="flex flex-col w-screen h-screen">
     <DiagramProvider {diagrams}>
-        <DiagramNavigation />
-        <Diagram class="flex-1" />
+        <header class="flex flex-row lg:hidden">
+            <DiagramNavigationPopup class="self-center" />
+        </header>
+        <div class="w-screen h-screen flex flex-row app-container">
+            <DiagramNavigation class="hidden lg:flex self-stretch" />
+            <Diagram class="flex-1" />
+        </div>
     </DiagramProvider>
 </div>
 

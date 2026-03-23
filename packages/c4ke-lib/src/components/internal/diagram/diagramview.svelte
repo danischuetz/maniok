@@ -59,5 +59,5 @@
 </script>
 
 <div bind:this={containerElement} class={className}>
-    <SvelteFlow bind:nodes bind:edges fitView {nodeTypes}></SvelteFlow>
+    <SvelteFlow bind:nodes bind:edges fitView {nodeTypes} minZoom={0.2}></SvelteFlow>
 </div>
