@@ -16,8 +16,10 @@
     let diagrams: DiagramModel[] = $derived(DiagramService.parse(workspace))
 </script>
 
-<DiagramProvider {diagrams}>
-    <Diagram class="w-screen h-screen" />
-</DiagramProvider>
+<div class="w-screen h-screen bg-surface-200-800">
+    <DiagramProvider {diagrams}>
+        <Diagram class="w-screen h-screen" />
+    </DiagramProvider>
+</div>
 
 <!-- {@render children()} -->
