@@ -10,5 +10,6 @@ assignees: danischuetz
 **Acceptance Criteria**
 - [ ]
 
-**Wireframe**
-https://miro.com/app/board/uXjVGyZD2f0=/
+**DoD**
+- [ ] The UI works well on small and large screens
+- [ ] The UI works well in bright mode and dark mode
