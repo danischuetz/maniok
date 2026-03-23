@@ -31,7 +31,7 @@ export class LayoutService {
                 layoutModel.direction === Direction.RightLeft
                     ? 40
                     : 30,
-            ranker: 'longest-path', // network-simplex, tight-tree or longest-path
+            ranker: 'network-simplex', // network-simplex, tight-tree or longest-path
             align: 'UL'
         })
 

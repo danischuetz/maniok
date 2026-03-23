@@ -2,7 +2,7 @@
 
  @import '@skeletonlabs/skeleton';
  @import '@skeletonlabs/skeleton-svelte';
- @import '@skeletonlabs/skeleton/themes/vox';
+ @import '@skeletonlabs/skeleton/themes/cerberus';
 
  @import '@xyflow/svelte/dist/style.css';
 
@@ -11,7 +11,7 @@
  }
 
  .svelte-flow__edge-label {
-     @apply bg-black text-white w-28 text-[12px] p-0.5 m-0 rounded;
+     @apply bg-black text-white w-32 text-[10px] p-0.5 m-0 rounded;
  }
 
  .svelte-flow__node-element {
