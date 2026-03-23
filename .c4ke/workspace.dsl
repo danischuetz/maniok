@@ -90,7 +90,7 @@ workspace {
 
         component c4ke-lib {
             include *
-            autoLayout
+            autoLayout lr
         }
 
         component c4ke-dsl-exporter {

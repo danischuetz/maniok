@@ -67,7 +67,8 @@ export class XYFlowUtils {
                     y: 0
                 },
                 width: 0,
-                height: 0
+                height: 0,
+                draggable: false
             })
 
             if (element.children.length > 0) {
