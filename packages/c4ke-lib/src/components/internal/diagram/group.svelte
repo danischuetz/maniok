@@ -2,7 +2,7 @@
     import { type NodeProps } from '@xyflow/svelte'
     import type { ElementMetaData } from '../../../model/diagram/elementmetadata'
 
-    let { data, width, height }: NodeProps = $props()
+    let { data }: NodeProps = $props()
 
     let metaData: ElementMetaData = $derived(data.metaData as ElementMetaData)
 </script>

@@ -1,4 +1,5 @@
 import type { DiagramModel } from '../model/diagram/diagrammodel'
+import { DiagramType } from '../model/diagram/diagramtype'
 import { type Element } from '../model/diagram/element'
 import { ElementType } from '../model/diagram/elementtype'
 import { type Relationship } from '../model/diagram/relationship'
@@ -11,28 +12,31 @@ import type {
     SzrWorkspace
 } from '../model/szr/szrworkspace'
 
-export enum DiagramType {
-    SystemContextDiagram = 'SystemContextDiagram',
-    ContainerDiagram = 'ContainerDiagram',
-    ComponentDiagram = 'ComponentDiagram'
-}
-
 export class DiagramService {
     static parse(workspace: SzrWorkspace): DiagramModel[] {
         const diagrams: DiagramModel[] = []
 
         workspace.views?.systemContextViews?.forEach((view) => {
-            const diagramModel = DiagramService.buildDiagramModel(workspace.model, view)
+            const diagramModel = {
+                ...DiagramService.buildDiagramModel(workspace.model, view),
+                type: DiagramType.SystemContextDiagram
+            }
             diagrams.push(diagramModel)
         })
 
         workspace.views?.containerViews?.forEach((view) => {
-            const diagramModel = DiagramService.buildDiagramModel(workspace.model, view)
+            const diagramModel = {
+                ...DiagramService.buildDiagramModel(workspace.model, view),
+                type: DiagramType.ContainerDiagram
+            }
             diagrams.push(diagramModel)
         })
 
         workspace.views?.componentViews?.forEach((view) => {
-            const diagramModel = DiagramService.buildDiagramModel(workspace.model, view)
+            const diagramModel = {
+                ...DiagramService.buildDiagramModel(workspace.model, view),
+                type: DiagramType.ComponentDiagram
+            }
             diagrams.push(diagramModel)
         })
 
@@ -41,9 +45,8 @@ export class DiagramService {
 
     /**
      *
-     * @param view A view
-     * @param type the view type
-     * @param coreElementId E.g. the softwareSystemId in a container view or the containerId in a componentView
+     * @param model The model
+     * @param view The view
      */
     private static buildDiagramModel(model: SzrModel, view: SzrView): DiagramModel {
         let elements: Element[] = []
@@ -126,9 +129,14 @@ export class DiagramService {
             }
         }
 
+        // Diagram title
+        const colonIndex = view.name.indexOf(':')
+        const diagramTitle =
+            colonIndex !== -1 ? view.name.substring(colonIndex + 2).trim() : view.name
+
         return {
             id: view.key,
-            title: view.name,
+            title: diagramTitle,
             direction: DiagramService.getDirection(view),
             elements: elements,
             relationships: relationships

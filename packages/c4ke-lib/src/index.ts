@@ -12,3 +12,4 @@ export { DiagramService } from './service/diagramservice'
 
 export { default as Diagram } from './components/diagram.svelte'
 export { default as DiagramProvider } from './components/diagramprovider.svelte'
+export { default as DiagramNavigation } from './components/diagramnavigation.svelte'
