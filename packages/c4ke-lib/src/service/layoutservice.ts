@@ -12,7 +12,7 @@ interface Bounds {
 }
 
 const margin = {
-    top: 10,
+    top: 30,
     right: 10,
     bottom: 10,
     left: 10

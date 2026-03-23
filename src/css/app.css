@@ -1,35 +1,49 @@
- @import "tailwindcss";
+@import "tailwindcss";
 
- @import '@skeletonlabs/skeleton';
- @import '@skeletonlabs/skeleton-svelte';
- @import '@skeletonlabs/skeleton/themes/cerberus';
+@import '@skeletonlabs/skeleton';
+@import '@skeletonlabs/skeleton-svelte';
+@import '@skeletonlabs/skeleton/themes/cerberus';
 
- @import '@xyflow/svelte/dist/style.css';
+@import '@xyflow/svelte/dist/style.css';
 
- .svelte-flow {
-     --background-color-default: transparent;
- }
+/* Accessibility: Hide elements visually but keep them for screen readers */
+.a11y-hidden {
+    @apply absolute w-px h-px overflow-hidden whitespace-nowrap border-0 -m-1 p-0;
+    @apply [clip:rect(0,0,0,0)] [clip-path:inset(100%)];
+}
 
- .svelte-flow__edge-label {
-     @apply bg-black text-white w-32 text-[10px] p-0.5 m-0 rounded;
- }
+.svelte-flow {
+    --background-color-default: transparent;
+}
 
- .svelte-flow__node-element {
-     @apply drop-shadow-lg drop-shadow-black/20;
- }
+.svelte-flow__edge-label {
+    @apply bg-black text-white w-28 text-[10px] p-0.5 m-0 rounded;
+}
 
- .element-body {
-     @apply bg-black rounded w-64 p-2;
- }
+.svelte-flow__node-element {
+    @apply drop-shadow-lg drop-shadow-black/20;
+}
 
- .element-name {
-     @apply text-xl font-bold text-white;
- }
+.svelte-flow__node-group {
+    @apply drop-shadow-lg drop-shadow-black/20 bg-surface-300-700;    
+}
 
- .element-type {
-     @apply text-[8px] text-gray-400 text-left;
- }
+.element-body {
+    @apply bg-black rounded min-w-46 max-w-64 p-2;
+}
 
- .element-description {
-     @apply text-xs font-light text-gray-300 leading-tight;
- }
+.element-name {
+    @apply text-xl font-bold text-white;
+}
+
+.element-type {
+    @apply text-[8px] text-gray-400 text-left;
+}
+
+.element-description {
+    @apply text-xs font-light text-gray-300 leading-tight;
+}
+
+.group-label {
+    @apply text-xs;
+}

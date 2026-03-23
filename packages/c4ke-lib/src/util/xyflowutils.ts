@@ -82,7 +82,8 @@ export class XYFlowUtils {
             id: relationship.id,
             source: relationship.sourceId,
             target: relationship.targetId,
-            label: relationship.description ?? ''
+            label: relationship.description ?? '',
+            type: 'bezier'
         }))
     }
 
