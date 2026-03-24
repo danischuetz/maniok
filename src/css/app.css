@@ -12,7 +12,7 @@
 }
 
 .lucide-icon-xl {
-    @apply size-14 border-2 rounded-lg p-3
+    @apply size-12 stroke-1 p-2
 }
 
 /* Accessibility: Hide elements visually but keep them for screen readers */
@@ -57,11 +57,12 @@
     @apply btn p-0 py-1 pl-2 justify-start text-surface-700-300 rounded;
 }
 
-/* Diagram */
-.diagram-container {
-    @apply bg-surface-200-800;
+/* Content */
+.content {
+    @apply bg-surface-200-800
 }
 
+/* Diagram */
 .svelte-flow {
     --background-color-default: transparent;
 }

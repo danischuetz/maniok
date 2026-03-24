@@ -1,6 +1,8 @@
 <script lang="ts">
     import { Workflow } from 'lucide-svelte'
     import { BookOpenText } from 'lucide-svelte'
+    import { getContext } from 'svelte'
+    import { Mode, type ModeContext } from '../../model/navigation/mode'
 
     interface Props {
         class?: string
@@ -8,22 +10,30 @@
 
     let { class: className }: Props = $props()
 
-    interface SwitcherItem {
-        label: string
-        icon: any
+    let modeContext: ModeContext = getContext('mode')
+
+    const icons: Record<Mode, any> = {
+        [Mode.Diagrams]: Workflow,
+        [Mode.Documentation]: BookOpenText
     }
 
-    const items: SwitcherItem[] = [
-        { label: 'Diagrams', icon: Workflow },
-        { label: 'Documentation', icon: BookOpenText }
-    ]
+    function switchTo(newMode: Mode) {
+        if (newMode !== modeContext.mode) {
+            modeContext.mode = newMode
+        }
+    }
 </script>
 
 <ul class="flex flex-col mode-nav-container {className}">
-    {#each items as item}
+    {#each Object.values(Mode) as mode}
+        {@const Icon = icons[mode]}
         <li>
-            <button class="btn btn-nav flex items-center justify-center" title={item.label}>
-                <item.icon class="lucide-icon-xl" />
+            <button
+                onclick={() => switchTo(mode)}
+                class="btn btn-nav flex items-center justify-center"
+                title={mode}
+            >
+                <Icon class="lucide-icon-xl" />
             </button>
         </li>
     {/each}

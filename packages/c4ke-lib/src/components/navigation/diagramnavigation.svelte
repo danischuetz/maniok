@@ -1,6 +1,9 @@
 <script lang="ts">
+    import { getContext } from 'svelte'
     import { type DiagramModel } from '../../model/diagram/diagrammodel'
     import { DiagramType } from '../../model/diagram/diagramtype'
+    import { Mode, type ModeContext } from '../../model/navigation/mode'
+    import Modewrapper from '../internal/mode/modewrapper.svelte'
 
     interface Props {
         class?: string
@@ -43,17 +46,19 @@
     </ul>
 {/snippet}
 
-<ul class="flex flex-col diagram-nav-container {className}">
-    <li class="flex flex-col">
-        <p class="diagram-nav-category">System Context Views</p>
-        {@render group(systemContextDiagrams, 'Software System')}
-    </li>
-    <li class="flex flex-col">
-        <p class="diagram-nav-category">Container Views</p>
-        {@render group(containerDiagrams, 'Software System')}
-    </li>
-    <li class="flex flex-col">
-        <p class="diagram-nav-category">Component Views</p>
-        {@render group(componentDiagrams, 'Container')}
-    </li>
-</ul>
+<Modewrapper mode={Mode.Diagrams}>
+    <ul class="flex flex-col diagram-nav-container {className}">
+        <li class="flex flex-col">
+            <p class="diagram-nav-category">System Context Views</p>
+            {@render group(systemContextDiagrams, 'Software System')}
+        </li>
+        <li class="flex flex-col">
+            <p class="diagram-nav-category">Container Views</p>
+            {@render group(containerDiagrams, 'Software System')}
+        </li>
+        <li class="flex flex-col">
+            <p class="diagram-nav-category">Component Views</p>
+            {@render group(componentDiagrams, 'Container')}
+        </li>
+    </ul>
+</Modewrapper>

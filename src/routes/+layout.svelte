@@ -1,14 +1,15 @@
 <script lang="ts">
+    import type { SzrWorkspace, DiagramModel } from 'c4ke-lib'
+    import { WorkspaceService, DiagramService } from 'c4ke-lib'
     import {
+        Content,
         Diagram,
-        type SzrWorkspace,
-        DiagramService,
-        type DiagramModel,
+        Navigation,
         DiagramNavigation,
-        BurgerMenu,
-        ModeNavigation
+        ModeNavigation,
+        NavigationProvider
     } from 'c4ke-lib'
-    import { WorkspaceService } from 'c4ke-lib'
+
     import type { LayoutProps } from './$types'
 
     let { data, children }: LayoutProps = $props()
@@ -19,8 +20,9 @@
     let selectedDiagram: DiagramModel | null = $derived(diagrams.length > 0 ? diagrams[0] : null)
 </script>
 
-<div class="flex flex-col w-screen h-screen">
-    <header class="flex flex-row lg:hidden">
+<NavigationProvider>
+    <div class="flex flex-col w-screen h-screen">
+        <!-- <header class="flex flex-row lg:hidden">
         <BurgerMenu>
             <nav class="nav-container">
                 <ModeNavigation />
@@ -31,14 +33,21 @@
                 />
             </nav>
         </BurgerMenu>
-    </header>
-    <div class="w-screen h-screen flex flex-row app-container">
-        <nav class="nav-container hidden lg:flex">
-            <ModeNavigation />
-            <DiagramNavigation {diagrams} bind:selectedDiagram class="flex flex-col self-stretch" />
-        </nav>
-        <Diagram diagram={selectedDiagram} class="flex-1" />
+    </header> -->
+        <div class="w-screen h-screen flex flex-row app-container">
+            <Navigation class="hidden lg:flex">
+                <ModeNavigation />
+                <DiagramNavigation
+                    {diagrams}
+                    bind:selectedDiagram
+                    class="flex flex-col self-stretch"
+                />
+            </Navigation>
+            <Content class="flex-1">
+                <Diagram diagram={selectedDiagram} />
+            </Content>
+        </div>
     </div>
-</div>
+</NavigationProvider>
 
 <!-- {@render children()} -->
