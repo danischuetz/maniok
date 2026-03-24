@@ -10,7 +10,7 @@
     let { class: className, diagram }: Props = $props()
 </script>
 
-<div class={className}>
+<div class="diagram-container {className}">
     {#if !diagram}
         <h1 class="text-gray-500">No diagram selected</h1>
     {:else}

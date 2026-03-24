@@ -12,7 +12,9 @@ export { DiagramService } from './service/diagramservice'
 export { MarkdownService } from './service/markdownservice'
 
 export { default as Diagram } from './components/diagram/diagram.svelte'
-export { default as DiagramNavigation } from './components/diagram/diagramnavigation.svelte'
-export { default as DiagramNavigationPopup } from './components/diagram/diagramnavigationpopup.svelte'
 
 export { default as Document } from './components/document/document.svelte'
+
+export { default as DiagramNavigation } from './components/navigation/diagramnavigation.svelte'
+export { default as BurgerMenu } from './components/navigation/burgermenu.svelte'
+export { default as ModeNavigation } from './components/navigation/modenavigation.svelte'

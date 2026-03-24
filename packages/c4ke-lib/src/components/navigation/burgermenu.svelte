@@ -1,17 +1,14 @@
 <script lang="ts">
     import { Popover, Portal } from '@skeletonlabs/skeleton-svelte'
     import { Menu } from 'lucide-svelte'
-
-    import DiagramNavigation from './diagramnavigation.svelte'
-    import type { DiagramModel } from '../../model/diagram/diagrammodel'
+    import type { Snippet } from 'svelte'
 
     interface Props {
         class?: string
-        diagrams: DiagramModel[]
-        selectedDiagram: DiagramModel | null
+        children: Snippet
     }
 
-    let { class: className = '', diagrams, selectedDiagram = $bindable() }: Props = $props()
+    let { class: className = '', children }: Props = $props()
 </script>
 
 <Popover>
@@ -21,7 +18,7 @@
     <Portal>
         <Popover.Positioner>
             <Popover.Content class="card">
-                <DiagramNavigation {diagrams} {selectedDiagram} />
+                {@render children()}
             </Popover.Content>
         </Popover.Positioner>
     </Portal>

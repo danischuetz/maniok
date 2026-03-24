@@ -5,7 +5,8 @@
         DiagramService,
         type DiagramModel,
         DiagramNavigation,
-        DiagramNavigationPopup
+        BurgerMenu,
+        ModeNavigation
     } from 'c4ke-lib'
     import { WorkspaceService } from 'c4ke-lib'
     import type { LayoutProps } from './$types'
@@ -20,10 +21,22 @@
 
 <div class="flex flex-col w-screen h-screen">
     <header class="flex flex-row lg:hidden">
-        <DiagramNavigationPopup {diagrams} bind:selectedDiagram class="self-center" />
+        <BurgerMenu>
+            <nav class="nav-container">
+                <ModeNavigation />
+                <DiagramNavigation
+                    {diagrams}
+                    bind:selectedDiagram
+                    class="flex flex-col self-stretch"
+                />
+            </nav>
+        </BurgerMenu>
     </header>
     <div class="w-screen h-screen flex flex-row app-container">
-        <DiagramNavigation {diagrams} bind:selectedDiagram class="hidden lg:flex self-stretch" />
+        <nav class="nav-container hidden lg:flex">
+            <ModeNavigation />
+            <DiagramNavigation {diagrams} bind:selectedDiagram class="flex flex-col self-stretch" />
+        </nav>
         <Diagram diagram={selectedDiagram} class="flex-1" />
     </div>
 </div>

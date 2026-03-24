@@ -19,14 +19,12 @@
     ]
 </script>
 
-<nav class="flex flex-col {className}">
-    <ul>
-        {#each items as item}
-            <li>
-                <button class="btn flex items-center justify-center" title={item.label}>
-                    <item.icon class="lucide-icon-xl" />
-                </button>
-            </li>
-        {/each}
-    </ul>
-</nav>
+<ul class="flex flex-col mode-nav-container {className}">
+    {#each items as item}
+        <li>
+            <button class="btn btn-nav flex items-center justify-center" title={item.label}>
+                <item.icon class="lucide-icon-xl" />
+            </button>
+        </li>
+    {/each}
+</ul>

@@ -12,7 +12,7 @@
 }
 
 .lucide-icon-xl {
-    @apply size-16 m-2
+    @apply size-14 border-2 rounded-lg p-3
 }
 
 /* Accessibility: Hide elements visually but keep them for screen readers */
@@ -23,27 +23,45 @@
 
 /* App */
 .app-container {
-   @apply bg-surface-200-800;
+   @apply bg-surface-50-950;
+}
+
+/* Navigation */
+.nav-container {
+    @apply gap-1 rounded-md;
+}
+
+.btn-nav {
+    @apply p-0 m-0 text-surface-900-100;
+}
+
+/* Mode Navigation */
+.mode-nav-container {
+    @apply bg-surface-100-900 gap-2 p-2;
 }
 
 /* Diagram Navigation */
-.nav-container {
-    @apply gap-8 px-2 py-8 xl:px-4 2xl:px-8 bg-surface-50-950;
+.diagram-nav-container {
+    @apply gap-8 bg-surface-100-900 p-2;
 }
 
-.nav-category {
+.diagram-nav-category {
     @apply text-xs font-bold text-surface-600-400;
 }
 
-.nav-selectable {
+.diagram-nav-selectable {
     @apply btn p-0 py-1 pl-2 justify-start text-surface-900-100 rounded;
 }
 
-.nav-selected {
+.diagram-nav-selected {
     @apply btn p-0 py-1 pl-2 justify-start text-surface-700-300 rounded;
 }
 
 /* Diagram */
+.diagram-container {
+    @apply bg-surface-200-800;
+}
+
 .svelte-flow {
     --background-color-default: transparent;
 }
