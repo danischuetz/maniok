@@ -7,8 +7,12 @@
 @import '@xyflow/svelte/dist/style.css';
 
 /* Common */
-.lucide-icon {
+.lucide-icon-sm {
     @apply size-6 m-2
+}
+
+.lucide-icon-xl {
+    @apply size-16 m-2
 }
 
 /* Accessibility: Hide elements visually but keep them for screen readers */

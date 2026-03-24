@@ -9,8 +9,10 @@ export { Direction } from './model/shared/direction'
 
 export { WorkspaceService } from './service/workspaceservice'
 export { DiagramService } from './service/diagramservice'
+export { MarkdownService } from './service/markdownservice'
 
-export { default as Diagram } from './components/diagram.svelte'
-export { default as DiagramProvider } from './components/diagramprovider.svelte'
-export { default as DiagramNavigation } from './components/diagramnavigation.svelte'
-export { default as DiagramNavigationPopup } from './components/diagramnavigationpopup.svelte'
+export { default as Diagram } from './components/diagram/diagram.svelte'
+export { default as DiagramNavigation } from './components/diagram/diagramnavigation.svelte'
+export { default as DiagramNavigationPopup } from './components/diagram/diagramnavigationpopup.svelte'
+
+export { default as Document } from './components/document/document.svelte'

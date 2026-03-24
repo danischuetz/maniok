@@ -1,24 +1,25 @@
 <script lang="ts">
-    import { type DiagramModel } from '../model/diagram/diagrammodel'
-    import { DiagramType } from '../model/diagram/diagramtype'
-    import { diagrams, selectedDiagram } from '../state/diagrams'
+    import { type DiagramModel } from '../../model/diagram/diagrammodel'
+    import { DiagramType } from '../../model/diagram/diagramtype'
 
     interface Props {
         class?: string
+        diagrams: DiagramModel[]
+        selectedDiagram: DiagramModel | null
     }
 
-    let { class: className = '' }: Props = $props()
+    let { class: className = '', diagrams, selectedDiagram = $bindable() }: Props = $props()
 
     let systemContextDiagrams = $derived(
-        $diagrams.filter((d) => d.type === DiagramType.SystemContextDiagram)
+        diagrams.filter((d) => d.type === DiagramType.SystemContextDiagram)
     )
 
     let containerDiagrams = $derived(
-        $diagrams.filter((d) => d.type === DiagramType.ContainerDiagram)
+        diagrams.filter((d) => d.type === DiagramType.ContainerDiagram)
     )
 
     let componentDiagrams = $derived(
-        $diagrams.filter((d) => d.type === DiagramType.ComponentDiagram)
+        diagrams.filter((d) => d.type === DiagramType.ComponentDiagram)
     )
 </script>
 
@@ -26,10 +27,10 @@
     <ul>
         {#each diagrams as diagram (diagram.id)}
             <li>
-                {#if diagram === $selectedDiagram}
+                {#if diagram === selectedDiagram}
                     <p class="nav-selected">{kind}: {diagram.title}</p>
                 {:else}
-                    <button class="nav-selectable" onclick={() => selectedDiagram.set(diagram)}>
+                    <button class="nav-selectable" onclick={() => (selectedDiagram = diagram)}>
                         {kind}:
                         {diagram.title}
                     </button>
