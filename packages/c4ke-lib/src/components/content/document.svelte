@@ -10,6 +10,6 @@
     let { class: className, html }: Props = $props()
 </script>
 
-<ModeWrapper mode={Mode.Documentation} class="markdown-body {className}">
+<ModeWrapper mode={Mode.Documentation} class="markdown-body w-full h-full {className}">
     {@html html}
 </ModeWrapper>
