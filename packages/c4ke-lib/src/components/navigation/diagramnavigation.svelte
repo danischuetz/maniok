@@ -1,8 +1,7 @@
 <script lang="ts">
-    import { getContext } from 'svelte'
     import { type DiagramModel } from '../../model/diagram/diagrammodel'
     import { DiagramType } from '../../model/diagram/diagramtype'
-    import { Mode, type ModeContext } from '../../model/navigation/mode'
+    import { Mode } from '../../model/navigation/mode'
     import Modewrapper from '../internal/mode/modewrapper.svelte'
 
     interface Props {

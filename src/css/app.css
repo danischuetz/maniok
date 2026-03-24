@@ -28,7 +28,11 @@
 
 /* Navigation */
 .nav-container {
-    @apply gap-1 rounded-md;
+    @apply gap-0.5;
+}
+
+.nav-container-burger {
+    @apply gap-1 rounded-md bg-surface-50-950 overflow-clip;
 }
 
 .btn-nav {
@@ -37,12 +41,12 @@
 
 /* Mode Navigation */
 .mode-nav-container {
-    @apply bg-surface-100-900 gap-2 p-2;
+    @apply bg-surface-200-800 gap-2 p-2;
 }
 
 /* Diagram Navigation */
 .diagram-nav-container {
-    @apply gap-8 bg-surface-100-900 p-2;
+    @apply gap-8 bg-surface-200-800 p-2 pt-12;
 }
 
 .diagram-nav-category {
@@ -59,7 +63,7 @@
 
 /* Content */
 .content {
-    @apply bg-surface-200-800
+    @apply bg-surface-100-900
 }
 
 /* Diagram */
@@ -97,4 +101,52 @@
 
 .group-label {
     @apply text-xs;
+}
+
+/* Markdown */
+.markdown-body {
+    @apply p-8 max-w-5xl mx-auto;
+}
+
+.markdown-body h1:first-child {
+    @apply h1 mb-10;
+}
+
+.markdown-body h1 {
+    @apply h1 mt-12 mb-6;
+}
+
+
+.markdown-body h2 {
+    @apply h2 mt-12 mb-6;
+}
+
+.markdown-body h3 {
+    @apply h3 mt-12 mb-6;
+}
+
+.markdown-body ul {
+    @apply list-disc;
+}
+
+.markdown-body p,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body pre,
+.markdown-body blockquote {
+    margin-block: 1rem;
+}
+
+.markdown-body li {
+    @apply ml-4;
+}
+
+.markdown-body pre {
+    @apply overflow-x-auto;
+    @apply p-4;
+    @apply rounded-lg;
+}
+
+.markdown-body a {
+    @apply underline;
 }

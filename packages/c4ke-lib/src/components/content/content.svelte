@@ -9,6 +9,6 @@
     let { class: className, children }: Props = $props()
 </script>
 
-<div class="content {className}">
+<div class="content overflow-auto {className}">
     {@render children()}
 </div>

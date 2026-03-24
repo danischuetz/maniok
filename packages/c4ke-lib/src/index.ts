@@ -20,4 +20,4 @@ export { default as ModeNavigation } from './components/navigation/modenavigatio
 
 export { default as Content } from './components/content/content.svelte'
 export { default as Diagram } from './components/content/diagram.svelte'
-export { default as Document } from './components/content/document.svelte'
+export { default as Documentation } from './components/content/documentation.svelte'

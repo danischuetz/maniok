@@ -9,6 +9,6 @@
     let { class: className, children }: Props = $props()
 </script>
 
-<div class="flex nav-container {className}">
+<div class="flex {className}">
     {@render children()}
 </div>

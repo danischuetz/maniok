@@ -13,12 +13,14 @@
     let { class: className, diagram }: Props = $props()
 </script>
 
-<ModeWrapper mode={Mode.Diagrams} class="h-full w-full {className}">
-    {#if !diagram}
-        <h1 class="text-gray-500">No diagram selected</h1>
-    {:else}
-        <SvelteFlowProvider>
-            <DiagramView class="w-full h-full" {diagram} />
-        </SvelteFlowProvider>
-    {/if}
+<ModeWrapper mode={Mode.Diagrams}>
+    <div class="h-full w-full {className}">
+        {#if !diagram}
+            <h1 class="text-gray-500">No diagram selected</h1>
+        {:else}
+            <SvelteFlowProvider>
+                <DiagramView class="w-full h-full" {diagram} />
+            </SvelteFlowProvider>
+        {/if}
+    </div>
 </ModeWrapper>
