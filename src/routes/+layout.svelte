@@ -14,7 +14,6 @@
     let { data, children }: LayoutProps = $props()
 
     let workspace: SzrWorkspace = $derived(WorkspaceService.parse(data.workspaceJson))
-
     let diagrams: DiagramModel[] = $derived(DiagramService.parse(workspace))
 </script>
 

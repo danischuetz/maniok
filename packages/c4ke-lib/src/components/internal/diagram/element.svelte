@@ -18,5 +18,5 @@
     {/if}
 </div>
 {#if targetPosition}
-    <Handle type="target" position={targetPosition} />
+    <Handle class="opacity-0" type="target" position={targetPosition} />
 {/if}

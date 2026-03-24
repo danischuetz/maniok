@@ -1,4 +1,4 @@
-import { type Node, type Edge, Position } from '@xyflow/svelte'
+import { type Node, type Edge, Position, MarkerType } from '@xyflow/svelte'
 import { type Element } from '../model/diagram/element'
 import { type Relationship } from '../model/diagram/relationship'
 import { Direction } from '../model/shared/direction'
@@ -84,7 +84,10 @@ export class XYFlowUtils {
             source: relationship.sourceId,
             target: relationship.targetId,
             label: relationship.description ?? '',
-            type: 'bezier'
+            type: 'bezier',
+            markerEnd: {
+                type: MarkerType.Arrow
+            }
         }))
     }
 
