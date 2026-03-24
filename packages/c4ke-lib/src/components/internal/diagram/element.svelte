@@ -12,7 +12,12 @@
 {/if}
 <div class="element-body flex flex-col space-y-2">
     <span class="element-name">{metaData.title}</span>
-    <span class="element-type">{'[ ' + metaData.type + ' ]' + (metaData.technology ?? '')}</span>
+    <span class="element-type"
+        >{'[ ' +
+            metaData.type +
+            ' ]' +
+            (metaData.technology ? ' ' + metaData.technology : '')}</span
+    >
     {#if metaData.description}
         <span class="element-description">{metaData.description}</span>
     {/if}
