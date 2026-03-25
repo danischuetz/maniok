@@ -1,4 +1,4 @@
-import { ElementType } from './elementtype'
+import { ElementType } from '../shared/elementtype'
 
 export interface ElementMetaData {
     title?: string

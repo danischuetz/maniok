@@ -4,7 +4,7 @@ export type { ElementMetaData } from './model/diagram/elementmetadata'
 export type { Relationship } from './model/diagram/relationship'
 export type * from './model/szr/szrworkspace'
 
-export { ElementType } from './model/diagram/elementtype'
+export { ElementType } from './model/shared/elementtype'
 export { Direction } from './model/shared/direction'
 
 export { WorkspaceService } from './service/workspaceservice'
@@ -21,3 +21,5 @@ export { default as ModeNavigation } from './components/navigation/modenavigatio
 export { default as Content } from './components/content/content.svelte'
 export { default as Diagram } from './components/content/diagram.svelte'
 export { default as Documentation } from './components/content/documentation.svelte'
+
+export { default as Toaster } from './components/util/toaster.svelte'

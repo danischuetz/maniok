@@ -1,7 +1,7 @@
 import type { DiagramModel } from '../model/diagram/diagrammodel'
 import { DiagramType } from '../model/diagram/diagramtype'
 import { type Element } from '../model/diagram/element'
-import { ElementType } from '../model/diagram/elementtype'
+import { ElementType } from '../model/shared/elementtype'
 import { type Relationship } from '../model/diagram/relationship'
 import { Direction } from '../model/shared/direction'
 import type {
