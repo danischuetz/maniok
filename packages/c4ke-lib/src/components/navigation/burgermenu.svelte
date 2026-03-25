@@ -1,23 +1,24 @@
 <script lang="ts">
     import { Popover, Portal } from '@skeletonlabs/skeleton-svelte'
-    import { DiagramNavigation } from '..'
-    import { Hamburger } from 'lucide-svelte'
+    import { Menu } from 'lucide-svelte'
+    import type { Snippet } from 'svelte'
 
     interface Props {
         class?: string
+        children: Snippet
     }
 
-    let { class: className = '' }: Props = $props()
+    let { class: className = '', children }: Props = $props()
 </script>
 
 <Popover>
     <Popover.Trigger class="btn flex items-center justify-center {className} "
-        ><Hamburger />
+        ><Menu class="lucide-icon-sm" />
     </Popover.Trigger>
     <Portal>
         <Popover.Positioner>
             <Popover.Content class="card">
-                <DiagramNavigation />
+                {@render children()}
             </Popover.Content>
         </Popover.Positioner>
     </Portal>

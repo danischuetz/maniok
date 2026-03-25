@@ -3,7 +3,7 @@
     "emeraldwalk.runonsave": {
         "commands": [
             {
-                "match": ".c4ke/workspace.dsl$",
+                "match": "\\.c4ke\\/.*",
                 "cmd": "echo 'Exporting C4 model to JSON...' && structurizr-cli export -workspace .c4ke/workspace.dsl -format json -output .c4ke"
             }
         ]

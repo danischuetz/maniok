@@ -7,8 +7,12 @@
 @import '@xyflow/svelte/dist/style.css';
 
 /* Common */
-.lucide-icon {
+.lucide-icon-sm {
     @apply size-6 m-2
+}
+
+.lucide-icon-xl {
+    @apply size-12 stroke-1 p-2
 }
 
 /* Accessibility: Hide elements visually but keep them for screen readers */
@@ -19,24 +23,47 @@
 
 /* App */
 .app-container {
-   @apply bg-surface-200-800;
+   @apply bg-surface-50-950;
+}
+
+/* Navigation */
+.nav-container {
+    @apply gap-0.5;
+}
+
+.nav-container-burger {
+    @apply gap-1 rounded-md bg-surface-50-950 overflow-clip;
+}
+
+.btn-nav {
+    @apply p-0 m-0 text-surface-900-100;
+}
+
+/* Mode Navigation */
+.mode-nav-container {
+    @apply bg-surface-200-800 gap-2 p-2;
 }
 
 /* Diagram Navigation */
-.nav-container {
-    @apply gap-8 px-2 py-8 xl:px-4 2xl:px-8 bg-surface-50-950;
+.diagram-nav-container {
+    @apply gap-8 bg-surface-200-800 p-2 pt-12;
 }
 
-.nav-category {
+.diagram-nav-category {
     @apply text-xs font-bold text-surface-600-400;
 }
 
-.nav-selectable {
+.diagram-nav-selectable {
     @apply btn p-0 py-1 pl-2 justify-start text-surface-900-100 rounded;
 }
 
-.nav-selected {
+.diagram-nav-selected {
     @apply btn p-0 py-1 pl-2 justify-start text-surface-700-300 rounded;
+}
+
+/* Content */
+.content {
+    @apply bg-surface-100-900
 }
 
 /* Diagram */
@@ -74,4 +101,52 @@
 
 .group-label {
     @apply text-xs;
+}
+
+/* Markdown */
+.markdown-body {
+    @apply p-8 max-w-5xl mx-auto;
+}
+
+.markdown-body h1:first-child {
+    @apply h1 mb-10;
+}
+
+.markdown-body h1 {
+    @apply h1 mt-12 mb-6;
+}
+
+
+.markdown-body h2 {
+    @apply h2 mt-12 mb-6;
+}
+
+.markdown-body h3 {
+    @apply h3 mt-12 mb-6;
+}
+
+.markdown-body ul {
+    @apply list-disc;
+}
+
+.markdown-body p,
+.markdown-body ul,
+.markdown-body ol,
+.markdown-body pre,
+.markdown-body blockquote {
+    margin-block: 1rem;
+}
+
+.markdown-body li {
+    @apply ml-4;
+}
+
+.markdown-body pre {
+    @apply overflow-x-auto;
+    @apply p-4;
+    @apply rounded-lg;
+}
+
+.markdown-body a {
+    @apply underline;
 }

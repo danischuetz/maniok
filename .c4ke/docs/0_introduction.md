@@ -22,19 +22,19 @@ For public repositories:
 
 # Current Restrictions
 
-This is a very minimal MVP and only works for public GitHub repositories right now (Making the functionality available for private repositories is the very next step, see [Private Repositories] (#id_privaterepos)).
+This is a very minimal MVP and only works for public GitHub repositories right now (Making the functionality available for private repositories is the very next step, see [Private Repositories](#private-repositories) ).
 
 Besides that, the following restrictions currently apply:
 
 - C4/Structurizr DSL only partially supported
 - Support for GitHub hosted repositories only
 
-## Private repositories {#id_privaterepos}
+## Private repositories
 
 In addition to the steps in quick start:
 
 - You/your org need to install the c4ke Github App for the repo's to be documented
-  - This is very restricted and only needs read access to a single file in each repo: .c4ke/workspace.json
+    - This is very restricted and only needs read access to a single file in each repo: .c4ke/workspace.json
 - Viewers of the documentation have to register/log in to c4ke.io and can then connect to their GitHub
   account which will allow them to access the documentation.
 
