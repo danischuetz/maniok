@@ -46,25 +46,15 @@ A git-native architecture-as-code solution which minimizes friction in creating 
 
 - Introduction
 - Getting Started
-- Architecture
-- System Landscape View
-- Software Systems
-    - c4ke-core
-        - Docs
-        - Views
-            - System Context View
-            - Container View
-        - Containers
-            - c4ke-lib
-                - Docs
-                - Views
-                    - Component View
-                - Components
-                    - c4ke-lib-api
-                    - c4ke-lib-diagram
-                        - Docs
-                    - c4ke-lib-diagramparser
-                    - c4ke-lib-layoutengine
-            - c4ke-viewer
-    - c4ke-app
-        - ...
+
+- **Software System: c4ke-core**
+- Overview
+- Chapter 2
+    - **Container: c4ke-lib**
+    - Overview
+    - Chapter 2
+
+- **Software System: c4ke-webapp**
+    - **Container: c4ke-database**
+    - Overview
+    - Chapter 2

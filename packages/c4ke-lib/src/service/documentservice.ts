@@ -13,7 +13,7 @@ export class DocumentService {
     static generateDocumentTree(workspace: SzrWorkspace): DocumentNode {
         const rootNode: DocumentNode = {
             id: 'root',
-            name: 'Root',
+            name: 'Docs',
             children: []
         }
 
@@ -32,11 +32,13 @@ export class DocumentService {
                         component,
                         ElementType.Component
                     )
-                    containerNode.children?.push(componentNode)
+                    if (componentNode.html || componentNode.children?.length)
+                        containerNode.children?.push(componentNode)
                 })
-                systemNode.children?.push(containerNode)
+                if (containerNode.html || containerNode.children?.length)
+                    systemNode.children?.push(containerNode)
             })
-            rootNode.children?.push(systemNode)
+            if (systemNode.html || systemNode.children?.length) rootNode.children?.push(systemNode)
         })
 
         return rootNode

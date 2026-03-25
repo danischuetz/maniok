@@ -17,10 +17,11 @@
 </script>
 
 {#snippet entry(node: DocumentNode)}
+    {@const displayName = node.type ? `${node.type}: ${node.name}` : node.name}
     {#if node.html}
-        <button onclick={() => (selectedDocumentNode = node)}>{node.type}: {node.name}</button>
+        <button onclick={() => (selectedDocumentNode = node)}>{displayName}</button>
     {:else}
-        <p>{node.type}: {node.name}</p>
+        <p>{displayName}</p>
     {/if}
 {/snippet}
 

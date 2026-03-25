@@ -44,26 +44,16 @@ describe('root node', () => {
     })
 
     it('should contain all documentable children of the workspace regardless of whether they have documentation or not', () => {
+        workspace.model.softwareSystems![0].containers![1].components![0].documentation = {
+            sections: [testSection]
+        }
+
         const root: DocumentNode = DocumentService.generateDocumentTree(workspace)
 
-        const numSoftwareSystems = workspace.model.softwareSystems?.length || 0
         expect(root.children).toBeDefined()
-        expect(root.children?.length).toBe(numSoftwareSystems)
+        expect(root.children?.length).toBe(1)
 
-        workspace.model.softwareSystems?.forEach((system, systemIndex) => {
-            const numContainers = system.containers?.length || 0
-            expect(root.children?.[systemIndex].children).toBeDefined()
-            expect(root.children?.[systemIndex].children?.length).toBe(numContainers)
-
-            system.containers?.forEach((container, containerIndex) => {
-                const numComponents = container.components?.length || 0
-                expect(
-                    root.children?.[systemIndex].children?.[containerIndex].children
-                ).toBeDefined()
-                expect(
-                    root.children?.[systemIndex].children?.[containerIndex].children?.length
-                ).toBe(numComponents)
-            })
-        })
+        expect(root.children![0].children).toBeDefined()
+        expect(root.children![0].children?.length).toBe(1)
     })
 })
