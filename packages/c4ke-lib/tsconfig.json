@@ -1,5 +1,4 @@
 {
-    "extends": "./.svelte-kit/tsconfig.json",
     "compilerOptions": {
         "module": "esnext",
         "moduleResolution": "bundler",
@@ -9,6 +8,6 @@
         "noEmit": true,
         "verbatimModuleSyntax": true
     },
-    "include": ["src/**/*"],
+    "include": ["src/**/*", "test/**/*"],
     "exclude": ["dist/**", "node_modules", ".svelte-kit/**"]
 }

@@ -125,3 +125,4 @@ export type SzrContainerView = z.infer<typeof containerViewSchema>
 export type SzrComponentView = z.infer<typeof componentViewSchema>
 export type SzrModel = z.infer<typeof modelSchema>
 export type SzrWorkspace = z.infer<typeof workspaceSchema>
+export type SzrDocumentation = z.infer<typeof documentationSchema>

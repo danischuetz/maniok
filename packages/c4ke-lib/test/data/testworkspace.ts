@@ -1,9 +1,8 @@
-import { SzrWorkspace } from '../../src/model/szr/szrworkspace'
+import type { SzrWorkspace } from '../../src/model/szr/szrworkspace'
 
 export const testWorkspace: SzrWorkspace = {
     configuration: {},
     description: 'Description',
-    documentation: {},
     id: 1,
     lastModifiedDate: '2026-03-18T11:02:27Z',
     model: {
@@ -91,7 +90,6 @@ export const testWorkspace: SzrWorkspace = {
                     {
                         description:
                             'A web application for consumers of technical software documentation written using the Structurizr DSL',
-                        documentation: {},
                         id: '4',
                         name: 'c4ke-webapp',
                         properties: {
@@ -139,7 +137,7 @@ export const testWorkspace: SzrWorkspace = {
                             {
                                 description:
                                     'Packages a java runtime with java code to make it usable as a node module',
-                                documentation: {},
+
                                 id: '6',
                                 name: 'Java Wrapper',
                                 properties: {
@@ -150,7 +148,7 @@ export const testWorkspace: SzrWorkspace = {
                             }
                         ],
                         description: 'Exports structurizr documentation to a workspace.json object',
-                        documentation: {},
+
                         id: '5',
                         name: 'dsl-exporter',
                         properties: {
@@ -162,7 +160,6 @@ export const testWorkspace: SzrWorkspace = {
                     {
                         components: [
                             {
-                                documentation: {},
                                 id: '8',
                                 name: 'API',
                                 properties: {
@@ -216,7 +213,7 @@ export const testWorkspace: SzrWorkspace = {
                             },
                             {
                                 description: 'Renders diagrams',
-                                documentation: {},
+
                                 id: '9',
                                 name: 'Diagram',
                                 properties: {
@@ -235,7 +232,7 @@ export const testWorkspace: SzrWorkspace = {
                             },
                             {
                                 description: 'Creates array of diagrams from workspace object',
-                                documentation: {},
+
                                 id: '10',
                                 name: 'Diagram Parser',
                                 properties: {
@@ -245,7 +242,7 @@ export const testWorkspace: SzrWorkspace = {
                             },
                             {
                                 description: 'Allows users to navigate diagrams',
-                                documentation: {},
+
                                 id: '11',
                                 name: 'Diagram Navigation',
                                 properties: {
@@ -256,7 +253,7 @@ export const testWorkspace: SzrWorkspace = {
                             {
                                 description:
                                     'Calculates the layout of diagram elements according to the contents and relationships',
-                                documentation: {},
+
                                 id: '12',
                                 name: 'Layout Engine',
                                 properties: {
@@ -266,7 +263,7 @@ export const testWorkspace: SzrWorkspace = {
                             },
                             {
                                 description: 'Renders documentation written in Markdown',
-                                documentation: {},
+
                                 id: '13',
                                 name: 'Document',
                                 properties: {
@@ -276,7 +273,7 @@ export const testWorkspace: SzrWorkspace = {
                             },
                             {
                                 description: 'Creates array of diagrams from workspace object',
-                                documentation: {},
+
                                 id: '14',
                                 name: 'Workspace Parser',
                                 properties: {
@@ -286,7 +283,7 @@ export const testWorkspace: SzrWorkspace = {
                             },
                             {
                                 description: 'Allows users to navigate written documentation',
-                                documentation: {},
+
                                 id: '15',
                                 name: 'Document Navigation',
                                 properties: {
@@ -297,7 +294,7 @@ export const testWorkspace: SzrWorkspace = {
                         ],
                         description:
                             'Core logic and components to view and navigate documentation described by a Structurizr workspace object',
-                        documentation: {},
+
                         id: '7',
                         name: 'c4ke-lib',
                         properties: {
@@ -309,7 +306,7 @@ export const testWorkspace: SzrWorkspace = {
                     {
                         description:
                             'VSCode Extension. Renders the documentation into a webview as it would be presented in the webapp',
-                        documentation: {},
+
                         id: '16',
                         name: 'c4ke-preview',
                         properties: {
@@ -339,26 +336,6 @@ export const testWorkspace: SzrWorkspace = {
                 ],
                 description:
                     'A software system to minimize friction when creating, maintaining and consuming technical software documentation',
-                documentation: {
-                    sections: [
-                        {
-                            content:
-                                '# Introduction\n\nC4ke minimizes the friction in creating, maintaining and consuming software documentation for developers.\n\n- Create and maintain useful documentation quickly, simply and without compromising security\n- Use your favorite IDE and existing AI-tooling to write good and complete documentation faster\n\nIt utilizes the Structurizr DSL (Domain Specific Language) and tooling to describe systems in diagrams and text using the C4 model for software system abstractions. Written documentation is edited in Markdown and can be associated with elements of the C4 models.\n\nTo create easy-to-read and well designed diagrams, the dagrejs library is used to layout C4 elements and groups logically, enabling xyflow to render diagram elements, labels and connections.\n\n# Quick Start\n\nFor public repositories:\n\n- In a repository root, create a folder called ".c4ke"\n- Download the [zipped template](https://github.com/danischuetz/c4ke-webapp/templates/c4ke), which contains the documentation you are currently reading\n- Extract it to the .c4ke folder\n- Commit the changes\n- Visit c4ke.io/github/\\<your organization\\>/\\<your repository\\>\n- Et voila, your documentation is online!\n\n# Current Restrictions\n\nThis is a very minimal MVP and only works for public GitHub repositories right now (Making the functionality available for private repositories is the very next step, see [Private Repositories] (#id_privaterepos)).\n\nBesides that, the following restrictions currently apply:\n\n- C4/Structurizr DSL only partially supported\n- Support for GitHub hosted repositories only\n\n## Private repositories {#id_privaterepos}\n\nIn addition to the steps in quick start:\n\n- You/your org need to install the c4ke Github App for the repo\'s to be documented\n  - This is very restricted and only needs read access to a single file in each repo: .c4ke/workspace.json\n- Viewers of the documentation have to register/log in to c4ke.io and can then connect to their GitHub\n  account which will allow them to access the documentation.\n\n# Editing tips\n\n## Describe your system\n\n## Add written documentation\n\n# Users and use cases\n\n## Viewer\n\n## Editor\n',
-                            filename: '0_introduction.md',
-                            format: 'Markdown',
-                            order: 1,
-                            title: ''
-                        },
-                        {
-                            content:
-                                "# Core Library\n\nThe core library provides logic and Svelte components to display C4 diagrams and documents parsed from workspace.json objects.\n\n## Usage\n\n### Diagrams - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Diagram, DiagramNavigation, DiagramProvider, parseDiagrams } from 'c4ke-diagramlib'\n    import type { DiagramModel } from 'c4ke-diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let diagrams: DiagramModel[] = $derived(parseDiagrams(workspace))\n</script>\n\n<DiagramProvider {diagrams}>\n    <DiagramNavigation />\n    <Diagram />\n</DiagramProvider>\n\n```\n\n### Documents - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Document, DocumentNavigation, DocumentProvider, parseDocument } from 'c4ke-diagramlib'\n    import type { DocumentModel } from 'c4ke-diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let document: DocumentModel[] = $derived(parseDocument(workspace))\n</script>\n\n<DocumentProvider {document}>\n    <DocumentNavigation />\n    <Document />\n</DocumentProvider>\n```\n\n## Architecture\n\n### Notes\n\n- Actual component layer (Svelte) ideally should not handle state or logic in any way\n\n### Logic Layer\n\n- Parse workspace.json to diagram model\n- Parse workspace.json to document model\n- Calculate layout for diagram model\n- Navigation state handling for\n  - diagrams\n  - documents\n\n### Component Layer\n\n- Diagram\n  - Draws nodes, edges and edge labels as defined in the DiagramModel\n  - Triggers the calculation of DiagramModel layout\n- DiagramNavigation\n  - Triggers selection of the current diagram\n- Document\n  - Renders the markdown document according to the current navigation state\n- DocumentNavigation\n  - Triggers selected section or heading within the document\n\n### Style Layer\n",
-                            filename: '1_corelibrary.md',
-                            format: 'Markdown',
-                            order: 2,
-                            title: ''
-                        }
-                    ]
-                },
                 id: '3',
                 name: 'c4ke',
                 properties: {
@@ -386,7 +363,7 @@ export const testWorkspace: SzrWorkspace = {
                 containers: [
                     {
                         description: 'Exports documentation to workspace.json object',
-                        documentation: {},
+
                         id: '18',
                         name: 'Structurizr Export',
                         properties: {
@@ -398,7 +375,7 @@ export const testWorkspace: SzrWorkspace = {
                     {
                         description:
                             'VSCode Extension. Provides syntax highlighting for the Structurizr DSL',
-                        documentation: {},
+
                         id: '19',
                         name: 'Structurizr Extension',
                         properties: {
@@ -410,7 +387,7 @@ export const testWorkspace: SzrWorkspace = {
                 ],
                 description:
                     'Defines the Structurizr DSL and parses structurizr documentation to workspace objects',
-                documentation: {},
+
                 id: '17',
                 name: 'Structurizr',
                 properties: {
@@ -421,7 +398,6 @@ export const testWorkspace: SzrWorkspace = {
             {
                 containers: [
                     {
-                        documentation: {},
                         id: '21',
                         name: 'GitHub API',
                         properties: {
@@ -440,7 +416,7 @@ export const testWorkspace: SzrWorkspace = {
                     },
                     {
                         description: 'Contains a .c4ke documentation directory',
-                        documentation: {},
+
                         id: '22',
                         name: 'Client Repository',
                         properties: {
@@ -450,7 +426,7 @@ export const testWorkspace: SzrWorkspace = {
                         technology: 'GitHub Repo'
                     }
                 ],
-                documentation: {},
+
                 id: '20',
                 name: 'GitHub',
                 properties: {
