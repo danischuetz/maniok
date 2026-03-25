@@ -8,7 +8,7 @@
 
     let { children }: Props = $props()
 
-    let modeContext: ModeContext = $state({ mode: Mode.Diagrams })
+    let modeContext: ModeContext = $state({ mode: Mode.Documentation })
     setContext('mode', modeContext)
 </script>
 

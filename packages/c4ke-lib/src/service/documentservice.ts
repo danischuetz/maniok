@@ -12,6 +12,7 @@ export class DocumentService {
      */
     static generateDocumentTree(workspace: SzrWorkspace): DocumentNode {
         const rootNode: DocumentNode = {
+            id: 'root',
             name: 'Root',
             children: []
         }
@@ -43,6 +44,7 @@ export class DocumentService {
 
     private static createNodeFor(element: SzrElement, type: ElementType): DocumentNode {
         const node: DocumentNode = {
+            id: element.id,
             name: element.name,
             type: type,
             children: []

@@ -46,7 +46,7 @@
 
 /* Diagram Navigation */
 .diagram-nav-container {
-    @apply gap-8 bg-surface-200-800 p-2 pt-12;
+    @apply gap-8 bg-surface-200-800 p-2 pt-4;
 }
 
 .diagram-nav-category {
@@ -54,11 +54,28 @@
 }
 
 .diagram-nav-selectable {
-    @apply btn p-0 py-1 pl-2 justify-start text-surface-900-100 rounded;
+    @apply btn p-0 py-1 pl-2 justify-start text-surface-900-100;
 }
 
 .diagram-nav-selected {
-    @apply btn p-0 py-1 pl-2 justify-start text-surface-700-300 rounded;
+    @apply btn p-0 py-1 pl-2 justify-start text-surface-700-300;
+}
+
+/* Document Navigation */
+.document-tree {
+    @apply bg-surface-200-800 p-2 pt-4;
+}
+
+.document-tree li {
+    @apply ml-8;
+}
+
+.document-tree button {
+    @apply btn p-0 pl-2 justify-start text-surface-900-100;
+}
+
+.document-tree p {
+    @apply btn p-0 pl-2 justify-start text-surface-700-300;
 }
 
 /* Content */

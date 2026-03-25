@@ -41,3 +41,30 @@ A git-native architecture-as-code solution which minimizes friction in creating 
 - Install the c4ke GitHub App for your repository
 - Register / Log-In to your c4ke account at app.c4ke.io
 - Connect to your GitHub
+
+## Brainstorm
+
+- Introduction
+- Getting Started
+- Architecture
+- System Landscape View
+- Software Systems
+    - c4ke-core
+        - Docs
+        - Views
+            - System Context View
+            - Container View
+        - Containers
+            - c4ke-lib
+                - Docs
+                - Views
+                    - Component View
+                - Components
+                    - c4ke-lib-api
+                    - c4ke-lib-diagram
+                        - Docs
+                    - c4ke-lib-diagramparser
+                    - c4ke-lib-layoutengine
+            - c4ke-viewer
+    - c4ke-app
+        - ...
