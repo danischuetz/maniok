@@ -108,25 +108,33 @@
     @apply p-8 max-w-5xl mx-auto;
 }
 
-.markdown-body h1:first-child {
-    @apply h1 mb-10;
-}
-
 .markdown-body h1 {
-    @apply h1 mt-12 mb-6;
+    @apply h1;
 }
 
 
 .markdown-body h2 {
-    @apply h2 mt-12 mb-6;
+    @apply h2;
 }
 
 .markdown-body h3 {
-    @apply h3 mt-12 mb-6;
+    @apply h3;
+}
+
+.markdown-body h4 {
+    @apply h4;
 }
 
 .markdown-body ul {
     @apply list-disc;
+}
+
+.markdown-body :where(h1, h2, h3, h4, h5, h6, p):first-child {
+    @apply mt-0;
+}
+
+.markdown-body :where(h1, h2, h3, h4, h5, h6) {
+    @apply mb-4 mt-8;
 }
 
 .markdown-body p,
@@ -134,7 +142,7 @@
 .markdown-body ol,
 .markdown-body pre,
 .markdown-body blockquote {
-    margin-block: 1rem;
+    @apply m-0 mb-2;
 }
 
 .markdown-body li {

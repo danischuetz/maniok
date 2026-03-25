@@ -9,7 +9,7 @@ const documentationSchema = z.object({
         .array(
             z.object({
                 content: z.string(),
-                filename: z.string(),
+                filename: z.string().optional(),
                 format: z.string(),
                 order: z.number().int(),
                 title: z.string()
