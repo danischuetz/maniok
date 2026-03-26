@@ -3,6 +3,7 @@ export enum ModeEnum {
     Documentation = 'Documentation'
 }
 
-export interface ModeContextModel {
+export interface NavigationContextModel {
     mode: ModeEnum
+    activeHeadingId: string | undefined
 }

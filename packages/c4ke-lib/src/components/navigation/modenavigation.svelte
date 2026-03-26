@@ -2,7 +2,7 @@
     import { Workflow } from 'lucide-svelte'
     import { BookOpenText } from 'lucide-svelte'
     import { getContext } from 'svelte'
-    import { ModeEnum, type ModeContextModel } from '../../model/navigation/mode'
+    import { ModeEnum, type NavigationContextModel } from '../../model/navigation/navigationcontext'
 
     interface Props {
         class?: string
@@ -10,7 +10,7 @@
 
     let { class: className }: Props = $props()
 
-    let modeContext: ModeContextModel = getContext('mode')
+    let navigationContext: NavigationContextModel = getContext('navigationContext')
 
     const icons: Record<ModeEnum, any> = {
         [ModeEnum.Diagrams]: Workflow,
@@ -18,8 +18,8 @@
     }
 
     function switchTo(newMode: ModeEnum) {
-        if (newMode !== modeContext.mode) {
-            modeContext.mode = newMode
+        if (newMode !== navigationContext.mode) {
+            navigationContext.mode = newMode
         }
     }
 </script>

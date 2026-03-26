@@ -1,6 +1,8 @@
 <script lang="ts">
+    import { getContext } from 'svelte'
     import type { DocumentNodeModel } from '../../model/documentation/documentnode'
-    import { ModeEnum } from '../../model/navigation/mode'
+    import type { HeadingModel } from '../../model/documentation/heading'
+    import { ModeEnum, type NavigationContextModel } from '../../model/navigation/navigationcontext'
     import Modewrapper from '../internal/mode/modewrapper.svelte'
 
     interface Props {
@@ -15,60 +17,44 @@
         selectedDocumentNode = $bindable()
     }: Props = $props()
 
-    let activeHeadingId: string | undefined = $state(undefined)
-
-    $effect(() => {
-        selectedDocumentNode
-
-        const observedHeadings: HTMLElement[] = Array.from(
-            document.querySelectorAll('[id]')
-        ) as HTMLElement[]
-
-        let intersectingHeadingIds: Set<string> = $state(new Set())
-
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting) intersectingHeadingIds.add(entry.target.id)
-                    else intersectingHeadingIds.delete(entry.target.id)
-                }
-                activeHeadingId =
-                    intersectingHeadingIds.size > 0
-                        ? observedHeadings
-                              .map((el) => el.id)
-                              .find((id) => intersectingHeadingIds.has(id))
-                        : undefined
-            },
-            { rootMargin: '-3% 0px -20% 0px' }
-        )
-
-        observedHeadings.forEach((el) => observer.observe(el))
-        return () => observer.disconnect()
-    })
+    let navigationContext: NavigationContextModel = getContext('navigationContext')
 </script>
 
-{#snippet headings(node: DocumentNodeModel)}
-    {#if node.documentation?.headings}
-        <ul>
-            {#each node.documentation.headings as heading (heading.id)}
+{#snippet headings(headingList: HeadingModel[], node: DocumentNodeModel, headingDepth: number)}
+    {@const levelHeadings = headingList.filter((heading) => heading.depth === headingDepth)}
+    {@const nextLevelHeadings = headingList.filter((heading) => heading.depth === headingDepth + 1)}
+    <ul>
+        {#each levelHeadings as heading (heading.id)}
+            {#if heading.depth === headingDepth}
                 <li>
                     <a
-                        onclick={() => (selectedDocumentNode = node)}
+                        onclick={(e) => {
+                            e.preventDefault()
+                            selectedDocumentNode = node
+                            document
+                                .getElementById(heading.id)
+                                ?.scrollIntoView({ behavior: 'smooth' })
+                        }}
                         href={'#' + heading.id}
-                        class:active={activeHeadingId === heading.id}
+                        class:active={navigationContext.activeHeadingId === heading.id}
                     >
                         {heading.text}
                     </a>
                 </li>
-            {/each}
-        </ul>
-    {/if}
+            {/if}
+        {/each}
+        {#if nextLevelHeadings.length > 0}
+            {@render headings(headingList, node, headingDepth + 1)}
+        {/if}
+    </ul>
 {/snippet}
 
 {#snippet node(nodeModel: DocumentNodeModel, level: number)}
-    <ul class="flex flex-col node-level-{level}">
+    <ul class="flex flex-col node">
         <p>{nodeModel.type ? `${nodeModel.type}: ${nodeModel.name}` : nodeModel.name}</p>
-        {@render headings(nodeModel)}
+        {#if nodeModel.documentation?.headings}
+            {@render headings(nodeModel.documentation.headings, nodeModel, 0)}
+        {/if}
     </ul>
 {/snippet}
 

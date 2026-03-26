@@ -1,7 +1,7 @@
 <script lang="ts">
     import { type DiagramModel } from '../../model/diagram/diagrammodel'
     import { DiagramTypeModel } from '../../model/diagram/diagramtype'
-    import { ModeEnum } from '../../model/navigation/mode'
+    import { ModeEnum } from '../../model/navigation/navigationcontext'
     import Modewrapper from '../internal/mode/modewrapper.svelte'
 
     interface Props {

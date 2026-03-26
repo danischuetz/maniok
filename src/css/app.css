@@ -71,11 +71,7 @@
 }
 
 .document-tree a {
-    @apply btn p-0 py-1 pl-2 justify-start text-surface-900-100;
-}
-
-.document-tree .heading-depth-0 {
-    @apply pl-4;
+    @apply btn p-0 py-1 justify-start text-surface-900-100;
 }
 
 .document-tree a.active {
@@ -84,6 +80,10 @@
 
 .document-tree p {
     @apply p-0 text-sm text-surface-600-400;
+}
+
+.document-tree .node ul ul ul {
+    @apply pl-4;
 }
 
 /* Content */

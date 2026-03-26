@@ -1,6 +1,6 @@
 # c4ke
 
-## What is it?
+## What is it, now?
 
 A git-native architecture-as-code solution which minimizes friction in creating and consuming technical documentation. It is based on an ODI (Outcome Driven Innovation) research on current pain points in the lifecycle of technical software documentation.
 

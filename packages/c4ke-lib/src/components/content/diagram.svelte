@@ -1,7 +1,6 @@
 <script lang="ts">
-    import { getContext } from 'svelte'
     import type { DiagramModel } from '../../model/diagram/diagrammodel'
-    import { ModeEnum, type ModeContextModel } from '../../model/navigation/mode'
+    import { ModeEnum } from '../../model/navigation/navigationcontext'
     import DiagramView from '../internal/diagram/diagramview.svelte'
     import { SvelteFlowProvider } from '@xyflow/svelte'
     import ModeWrapper from '../internal/mode/modewrapper.svelte'

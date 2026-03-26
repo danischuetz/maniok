@@ -7,7 +7,6 @@ workspace {
 
         c4ke-core = softwareSystem "c4ke-core" "Open core of the c4ke documentation system" {
             !docs docs/opencore.md
-            
             c4ke-lib = container "c4ke-lib" "Core logic and components to view and navigate documentation described by a Structurizr workspace object" "node.js" {
                 c4ke-lib-api = component "API"
                 
