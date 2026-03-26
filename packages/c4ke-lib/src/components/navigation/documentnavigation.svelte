@@ -18,53 +18,76 @@
     }: Props = $props()
 
     let navigationContext: NavigationContextModel = getContext('navigationContext')
+
+    interface HeadingNode {
+        heading: HeadingModel
+        children: HeadingNode[]
+    }
+
+    function buildHeadingTree(headings: HeadingModel[]): HeadingNode[] {
+        const root: HeadingNode = { heading: { id: 'root', text: '', depth: 0 }, children: [] }
+        const stack: HeadingNode[] = [root]
+
+        for (const heading of headings) {
+            while (stack.length > 1 && heading.depth <= stack[stack.length - 1].heading.depth) {
+                stack.pop()
+            }
+            const newNode: HeadingNode = { heading, children: [] }
+            stack[stack.length - 1].children.push(newNode)
+            stack.push(newNode)
+        }
+
+        return root.children
+    }
 </script>
 
-{#snippet headings(headingList: HeadingModel[], node: DocumentNodeModel, headingDepth: number)}
-    {@const levelHeadings = headingList.filter((heading) => heading.depth === headingDepth)}
-    {@const nextLevelHeadings = headingList.filter((heading) => heading.depth === headingDepth + 1)}
+{#snippet headings(headingNodes: HeadingNode[], node: DocumentNodeModel)}
     <ul>
-        {#each levelHeadings as heading (heading.id)}
-            {#if heading.depth === headingDepth}
-                <li>
-                    <a
-                        onclick={(e) => {
-                            e.preventDefault()
-                            selectedDocumentNode = node
-                            document
-                                .getElementById(heading.id)
-                                ?.scrollIntoView({ behavior: 'smooth' })
-                        }}
-                        href={'#' + heading.id}
-                        class:active={navigationContext.activeHeadingId === heading.id}
-                    >
-                        {heading.text}
-                    </a>
-                </li>
+        {#each headingNodes as headingNode (headingNode.heading.id)}
+            {@const heading = headingNode.heading}
+            <li>
+                <a
+                    onclick={(e) => {
+                        e.preventDefault()
+                        selectedDocumentNode = node
+                        document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' })
+                    }}
+                    href={'#' + heading.id}
+                    class:active={navigationContext.activeHeadingId === heading.id}
+                >
+                    {heading.text}
+                </a>
+            </li>
+            {#if headingNode.children.length > 0}
+                {@render headings(headingNode.children, node)}
             {/if}
         {/each}
-        {#if nextLevelHeadings.length > 0}
-            {@render headings(headingList, node, headingDepth + 1)}
-        {/if}
     </ul>
 {/snippet}
 
-{#snippet node(nodeModel: DocumentNodeModel, level: number)}
+{#snippet node(nodeModel: DocumentNodeModel)}
     <ul class="flex flex-col node">
-        <p>{nodeModel.type ? `${nodeModel.type}: ${nodeModel.name}` : nodeModel.name}</p>
+        <button
+            onclick={() => {
+                selectedDocumentNode = nodeModel
+            }}
+            class:active={nodeModel === selectedDocumentNode}
+        >
+            {nodeModel.type ? `${nodeModel.type}: ${nodeModel.name}` : nodeModel.name}
+        </button>
         {#if nodeModel.documentation?.headings}
-            {@render headings(nodeModel.documentation.headings, nodeModel, 0)}
+            {@render headings(buildHeadingTree(nodeModel.documentation.headings), nodeModel)}
         {/if}
     </ul>
 {/snippet}
 
-{#snippet subTree(root: DocumentNodeModel, level: number)}
+{#snippet subTree(root: DocumentNodeModel)}
     {#if root.children && root.children.length > 0}
         <ul class="flex flex-col items-start">
             {#each root.children as child (child.id)}
                 <li>
-                    {@render node(child, level)}
-                    {@render subTree(child, level + 1)}
+                    {@render node(child)}
+                    {@render subTree(child)}
                 </li>
             {/each}
         </ul>
@@ -73,7 +96,7 @@
 
 <Modewrapper mode={ModeEnum.Documentation}>
     <nav class="flex flex-col items-start document-tree {className}">
-        {@render node(documentRoot, 0)}
-        {@render subTree(documentRoot, 1)}
+        {@render node(documentRoot)}
+        {@render subTree(documentRoot)}
     </nav>
 </Modewrapper>

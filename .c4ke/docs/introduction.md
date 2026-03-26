@@ -1,6 +1,6 @@
 # c4ke
 
-## What is it, now?
+## What is it?
 
 A git-native architecture-as-code solution which minimizes friction in creating and consuming technical documentation. It is based on an ODI (Outcome Driven Innovation) research on current pain points in the lifecycle of technical software documentation.
 
@@ -41,20 +41,3 @@ A git-native architecture-as-code solution which minimizes friction in creating 
 - Install the c4ke GitHub App for your repository
 - Register / Log-In to your c4ke account at app.c4ke.io
 - Connect to your GitHub
-
-## Brainstorm
-
-- Introduction
-- Getting Started
-
-- **Software System: c4ke-core**
-- Overview
-- Chapter 2
-    - **Container: c4ke-lib**
-    - Overview
-    - Chapter 2
-
-- **Software System: c4ke-webapp**
-    - **Container: c4ke-database**
-    - Overview
-    - Chapter 2

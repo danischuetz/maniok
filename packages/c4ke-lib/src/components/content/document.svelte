@@ -23,22 +23,19 @@
 
         let intersectingHeadingIds: Set<string> = $state(new Set())
 
-        const observer = new IntersectionObserver(
-            (entries) => {
-                for (const entry of entries) {
-                    if (entry.isIntersecting) intersectingHeadingIds.add(entry.target.id)
-                    else intersectingHeadingIds.delete(entry.target.id)
-                }
+        const observer = new IntersectionObserver((entries) => {
+            for (const entry of entries) {
+                if (entry.isIntersecting) intersectingHeadingIds.add(entry.target.id)
+                else intersectingHeadingIds.delete(entry.target.id)
+            }
 
-                navigationContext.activeHeadingId =
-                    intersectingHeadingIds.size > 0
-                        ? observedHeadings
-                              .map((el) => el.id)
-                              .find((id) => intersectingHeadingIds.has(id))
-                        : undefined
-            },
-            { rootMargin: '-3% 0px -20% 0px' }
-        )
+            navigationContext.activeHeadingId =
+                intersectingHeadingIds.size > 0
+                    ? observedHeadings
+                          .map((el) => el.id)
+                          .find((id) => intersectingHeadingIds.has(id))
+                    : undefined
+        })
 
         observedHeadings.forEach((el) => observer.observe(el))
         return () => observer.disconnect()
