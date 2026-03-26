@@ -66,8 +66,24 @@
     @apply bg-surface-200-800 p-2 pt-4;
 }
 
-.document-tree button {
-    @apply btn p-0 text-sm text-surface-600-400;
+.document-tree ul {
+    @apply pb-2;
+}
+
+.document-tree a {
+    @apply btn p-0 py-1 pl-2 justify-start text-surface-900-100;
+}
+
+.document-tree .heading-depth-0 {
+    @apply pl-4;
+}
+
+.document-tree a.active {
+    @apply text-surface-700-300;
+}
+
+.document-tree p {
+    @apply p-0 text-sm text-surface-600-400;
 }
 
 /* Content */

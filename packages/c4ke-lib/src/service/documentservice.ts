@@ -14,7 +14,7 @@ export class DocumentService {
     static generateDocumentTree(workspace: SzrWorkspace): DocumentNodeModel {
         const rootNode: DocumentNodeModel = {
             id: 'root',
-            name: 'Docs',
+            name: 'Overview',
             children: []
         }
 
