@@ -1,8 +1,8 @@
-import { Direction } from '../../src/model/shared/direction'
-import { DiagramModel } from '../../src/model/diagram/diagrammodel'
-import { Element } from '../../src/model/diagram/element'
+import { DirectionEnum } from '../../src/model/shared/direction'
+import type { DiagramModel } from '../../src/model/diagram/diagrammodel'
+import type { ElementModel } from '../../src/model/diagram/element'
 
-export function createElement(id: string): Element {
+export function createElement(id: string): ElementModel {
     return {
         id,
         metaData: {},
@@ -18,7 +18,7 @@ export function createRelationship(sourceId: string, targetId: string) {
     }
 }
 
-export function createNestedDiagram(direction: Direction): DiagramModel {
+export function createNestedDiagram(direction: DirectionEnum): DiagramModel {
     return {
         id: 'test-diagram',
         direction: direction,

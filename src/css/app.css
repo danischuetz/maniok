@@ -50,7 +50,7 @@
 }
 
 .diagram-nav-category {
-    @apply text-xs font-bold text-surface-600-400;
+    @apply text-sm text-surface-600-400;
 }
 
 .diagram-nav-selectable {
@@ -66,16 +66,8 @@
     @apply bg-surface-200-800 p-2 pt-4;
 }
 
-.document-tree li {
-    @apply ml-8;
-}
-
 .document-tree button {
-    @apply btn p-0 pl-2 justify-start text-surface-900-100;
-}
-
-.document-tree p {
-    @apply btn p-0 pl-2 justify-start text-surface-700-300;
+    @apply btn p-0 text-sm text-surface-600-400;
 }
 
 /* Content */

@@ -6,6 +6,32 @@ import rehypeSanitize from 'rehype-sanitize'
 import rehypeSlug from 'rehype-slug'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeStringify from 'rehype-stringify'
+import { visit } from 'unist-util-visit'
+
+import type { DocumentContentModel } from '../model/documentation/documentcontent'
+import type { HeadingModel } from '../model/documentation/heading'
+
+function rehypeCollectHeadings() {
+    return (tree: any, file: any) => {
+        const headings: HeadingModel[] = []
+
+        visit(tree, 'element', (node: any) => {
+            if (!/^h[1-6]$/.test(node.tagName)) return
+
+            headings.push({
+                id: node.properties?.id ?? '',
+                text:
+                    node.children
+                        ?.filter((child: any) => child.type === 'text')
+                        .map((child: any) => child.value)
+                        .join('') ?? '',
+                depth: Number(node.tagName[1])
+            })
+        })
+
+        file.data.headings = headings
+    }
+}
 
 export class MarkdownService {
     /**
@@ -13,7 +39,7 @@ export class MarkdownService {
      * @param markdown The markdown string to parse.
      * @returns The HTML string generated from the markdown.
      */
-    static parseToHtml(markdown: string): string {
+    static parse(markdown: string): DocumentContentModel {
         const processor = unified()
             .use(remarkParse)
             .use(remarkGfm)
@@ -21,8 +47,14 @@ export class MarkdownService {
             .use(rehypeSanitize)
             .use(rehypeSlug)
             .use(rehypeAutolinkHeadings, { behavior: 'append' })
+            .use(rehypeCollectHeadings)
             .use(rehypeStringify)
 
-        return processor.processSync(markdown).toString()
+        const file = processor.processSync(markdown)
+
+        return {
+            html: file.toString(),
+            headings: (file.data.headings as HeadingModel[]) ?? []
+        }
     }
 }

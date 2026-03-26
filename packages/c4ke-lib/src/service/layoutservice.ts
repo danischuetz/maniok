@@ -1,8 +1,8 @@
 import Dagre from '@dagrejs/dagre'
-import { Direction } from '../model/shared/direction'
-import type { LayoutModel } from '../model/layout/layoutmodel'
-import type { LayoutElement } from '../model/layout/layoutelement'
-import type { LayoutEdge } from '../model/layout/layoutedge'
+import { DirectionEnum } from '../model/shared/direction'
+import type { LayoutModel } from '../model/layout/layout'
+import type { LayoutElementModel } from '../model/layout/layoutelement'
+import type { LayoutEdgeModel } from '../model/layout/layoutedge'
 
 interface Bounds {
     minX: number
@@ -27,8 +27,8 @@ export class LayoutService {
         graph.setGraph({
             rankdir: layoutModel.direction,
             ranksep:
-                layoutModel.direction === Direction.LeftRight ||
-                layoutModel.direction === Direction.RightLeft
+                layoutModel.direction === DirectionEnum.LeftRight ||
+                layoutModel.direction === DirectionEnum.RightLeft
                     ? 40
                     : 30,
             ranker: 'network-simplex', // network-simplex, tight-tree or longest-path
@@ -46,7 +46,7 @@ export class LayoutService {
         this.fitGroups(layoutModel.layoutElements, graph)
     }
 
-    private addEdges(graph: Dagre.graphlib.Graph, edges: LayoutEdge[]): void {
+    private addEdges(graph: Dagre.graphlib.Graph, edges: LayoutEdgeModel[]): void {
         edges.forEach((edge) =>
             graph.setEdge(edge.sourceId, edge.targetId, {
                 minlen: 5
@@ -54,7 +54,7 @@ export class LayoutService {
         )
     }
 
-    private addElements(graph: Dagre.graphlib.Graph, elements: LayoutElement[]): void {
+    private addElements(graph: Dagre.graphlib.Graph, elements: LayoutElementModel[]): void {
         elements.forEach((element) => {
             graph.setNode(element.id, {
                 width: element.width,
@@ -64,7 +64,7 @@ export class LayoutService {
         })
     }
 
-    private updateElements(elements: LayoutElement[], graph: Dagre.graphlib.Graph): void {
+    private updateElements(elements: LayoutElementModel[], graph: Dagre.graphlib.Graph): void {
         elements.forEach((element) => {
             const node = graph.node(element.id)
             element.x = node.x - element.width / 2
@@ -72,11 +72,11 @@ export class LayoutService {
         })
     }
 
-    private fitGroups(elements: LayoutElement[], graph: Dagre.graphlib.Graph): void {
-        let groups: LayoutElement[] = elements.filter((e) => graph.children(e.id).length > 0)
+    private fitGroups(elements: LayoutElementModel[], graph: Dagre.graphlib.Graph): void {
+        let groups: LayoutElementModel[] = elements.filter((e) => graph.children(e.id).length > 0)
 
         groups.reverse().forEach((group) => {
-            const children: LayoutElement[] = elements.filter((e) => e.parentId === group.id)
+            const children: LayoutElementModel[] = elements.filter((e) => e.parentId === group.id)
             let bounds = this.calculateBounds(children)
             bounds = this.applyMargin(bounds)
 
@@ -92,7 +92,7 @@ export class LayoutService {
         })
     }
 
-    private calculateBounds(elements: LayoutElement[]): Bounds {
+    private calculateBounds(elements: LayoutElementModel[]): Bounds {
         const minX = Math.min(...elements.map((element) => element.x))
         const minY = Math.min(...elements.map((element) => element.y))
         const maxX = Math.max(...elements.map((element) => element.x + element.width))

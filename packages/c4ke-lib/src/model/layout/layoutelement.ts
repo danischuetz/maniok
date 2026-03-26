@@ -1,4 +1,4 @@
-export interface LayoutElement {
+export interface LayoutElementModel {
     id: string
     parentId: string | undefined
     x: number

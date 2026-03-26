@@ -1,27 +1,27 @@
 <script lang="ts">
     import { type DiagramModel } from '../../model/diagram/diagrammodel'
-    import { DiagramType } from '../../model/diagram/diagramtype'
-    import { Mode } from '../../model/navigation/mode'
+    import { DiagramTypeModel } from '../../model/diagram/diagramtype'
+    import { ModeEnum } from '../../model/navigation/mode'
     import Modewrapper from '../internal/mode/modewrapper.svelte'
 
     interface Props {
         class?: string
         diagrams: DiagramModel[]
-        selectedDiagram: DiagramModel | null
+        selectedDiagram: DiagramModel | undefined
     }
 
     let { class: className = '', diagrams, selectedDiagram = $bindable() }: Props = $props()
 
     let systemContextDiagrams = $derived(
-        diagrams.filter((d) => d.type === DiagramType.SystemContextDiagram)
+        diagrams.filter((d) => d.type === DiagramTypeModel.SystemContextDiagram)
     )
 
     let containerDiagrams = $derived(
-        diagrams.filter((d) => d.type === DiagramType.ContainerDiagram)
+        diagrams.filter((d) => d.type === DiagramTypeModel.ContainerDiagram)
     )
 
     let componentDiagrams = $derived(
-        diagrams.filter((d) => d.type === DiagramType.ComponentDiagram)
+        diagrams.filter((d) => d.type === DiagramTypeModel.ComponentDiagram)
     )
 </script>
 
@@ -45,7 +45,7 @@
     </ul>
 {/snippet}
 
-<Modewrapper mode={Mode.Diagrams}>
+<Modewrapper mode={ModeEnum.Diagrams}>
     <ul class="flex flex-col diagram-nav-container {className}">
         <li class="flex flex-col">
             <p class="diagram-nav-category">System Context Views</p>

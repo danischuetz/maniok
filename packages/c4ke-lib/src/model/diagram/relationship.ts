@@ -1,4 +1,4 @@
-export interface Relationship {
+export interface RelationshipModel {
     id: string
     sourceId: string
     targetId: string

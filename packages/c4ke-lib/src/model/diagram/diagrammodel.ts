@@ -1,13 +1,13 @@
-import { Direction } from '../shared/direction'
-import { type Relationship } from './relationship'
-import { type Element } from './element'
-import type { DiagramType } from './diagramtype'
+import { DirectionEnum } from '../shared/direction'
+import { type RelationshipModel } from './relationship'
+import { type ElementModel } from './element'
+import type { DiagramTypeModel } from './diagramtype'
 
 export interface DiagramModel {
     id: string
     title?: string
-    type?: DiagramType
-    direction: Direction
-    elements: Element[]
-    relationships: Relationship[]
+    type?: DiagramTypeModel
+    direction: DirectionEnum
+    elements: ElementModel[]
+    relationships: RelationshipModel[]
 }

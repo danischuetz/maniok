@@ -1,9 +1,9 @@
-import { ElementType } from '../shared/elementtype'
+import { ElementTypeEnum } from '../shared/elementtype'
 
-export interface ElementMetaData {
+export interface ElementMetaDataModel {
     title?: string
     description?: string
     technology?: string
     tags?: string
-    type?: ElementType
+    type?: ElementTypeEnum
 }

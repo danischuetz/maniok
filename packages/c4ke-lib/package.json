@@ -14,7 +14,7 @@
         }
     },
     "scripts": {
-        "build": "svelte-package -i src",
+        "build": "tsc && svelte-package -i src",
         "prepare": "npm run build",
         "test": "vitest"
     },

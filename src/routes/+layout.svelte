@@ -1,10 +1,14 @@
 <script lang="ts">
     import { createToaster } from '@skeletonlabs/skeleton-svelte'
-    import type { SzrWorkspace, DiagramModel, DocumentNode } from 'c4ke-lib'
+    import type {
+        SzrWorkspace,
+        DiagramModel,
+        DocumentNodeModel,
+        DocumentContentModel
+    } from 'c4ke-lib'
     import {
         WorkspaceService,
         DiagramService,
-        MarkdownService,
         BurgerMenu,
         DocumentNavigation,
         DocumentService
@@ -16,7 +20,7 @@
         ModeNavigation,
         Content,
         Diagram,
-        Documentation,
+        Document,
         Toaster
     } from 'c4ke-lib'
 
@@ -52,8 +56,8 @@
         }
     })
 
-    let documentRoot: DocumentNode | null = $derived.by(() => {
-        if (!workspace) return null
+    let documentRoot: DocumentNodeModel | undefined = $derived.by(() => {
+        if (!workspace) return undefined
 
         try {
             return DocumentService.generateDocumentTree(workspace)
@@ -62,14 +66,17 @@
                 title: 'Failed to generate document tree',
                 description: error instanceof Error ? error.message : 'An unknown error occurred'
             })
-            return null
+            return undefined
         }
     })
 
-    let selectedDiagram: DiagramModel | null = $derived(diagrams.length > 0 ? diagrams[0] : null)
+    let selectedDiagram: DiagramModel | undefined = $derived(
+        diagrams.length > 0 ? diagrams[0] : undefined
+    )
+    let selectedDocumentNode: DocumentNodeModel | undefined = $derived(documentRoot)
 
-    let markdownHtml: string = $derived(
-        workspace ? MarkdownService.parseToHtml(workspace.documentation!.sections![0].content) : ''
+    let content: DocumentContentModel | undefined = $derived(
+        selectedDocumentNode ? selectedDocumentNode.documentation : undefined
     )
 </script>
 
@@ -77,7 +84,7 @@
     <ModeNavigation />
     <DiagramNavigation {diagrams} bind:selectedDiagram class="flex flex-col self-stretch" />
     {#if documentRoot}
-        <DocumentNavigation {documentRoot} />
+        <DocumentNavigation {documentRoot} bind:selectedDocumentNode />
     {/if}
 {/snippet}
 
@@ -96,7 +103,7 @@
             </Navigation>
             <Content class="flex-1">
                 <Diagram diagram={selectedDiagram} />
-                <Documentation html={markdownHtml} />
+                <Document html={content?.html} />
             </Content>
         </div>
     </div>

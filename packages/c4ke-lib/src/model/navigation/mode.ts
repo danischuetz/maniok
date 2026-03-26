@@ -1,8 +1,8 @@
-export enum Mode {
+export enum ModeEnum {
     Diagrams = 'Diagrams',
     Documentation = 'Documentation'
 }
 
-export interface ModeContext {
-    mode: Mode
+export interface ModeContextModel {
+    mode: ModeEnum
 }

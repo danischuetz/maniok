@@ -1,10 +1,12 @@
-import { Direction } from '../../src/model/shared/direction'
-import { type LayoutModel } from '../../src/model/layout/layoutmodel'
-import { type LayoutElement } from '../../src/model/layout/layoutelement'
-import { LayoutEdge } from '../../src/model/layout/layoutedge'
-import { create } from 'node:domain'
+import { DirectionEnum } from '../../src/model/shared/direction'
+import { type LayoutModel } from '../../src/model/layout/layout'
+import { type LayoutElementModel } from '../../src/model/layout/layoutelement'
+import type { LayoutEdgeModel } from '../../src/model/layout/layoutedge'
 
-export function createElement(id: string, parentId: string | null = null): LayoutElement {
+export function createElement(
+    id: string,
+    parentId: string | undefined = undefined
+): LayoutElementModel {
     return {
         id,
         parentId,
@@ -15,14 +17,14 @@ export function createElement(id: string, parentId: string | null = null): Layou
     }
 }
 
-export function createEdge(sourceId: string, targetId: string): LayoutEdge {
+export function createEdge(sourceId: string, targetId: string): LayoutEdgeModel {
     return {
         sourceId,
         targetId
     }
 }
 
-export function createFlatLayout(direction: Direction): LayoutModel {
+export function createFlatLayout(direction: DirectionEnum): LayoutModel {
     return {
         direction: direction,
         layoutElements: [createElement('1'), createElement('2'), createElement('3')],
@@ -30,7 +32,7 @@ export function createFlatLayout(direction: Direction): LayoutModel {
     }
 }
 
-export function createNestedLayout(direction: Direction): LayoutModel {
+export function createNestedLayout(direction: DirectionEnum): LayoutModel {
     return {
         direction: direction,
         layoutElements: [
@@ -44,7 +46,7 @@ export function createNestedLayout(direction: Direction): LayoutModel {
     }
 }
 
-export function createNestedNestedLayout(direction: Direction): LayoutModel {
+export function createNestedNestedLayout(direction: DirectionEnum): LayoutModel {
     return {
         direction: direction,
         layoutElements: [

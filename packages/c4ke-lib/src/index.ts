@@ -1,12 +1,13 @@
 export type { DiagramModel } from './model/diagram/diagrammodel'
-export type { Element } from './model/diagram/element'
-export type { ElementMetaData } from './model/diagram/elementmetadata'
-export type { Relationship } from './model/diagram/relationship'
-export type { DocumentNode } from './model/documentation/documentnode'
+export type { ElementModel } from './model/diagram/element'
+export type { ElementMetaDataModel } from './model/diagram/elementmetadata'
+export type { RelationshipModel } from './model/diagram/relationship'
+export type { DocumentNodeModel } from './model/documentation/documentnode'
+export type { DocumentContentModel } from './model/documentation/documentcontent'
 export type * from './model/szr/szrworkspace'
 
-export { ElementType } from './model/shared/elementtype'
-export { Direction } from './model/shared/direction'
+export { ElementTypeEnum } from './model/shared/elementtype'
+export { DirectionEnum } from './model/shared/direction'
 
 export { WorkspaceService } from './service/workspaceservice'
 export { DiagramService } from './service/diagramservice'
@@ -23,6 +24,6 @@ export { default as ModeNavigation } from './components/navigation/modenavigatio
 
 export { default as Content } from './components/content/content.svelte'
 export { default as Diagram } from './components/content/diagram.svelte'
-export { default as Documentation } from './components/content/documentation.svelte'
+export { default as Document } from './components/content/document.svelte'
 
 export { default as Toaster } from './components/util/toaster.svelte'

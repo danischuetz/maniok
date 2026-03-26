@@ -1,4 +1,4 @@
-export interface LayoutEdge {
+export interface LayoutEdgeModel {
     sourceId: string
     targetId: string
 }

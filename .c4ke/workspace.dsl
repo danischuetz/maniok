@@ -1,5 +1,5 @@
 workspace {
-    !docs docs
+    !docs docs/introduction.md
 
     model {
         viewer = person "Viewer"

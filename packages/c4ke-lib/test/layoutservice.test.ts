@@ -1,11 +1,11 @@
 import { describe, it, expect, beforeAll } from 'vitest'
-import { Direction } from '../src/model/shared/direction'
+import { DirectionEnum } from '../src/model/shared/direction'
 import { LayoutService } from '../src/service/layoutservice'
 
 import { createFlatLayout, createNestedLayout, createNestedNestedLayout } from './utils/testLayouts'
-import { LayoutModel } from '../src/model/layout/layoutmodel'
+import type { LayoutModel } from '../src/model/layout/layout'
 
-for (const direction of Object.values(Direction)) {
+for (const direction of Object.values(DirectionEnum)) {
     describe('FlatDiagrams', () => {
         let layoutModel: LayoutModel
 
@@ -20,16 +20,16 @@ for (const direction of Object.values(Direction)) {
             const element2 = layoutModel.layoutElements.find((e) => e.id === '2')!
 
             switch (direction) {
-                case Direction.TopBottom:
+                case DirectionEnum.TopBottom:
                     expect(element2.y).toBeGreaterThan(element1.y + element1.height)
                     break
-                case Direction.LeftRight:
+                case DirectionEnum.LeftRight:
                     expect(element2.x).toBeGreaterThan(element1.x + element1.width)
                     break
-                case Direction.BottomTop:
+                case DirectionEnum.BottomTop:
                     expect(element2.y).toBeLessThan(element1.y - element2.height)
                     break
-                case Direction.RightLeft:
+                case DirectionEnum.RightLeft:
                     expect(element2.x).toBeLessThan(element1.x - element2.width)
                     break
             }
@@ -43,7 +43,7 @@ describe('NestedDiagrams', () => {
 
     beforeAll(() => {
         const layoutEngine = new LayoutService()
-        layoutModel = createNestedLayout(Direction.LeftRight)
+        layoutModel = createNestedLayout(DirectionEnum.LeftRight)
         layoutEngine.layout(layoutModel)
     })
 
@@ -69,7 +69,7 @@ describe('NestedNestedDiagrams', () => {
 
     beforeAll(() => {
         const layoutEngine = new LayoutService()
-        layoutModel = createNestedNestedLayout(Direction.LeftRight)
+        layoutModel = createNestedNestedLayout(DirectionEnum.LeftRight)
         layoutEngine.layout(layoutModel)
     })
 

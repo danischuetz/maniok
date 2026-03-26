@@ -1,7 +1,7 @@
 <script lang="ts">
     import { getContext } from 'svelte'
     import type { DiagramModel } from '../../model/diagram/diagrammodel'
-    import { Mode, type ModeContext } from '../../model/navigation/mode'
+    import { ModeEnum, type ModeContextModel } from '../../model/navigation/mode'
     import DiagramView from '../internal/diagram/diagramview.svelte'
     import { SvelteFlowProvider } from '@xyflow/svelte'
     import ModeWrapper from '../internal/mode/modewrapper.svelte'
@@ -13,7 +13,7 @@
     let { class: className, diagram }: Props = $props()
 </script>
 
-<ModeWrapper mode={Mode.Diagrams}>
+<ModeWrapper mode={ModeEnum.Diagrams}>
     <div class="h-full w-full {className}">
         {#if !diagram}
             <h1 class="text-gray-500">No diagram selected</h1>

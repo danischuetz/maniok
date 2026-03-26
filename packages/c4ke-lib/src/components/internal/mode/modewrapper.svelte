@@ -1,14 +1,14 @@
 <script lang="ts">
     import { getContext, type Snippet } from 'svelte'
-    import type { Mode, ModeContext } from '../../../model/navigation/mode'
+    import type { ModeEnum, ModeContextModel } from '../../../model/navigation/mode'
 
     interface Props {
-        mode: Mode
+        mode: ModeEnum
         children: Snippet
     }
 
     const { mode, children }: Props = $props()
-    let modeContext: ModeContext = $derived(getContext('mode'))
+    let modeContext: ModeContextModel = $derived(getContext('mode'))
 </script>
 
 {#if modeContext.mode === mode}

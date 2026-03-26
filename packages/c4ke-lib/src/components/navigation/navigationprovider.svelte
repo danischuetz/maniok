@@ -1,6 +1,6 @@
 <script lang="ts">
     import { setContext, type Snippet } from 'svelte'
-    import { Mode, type ModeContext } from '../../model/navigation/mode'
+    import { ModeEnum, type ModeContextModel } from '../../model/navigation/mode'
 
     interface Props {
         children: Snippet
@@ -8,7 +8,7 @@
 
     let { children }: Props = $props()
 
-    let modeContext: ModeContext = $state({ mode: Mode.Documentation })
+    let modeContext: ModeContextModel = $state({ mode: ModeEnum.Documentation })
     setContext('mode', modeContext)
 </script>
 

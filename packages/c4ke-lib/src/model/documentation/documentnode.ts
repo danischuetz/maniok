@@ -1,9 +1,9 @@
-import type { ElementType } from '../shared/elementtype'
-
-export interface DocumentNode {
+import type { ElementTypeEnum } from '../shared/elementtype'
+import type { DocumentContentModel } from './documentcontent'
+export interface DocumentNodeModel {
     id: string
     name: string
-    type?: ElementType
-    html?: string
-    children?: DocumentNode[]
+    type?: ElementTypeEnum
+    documentation?: DocumentContentModel
+    children?: DocumentNodeModel[]
 }

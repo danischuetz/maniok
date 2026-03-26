@@ -1,7 +1,7 @@
-import { type ElementMetaData } from './elementmetadata'
+import { type ElementMetaDataModel } from './elementmetadata'
 
-export interface Element {
+export interface ElementModel {
     id: string
-    metaData: ElementMetaData
-    children: Element[]
+    metaData: ElementMetaDataModel
+    children: ElementModel[]
 }

@@ -1,10 +1,10 @@
 import { type Node, type Edge, Position, MarkerType } from '@xyflow/svelte'
-import { type Element } from '../model/diagram/element'
-import { type Relationship } from '../model/diagram/relationship'
-import { Direction } from '../model/shared/direction'
-import type { LayoutModel } from '../model/layout/layoutmodel'
-import type { LayoutElement } from '../model/layout/layoutelement'
-import type { LayoutEdge } from '../model/layout/layoutedge'
+import { type ElementModel } from '../model/diagram/element'
+import { type RelationshipModel } from '../model/diagram/relationship'
+import { DirectionEnum } from '../model/shared/direction'
+import type { LayoutModel } from '../model/layout/layout'
+import type { LayoutElementModel } from '../model/layout/layoutelement'
+import type { LayoutEdgeModel } from '../model/layout/layoutedge'
 import type { DiagramModel } from '../model/diagram/diagrammodel'
 
 export class XYFlowUtils {
@@ -30,8 +30,8 @@ export class XYFlowUtils {
         })
     }
 
-    static toLayoutModel(nodes: Node[], edges: Edge[], direction: Direction): LayoutModel {
-        const layoutElements: LayoutElement[] = nodes.map((node) => ({
+    static toLayoutModel(nodes: Node[], edges: Edge[], direction: DirectionEnum): LayoutModel {
+        const layoutElements: LayoutElementModel[] = nodes.map((node) => ({
             id: node.id,
             parentId: node.parentId,
             x: node.type === 'group' ? 1 : 0,
@@ -40,7 +40,7 @@ export class XYFlowUtils {
             height: node.measured?.height ?? 10
         }))
 
-        const layoutEdges: LayoutEdge[] = edges.map((edge) => ({
+        const layoutEdges: LayoutEdgeModel[] = edges.map((edge) => ({
             sourceId: edge.source,
             targetId: edge.target
         }))
@@ -52,7 +52,7 @@ export class XYFlowUtils {
         }
     }
 
-    static toNodes(elements: Element[], parentId?: string): Node[] {
+    static toNodes(elements: ElementModel[], parentId?: string): Node[] {
         let nodes: Node[] = []
         for (const element of elements) {
             nodes.push({
@@ -78,7 +78,7 @@ export class XYFlowUtils {
         return nodes
     }
 
-    static toEdges(relationships: Relationship[]): Edge[] {
+    static toEdges(relationships: RelationshipModel[]): Edge[] {
         return relationships.map((relationship) => ({
             id: relationship.id,
             source: relationship.sourceId,
@@ -91,25 +91,29 @@ export class XYFlowUtils {
         }))
     }
 
-    static setSourceAndTargetPositions(nodes: Node[], edges: Edge[], direction: Direction): void {
+    static setSourceAndTargetPositions(
+        nodes: Node[],
+        edges: Edge[],
+        direction: DirectionEnum
+    ): void {
         edges.forEach((edge) => {
             const sourceNode = nodes.find((node) => node.id === edge.source)
             const targetNode = nodes.find((node) => node.id === edge.target)
 
             switch (direction) {
-                case Direction.LeftRight:
+                case DirectionEnum.LeftRight:
                     sourceNode!.sourcePosition = Position.Right
                     targetNode!.targetPosition = Position.Left
                     break
-                case Direction.RightLeft:
+                case DirectionEnum.RightLeft:
                     sourceNode!.sourcePosition = Position.Left
                     targetNode!.targetPosition = Position.Right
                     break
-                case Direction.TopBottom:
+                case DirectionEnum.TopBottom:
                     sourceNode!.sourcePosition = Position.Bottom
                     targetNode!.targetPosition = Position.Top
                     break
-                case Direction.BottomTop:
+                case DirectionEnum.BottomTop:
                     sourceNode!.sourcePosition = Position.Top
                     targetNode!.targetPosition = Position.Bottom
                     break

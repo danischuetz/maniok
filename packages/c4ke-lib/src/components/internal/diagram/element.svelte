@@ -1,10 +1,10 @@
 <script lang="ts">
-    import type { ElementMetaData } from '../../../model/diagram/elementmetadata'
+    import type { ElementMetaDataModel } from '../../../model/diagram/elementmetadata'
     import { type NodeProps, Handle } from '@xyflow/svelte'
 
     let { data, sourcePosition, targetPosition }: NodeProps = $props()
 
-    let metaData: ElementMetaData = $derived(data.metaData as ElementMetaData)
+    let metaData: ElementMetaDataModel = $derived(data.metaData as ElementMetaDataModel)
 </script>
 
 {#if sourcePosition}

@@ -1,9 +1,9 @@
 import type { DiagramModel } from '../model/diagram/diagrammodel'
-import { DiagramType } from '../model/diagram/diagramtype'
-import { type Element } from '../model/diagram/element'
-import { ElementType } from '../model/shared/elementtype'
-import { type Relationship } from '../model/diagram/relationship'
-import { Direction } from '../model/shared/direction'
+import { DiagramTypeModel } from '../model/diagram/diagramtype'
+import { type ElementModel } from '../model/diagram/element'
+import { ElementTypeEnum } from '../model/shared/elementtype'
+import { type RelationshipModel } from '../model/diagram/relationship'
+import { DirectionEnum } from '../model/shared/direction'
 import type {
     SzrElement,
     SzrModel,
@@ -19,7 +19,7 @@ export class DiagramService {
         workspace.views?.systemContextViews?.forEach((view) => {
             const diagramModel = {
                 ...DiagramService.buildDiagramModel(workspace.model, view),
-                type: DiagramType.SystemContextDiagram
+                type: DiagramTypeModel.SystemContextDiagram
             }
             diagrams.push(diagramModel)
         })
@@ -27,7 +27,7 @@ export class DiagramService {
         workspace.views?.containerViews?.forEach((view) => {
             const diagramModel = {
                 ...DiagramService.buildDiagramModel(workspace.model, view),
-                type: DiagramType.ContainerDiagram
+                type: DiagramTypeModel.ContainerDiagram
             }
             diagrams.push(diagramModel)
         })
@@ -35,7 +35,7 @@ export class DiagramService {
         workspace.views?.componentViews?.forEach((view) => {
             const diagramModel = {
                 ...DiagramService.buildDiagramModel(workspace.model, view),
-                type: DiagramType.ComponentDiagram
+                type: DiagramTypeModel.ComponentDiagram
             }
             diagrams.push(diagramModel)
         })
@@ -49,30 +49,30 @@ export class DiagramService {
      * @param view The view
      */
     private static buildDiagramModel(model: SzrModel, view: SzrView): DiagramModel {
-        let elements: Element[] = []
+        let elements: ElementModel[] = []
 
         for (const person of model.people ?? []) {
             if (view.elements?.find((e) => e.id === person.id)) {
-                elements.push(DiagramService.createElement(person, ElementType.Person))
+                elements.push(DiagramService.createElement(person, ElementTypeEnum.Person))
             }
         }
 
         for (const softwareSystem of model.softwareSystems ?? []) {
             const softwareSystemElement = DiagramService.createElement(
                 softwareSystem,
-                ElementType.SoftwareSystem
+                ElementTypeEnum.SoftwareSystem
             )
 
             for (const container of softwareSystem.containers ?? []) {
                 const containerElement = DiagramService.createElement(
                     container,
-                    ElementType.Container
+                    ElementTypeEnum.Container
                 )
 
                 for (const component of container.components ?? []) {
                     const componentElement = DiagramService.createElement(
                         component,
-                        ElementType.Component
+                        ElementTypeEnum.Component
                     )
                     if (view.elements?.find((e) => e.id === component.id)) {
                         containerElement.children.push(componentElement)
@@ -95,7 +95,7 @@ export class DiagramService {
             }
         }
 
-        let relationships: Relationship[] = []
+        let relationships: RelationshipModel[] = []
 
         for (const person of model.people ?? []) {
             for (const relationship of person.relationships ?? []) {
@@ -143,7 +143,7 @@ export class DiagramService {
         }
     }
 
-    private static createElement(szrElement: SzrElement, type: ElementType): Element {
+    private static createElement(szrElement: SzrElement, type: ElementTypeEnum): ElementModel {
         return {
             id: szrElement.id,
             metaData: {
@@ -157,7 +157,7 @@ export class DiagramService {
         }
     }
 
-    private static createRelationship(szrRelationship: SzrRelationship): Relationship {
+    private static createRelationship(szrRelationship: SzrRelationship): RelationshipModel {
         return {
             id: szrRelationship.id,
             sourceId: szrRelationship.sourceId,
@@ -166,19 +166,19 @@ export class DiagramService {
         }
     }
 
-    private static getDirection(view: SzrView): Direction {
+    private static getDirection(view: SzrView): DirectionEnum {
         const rankDirection = view.automaticLayout?.rankDirection
         switch (rankDirection) {
             case 'LeftRight':
-                return Direction.LeftRight
+                return DirectionEnum.LeftRight
             case 'RightLeft':
-                return Direction.RightLeft
+                return DirectionEnum.RightLeft
             case 'TopBottom':
-                return Direction.TopBottom
+                return DirectionEnum.TopBottom
             case 'BottomTop':
-                return Direction.BottomTop
+                return DirectionEnum.BottomTop
             default:
-                return Direction.LeftRight
+                return DirectionEnum.LeftRight
         }
     }
 }
