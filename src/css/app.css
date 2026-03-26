@@ -134,7 +134,7 @@
 
 /* Markdown */
 .markdown-body {
-    @apply p-8 max-w-5xl mx-auto;
+    @apply p-8 max-w-5xl ml-8;
 }
 
 .markdown-body h1 {

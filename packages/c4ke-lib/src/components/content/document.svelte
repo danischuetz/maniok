@@ -46,7 +46,7 @@
     {#if !html}
         <p>No content available.</p>
     {:else}
-        <article class="markdown-body w-full min-h-full overflow-y-auto {className}">
+        <article class="markdown-body w-full min-h-full {className}">
             {@html html}
         </article>
     {/if}
