@@ -73,7 +73,7 @@ workspace {
             autoLayout
         }
 
-        container c4ke-core {
+        container c4ke-core "CoreContainerView" {
             include *
             autoLayout
         }

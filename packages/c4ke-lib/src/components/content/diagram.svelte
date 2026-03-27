@@ -13,7 +13,7 @@
 </script>
 
 <ModeWrapper mode={ModeEnum.Diagrams}>
-    <div class="h-full w-full {className}">
+    <div class="w-full h-full {className}">
         {#if !diagram}
             <h1 class="text-gray-500">No diagram selected</h1>
         {:else}
