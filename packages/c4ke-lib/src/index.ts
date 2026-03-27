@@ -23,7 +23,7 @@ export { default as BurgerMenu } from './components/navigation/burgermenu.svelte
 export { default as ModeNavigation } from './components/navigation/modenavigation.svelte'
 
 export { default as Content } from './components/content/content.svelte'
-export { default as Diagram } from './components/content/diagram.svelte'
-export { default as Document } from './components/content/document.svelte'
+export { default as DiagramView } from './components/content/diagramview.svelte'
+export { default as DocumentView } from './components/content/documentview.svelte'
 
 export { default as Toaster } from './components/util/toaster.svelte'

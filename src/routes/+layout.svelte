@@ -19,8 +19,8 @@
         DiagramNavigation,
         ModeNavigation,
         Content,
-        Diagram,
-        Document,
+        DiagramView,
+        DocumentView,
         Toaster
     } from 'c4ke-lib'
 
@@ -102,8 +102,8 @@
                 {@render navElements()}
             </Navigation>
             <Content class="flex-1">
-                <Diagram diagram={selectedDiagram} />
-                <Document html={content?.html} />
+                <DiagramView diagram={selectedDiagram} />
+                <DocumentView html={content?.html} {diagrams} />
             </Content>
         </div>
     </div>
