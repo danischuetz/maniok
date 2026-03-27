@@ -46,19 +46,19 @@
 
 /* Diagram Navigation */
 .diagram-nav-container {
-    @apply gap-8 bg-surface-200-800 p-2 pt-4;
+    @apply gap-8 bg-surface-200-800 py-4;
 }
 
 .diagram-nav-category {
-    @apply text-sm text-surface-600-400;
+    @apply text-sm px-2 text-surface-600-400;
 }
 
 .diagram-nav-selectable {
-    @apply btn p-0 py-1 pl-2 justify-start text-surface-900-100;
+    @apply p-0 py-1 pl-4 pr-2 justify-start text-surface-900-100;
 }
 
 .diagram-nav-selected {
-    @apply btn p-0 py-1 pl-2 justify-start text-surface-700-300;
+    @apply p-0 py-1 pl-4 pr-2 w-full justify-start bg-surface-500/20 text-primary-700-300;
 }
 
 /* Document Navigation */

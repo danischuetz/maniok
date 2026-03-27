@@ -12,8 +12,8 @@ export function createElement(
         parentId,
         x: 0,
         y: 0,
-        width: 100,
-        height: 50
+        width: 100 + parseInt(id) * 10,
+        height: 50 + parseInt(id) * 10
     }
 }
 

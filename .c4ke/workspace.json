@@ -3,7 +3,7 @@
   "description" : "Description",
   "documentation" : {
     "sections" : [ {
-      "content" : "# c4ke\n\n## What is it?\n\nA git-native architecture-as-code solution which minimizes friction in creating and consuming technical documentation. It is based on an ODI (Outcome Driven Innovation) research on current pain points in the lifecycle of technical software documentation.\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enables AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## Requirements\n\n- Github hosted repositories only\n\n## Quick Start\n\n### Documentation Setup\n\n- In a repository root, create a folder called \".c4ke\"\n- Download the [zipped default template](https://github.com/danischuetz/c4ke-webapp/templates/default)\n- Extract it to the .c4ke folder\n- Commit the changes\n- Et voila, your documentation is online!\n\n### Public Repositories\n\n- Visit app.c4ke.io\n- Type your public repo URL\n\n### Private Repositories\n\n- Install the c4ke GitHub App for your repository\n- Register / Log-In to your c4ke account at app.c4ke.io\n- Connect to your GitHub\n",
+      "content" : "# c4ke\n\n## What is it?\n\nA git-native architecture-as-code solution which minimizes friction in creating and consuming technical documentation. It is based on an ODI (Outcome Driven Innovation) research on current pain points in the lifecycle of technical software documentation.\n\n![c4ke system overview](embed:)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enables AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## Requirements\n\n- Github hosted repositories only\n\n## Quick Start\n\n### Documentation Setup\n\n- In a repository root, create a folder called \".c4ke\"\n- Download the [zipped default template](https://github.com/danischuetz/c4ke-webapp/templates/default)\n- Extract it to the .c4ke folder\n- Commit the changes\n- Et voila, your documentation is online!\n\n### Public Repositories\n\n- Visit app.c4ke.io\n- Type your public repo URL\n\n### Private Repositories\n\n- Install the c4ke GitHub App for your repository\n- Register / Log-In to your c4ke account at app.c4ke.io\n- Connect to your GitHub\n",
       "format" : "Markdown",
       "order" : 1,
       "title" : ""
@@ -18,16 +18,16 @@
         "structurizr.dsl.identifier" : "viewer"
       },
       "relationships" : [ {
-        "description" : "inspect and navigate documentation",
-        "destinationId" : "15",
-        "id" : "28",
+        "description" : "View documentation",
+        "destinationId" : "13",
+        "id" : "24",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
-        "description" : "inspect and navigate documentation",
-        "destinationId" : "14",
-        "id" : "29",
-        "linkedRelationshipId" : "28",
+        "description" : "View documentation",
+        "destinationId" : "3",
+        "id" : "25",
+        "linkedRelationshipId" : "24",
         "sourceId" : "1"
       } ],
       "tags" : "Element,Person"
@@ -37,43 +37,6 @@
       "properties" : {
         "structurizr.dsl.identifier" : "editor"
       },
-      "relationships" : [ {
-        "description" : "check syntax",
-        "destinationId" : "24",
-        "id" : "30",
-        "sourceId" : "2",
-        "tags" : "Relationship"
-      }, {
-        "description" : "check syntax",
-        "destinationId" : "22",
-        "id" : "31",
-        "linkedRelationshipId" : "30",
-        "sourceId" : "2"
-      }, {
-        "description" : "inspect rendered version",
-        "destinationId" : "21",
-        "id" : "32",
-        "sourceId" : "2",
-        "tags" : "Relationship"
-      }, {
-        "description" : "inspect rendered version",
-        "destinationId" : "18",
-        "id" : "33",
-        "linkedRelationshipId" : "32",
-        "sourceId" : "2"
-      }, {
-        "description" : "push changes",
-        "destinationId" : "27",
-        "id" : "34",
-        "sourceId" : "2",
-        "tags" : "Relationship"
-      }, {
-        "description" : "push changes",
-        "destinationId" : "25",
-        "id" : "35",
-        "linkedRelationshipId" : "34",
-        "sourceId" : "2"
-      } ],
       "tags" : "Element,Person"
     } ],
     "softwareSystems" : [ {
@@ -88,37 +51,37 @@
           "relationships" : [ {
             "description" : "expose component",
             "destinationId" : "6",
-            "id" : "56",
+            "id" : "31",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose parser",
             "destinationId" : "7",
-            "id" : "57",
+            "id" : "32",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose component",
             "destinationId" : "8",
-            "id" : "58",
+            "id" : "33",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose component",
             "destinationId" : "10",
-            "id" : "59",
+            "id" : "34",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose parser",
             "destinationId" : "11",
-            "id" : "60",
+            "id" : "35",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose component",
             "destinationId" : "12",
-            "id" : "61",
+            "id" : "36",
             "sourceId" : "5",
             "tags" : "Relationship"
           } ],
@@ -134,7 +97,7 @@
           "relationships" : [ {
             "description" : "calculate layout",
             "destinationId" : "9",
-            "id" : "62",
+            "id" : "37",
             "sourceId" : "6",
             "tags" : "Relationship"
           } ],
@@ -211,6 +174,25 @@
         "properties" : {
           "structurizr.dsl.identifier" : "c4ke-viewer"
         },
+        "relationships" : [ {
+          "description" : "Display diagram and document components",
+          "destinationId" : "4",
+          "id" : "26",
+          "sourceId" : "13",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetch documentation from client repo",
+          "destinationId" : "22",
+          "id" : "27",
+          "sourceId" : "13",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetch documentation from client repo",
+          "destinationId" : "21",
+          "id" : "28",
+          "linkedRelationshipId" : "27",
+          "sourceId" : "13"
+        } ],
         "tags" : "Element,Container",
         "technology" : "SvelteKit"
       } ],
@@ -228,126 +210,18 @@
       "properties" : {
         "structurizr.dsl.identifier" : "c4ke-core"
       },
-      "tags" : "Element,Software System"
-    }, {
-      "containers" : [ {
-        "description" : "A web application for consumers of technical software documentation",
-        "documentation" : { },
-        "id" : "15",
-        "name" : "c4ke-webapp",
-        "properties" : {
-          "structurizr.dsl.identifier" : "c4ke-webapp"
-        },
-        "relationships" : [ {
-          "description" : "retrieve .c4ke/workspace.json from client repo at given URL",
-          "destinationId" : "26",
-          "id" : "36",
-          "sourceId" : "15",
-          "tags" : "Relationship"
-        }, {
-          "description" : "retrieve .c4ke/workspace.json from client repo at given URL",
-          "destinationId" : "25",
-          "id" : "37",
-          "linkedRelationshipId" : "36",
-          "sourceId" : "15"
-        }, {
-          "description" : "Use logic & components to present workspace diagrams & documents",
-          "destinationId" : "5",
-          "id" : "40",
-          "sourceId" : "15",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Use logic & components to present workspace diagrams & documents",
-          "destinationId" : "4",
-          "id" : "41",
-          "linkedRelationshipId" : "40",
-          "sourceId" : "15"
-        }, {
-          "description" : "Use logic & components to present workspace diagrams & documents",
-          "destinationId" : "3",
-          "id" : "42",
-          "linkedRelationshipId" : "40",
-          "sourceId" : "15"
-        }, {
-          "description" : "Store user related data",
-          "destinationId" : "16",
-          "id" : "46",
-          "sourceId" : "15",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Process payments",
-          "destinationId" : "17",
-          "id" : "47",
-          "sourceId" : "15",
-          "tags" : "Relationship"
-        } ],
-        "tags" : "Element,Container",
-        "technology" : "SvelteKit"
-      }, {
-        "description" : "Database to store users, sessions, orgs, subscriptions, entitlements, etc...",
-        "documentation" : { },
-        "id" : "16",
-        "name" : "DB",
-        "properties" : {
-          "structurizr.dsl.identifier" : "c4ke-database"
-        },
-        "relationships" : [ {
-          "description" : "Update database on successful payment",
-          "destinationId" : "17",
-          "id" : "48",
-          "sourceId" : "16",
-          "tags" : "Relationship"
-        } ],
-        "tags" : "Element,Container",
-        "technology" : "Supabase"
-      }, {
-        "description" : "Manages payments to enable subscriptions and entitlements",
-        "documentation" : { },
-        "id" : "17",
-        "name" : "Payment System",
-        "properties" : {
-          "structurizr.dsl.identifier" : "c4ke-payment-system"
-        },
-        "tags" : "Element,Container",
-        "technology" : "Stripe"
-      } ],
-      "description" : "A software system to minimize friction when creating, maintaining and consuming technical software documentation",
-      "documentation" : { },
-      "id" : "14",
-      "name" : "c4ke-app",
-      "properties" : {
-        "structurizr.dsl.identifier" : "c4ke-app"
-      },
       "relationships" : [ {
-        "description" : "retrieve .c4ke/workspace.json from client repo at given URL",
-        "destinationId" : "26",
-        "id" : "38",
-        "linkedRelationshipId" : "36",
-        "sourceId" : "14"
+        "description" : "Fetch documentation from client repo",
+        "destinationId" : "22",
+        "id" : "29",
+        "linkedRelationshipId" : "27",
+        "sourceId" : "3"
       }, {
-        "description" : "retrieve .c4ke/workspace.json from client repo at given URL",
-        "destinationId" : "25",
-        "id" : "39",
-        "linkedRelationshipId" : "36",
-        "sourceId" : "14"
-      }, {
-        "description" : "Use logic & components to present workspace diagrams & documents",
-        "destinationId" : "5",
-        "id" : "43",
-        "linkedRelationshipId" : "40",
-        "sourceId" : "14"
-      }, {
-        "description" : "Use logic & components to present workspace diagrams & documents",
-        "destinationId" : "4",
-        "id" : "44",
-        "linkedRelationshipId" : "40",
-        "sourceId" : "14"
-      }, {
-        "description" : "Use logic & components to present workspace diagrams & documents",
-        "destinationId" : "3",
-        "id" : "45",
-        "linkedRelationshipId" : "40",
-        "sourceId" : "14"
+        "description" : "Fetch documentation from client repo",
+        "destinationId" : "21",
+        "id" : "30",
+        "linkedRelationshipId" : "27",
+        "sourceId" : "3"
       } ],
       "tags" : "Element,Software System"
     }, {
@@ -355,7 +229,7 @@
         "components" : [ {
           "description" : "Packages a java runtime with java code to make it usable as a node module",
           "documentation" : { },
-          "id" : "20",
+          "id" : "16",
           "name" : "Java Wrapper",
           "properties" : {
             "structurizr.dsl.identifier" : "java-wrapper"
@@ -365,7 +239,7 @@
         } ],
         "description" : "Exports structurizr documentation to a workspace.json object",
         "documentation" : { },
-        "id" : "19",
+        "id" : "15",
         "name" : "dsl-exporter",
         "properties" : {
           "structurizr.dsl.identifier" : "c4ke-dsl-exporter"
@@ -375,71 +249,27 @@
       }, {
         "description" : "VSCode Extension. Renders the documentation into a webview as it would be presented in the webapp",
         "documentation" : { },
-        "id" : "21",
+        "id" : "17",
         "name" : "c4ke-preview",
         "properties" : {
           "structurizr.dsl.identifier" : "c4ke-preview"
         },
-        "relationships" : [ {
-          "description" : "Use logic & components to present workspace diagrams & documents",
-          "destinationId" : "5",
-          "id" : "49",
-          "sourceId" : "21",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Use logic & components to present workspace diagrams & documents",
-          "destinationId" : "4",
-          "id" : "50",
-          "linkedRelationshipId" : "49",
-          "sourceId" : "21"
-        }, {
-          "description" : "Use logic & components to present workspace diagrams & documents",
-          "destinationId" : "3",
-          "id" : "51",
-          "linkedRelationshipId" : "49",
-          "sourceId" : "21"
-        }, {
-          "description" : "Run export on save",
-          "destinationId" : "19",
-          "id" : "55",
-          "sourceId" : "21",
-          "tags" : "Relationship"
-        } ],
         "tags" : "Element,Container",
         "technology" : "node.js"
       } ],
       "description" : "Tooling for editing and previewing documentation",
       "documentation" : { },
-      "id" : "18",
+      "id" : "14",
       "name" : "c4ke-editing",
       "properties" : {
         "structurizr.dsl.identifier" : "c4ke-editing"
       },
-      "relationships" : [ {
-        "description" : "Use logic & components to present workspace diagrams & documents",
-        "destinationId" : "5",
-        "id" : "52",
-        "linkedRelationshipId" : "49",
-        "sourceId" : "18"
-      }, {
-        "description" : "Use logic & components to present workspace diagrams & documents",
-        "destinationId" : "4",
-        "id" : "53",
-        "linkedRelationshipId" : "49",
-        "sourceId" : "18"
-      }, {
-        "description" : "Use logic & components to present workspace diagrams & documents",
-        "destinationId" : "3",
-        "id" : "54",
-        "linkedRelationshipId" : "49",
-        "sourceId" : "18"
-      } ],
       "tags" : "Element,Software System"
     }, {
       "containers" : [ {
         "description" : "Exports documentation to workspace.json object",
         "documentation" : { },
-        "id" : "23",
+        "id" : "19",
         "name" : "Structurizr Export",
         "properties" : {
           "structurizr.dsl.identifier" : "structurizr-export"
@@ -449,7 +279,7 @@
       }, {
         "description" : "VSCode Extension. Provides syntax highlighting for the Structurizr DSL",
         "documentation" : { },
-        "id" : "24",
+        "id" : "20",
         "name" : "Structurizr Extension",
         "properties" : {
           "structurizr.dsl.identifier" : "structurizrExtension"
@@ -459,7 +289,7 @@
       } ],
       "description" : "Defines the Structurizr DSL and parses structurizr documentation to workspace objects",
       "documentation" : { },
-      "id" : "22",
+      "id" : "18",
       "name" : "Structurizr",
       "properties" : {
         "structurizr.dsl.identifier" : "structurizr"
@@ -468,23 +298,23 @@
     }, {
       "containers" : [ {
         "documentation" : { },
-        "id" : "26",
+        "id" : "22",
         "name" : "GitHub API",
         "properties" : {
           "structurizr.dsl.identifier" : "github-api"
         },
         "relationships" : [ {
           "description" : "retrieve .c4ke/workspace.json",
-          "destinationId" : "27",
-          "id" : "63",
-          "sourceId" : "26",
+          "destinationId" : "23",
+          "id" : "38",
+          "sourceId" : "22",
           "tags" : "Relationship"
         } ],
         "tags" : "Element,Container"
       }, {
         "description" : "Contains a .c4ke documentation directory",
         "documentation" : { },
-        "id" : "27",
+        "id" : "23",
         "name" : "Client Repository",
         "properties" : {
           "structurizr.dsl.identifier" : "github-client-repo"
@@ -493,7 +323,7 @@
         "technology" : "GitHub Repo"
       } ],
       "documentation" : { },
-      "id" : "25",
+      "id" : "21",
       "name" : "GitHub",
       "properties" : {
         "structurizr.dsl.identifier" : "github"
@@ -503,7 +333,7 @@
   },
   "name" : "Name",
   "properties" : {
-    "structurizr.inspection.error" : "67",
+    "structurizr.inspection.error" : "52",
     "structurizr.inspection.info" : "0",
     "structurizr.inspection.ignore" : "0",
     "structurizr.inspection.warning" : "0"
@@ -552,60 +382,27 @@
         "id" : "12",
         "x" : 0,
         "y" : 0
-      }, {
-        "id" : "14",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "18",
-        "x" : 0,
-        "y" : 0
       } ],
       "externalContainerBoundariesVisible" : false,
       "generatedKey" : true,
       "key" : "Component-001",
       "name" : "Component View: c4ke-core - c4ke-lib",
-      "order" : 7,
+      "order" : 4,
       "relationships" : [ {
-        "id" : "43"
+        "id" : "31"
       }, {
-        "id" : "52"
+        "id" : "32"
       }, {
-        "id" : "56"
+        "id" : "33"
       }, {
-        "id" : "57"
+        "id" : "34"
       }, {
-        "id" : "58"
+        "id" : "35"
       }, {
-        "id" : "59"
+        "id" : "36"
       }, {
-        "id" : "60"
-      }, {
-        "id" : "61"
-      }, {
-        "id" : "62"
+        "id" : "37"
       } ]
-    }, {
-      "automaticLayout" : {
-        "applied" : false,
-        "edgeSeparation" : 0,
-        "implementation" : "Graphviz",
-        "nodeSeparation" : 300,
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "vertices" : false
-      },
-      "containerId" : "19",
-      "elements" : [ {
-        "id" : "20",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "externalContainerBoundariesVisible" : false,
-      "generatedKey" : true,
-      "key" : "Component-002",
-      "name" : "Component View: c4ke-editing - dsl-exporter",
-      "order" : 8
     } ],
     "configuration" : {
       "branding" : { },
@@ -623,6 +420,10 @@
         "vertices" : false
       },
       "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
         "id" : "4",
         "x" : 0,
         "y" : 0
@@ -631,11 +432,7 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "14",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "18",
+        "id" : "21",
         "x" : 0,
         "y" : 0
       } ],
@@ -645,12 +442,49 @@
       "name" : "Container View: c4ke-core",
       "order" : 2,
       "relationships" : [ {
-        "id" : "44"
+        "id" : "24"
       }, {
-        "id" : "53"
+        "id" : "26"
+      }, {
+        "id" : "28"
       } ],
       "softwareSystemId" : "3"
     }, {
+      "automaticLayout" : {
+        "applied" : false,
+        "edgeSeparation" : 0,
+        "implementation" : "Graphviz",
+        "nodeSeparation" : 300,
+        "rankDirection" : "TopBottom",
+        "rankSeparation" : 300,
+        "vertices" : false
+      },
+      "elements" : [ {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "22",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "23",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "generatedKey" : true,
+      "key" : "Container-002",
+      "name" : "Container View: GitHub",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "29"
+      }, {
+        "id" : "38"
+      } ],
+      "softwareSystemId" : "21"
+    } ],
+    "systemContextViews" : [ {
       "automaticLayout" : {
         "applied" : false,
         "edgeSeparation" : 0,
@@ -669,174 +503,7 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "15",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "16",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "17",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "25",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "externalSoftwareSystemBoundariesVisible" : false,
-      "generatedKey" : true,
-      "key" : "Container-002",
-      "name" : "Container View: c4ke-app",
-      "order" : 3,
-      "relationships" : [ {
-        "id" : "28"
-      }, {
-        "id" : "37"
-      }, {
-        "id" : "42"
-      }, {
-        "id" : "46"
-      }, {
-        "id" : "47"
-      }, {
-        "id" : "48"
-      } ],
-      "softwareSystemId" : "14"
-    }, {
-      "automaticLayout" : {
-        "applied" : false,
-        "edgeSeparation" : 0,
-        "implementation" : "Graphviz",
-        "nodeSeparation" : 300,
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "vertices" : false
-      },
-      "elements" : [ {
-        "id" : "2",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "3",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "19",
-        "x" : 0,
-        "y" : 0
-      }, {
         "id" : "21",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "externalSoftwareSystemBoundariesVisible" : false,
-      "generatedKey" : true,
-      "key" : "Container-003",
-      "name" : "Container View: c4ke-editing",
-      "order" : 4,
-      "relationships" : [ {
-        "id" : "32"
-      }, {
-        "id" : "51"
-      }, {
-        "id" : "55"
-      } ],
-      "softwareSystemId" : "18"
-    }, {
-      "automaticLayout" : {
-        "applied" : false,
-        "edgeSeparation" : 0,
-        "implementation" : "Graphviz",
-        "nodeSeparation" : 300,
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "vertices" : false
-      },
-      "elements" : [ {
-        "id" : "2",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "14",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "26",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "27",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "externalSoftwareSystemBoundariesVisible" : false,
-      "generatedKey" : true,
-      "key" : "Container-004",
-      "name" : "Container View: GitHub",
-      "order" : 5,
-      "relationships" : [ {
-        "id" : "34"
-      }, {
-        "id" : "38"
-      }, {
-        "id" : "63"
-      } ],
-      "softwareSystemId" : "25"
-    }, {
-      "automaticLayout" : {
-        "applied" : false,
-        "edgeSeparation" : 0,
-        "implementation" : "Graphviz",
-        "nodeSeparation" : 300,
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "vertices" : false
-      },
-      "elements" : [ {
-        "id" : "2",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "23",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "24",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "externalSoftwareSystemBoundariesVisible" : false,
-      "generatedKey" : true,
-      "key" : "Container-005",
-      "name" : "Container View: Structurizr",
-      "order" : 6,
-      "relationships" : [ {
-        "id" : "30"
-      } ],
-      "softwareSystemId" : "22"
-    } ],
-    "systemContextViews" : [ {
-      "automaticLayout" : {
-        "applied" : false,
-        "edgeSeparation" : 0,
-        "implementation" : "Graphviz",
-        "nodeSeparation" : 300,
-        "rankDirection" : "TopBottom",
-        "rankSeparation" : 300,
-        "vertices" : false
-      },
-      "elements" : [ {
-        "id" : "3",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "14",
-        "x" : 0,
-        "y" : 0
-      }, {
-        "id" : "18",
         "x" : 0,
         "y" : 0
       } ],
@@ -846,9 +513,9 @@
       "name" : "System Context View: c4ke-core",
       "order" : 1,
       "relationships" : [ {
-        "id" : "45"
+        "id" : "25"
       }, {
-        "id" : "54"
+        "id" : "30"
       } ],
       "softwareSystemId" : "3"
     } ]

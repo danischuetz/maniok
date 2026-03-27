@@ -23,11 +23,11 @@ workspace {
             c4ke-viewer = container "c4ke-viewer" "Provides all functionality to consume documentation of a single workspace. Can be hosted locally or used as a component." "SvelteKit"
         }
 
-        c4ke-app = softwareSystem "c4ke-app" "A software system to minimize friction when creating, maintaining and consuming technical software documentation" {
-            c4ke-webapp = container "c4ke-webapp" "A web application for consumers of technical software documentation" "SvelteKit"
-            c4ke-database = container "DB" "Database to store users, sessions, orgs, subscriptions, entitlements, etc..." "Supabase"
-            c4ke-payment-system = container "Payment System" "Manages payments to enable subscriptions and entitlements" "Stripe"
-        } 
+        # c4ke-app = softwareSystem "c4ke-app" "A software system to minimize friction when creating, maintaining and consuming technical software documentation" {
+        #     c4ke-webapp = container "c4ke-webapp" "A web application for consumers of technical software documentation" "SvelteKit"
+        #     c4ke-database = container "DB" "Database to store users, sessions, orgs, subscriptions, entitlements, etc..." "Supabase"
+        #     c4ke-payment-system = container "Payment System" "Manages payments to enable subscriptions and entitlements" "Stripe"
+        # } 
 
         c4ke-editing = softwareSystem "c4ke-editing" "Tooling for editing and previewing documentation" {
             c4ke-dsl-exporter = container "dsl-exporter" "Exports structurizr documentation to a workspace.json object" "node.js" {
@@ -47,23 +47,12 @@ workspace {
         }
 
         # Viewer interactions
-        viewer -> c4ke-webapp "inspect and navigate documentation"
-
-        # Editor interactions
-        editor -> structurizrExtension "check syntax"
-        editor -> c4ke-preview "inspect rendered version"
-        editor -> github-client-repo "push changes"
+        viewer -> c4ke-viewer "View documentation"
 
         # Internals
-        c4ke-webapp -> github-api "retrieve .c4ke/workspace.json from client repo at given URL"
-        c4ke-webapp -> c4ke-lib-api "Use logic & components to present workspace diagrams & documents"
-        c4ke-webapp -> c4ke-database "Store user related data"
-        c4ke-webapp -> c4ke-payment-system "Process payments"
-        c4ke-database -> c4ke-payment-system "Update database on successful payment" 
+        c4ke-viewer -> c4ke-lib "Display diagram and document components"
+        c4ke-viewer -> github-api "Fetch documentation from client repo"
 
-        c4ke-preview -> c4ke-lib-api "Use logic & components to present workspace diagrams & documents"
-        c4ke-preview -> c4ke-dsl-exporter "Run export on save"
-        
         c4ke-lib-api -> c4ke-lib-diagram "expose component"
         c4ke-lib-api -> c4ke-lib-diagramparser "expose parser"
         c4ke-lib-api -> c4ke-lib-diagramnavigation "expose component"
@@ -89,22 +78,7 @@ workspace {
             autoLayout
         }
 
-        container c4ke-app {
-            include *
-            autoLayout
-        }
-
-        container c4ke-editing {
-            include *
-            autoLayout
-        }
-
         container github {
-            include *
-            autoLayout
-        }
-
-        container structurizr {
             include *
             autoLayout
         }
@@ -112,11 +86,6 @@ workspace {
         component c4ke-lib {
             include *
             autoLayout lr
-        }
-
-        component c4ke-dsl-exporter {
-            include *
-            autoLayout
         }
     }
 }

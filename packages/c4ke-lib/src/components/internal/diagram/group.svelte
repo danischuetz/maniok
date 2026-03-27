@@ -7,7 +7,7 @@
     let metaData: ElementMetaDataModel = $derived(data.metaData as ElementMetaDataModel)
 </script>
 
-<div class="absolute inset-0 flex flex-col justify-start items-start" role="group">
+<div class="absolute inset-0 flex flex-col justify-end items-start" role="group">
     {#if metaData.type && metaData.title}
         <p class="px-1 group-label">{metaData.type}: {metaData.title}</p>
     {/if}

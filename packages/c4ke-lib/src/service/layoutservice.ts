@@ -12,9 +12,9 @@ interface Bounds {
 }
 
 const margin = {
-    top: 30,
+    top: 10,
     right: 10,
-    bottom: 10,
+    bottom: 30,
     left: 10
 }
 
@@ -29,8 +29,8 @@ export class LayoutService {
             ranksep:
                 layoutModel.direction === DirectionEnum.LeftRight ||
                 layoutModel.direction === DirectionEnum.RightLeft
-                    ? 40
-                    : 30,
+                    ? 30
+                    : 20,
             ranker: 'network-simplex', // network-simplex, tight-tree or longest-path
             align: 'UL'
         })
@@ -42,7 +42,8 @@ export class LayoutService {
 
         Dagre.layout(graph)
 
-        this.updateElements(layoutModel.layoutElements, graph)
+        this.updateElements(layoutModel, graph)
+        this.alignElements(layoutModel, graph)
         this.fitGroups(layoutModel.layoutElements, graph)
     }
 
@@ -64,12 +65,57 @@ export class LayoutService {
         })
     }
 
-    private updateElements(elements: LayoutElementModel[], graph: Dagre.graphlib.Graph): void {
-        elements.forEach((element) => {
+    private updateElements(layoutModel: LayoutModel, graph: Dagre.graphlib.Graph): void {
+        layoutModel.layoutElements.forEach((element) => {
             const node = graph.node(element.id)
+
             element.x = node.x - element.width / 2
             element.y = node.y - element.height / 2
         })
+    }
+
+    private alignElements(layoutModel: LayoutModel, graph: Dagre.graphlib.Graph): void {
+        const ranks: Map<number, LayoutElementModel[]> = new Map()
+
+        graph.nodes().forEach((nodeId) => {
+            const node = graph.node(nodeId)
+            if (node.rank === undefined) return
+
+            const element = layoutModel.layoutElements.find((e) => e.id === nodeId)!
+            const rank = Math.floor(node.rank / 10)
+
+            if (!ranks.has(rank)) ranks.set(rank, [])
+            ranks.get(rank)!.push(element)
+        })
+
+        switch (layoutModel.direction) {
+            case DirectionEnum.LeftRight:
+                ranks.forEach((elements) => {
+                    const averageLeft = elements.reduce((sum, e) => sum + e.x, 0) / elements.length
+                    elements.forEach((e) => (e.x = averageLeft))
+                })
+                break
+            case DirectionEnum.RightLeft:
+                ranks.forEach((elements) => {
+                    const averageRight =
+                        elements.reduce((sum, e) => sum + e.x + e.width, 0) / elements.length
+                    elements.forEach((e) => (e.x = averageRight - e.width))
+                })
+                break
+            case DirectionEnum.TopBottom:
+                ranks.forEach((elements) => {
+                    const averageTop = elements.reduce((sum, e) => sum + e.y, 0) / elements.length
+                    elements.forEach((e) => (e.y = averageTop))
+                })
+                break
+            case DirectionEnum.BottomTop:
+                ranks.forEach((elements) => {
+                    const averageBottom =
+                        elements.reduce((sum, e) => sum + e.y + e.height, 0) / elements.length
+                    elements.forEach((e) => (e.y = averageBottom - e.height))
+                })
+                break
+        }
     }
 
     private fitGroups(elements: LayoutElementModel[], graph: Dagre.graphlib.Graph): void {

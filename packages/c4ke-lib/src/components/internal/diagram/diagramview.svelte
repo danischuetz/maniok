@@ -54,7 +54,7 @@
 
         nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]
 
-        fitView({ padding: 0.05 })
+        fitView({ padding: { top: 0.05, right: 0.05, bottom: 0.15, left: 0.05 } })
     }
 </script>
 

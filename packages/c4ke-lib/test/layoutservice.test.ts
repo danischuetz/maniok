@@ -34,6 +34,27 @@ for (const direction of Object.values(DirectionEnum)) {
                     break
             }
         })
+
+        it('should layout elements aligned to the start of the main axis', () => {
+            const element1 = layoutModel.layoutElements.find((e) => e.id === '1')!
+            const element2 = layoutModel.layoutElements.find((e) => e.id === '2')!
+            const element3 = layoutModel.layoutElements.find((e) => e.id === '3')!
+
+            switch (direction) {
+                case DirectionEnum.TopBottom:
+                    expect(element2.y).toBeCloseTo(element3.y)
+                    break
+                case DirectionEnum.BottomTop:
+                    expect(element2.y + element2.height).toBeCloseTo(element3.y + element3.height)
+                    break
+                case DirectionEnum.LeftRight:
+                    expect(element2.x).toBeCloseTo(element3.x)
+                    break
+                case DirectionEnum.RightLeft:
+                    expect(element2.x + element2.width).toBeCloseTo(element3.x + element3.width)
+                    break
+            }
+        })
     })
 }
 
