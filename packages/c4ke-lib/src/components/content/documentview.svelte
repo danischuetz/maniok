@@ -24,7 +24,9 @@
         if (!articleElement || !html) return
 
         const mountedDiagrams: Array<ReturnType<typeof mount>> = []
-        const placeholders = articleElement.querySelectorAll('diagram-embed[data-diagram-key]')
+        const placeholders = articleElement.querySelectorAll<HTMLElement>(
+            'diagram-embed[data-diagram-key]'
+        )
 
         for (const placeholder of placeholders) {
             const diagramKey = placeholder.getAttribute('data-diagram-key')
@@ -36,14 +38,14 @@
                 continue
             }
 
-            placeholder.classList.add('block', 'w-full', 'h-96', 'my-4')
+            placeholder.classList.add('block', 'w-full', 'h-full')
             mountedDiagrams.push(
                 mount(Diagram, {
                     target: placeholder,
                     props: {
                         diagram,
                         class: 'w-full h-full',
-                        disableModeWrapper: true
+                        fitViewPort: true
                     }
                 })
             )
@@ -88,7 +90,7 @@
     {#if !html}
         <p>No content available.</p>
     {:else}
-        <article bind:this={articleElement} class="markdown-body w-full min-h-full {className}">
+        <article bind:this={articleElement} class="markdown-body min-h-full {className}">
             {@html html}
         </article>
     {/if}

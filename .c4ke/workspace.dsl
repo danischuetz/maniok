@@ -75,10 +75,10 @@ workspace {
 
         container c4ke-core "CoreContainerView" {
             include *
-            autoLayout
+            autoLayout lr
         }
 
-        container github {
+        container github "GitHubContainerView" {
             include *
             autoLayout
         }

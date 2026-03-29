@@ -11,16 +11,23 @@
     interface Props {
         class?: string
         diagram: DiagramModel
+        fitViewPort: boolean
     }
 
-    let { class: className, diagram }: Props = $props()
+    let { class: className, diagram, fitViewPort = false }: Props = $props()
 
     let nodes: Node[] = $state.raw([])
     let edges: Edge[] = $state.raw([])
 
-    let diagramDimensions: { width: number; height: number } = $state({ width: 0, height: 0 })
+    let height: number = $state(0)
+    let aspectRatio: number = $state(1)
 
     let containerElement: HTMLElement | undefined = $state()
+
+    const fitViewOptions = {
+        padding: 0.05,
+        includeHiddenNodes: true
+    }
 
     const nodeTypes = {
         element: ElementComponent,
@@ -44,48 +51,48 @@
 
     $effect(() => {
         if (!containerElement) return
-        const resizeObserver = new ResizeObserver(() => fitContainer())
+        const resizeObserver = new ResizeObserver(() => {
+            fitView(fitViewOptions)
+
+            if (!containerElement) return
+            if (!containerElement.clientWidth) return
+            if (aspectRatio > 1) height = containerElement.clientWidth / aspectRatio || height
+        })
         resizeObserver.observe(containerElement)
         return () => resizeObserver.disconnect()
     })
-
-    function fitContainer() {
-        if (!containerElement) return
-        if (!containerElement.parentElement) return
-
-        const availableWidth = containerElement.parentElement.clientWidth || 0
-        const availableHeight = containerElement.parentElement.clientHeight || 0
-
-        const scaleFactor = Math.min(
-            availableWidth / diagramDimensions.width,
-            availableHeight / diagramDimensions.height
-        )
-
-        containerElement.style.width = `${diagramDimensions.width * scaleFactor}px`
-        containerElement.style.height = `${diagramDimensions.height * scaleFactor}px`
-
-        fitView({ padding: { top: 0.05, right: 0.05, bottom: 0.15, left: 0.05 } })
-    }
 
     async function layoutNodes() {
         const layoutModel: LayoutModel = XYFlowUtils.toLayoutModel(nodes, edges, diagram.direction)
         const layoutEngine = new LayoutService()
         layoutEngine.layout(layoutModel)
 
-        diagramDimensions.width = layoutModel.layoutElements.reduce(
+        const width = layoutModel.layoutElements.reduce(
             (max, element) => Math.max(max, element.x + element.width),
             0
         )
-        diagramDimensions.height = layoutModel.layoutElements.reduce(
+        height = layoutModel.layoutElements.reduce(
             (max, element) => Math.max(max, element.y + element.height),
             0
         )
+        aspectRatio = width / height
 
         nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]
-        fitContainer()
+
+        requestAnimationFrame(() => {
+            fitView(fitViewOptions)
+        })
     }
 </script>
 
-<div bind:this={containerElement} class={className}>
-    <SvelteFlow bind:nodes bind:edges {nodeTypes} minZoom={0.2}></SvelteFlow>
+<div bind:this={containerElement} class="diagram-viewport w-full {className}">
+    <SvelteFlow
+        bind:nodes
+        bind:edges
+        height={fitViewPort ? height : undefined}
+        {nodeTypes}
+        minZoom={0.2}
+        maxZoom={10}
+        proOptions={{ hideAttribution: true }}
+    ></SvelteFlow>
 </div>

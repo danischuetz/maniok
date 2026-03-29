@@ -6,6 +6,12 @@ A git-native architecture-as-code solution which minimizes friction in creating 
 
 ![c4ke system overview](embed:CoreContainerView)
 
+## GitHub
+
+For a test, let's checkout the github container view:
+
+![github system overview](embed:GitHubContainerView)
+
 ## Features
 
 - Minimal setup

@@ -134,7 +134,7 @@
 
 /* Markdown */
 .markdown-body {
-    @apply p-8 max-w-5xl ml-8;
+    @apply mx-2 md:mx-4 lg:mx-8 xl:mx-16 2xl:mx-32 max-w-5xl;
 }
 
 .markdown-body h1 {
@@ -157,32 +157,36 @@
     @apply list-disc;
 }
 
-.markdown-body :where(h1, h2, h3, h4, h5, h6, p):first-child {
+.mardown-body diagram-embed {
+    @apply my-4;
+}
+
+.markdown-body :where(h1, h2, h3, h4, h5, h6, p):first-child:not(diagram-embed *) {
     @apply mt-0;
 }
 
-.markdown-body :where(h1, h2, h3, h4, h5, h6) {
-    @apply mb-4 mt-8;
+.markdown-body :where(h1, h2, h3, h4, h5, h6):not(diagram-embed *) {
+    @apply mb-0 mt-8;
 }
 
-.markdown-body p,
-.markdown-body ul,
-.markdown-body ol,
-.markdown-body pre,
-.markdown-body blockquote {
-    @apply m-0 mb-2;
+.markdown-body :where(p,ul,ol,pre,blockquote):not(diagram-embed *) {
+    @apply m-0 my-4;
 }
 
-.markdown-body li {
+.markdown-body li:not(diagram-embed *) {
     @apply ml-4;
 }
 
-.markdown-body pre {
+.markdown-body pre:not(diagram-embed *) {
     @apply overflow-x-auto;
     @apply p-4;
     @apply rounded-lg;
 }
 
-.markdown-body a {
+.markdown-body a:not(diagram-embed *) {
     @apply underline;
+}
+
+.markdown-body .svelte-flow {
+    @apply border-surface-500 border rounded-lg
 }

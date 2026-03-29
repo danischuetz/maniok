@@ -3,7 +3,7 @@
   "description" : "Description",
   "documentation" : {
     "sections" : [ {
-      "content" : "# c4ke\n\n## What is it?\n\nA git-native architecture-as-code solution which minimizes friction in creating and consuming technical documentation. It is based on an ODI (Outcome Driven Innovation) research on current pain points in the lifecycle of technical software documentation.\n\n![c4ke system overview](embed:CoreContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enables AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## Requirements\n\n- Github hosted repositories only\n\n## Quick Start\n\n### Documentation Setup\n\n- In a repository root, create a folder called \".c4ke\"\n- Download the [zipped default template](https://github.com/danischuetz/c4ke-webapp/templates/default)\n- Extract it to the .c4ke folder\n- Commit the changes\n- Et voila, your documentation is online!\n\n### Public Repositories\n\n- Visit app.c4ke.io\n- Type your public repo URL\n\n### Private Repositories\n\n- Install the c4ke GitHub App for your repository\n- Register / Log-In to your c4ke account at app.c4ke.io\n- Connect to your GitHub\n",
+      "content" : "# c4ke\n\n## What is it?\n\nA git-native architecture-as-code solution which minimizes friction in creating and consuming technical documentation. It is based on an ODI (Outcome Driven Innovation) research on current pain points in the lifecycle of technical software documentation.\n\n![c4ke system overview](embed:CoreContainerView)\n\n## GitHub\n\nFor a test, let's checkout the github container view:\n\n![github system overview](embed:GitHubContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enables AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## Requirements\n\n- Github hosted repositories only\n\n## Quick Start\n\n### Documentation Setup\n\n- In a repository root, create a folder called \".c4ke\"\n- Download the [zipped default template](https://github.com/danischuetz/c4ke-webapp/templates/default)\n- Extract it to the .c4ke folder\n- Commit the changes\n- Et voila, your documentation is online!\n\n### Public Repositories\n\n- Visit app.c4ke.io\n- Type your public repo URL\n\n### Private Repositories\n\n- Install the c4ke GitHub App for your repository\n- Register / Log-In to your c4ke account at app.c4ke.io\n- Connect to your GitHub\n",
       "format" : "Markdown",
       "order" : 1,
       "title" : ""
@@ -333,7 +333,7 @@
   },
   "name" : "Name",
   "properties" : {
-    "structurizr.inspection.error" : "51",
+    "structurizr.inspection.error" : "50",
     "structurizr.inspection.info" : "0",
     "structurizr.inspection.ignore" : "0",
     "structurizr.inspection.warning" : "0"
@@ -415,7 +415,7 @@
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
-        "rankDirection" : "TopBottom",
+        "rankDirection" : "LeftRight",
         "rankSeparation" : 300,
         "vertices" : false
       },
@@ -472,8 +472,7 @@
         "y" : 0
       } ],
       "externalSoftwareSystemBoundariesVisible" : false,
-      "generatedKey" : true,
-      "key" : "Container-001",
+      "key" : "GitHubContainerView",
       "name" : "Container View: GitHub",
       "order" : 3,
       "relationships" : [ {
