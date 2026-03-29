@@ -1,0 +1,36 @@
+/* Diagram */
+.svelte-flow {
+    --background-color-default: transparent;
+}
+
+.svelte-flow__edge-label {
+    @apply bg-surface-50-950 text-surface-950-50 w-28 text-[10px] p-0.5 m-0 rounded;
+}
+
+.svelte-flow__node-element {
+    @apply drop-shadow-lg drop-shadow-black/20;
+}
+
+.svelte-flow__node-group {
+    @apply drop-shadow-lg drop-shadow-black/20 bg-surface-300-700/50 border-surface-500;
+}
+
+.element-body {
+    @apply bg-surface-50-950 rounded min-w-46 max-w-64 p-2;
+}
+
+.element-name {
+    @apply text-xl font-bold text-surface-950-50;
+}
+
+.element-type {
+    @apply text-[8px] text-surface-500 text-left;
+}
+
+.element-description {
+    @apply text-xs font-light text-surface-700-300 leading-tight;
+}
+
+.group-label {
+    @apply text-xs;
+}

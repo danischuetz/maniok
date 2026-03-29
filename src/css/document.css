@@ -1,0 +1,58 @@
+/* Markdown */
+.markdown-body {
+    @apply mx-2 md:mx-4 lg:mx-8 xl:mx-16 2xl:mx-32 max-w-5xl;
+}
+
+.markdown-body h1 {
+    @apply h1;
+}
+
+.markdown-body h2 {
+    @apply h2;
+}
+
+.markdown-body h3 {
+    @apply h3;
+}
+
+.markdown-body h4 {
+    @apply h4;
+}
+
+.markdown-body ul {
+    @apply list-disc;
+}
+
+.mardown-body diagram-embed {
+    @apply my-4;
+}
+
+.markdown-body :where(h1, h2, h3, h4, h5, h6, p):first-child:not(diagram-embed *) {
+    @apply mt-0;
+}
+
+.markdown-body :where(h1, h2, h3, h4, h5, h6):not(diagram-embed *) {
+    @apply mb-0 mt-8;
+}
+
+.markdown-body :where(p, ul, ol, pre, blockquote):not(diagram-embed *) {
+    @apply m-0 my-4;
+}
+
+.markdown-body li:not(diagram-embed *) {
+    @apply ml-4;
+}
+
+.markdown-body pre:not(diagram-embed *) {
+    @apply overflow-x-auto;
+    @apply p-4;
+    @apply rounded-lg;
+}
+
+.markdown-body a:not(diagram-embed *) {
+    @apply underline;
+}
+
+.markdown-body .svelte-flow {
+    @apply border-surface-500 border rounded-lg;
+}

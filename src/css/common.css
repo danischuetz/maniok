@@ -1,0 +1,14 @@
+/* Common */
+.lucide-icon-sm {
+    @apply size-6 m-2;
+}
+
+.lucide-icon-xl {
+    @apply size-12 stroke-1 p-2;
+}
+
+/* Accessibility: Hide elements visually but keep them for screen readers */
+.a11y-hidden {
+    @apply absolute w-px h-px overflow-hidden whitespace-nowrap border-0 -m-1 p-0;
+    @apply [clip:rect(0,0,0,0)] [clip-path:inset(100%)];
+}
