@@ -1,5 +1,5 @@
 export enum DiagramTypeModel {
-    SystemContextDiagram = 'SystemContextDiagram',
-    ContainerDiagram = 'ContainerDiagram',
-    ComponentDiagram = 'ComponentDiagram'
+    SystemContextDiagram = 'System Context Diagram',
+    ContainerDiagram = 'Container Diagram',
+    ComponentDiagram = 'Component Diagram'
 }

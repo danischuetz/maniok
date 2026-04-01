@@ -7,8 +7,12 @@
     @apply stroke-1 stroke-surface-700-300;
 }
 
+.diagram-label {
+    @apply pl-2 font-light text-xs text-surface-700-300;
+}
+
 .dialog-focus-modal-positioner {
-    @apply p-32;
+    @apply lg:p-16;
 }
 
 .dialog-focus-modal-content {

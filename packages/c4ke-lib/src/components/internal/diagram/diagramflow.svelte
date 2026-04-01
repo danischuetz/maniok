@@ -22,11 +22,11 @@
     let nodes: Node[] = $state.raw([])
     let edges: Edge[] = $state.raw([])
 
+    let clientWidth: number | undefined = $state(undefined)
     let initialHeight: number = $state(0)
     let height: number = $derived.by(() => {
-        if (!containerElement) return 0
-        if (!containerElement.clientWidth) return 0
-        return Math.min(containerElement.clientWidth / aspectRatio, initialHeight * 1.2)
+        if (!clientWidth) return 0
+        return Math.min(clientWidth / aspectRatio, initialHeight * 1.2)
     })
     let aspectRatio: number = $state(1)
 
@@ -64,8 +64,10 @@
 
         const resizeObserver = new ResizeObserver(() => {
             fitView(fitViewOptions)
+            clientWidth = containerElement ? (containerElement.clientWidth ?? undefined) : undefined
         })
 
+        clientWidth = containerElement ? (containerElement.clientWidth ?? undefined) : undefined
         resizeObserver.observe(containerElement)
         return () => resizeObserver.disconnect()
     })
@@ -97,7 +99,7 @@
     }
 </script>
 
-<div bind:this={containerElement} class="relative diagram-viewport w-full {className}">
+<div bind:this={containerElement} class="relative diagram-viewport w-full flex-col {className}">
     <button
         type="button"
         class="btn-icon-diagram absolute right-0 top-0 z-50"
@@ -127,4 +129,6 @@
         zoomOnDoubleClick={false}
         proOptions={{ hideAttribution: true }}
     ></SvelteFlow>
+
+    <p class="diagram-label">{diagram.type}: {diagram.title}</p>
 </div>
