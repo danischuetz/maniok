@@ -54,5 +54,6 @@
 }
 
 .markdown-body .svelte-flow {
-    @apply border-surface-500 border rounded-lg;
+    @apply border-surface-500/30 border rounded-lg;
+    /* --background-color-default: oklch(from var(--color-primary-50-950) l c h / 0.5); */
 }

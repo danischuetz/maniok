@@ -60,7 +60,10 @@ export class XYFlowUtils {
                 parentId: parentId,
                 type: element.children.length > 0 ? 'group' : 'element',
                 data: {
-                    metaData: element.metaData
+                    metaData: {
+                        ...element.metaData,
+                        external: parentId == undefined
+                    }
                 },
                 position: {
                     x: 0,
@@ -86,7 +89,11 @@ export class XYFlowUtils {
             label: relationship.description ?? '',
             type: 'bezier',
             markerEnd: {
-                type: MarkerType.Arrow
+                type: MarkerType.ArrowClosed,
+                width: 20,
+                height: 20,
+                color: 'var(--color-surface-950-50)',
+                strokeWidth: 1
             }
         }))
     }

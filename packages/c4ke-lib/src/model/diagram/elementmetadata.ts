@@ -6,4 +6,5 @@ export interface ElementMetaDataModel {
     technology?: string
     tags?: string
     type?: ElementTypeEnum
+    external?: boolean
 }
