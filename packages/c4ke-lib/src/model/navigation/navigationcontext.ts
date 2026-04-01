@@ -6,4 +6,5 @@ export enum ModeEnum {
 export interface NavigationContextModel {
     mode: ModeEnum
     activeHeadingId: string | undefined
+    diagramFocusId: string | undefined
 }

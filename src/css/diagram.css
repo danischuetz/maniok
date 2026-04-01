@@ -1,4 +1,20 @@
 /* Diagram */
+.btn-icon-diagram {
+    @apply btn-icon w-5 h-5;
+}
+
+.icon-diagram {
+    @apply stroke-1 stroke-surface-700-300;
+}
+
+.dialog-focus-modal-positioner {
+    @apply p-32;
+}
+
+.dialog-focus-modal-content {
+    @apply bg-surface-100-900 p-4 backdrop-blur-sm backdrop-brightness-50 rounded-lg drop-shadow-lg;
+}
+
 .svelte-flow {
     --background-color-default: transparent;
 }

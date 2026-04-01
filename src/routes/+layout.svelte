@@ -20,6 +20,7 @@
         ModeNavigation,
         Content,
         DiagramView,
+        DiagramFocusModal,
         DocumentView,
         Toaster
     } from 'c4ke-lib'
@@ -104,6 +105,7 @@
             <Content class="flex-1">
                 <DiagramView diagram={selectedDiagram} />
                 <DocumentView html={content?.html} {diagrams} />
+                <DiagramFocusModal {diagrams} />
             </Content>
         </div>
     </div>

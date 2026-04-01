@@ -7,6 +7,9 @@
     import ElementComponent from './element.svelte'
     import GroupComponent from './group.svelte'
     import type { LayoutModel } from '../../../model/layout/layout'
+    import type { NavigationContextModel } from '../../../model/navigation/navigationcontext'
+    import { getContext } from 'svelte'
+    import { Maximize, Minimize } from 'lucide-svelte'
 
     interface Props {
         class?: string
@@ -19,13 +22,20 @@
     let nodes: Node[] = $state.raw([])
     let edges: Edge[] = $state.raw([])
 
-    let height: number = $state(0)
+    let initialHeight: number = $state(0)
+    let height: number = $derived.by(() => {
+        if (!containerElement) return 0
+        if (!containerElement.clientWidth) return 0
+        return Math.min(containerElement.clientWidth / aspectRatio, initialHeight * 1.2)
+    })
     let aspectRatio: number = $state(1)
 
     let containerElement: HTMLElement | undefined = $state()
+    let navigationContext: NavigationContextModel = getContext('navigationContext')
+    let isFocussed: boolean = $derived(navigationContext.diagramFocusId == diagram.id)
 
     const fitViewOptions = {
-        padding: 0.05,
+        padding: 0.1,
         includeHiddenNodes: true
     }
 
@@ -51,13 +61,11 @@
 
     $effect(() => {
         if (!containerElement) return
+
         const resizeObserver = new ResizeObserver(() => {
             fitView(fitViewOptions)
-
-            if (!containerElement) return
-            if (!containerElement.clientWidth) return
-            if (aspectRatio > 1) height = containerElement.clientWidth / aspectRatio || height
         })
+
         resizeObserver.observe(containerElement)
         return () => resizeObserver.disconnect()
     })
@@ -67,15 +75,15 @@
         const layoutEngine = new LayoutService()
         layoutEngine.layout(layoutModel)
 
-        const width = layoutModel.layoutElements.reduce(
+        const initialWidth = layoutModel.layoutElements.reduce(
             (max, element) => Math.max(max, element.x + element.width),
             0
         )
-        height = layoutModel.layoutElements.reduce(
+        initialHeight = layoutModel.layoutElements.reduce(
             (max, element) => Math.max(max, element.y + element.height),
             0
         )
-        aspectRatio = width / height
+        aspectRatio = initialWidth / initialHeight
 
         nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]
 
@@ -83,9 +91,26 @@
             fitView(fitViewOptions)
         })
     }
+
+    async function toggleFocus() {
+        navigationContext.diagramFocusId = isFocussed ? undefined : diagram.id
+    }
 </script>
 
-<div bind:this={containerElement} class="diagram-viewport w-full {className}">
+<div bind:this={containerElement} class="relative diagram-viewport w-full {className}">
+    <button
+        type="button"
+        class="btn-icon-diagram absolute right-0 top-0 z-50"
+        onclick={toggleFocus}
+        aria-pressed={isFocussed}
+    >
+        {#if isFocussed}
+            <Minimize class="icon-diagram" />
+        {:else}
+            <Maximize class="icon-diagram" />
+        {/if}
+    </button>
+
     <SvelteFlow
         bind:nodes
         bind:edges
@@ -93,6 +118,13 @@
         {nodeTypes}
         minZoom={0.2}
         maxZoom={10}
+        preventScrolling={false}
+        panOnDrag={false}
+        nodesFocusable={false}
+        edgesFocusable={false}
+        elementsSelectable={false}
+        disableKeyboardA11y={true}
+        zoomOnDoubleClick={false}
         proOptions={{ hideAttribution: true }}
     ></SvelteFlow>
 </div>

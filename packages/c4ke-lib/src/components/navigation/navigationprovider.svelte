@@ -10,7 +10,8 @@
 
     let navigationContext: NavigationContextModel = $state({
         mode: ModeEnum.Documentation,
-        activeHeadingId: undefined
+        activeHeadingId: undefined,
+        diagramFocusId: undefined
     })
     setContext('navigationContext', navigationContext)
 </script>
