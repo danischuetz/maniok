@@ -1,24 +1,16 @@
 /* Navigation */
-.nav-container {
-    @apply gap-0.5;
-}
-
-.nav-container-burger {
-    @apply gap-1 rounded-md bg-surface-50-950 overflow-clip;
-}
-
 .btn-nav {
     @apply p-0 m-0 text-surface-900-100;
 }
 
 /* Mode Navigation */
 .mode-nav-container {
-    @apply bg-surface-200-800 gap-2 p-2;
+    @apply gap-2 p-2 border-r border-surface-200-800;
 }
 
 /* Diagram Navigation */
 .diagram-nav-container {
-    @apply gap-8 bg-surface-200-800 py-4;
+    @apply gap-8 py-4;
 }
 
 .diagram-nav-category {
@@ -35,7 +27,7 @@
 
 /* Document Navigation */
 .document-tree {
-    @apply bg-surface-200-800 pt-4 gap-6;
+    @apply  pt-4 gap-6;
 }
 
 .document-tree ul {
@@ -43,7 +35,7 @@
 }
 
 .document-tree button {
-    @apply btn justify-start px-2 text-base text-surface-600-400;
+    @apply btn justify-start px-2 text-base text-surface-300-500;
 }
 
 .document-tree button.active {

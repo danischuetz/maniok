@@ -1,0 +1,5 @@
+/* Additional color definitions */
+
+@theme {
+    --color-surface-300-500: light-dark(var(--color-surface-300), var(--color-surface-500));
+}

@@ -28,3 +28,5 @@ export { default as DocumentView } from './components/content/documentview.svelt
 export { default as DiagramFocusModal } from './components/internal/diagram/diagramfocusmodal.svelte'
 
 export { default as Toaster } from './components/util/toaster.svelte'
+export { default as LightSwitch } from './components/util/lightswitch.svelte'
+export { default as Logo } from './components/util/logo.svelte'

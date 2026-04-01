@@ -11,7 +11,9 @@
         DiagramService,
         BurgerMenu,
         DocumentNavigation,
-        DocumentService
+        DocumentService,
+        LightSwitch,
+        Logo
     } from 'c4ke-lib'
     import {
         NavigationProvider,
@@ -90,19 +92,26 @@
 {/snippet}
 
 <NavigationProvider>
-    <div class="flex flex-col w-screen h-screen">
-        <header class="flex flex-row lg:hidden">
-            <BurgerMenu>
-                <Navigation class="nav-container-burger">
-                    {@render navElements()}
-                </Navigation>
-            </BurgerMenu>
+    <div class="flex flex-col w-screen h-screen app overflow-hidden">
+        <!-- Title Bar -->
+        <header class="flex justify-between items-center w-full p-4 titlebar">
+            <div class="flex items-center gap-4">
+                <BurgerMenu class="p-0 lg:hidden">
+                    <Navigation class="navigation-burger">
+                        {@render navElements()}
+                    </Navigation>
+                </BurgerMenu>
+                <Logo class="h-8 fill-primary-500" />
+            </div>
+            <LightSwitch class="size-8 stroke-1" />
         </header>
-        <div class="w-screen h-screen flex flex-row app-container">
-            <Navigation class="hidden lg:flex nav-container">
+
+        <!-- Body -->
+        <div class="w-screen h-screen flex flex-row">
+            <Navigation class="hidden lg:flex navigation">
                 {@render navElements()}
             </Navigation>
-            <Content class="flex-1">
+            <Content class="flex-1 content">
                 <DiagramView diagram={selectedDiagram} />
                 <DocumentView html={content?.html} {diagrams} />
                 <DiagramFocusModal {diagrams} />

@@ -6,15 +6,34 @@
 
 @import '@xyflow/svelte/dist/style.css';
 
+@import './colors.css';
 @import './common.css';
 @import './navigation.css';
 @import './diagram.css';
 @import './document.css';
 
-.app-container {
-    @apply bg-surface-50-950;
+@custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
+
+.app {
+    background: radial-gradient(
+        circle at 20% 20%,
+        oklch(from var(--color-primary-50-950) l c h / 0.2),
+        oklch(from var(--color-surface-50-950) l c h / 0.5)
+    )
+}
+
+.titlebar {
+    @apply border-b border-surface-200-800;
+}
+
+.navigation {
+    @apply gap-0.5 border-r border-surface-200-800;
+}
+
+.navigation-burger {
+    @apply gap-1 rounded-md bg-surface-50-950 border border-surface-700-300 drop-shadow-md overflow-clip;
 }
 
 .content {
-    @apply bg-surface-100-900;
+    ;
 }
