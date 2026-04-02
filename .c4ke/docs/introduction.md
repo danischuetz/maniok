@@ -1,6 +1,12 @@
 # What is it?
 
-A git-native architecture-as-code solution which minimizes friction in creating and consuming technical documentation. It is based on an ODI (Outcome Driven Innovation) research on current pain points in the lifecycle of technical software documentation.
+TODO: add editing interactions to architecture...
+
+The git-native solution for C4 architecture documentation - like Docusaurus for architects, with C4 diagrams-as-code but without the setup overhead.
+
+The whole documentation lives in a single file in your github repository, `.c4ke/workspace.json`,which is then rendered by the c4ke.io webapp.
+
+Here is how it works:
 
 ![c4ke system overview](embed:CoreContainerView)
 
