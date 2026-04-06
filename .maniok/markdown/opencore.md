@@ -8,8 +8,8 @@ The core library provides logic and Svelte components to display C4 diagrams and
 
 ```
 <script lang="ts">
-    import { Diagram, DiagramNavigation, DiagramProvider, parseDiagrams } from 'c4ke-diagramlib'
-    import type { DiagramModel } from 'c4ke-diagramlib'
+    import { Diagram, DiagramNavigation, DiagramProvider, parseDiagrams } from 'diagramlib'
+    import type { DiagramModel } from 'diagramlib'
 
     # workspace.json file contents
     const workspace: object = ...
@@ -28,8 +28,8 @@ The core library provides logic and Svelte components to display C4 diagrams and
 
 ```
 <script lang="ts">
-    import { Document, DocumentNavigation, DocumentProvider, parseDocument } from 'c4ke-diagramlib'
-    import type { DocumentModel } from 'c4ke-diagramlib'
+    import { Document, DocumentNavigation, DocumentProvider, parseDocument } from 'diagramlib'
+    import type { DocumentModel } from 'diagramlib'
 
     # workspace.json file contents
     const workspace: object = ...

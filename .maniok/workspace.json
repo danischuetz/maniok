@@ -3,7 +3,7 @@
   "description" : "Description",
   "documentation" : {
     "sections" : [ {
-      "content" : "# What is it?\n\nTODO: add editing interactions to architecture...\n\nThe git-native solution for C4 architecture documentation - like Docusaurus for architects, with C4 diagrams-as-code but without the setup overhead.\n\nThe whole documentation lives in a single file in your github repository, `.c4ke/workspace.json`,which is then rendered by the c4ke.io webapp.\n\nHere is how it works:\n\n![c4ke system overview](embed:CoreContainerView)\n\n## GitHub\n\nFor a test, let's checkout the github container view:\n\n![github system overview](embed:GitHubContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enables AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## Requirements\n\n- Github hosted repositories only\n\n## Quick Start\n\n### Documentation Setup\n\n- In a repository root, create a folder called \".c4ke\"\n- Download the [zipped default template](https://github.com/danischuetz/c4ke-webapp/templates/default)\n- Extract it to the .c4ke folder\n- Commit the changes\n- Et voila, your documentation is online!\n\n### Public Repositories\n\n- Visit app.c4ke.io\n- Type your public repo URL\n\n### Private Repositories\n\n- Install the c4ke GitHub App for your repository\n- Register / Log-In to your c4ke account at app.c4ke.io\n- Connect to your GitHub\n",
+      "content" : "# What is it?\n\nTODO: add editing interactions to architecture...\n\nThe git-native solution for C4 architecture documentation - like Docusaurus for architects, with C4 diagrams-as-code but without the setup overhead.\n\nThe whole documentation lives in a single file in your github repository, `.maniok/workspace.json`,which is then rendered by the maniok webapp.\n\nHere is how it works:\n\n![core system overview](embed:CoreContainerView)\n\n## GitHub\n\nFor a test, let's checkout the github container view:\n\n![github system overview](embed:GitHubContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enables AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## Requirements\n\n- Github hosted repositories only\n\n## Quick Start\n\n### Documentation Setup\n\n- In a repository root, create a folder called \".maniok\"\n- Download the [zipped default template](https://github.com/.../templates/default)\n- Extract it to the .maniok folder\n- Commit the changes\n- Et voila, your documentation is online!\n\n### Public Repositories\n\n- Visit app.maniok.io\n- Type your public repo URL\n\n### Private Repositories\n\n- Install the Maniok GitHub App for your repository\n- Register / Log-In to your Maniok account at app.maniok.io\n- Connect to your GitHub\n",
       "format" : "Markdown",
       "order" : 1,
       "title" : ""
@@ -13,9 +13,9 @@
   "model" : {
     "people" : [ {
       "id" : "1",
-      "name" : "Viewer",
+      "name" : "Consumer",
       "properties" : {
-        "structurizr.dsl.identifier" : "viewer"
+        "structurizr.dsl.identifier" : "consumer"
       },
       "relationships" : [ {
         "description" : "View documentation",
@@ -28,6 +28,24 @@
         "destinationId" : "3",
         "id" : "25",
         "linkedRelationshipId" : "24",
+        "sourceId" : "1"
+      }, {
+        "description" : "Display diagram and document components",
+        "destinationId" : "4",
+        "id" : "26",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Fetch documentation from client repo",
+        "destinationId" : "22",
+        "id" : "27",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Fetch documentation from client repo",
+        "destinationId" : "21",
+        "id" : "28",
+        "linkedRelationshipId" : "27",
         "sourceId" : "1"
       } ],
       "tags" : "Element,Person"
@@ -46,42 +64,42 @@
           "id" : "5",
           "name" : "API",
           "properties" : {
-            "structurizr.dsl.identifier" : "c4ke-lib-api"
+            "structurizr.dsl.identifier" : "lib-api"
           },
           "relationships" : [ {
             "description" : "expose component",
             "destinationId" : "6",
-            "id" : "31",
+            "id" : "29",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose parser",
             "destinationId" : "7",
-            "id" : "32",
+            "id" : "30",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose component",
             "destinationId" : "8",
-            "id" : "33",
+            "id" : "31",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose component",
             "destinationId" : "10",
-            "id" : "34",
+            "id" : "32",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose parser",
             "destinationId" : "11",
-            "id" : "35",
+            "id" : "33",
             "sourceId" : "5",
             "tags" : "Relationship"
           }, {
             "description" : "expose component",
             "destinationId" : "12",
-            "id" : "36",
+            "id" : "34",
             "sourceId" : "5",
             "tags" : "Relationship"
           } ],
@@ -92,12 +110,12 @@
           "id" : "6",
           "name" : "Diagram",
           "properties" : {
-            "structurizr.dsl.identifier" : "c4ke-lib-diagram"
+            "structurizr.dsl.identifier" : "lib-diagram"
           },
           "relationships" : [ {
             "description" : "calculate layout",
             "destinationId" : "9",
-            "id" : "37",
+            "id" : "35",
             "sourceId" : "6",
             "tags" : "Relationship"
           } ],
@@ -108,7 +126,7 @@
           "id" : "7",
           "name" : "Diagram Parser",
           "properties" : {
-            "structurizr.dsl.identifier" : "c4ke-lib-diagramparser"
+            "structurizr.dsl.identifier" : "lib-diagramparser"
           },
           "tags" : "Element,Component"
         }, {
@@ -117,7 +135,7 @@
           "id" : "8",
           "name" : "Diagram Navigation",
           "properties" : {
-            "structurizr.dsl.identifier" : "c4ke-lib-diagramnavigation"
+            "structurizr.dsl.identifier" : "lib-diagramnavigation"
           },
           "tags" : "Element,Component"
         }, {
@@ -126,7 +144,7 @@
           "id" : "9",
           "name" : "Layout Engine",
           "properties" : {
-            "structurizr.dsl.identifier" : "c4ke-lib-layoutEngine"
+            "structurizr.dsl.identifier" : "lib-layoutEngine"
           },
           "tags" : "Element,Component"
         }, {
@@ -135,7 +153,7 @@
           "id" : "10",
           "name" : "Document",
           "properties" : {
-            "structurizr.dsl.identifier" : "c4ke-lib-document"
+            "structurizr.dsl.identifier" : "lib-document"
           },
           "tags" : "Element,Component"
         }, {
@@ -144,7 +162,7 @@
           "id" : "11",
           "name" : "Workspace Parser",
           "properties" : {
-            "structurizr.dsl.identifier" : "c4ke-lib-documentparser"
+            "structurizr.dsl.identifier" : "lib-documentparser"
           },
           "tags" : "Element,Component"
         }, {
@@ -153,16 +171,16 @@
           "id" : "12",
           "name" : "Document Navigation",
           "properties" : {
-            "structurizr.dsl.identifier" : "c4ke-lib-documentnavigation"
+            "structurizr.dsl.identifier" : "lib-documentnavigation"
           },
           "tags" : "Element,Component"
         } ],
         "description" : "Core logic and components to view and navigate documentation described by a Structurizr workspace object",
         "documentation" : { },
         "id" : "4",
-        "name" : "c4ke-lib",
+        "name" : "lib",
         "properties" : {
-          "structurizr.dsl.identifier" : "c4ke-lib"
+          "structurizr.dsl.identifier" : "lib"
         },
         "tags" : "Element,Container",
         "technology" : "node.js"
@@ -170,59 +188,27 @@
         "description" : "Provides all functionality to consume documentation of a single workspace. Can be hosted locally or used as a component.",
         "documentation" : { },
         "id" : "13",
-        "name" : "c4ke-viewer",
+        "name" : "viewer",
         "properties" : {
-          "structurizr.dsl.identifier" : "c4ke-viewer"
+          "structurizr.dsl.identifier" : "viewer"
         },
-        "relationships" : [ {
-          "description" : "Display diagram and document components",
-          "destinationId" : "4",
-          "id" : "26",
-          "sourceId" : "13",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Fetch documentation from client repo",
-          "destinationId" : "22",
-          "id" : "27",
-          "sourceId" : "13",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Fetch documentation from client repo",
-          "destinationId" : "21",
-          "id" : "28",
-          "linkedRelationshipId" : "27",
-          "sourceId" : "13"
-        } ],
         "tags" : "Element,Container",
         "technology" : "SvelteKit"
       } ],
       "description" : "Open core of the c4ke documentation system",
       "documentation" : {
         "sections" : [ {
-          "content" : "# Open Core\n\nThe core library provides logic and Svelte components to display C4 diagrams and documents parsed from workspace.json objects.\n\n## Usage\n\n### Diagrams - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Diagram, DiagramNavigation, DiagramProvider, parseDiagrams } from 'c4ke-diagramlib'\n    import type { DiagramModel } from 'c4ke-diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let diagrams: DiagramModel[] = $derived(parseDiagrams(workspace))\n</script>\n\n<DiagramProvider {diagrams}>\n    <DiagramNavigation />\n    <Diagram />\n</DiagramProvider>\n\n```\n\n### Documents - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Document, DocumentNavigation, DocumentProvider, parseDocument } from 'c4ke-diagramlib'\n    import type { DocumentModel } from 'c4ke-diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let document: DocumentModel[] = $derived(parseDocument(workspace))\n</script>\n\n<DocumentProvider {document}>\n    <DocumentNavigation />\n    <Document />\n</DocumentProvider>\n```\n\n## Architecture\n\n### Notes\n\n- Actual component layer (Svelte) ideally should not handle state or logic in any way\n\n### Logic Layer\n\n- Parse workspace.json to diagram model\n- Parse workspace.json to document model\n- Calculate layout for diagram model\n- Navigation state handling for\n    - diagrams\n    - documents\n\n### Component Layer\n\n- Diagram\n    - Draws nodes, edges and edge labels as defined in the DiagramModel\n    - Triggers the calculation of DiagramModel layout\n- DiagramNavigation\n    - Triggers selection of the current diagram\n- Document\n    - Renders the markdown document according to the current navigation state\n- DocumentNavigation\n    - Triggers selected section or heading within the document\n\n### Style Layer\n",
+          "content" : "# Open Core\n\nThe core library provides logic and Svelte components to display C4 diagrams and documents parsed from workspace.json objects.\n\n## Usage\n\n### Diagrams - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Diagram, DiagramNavigation, DiagramProvider, parseDiagrams } from 'diagramlib'\n    import type { DiagramModel } from 'diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let diagrams: DiagramModel[] = $derived(parseDiagrams(workspace))\n</script>\n\n<DiagramProvider {diagrams}>\n    <DiagramNavigation />\n    <Diagram />\n</DiagramProvider>\n\n```\n\n### Documents - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Document, DocumentNavigation, DocumentProvider, parseDocument } from 'diagramlib'\n    import type { DocumentModel } from 'diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let document: DocumentModel[] = $derived(parseDocument(workspace))\n</script>\n\n<DocumentProvider {document}>\n    <DocumentNavigation />\n    <Document />\n</DocumentProvider>\n```\n\n## Architecture\n\n### Notes\n\n- Actual component layer (Svelte) ideally should not handle state or logic in any way\n\n### Logic Layer\n\n- Parse workspace.json to diagram model\n- Parse workspace.json to document model\n- Calculate layout for diagram model\n- Navigation state handling for\n    - diagrams\n    - documents\n\n### Component Layer\n\n- Diagram\n    - Draws nodes, edges and edge labels as defined in the DiagramModel\n    - Triggers the calculation of DiagramModel layout\n- DiagramNavigation\n    - Triggers selection of the current diagram\n- Document\n    - Renders the markdown document according to the current navigation state\n- DocumentNavigation\n    - Triggers selected section or heading within the document\n\n### Style Layer\n",
           "format" : "Markdown",
           "order" : 1,
           "title" : ""
         } ]
       },
       "id" : "3",
-      "name" : "c4ke-core",
+      "name" : "core",
       "properties" : {
-        "structurizr.dsl.identifier" : "c4ke-core"
+        "structurizr.dsl.identifier" : "core"
       },
-      "relationships" : [ {
-        "description" : "Fetch documentation from client repo",
-        "destinationId" : "22",
-        "id" : "29",
-        "linkedRelationshipId" : "27",
-        "sourceId" : "3"
-      }, {
-        "description" : "Fetch documentation from client repo",
-        "destinationId" : "21",
-        "id" : "30",
-        "linkedRelationshipId" : "27",
-        "sourceId" : "3"
-      } ],
       "tags" : "Element,Software System"
     }, {
       "containers" : [ {
@@ -242,7 +228,7 @@
         "id" : "15",
         "name" : "dsl-exporter",
         "properties" : {
-          "structurizr.dsl.identifier" : "c4ke-dsl-exporter"
+          "structurizr.dsl.identifier" : "dsl-exporter"
         },
         "tags" : "Element,Container",
         "technology" : "node.js"
@@ -250,9 +236,9 @@
         "description" : "VSCode Extension. Renders the documentation into a webview as it would be presented in the webapp",
         "documentation" : { },
         "id" : "17",
-        "name" : "c4ke-preview",
+        "name" : "preview",
         "properties" : {
-          "structurizr.dsl.identifier" : "c4ke-preview"
+          "structurizr.dsl.identifier" : "preview"
         },
         "tags" : "Element,Container",
         "technology" : "node.js"
@@ -260,9 +246,9 @@
       "description" : "Tooling for editing and previewing documentation",
       "documentation" : { },
       "id" : "14",
-      "name" : "c4ke-editing",
+      "name" : "editing",
       "properties" : {
-        "structurizr.dsl.identifier" : "c4ke-editing"
+        "structurizr.dsl.identifier" : "editing"
       },
       "tags" : "Element,Software System"
     }, {
@@ -306,7 +292,7 @@
         "relationships" : [ {
           "description" : "retrieve .c4ke/workspace.json",
           "destinationId" : "23",
-          "id" : "38",
+          "id" : "36",
           "sourceId" : "22",
           "tags" : "Relationship"
         } ],
@@ -333,7 +319,7 @@
   },
   "name" : "Name",
   "properties" : {
-    "structurizr.inspection.error" : "50",
+    "structurizr.inspection.error" : "49",
     "structurizr.inspection.info" : "0",
     "structurizr.inspection.ignore" : "0",
     "structurizr.inspection.warning" : "0"
@@ -386,9 +372,13 @@
       "externalContainerBoundariesVisible" : false,
       "generatedKey" : true,
       "key" : "Component-001",
-      "name" : "Component View: c4ke-core - c4ke-lib",
+      "name" : "Component View: core - lib",
       "order" : 4,
       "relationships" : [ {
+        "id" : "29"
+      }, {
+        "id" : "30"
+      }, {
         "id" : "31"
       }, {
         "id" : "32"
@@ -398,10 +388,6 @@
         "id" : "34"
       }, {
         "id" : "35"
-      }, {
-        "id" : "36"
-      }, {
-        "id" : "37"
       } ]
     } ],
     "configuration" : {
@@ -431,21 +417,15 @@
         "id" : "13",
         "x" : 0,
         "y" : 0
-      }, {
-        "id" : "21",
-        "x" : 0,
-        "y" : 0
       } ],
       "externalSoftwareSystemBoundariesVisible" : false,
       "key" : "CoreContainerView",
-      "name" : "Container View: c4ke-core",
+      "name" : "Container View: core",
       "order" : 2,
       "relationships" : [ {
         "id" : "24"
       }, {
         "id" : "26"
-      }, {
-        "id" : "28"
       } ],
       "softwareSystemId" : "3"
     }, {
@@ -459,7 +439,7 @@
         "vertices" : false
       },
       "elements" : [ {
-        "id" : "3",
+        "id" : "1",
         "x" : 0,
         "y" : 0
       }, {
@@ -476,9 +456,9 @@
       "name" : "Container View: GitHub",
       "order" : 3,
       "relationships" : [ {
-        "id" : "29"
+        "id" : "27"
       }, {
-        "id" : "38"
+        "id" : "36"
       } ],
       "softwareSystemId" : "21"
     } ],
@@ -500,20 +480,14 @@
         "id" : "3",
         "x" : 0,
         "y" : 0
-      }, {
-        "id" : "21",
-        "x" : 0,
-        "y" : 0
       } ],
       "enterpriseBoundaryVisible" : true,
       "generatedKey" : true,
       "key" : "SystemContext-001",
-      "name" : "System Context View: c4ke-core",
+      "name" : "System Context View: core",
       "order" : 1,
       "relationships" : [ {
         "id" : "25"
-      }, {
-        "id" : "30"
       } ],
       "softwareSystemId" : "3"
     } ]

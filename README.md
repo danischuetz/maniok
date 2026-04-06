@@ -1,4 +1,4 @@
-# C4ke Webapp
+# Webapp
 
 ## List of possible features
 
