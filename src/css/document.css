@@ -7,8 +7,8 @@
     @apply border-l-4 border-surface-200-800 pl-4;
 }
 
-.markdown-body code {
-    @apply bg-surface-200-800 p-0.5 rounded-sm font-mono text-sm;
+.markdown-body p code {
+    @apply bg-surface-500/40 p-0.5 rounded-sm font-mono text-sm;
 }
 
 .markdown-body h1 {
@@ -55,6 +55,7 @@
     @apply overflow-x-auto;
     @apply p-4;
     @apply rounded-lg;
+    @apply bg-surface-200-800/50;
 }
 
 .markdown-body a:not(diagram-embed *) {
