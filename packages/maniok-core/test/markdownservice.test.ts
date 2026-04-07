@@ -3,9 +3,11 @@ import { MarkdownService } from '../src/service/markdownservice'
 
 describe('MarkdownService', () => {
     it('should replace embed image syntax with diagram placeholders', () => {
-        const content = MarkdownService.parse('![c4ke system overview](embed:CoreContainerView)')
+        const content = MarkdownService.parse('![system overview](embed:CoreContainerView)')
 
-        expect(content.html).toContain('<diagram-embed data-diagram-key="CoreContainerView"></diagram-embed>')
+        expect(content.html).toContain(
+            '<diagram-embed data-diagram-key="CoreContainerView"></diagram-embed>'
+        )
     })
 
     it('should keep normal image syntax untouched', () => {

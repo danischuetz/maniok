@@ -44,6 +44,18 @@
     @apply text-xs text-surface-700-300;
 }
 
+.icon-person {
+    @apply stroke-2 size-12 stroke-primary-600-400;
+}
+
+.body-person {
+    @apply rounded p-2;
+}
+
+.name-person {
+    @apply text-sm font-bold text-primary-600-400;
+}
+
 .element-body-base {
     @apply rounded min-w-46 max-w-52 p-2;
 }

@@ -24,13 +24,14 @@ export class LayoutService {
             compound: true
         })
 
+        const horizontal: boolean =
+            layoutModel.direction === DirectionEnum.LeftRight ||
+            layoutModel.direction === DirectionEnum.RightLeft
+
         graph.setGraph({
             rankdir: layoutModel.direction,
-            ranksep:
-                layoutModel.direction === DirectionEnum.LeftRight ||
-                layoutModel.direction === DirectionEnum.RightLeft
-                    ? 30
-                    : 20,
+            ranksep: horizontal ? 30 : 20,
+            nodesep: horizontal ? 20 : 100,
             ranker: 'network-simplex', // network-simplex, tight-tree or longest-path
             align: 'UL'
         })

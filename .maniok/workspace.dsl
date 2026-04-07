@@ -2,88 +2,69 @@ workspace {
     !docs markdown/introduction.md
 
     model {
-        consumer = person "Consumer"
-        architect = person "Architect"
+        user = person "User"
 
-        core = softwareSystem "core" "Open core of the c4ke documentation system" {
-            !docs markdown/opencore.md
-            lib = container "lib" "Core logic and components to view and navigate documentation described by a Structurizr workspace object" "node.js" {
-                lib-api = component "API"
-                
-                lib-diagram = component "Diagram" "Renders diagrams"
-                lib-diagramparser = component "Diagram Parser" "Creates array of diagrams from workspace object"
-                lib-diagramnavigation = component "Diagram Navigation" "Allows users to navigate diagrams"
-                lib-layoutEngine = component "Layout Engine" "Calculates the layout of diagram elements according to the contents and relationships"
-                
-                lib-document = component "Document" "Renders documentation written in Markdown"
-                lib-documentparser = component "Workspace Parser" "Creates array of diagrams from workspace object"
-                lib-documentnavigation = component "Document Navigation" "Allows users to navigate written documentation"
+        maniok = softwareSystem "Maniok" "The maniok documentation system" {
+            core = container "Core" "Core logic and components to render and navigate written documentation and diagrams from a Structurizr workspace" "node.js" {
+                core-diagramservice = component "Diagram Service" "Creates a diagram model tree from a Structurizr workspace"
+                core-documentservice = component "Document Service" "Creates a document model tree from a Structurizr workspace"
+                core-layoutservice = component "Diagram Layout Service" "Calculates a suitable layout for a layout model tree"
+                core-markdownservice = component "Markdown Service" "Renders markdown content to html"
+                core-notificationservice = component "Notification Service" "Enable notification registrations which should be shown to the user"
+                core-workspaceservice = component "Workspace Service" "Creates a Structurizr workspace model from a Structurizr workspace JSON"
+
+                core-components = component "Maniok Component Library" "Svelte Components to present diagrams, documents and navigation" "Svelte"
             }
 
-            viewer = container "viewer" "Provides all functionality to consume documentation of a single workspace. Can be hosted locally or used as a component." "SvelteKit"
+            webapp = container "Maniok Webapp" "Renders the documentation for a selected public GitHub repository" "SvelteKit"
+            editor = container "Maniok Editor" "Docker image to support live preview and export-on-save" "Docker"
         }
 
-        # app = softwareSystem "app" "A software system to minimize friction when creating, maintaining and consuming technical software documentation" {
-        #     webapp = container "webapp" "A web application for consumers of technical software documentation" "SvelteKit"
-        #     database = container "DB" "Database to store users, sessions, orgs, subscriptions, entitlements, etc..." "Supabase"
-        #     payment-system = container "Payment System" "Manages payments to enable subscriptions and entitlements" "Stripe"
-        # } 
-
-        editing = softwareSystem "editing" "Tooling for editing and previewing documentation" {
-            dsl-exporter = container "dsl-exporter" "Exports structurizr documentation to a workspace.json object" "node.js" {
-                java-wrapper = component "Java Wrapper" "Packages a java runtime with java code to make it usable as a node module" "node.js"
-            }
-            preview = container "preview" "VSCode Extension. Renders the documentation into a webview as it would be presented in the webapp" "node.js"
-        }
-
-        structurizr = softwareSystem "Structurizr" "Defines the Structurizr DSL and parses structurizr documentation to workspace objects" "Java" {
-            structurizr-export = container "Structurizr Export" "Exports documentation to workspace.json object" "Java"
-            structurizrExtension = container "Structurizr Extension" "VSCode Extension. Provides syntax highlighting for the Structurizr DSL" "node.js"
+        structurizr = softwareSystem "Structurizr" "Defines the Structurizr DSL and parses Structurizr documentation to workspace objects" "Java" {
+            structurizr-cli = container "Structurizr CLI" "Exports structurizr documentation to workspace.json object" "Java"
         }
 
         github = softwareSystem "GitHub" {
-            github-api = container "GitHub API"
-            github-client-repo = container "Client Repository" "Contains a .c4ke documentation directory" "GitHub Repo"
+            github-client-repo = container "GitHub Client Repository" "Contains a .maniok documentation directory" "GitHub Repo"
         }
 
-        # Viewer interactions
-        consumer -> viewer "View documentation"
+        # User interactions
+        user -> webapp "View documentation"
+        user -> editor "Edit & preview documentation"
 
         # Internals
-        consumer -> lib "Display diagram and document components"
-        consumer -> github-api "Fetch documentation from client repo"
+        webapp -> core-diagramservice "Build diagram model tree"
+        webapp -> core-documentservice "Build document model tree"
+        webapp -> core-components "Render diagram & document models"
+        webapp -> core-notificationservice "Show warnings, info, errors etc."
+        webapp -> core-workspaceservice "Parse workspace JSON"
 
-        lib-api -> lib-diagram "expose component"
-        lib-api -> lib-diagramparser "expose parser"
-        lib-api -> lib-diagramnavigation "expose component"
-        
-        lib-api -> lib-document "expose component"
-        lib-api -> lib-documentparser "expose parser"
-        lib-api -> lib-documentnavigation "expose component"
+        webapp -> github-client-repo "Fetch documentation from client repo"
 
-        lib-diagram -> lib-layoutEngine "calculate layout"
+        core-components -> core-layoutservice "Calculate diagram layout"
+        core-components -> core-markdownservice "Render Markdown"
 
         # External
-        github-api -> github-client-repo "retrieve .c4ke/workspace.json"
+        user -> github-client-repo "Push documentation changes"
     }
 
     views {
-        systemContext core {
+        systemContext maniok {
             include *
-            autoLayout
+            autoLayout lr
         }
 
-        container core "CoreContainerView" {
+        container maniok "CoreContainerView" {
             include *
             autoLayout lr
         }
 
         container github "GitHubContainerView" {
             include *
-            autoLayout
+            autoLayout lr
         }
 
-        component lib {
+        component core {
             include *
             autoLayout lr
         }

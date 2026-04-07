@@ -13,269 +13,238 @@
   "model" : {
     "people" : [ {
       "id" : "1",
-      "name" : "Consumer",
+      "name" : "User",
       "properties" : {
-        "structurizr.dsl.identifier" : "consumer"
+        "structurizr.dsl.identifier" : "user"
       },
       "relationships" : [ {
         "description" : "View documentation",
-        "destinationId" : "13",
-        "id" : "24",
+        "destinationId" : "11",
+        "id" : "17",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
         "description" : "View documentation",
-        "destinationId" : "3",
-        "id" : "25",
-        "linkedRelationshipId" : "24",
+        "destinationId" : "2",
+        "id" : "18",
+        "linkedRelationshipId" : "17",
         "sourceId" : "1"
       }, {
-        "description" : "Display diagram and document components",
-        "destinationId" : "4",
-        "id" : "26",
+        "description" : "Edit & preview documentation",
+        "destinationId" : "12",
+        "id" : "19",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
-        "description" : "Fetch documentation from client repo",
-        "destinationId" : "22",
-        "id" : "27",
+        "description" : "Push documentation changes",
+        "destinationId" : "16",
+        "id" : "32",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
-        "description" : "Fetch documentation from client repo",
-        "destinationId" : "21",
-        "id" : "28",
-        "linkedRelationshipId" : "27",
+        "description" : "Push documentation changes",
+        "destinationId" : "15",
+        "id" : "33",
+        "linkedRelationshipId" : "32",
         "sourceId" : "1"
       } ],
-      "tags" : "Element,Person"
-    }, {
-      "id" : "2",
-      "name" : "Architect",
-      "properties" : {
-        "structurizr.dsl.identifier" : "architect"
-      },
       "tags" : "Element,Person"
     } ],
     "softwareSystems" : [ {
       "containers" : [ {
         "components" : [ {
+          "description" : "Creates a diagram model tree from a Structurizr workspace",
+          "documentation" : { },
+          "id" : "4",
+          "name" : "Diagram Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "core-diagramservice"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Creates a document model tree from a Structurizr workspace",
           "documentation" : { },
           "id" : "5",
-          "name" : "API",
+          "name" : "Document Service",
           "properties" : {
-            "structurizr.dsl.identifier" : "lib-api"
+            "structurizr.dsl.identifier" : "core-documentservice"
           },
-          "relationships" : [ {
-            "description" : "expose component",
-            "destinationId" : "6",
-            "id" : "29",
-            "sourceId" : "5",
-            "tags" : "Relationship"
-          }, {
-            "description" : "expose parser",
-            "destinationId" : "7",
-            "id" : "30",
-            "sourceId" : "5",
-            "tags" : "Relationship"
-          }, {
-            "description" : "expose component",
-            "destinationId" : "8",
-            "id" : "31",
-            "sourceId" : "5",
-            "tags" : "Relationship"
-          }, {
-            "description" : "expose component",
-            "destinationId" : "10",
-            "id" : "32",
-            "sourceId" : "5",
-            "tags" : "Relationship"
-          }, {
-            "description" : "expose parser",
-            "destinationId" : "11",
-            "id" : "33",
-            "sourceId" : "5",
-            "tags" : "Relationship"
-          }, {
-            "description" : "expose component",
-            "destinationId" : "12",
-            "id" : "34",
-            "sourceId" : "5",
-            "tags" : "Relationship"
-          } ],
           "tags" : "Element,Component"
         }, {
-          "description" : "Renders diagrams",
+          "description" : "Calculates a suitable layout for a layout model tree",
           "documentation" : { },
           "id" : "6",
-          "name" : "Diagram",
+          "name" : "Diagram Layout Service",
           "properties" : {
-            "structurizr.dsl.identifier" : "lib-diagram"
+            "structurizr.dsl.identifier" : "core-layoutservice"
           },
-          "relationships" : [ {
-            "description" : "calculate layout",
-            "destinationId" : "9",
-            "id" : "35",
-            "sourceId" : "6",
-            "tags" : "Relationship"
-          } ],
           "tags" : "Element,Component"
         }, {
-          "description" : "Creates array of diagrams from workspace object",
+          "description" : "Renders markdown content to html",
           "documentation" : { },
           "id" : "7",
-          "name" : "Diagram Parser",
+          "name" : "Markdown Service",
           "properties" : {
-            "structurizr.dsl.identifier" : "lib-diagramparser"
+            "structurizr.dsl.identifier" : "core-markdownservice"
           },
           "tags" : "Element,Component"
         }, {
-          "description" : "Allows users to navigate diagrams",
+          "description" : "Enable notification registrations which should be shown to the user",
           "documentation" : { },
           "id" : "8",
-          "name" : "Diagram Navigation",
+          "name" : "Notification Service",
           "properties" : {
-            "structurizr.dsl.identifier" : "lib-diagramnavigation"
+            "structurizr.dsl.identifier" : "core-notificationservice"
           },
           "tags" : "Element,Component"
         }, {
-          "description" : "Calculates the layout of diagram elements according to the contents and relationships",
+          "description" : "Creates a Structurizr workspace model from a Structurizr workspace JSON",
           "documentation" : { },
           "id" : "9",
-          "name" : "Layout Engine",
+          "name" : "Workspace Service",
           "properties" : {
-            "structurizr.dsl.identifier" : "lib-layoutEngine"
+            "structurizr.dsl.identifier" : "core-workspaceservice"
           },
           "tags" : "Element,Component"
         }, {
-          "description" : "Renders documentation written in Markdown",
+          "description" : "Svelte Components to present diagrams, documents and navigation",
           "documentation" : { },
           "id" : "10",
-          "name" : "Document",
+          "name" : "Maniok Component Library",
           "properties" : {
-            "structurizr.dsl.identifier" : "lib-document"
+            "structurizr.dsl.identifier" : "core-components"
           },
-          "tags" : "Element,Component"
-        }, {
-          "description" : "Creates array of diagrams from workspace object",
-          "documentation" : { },
-          "id" : "11",
-          "name" : "Workspace Parser",
-          "properties" : {
-            "structurizr.dsl.identifier" : "lib-documentparser"
-          },
-          "tags" : "Element,Component"
-        }, {
-          "description" : "Allows users to navigate written documentation",
-          "documentation" : { },
-          "id" : "12",
-          "name" : "Document Navigation",
-          "properties" : {
-            "structurizr.dsl.identifier" : "lib-documentnavigation"
-          },
-          "tags" : "Element,Component"
+          "relationships" : [ {
+            "description" : "Calculate diagram layout",
+            "destinationId" : "6",
+            "id" : "30",
+            "sourceId" : "10",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Render Markdown",
+            "destinationId" : "7",
+            "id" : "31",
+            "sourceId" : "10",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Svelte"
         } ],
-        "description" : "Core logic and components to view and navigate documentation described by a Structurizr workspace object",
+        "description" : "Core logic and components to render and navigate written documentation and diagrams from a Structurizr workspace",
         "documentation" : { },
-        "id" : "4",
-        "name" : "lib",
+        "id" : "3",
+        "name" : "Core",
         "properties" : {
-          "structurizr.dsl.identifier" : "lib"
+          "structurizr.dsl.identifier" : "core"
         },
         "tags" : "Element,Container",
         "technology" : "node.js"
       }, {
-        "description" : "Provides all functionality to consume documentation of a single workspace. Can be hosted locally or used as a component.",
+        "description" : "Renders the documentation for a selected public GitHub repository",
         "documentation" : { },
-        "id" : "13",
-        "name" : "viewer",
+        "id" : "11",
+        "name" : "Maniok Webapp",
         "properties" : {
-          "structurizr.dsl.identifier" : "viewer"
+          "structurizr.dsl.identifier" : "webapp"
         },
+        "relationships" : [ {
+          "description" : "Build diagram model tree",
+          "destinationId" : "4",
+          "id" : "20",
+          "sourceId" : "11",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Build diagram model tree",
+          "destinationId" : "3",
+          "id" : "21",
+          "linkedRelationshipId" : "20",
+          "sourceId" : "11"
+        }, {
+          "description" : "Build document model tree",
+          "destinationId" : "5",
+          "id" : "22",
+          "sourceId" : "11",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Render diagram & document models",
+          "destinationId" : "10",
+          "id" : "23",
+          "sourceId" : "11",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Show warnings, info, errors etc.",
+          "destinationId" : "8",
+          "id" : "24",
+          "sourceId" : "11",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Parse workspace JSON",
+          "destinationId" : "9",
+          "id" : "25",
+          "sourceId" : "11",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetch documentation from client repo",
+          "destinationId" : "16",
+          "id" : "26",
+          "sourceId" : "11",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetch documentation from client repo",
+          "destinationId" : "15",
+          "id" : "27",
+          "linkedRelationshipId" : "26",
+          "sourceId" : "11"
+        } ],
         "tags" : "Element,Container",
         "technology" : "SvelteKit"
-      } ],
-      "description" : "Open core of the c4ke documentation system",
-      "documentation" : {
-        "sections" : [ {
-          "content" : "# Open Core\n\nThe core library provides logic and Svelte components to display C4 diagrams and documents parsed from workspace.json objects.\n\n## Usage\n\n### Diagrams - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Diagram, DiagramNavigation, DiagramProvider, parseDiagrams } from 'diagramlib'\n    import type { DiagramModel } from 'diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let diagrams: DiagramModel[] = $derived(parseDiagrams(workspace))\n</script>\n\n<DiagramProvider {diagrams}>\n    <DiagramNavigation />\n    <Diagram />\n</DiagramProvider>\n\n```\n\n### Documents - display and navigation\n\n```\n<script lang=\"ts\">\n    import { Document, DocumentNavigation, DocumentProvider, parseDocument } from 'diagramlib'\n    import type { DocumentModel } from 'diagramlib'\n\n    # workspace.json file contents\n    const workspace: object = ...\n\n    let document: DocumentModel[] = $derived(parseDocument(workspace))\n</script>\n\n<DocumentProvider {document}>\n    <DocumentNavigation />\n    <Document />\n</DocumentProvider>\n```\n\n## Architecture\n\n### Notes\n\n- Actual component layer (Svelte) ideally should not handle state or logic in any way\n\n### Logic Layer\n\n- Parse workspace.json to diagram model\n- Parse workspace.json to document model\n- Calculate layout for diagram model\n- Navigation state handling for\n    - diagrams\n    - documents\n\n### Component Layer\n\n- Diagram\n    - Draws nodes, edges and edge labels as defined in the DiagramModel\n    - Triggers the calculation of DiagramModel layout\n- DiagramNavigation\n    - Triggers selection of the current diagram\n- Document\n    - Renders the markdown document according to the current navigation state\n- DocumentNavigation\n    - Triggers selected section or heading within the document\n\n### Style Layer\n",
-          "format" : "Markdown",
-          "order" : 1,
-          "title" : ""
-        } ]
-      },
-      "id" : "3",
-      "name" : "core",
-      "properties" : {
-        "structurizr.dsl.identifier" : "core"
-      },
-      "tags" : "Element,Software System"
-    }, {
-      "containers" : [ {
-        "components" : [ {
-          "description" : "Packages a java runtime with java code to make it usable as a node module",
-          "documentation" : { },
-          "id" : "16",
-          "name" : "Java Wrapper",
-          "properties" : {
-            "structurizr.dsl.identifier" : "java-wrapper"
-          },
-          "tags" : "Element,Component",
-          "technology" : "node.js"
-        } ],
-        "description" : "Exports structurizr documentation to a workspace.json object",
-        "documentation" : { },
-        "id" : "15",
-        "name" : "dsl-exporter",
-        "properties" : {
-          "structurizr.dsl.identifier" : "dsl-exporter"
-        },
-        "tags" : "Element,Container",
-        "technology" : "node.js"
       }, {
-        "description" : "VSCode Extension. Renders the documentation into a webview as it would be presented in the webapp",
+        "description" : "Docker image to support live preview and export-on-save",
         "documentation" : { },
-        "id" : "17",
-        "name" : "preview",
+        "id" : "12",
+        "name" : "Maniok Editor",
         "properties" : {
-          "structurizr.dsl.identifier" : "preview"
+          "structurizr.dsl.identifier" : "editor"
         },
         "tags" : "Element,Container",
-        "technology" : "node.js"
+        "technology" : "Docker"
       } ],
-      "description" : "Tooling for editing and previewing documentation",
+      "description" : "The maniok documentation system",
       "documentation" : { },
-      "id" : "14",
-      "name" : "editing",
+      "id" : "2",
+      "name" : "Maniok",
       "properties" : {
-        "structurizr.dsl.identifier" : "editing"
+        "structurizr.dsl.identifier" : "maniok"
       },
+      "relationships" : [ {
+        "description" : "Fetch documentation from client repo",
+        "destinationId" : "16",
+        "id" : "28",
+        "linkedRelationshipId" : "26",
+        "sourceId" : "2"
+      }, {
+        "description" : "Fetch documentation from client repo",
+        "destinationId" : "15",
+        "id" : "29",
+        "linkedRelationshipId" : "26",
+        "sourceId" : "2"
+      } ],
       "tags" : "Element,Software System"
     }, {
       "containers" : [ {
-        "description" : "Exports documentation to workspace.json object",
+        "description" : "Exports structurizr documentation to workspace.json object",
         "documentation" : { },
-        "id" : "19",
-        "name" : "Structurizr Export",
+        "id" : "14",
+        "name" : "Structurizr CLI",
         "properties" : {
-          "structurizr.dsl.identifier" : "structurizr-export"
+          "structurizr.dsl.identifier" : "structurizr-cli"
         },
         "tags" : "Element,Container",
         "technology" : "Java"
-      }, {
-        "description" : "VSCode Extension. Provides syntax highlighting for the Structurizr DSL",
-        "documentation" : { },
-        "id" : "20",
-        "name" : "Structurizr Extension",
-        "properties" : {
-          "structurizr.dsl.identifier" : "structurizrExtension"
-        },
-        "tags" : "Element,Container",
-        "technology" : "node.js"
       } ],
-      "description" : "Defines the Structurizr DSL and parses structurizr documentation to workspace objects",
+      "description" : "Defines the Structurizr DSL and parses Structurizr documentation to workspace objects",
       "documentation" : { },
-      "id" : "18",
+      "id" : "13",
       "name" : "Structurizr",
       "properties" : {
         "structurizr.dsl.identifier" : "structurizr"
@@ -283,25 +252,10 @@
       "tags" : "Element,Software System,Java"
     }, {
       "containers" : [ {
+        "description" : "Contains a .maniok documentation directory",
         "documentation" : { },
-        "id" : "22",
-        "name" : "GitHub API",
-        "properties" : {
-          "structurizr.dsl.identifier" : "github-api"
-        },
-        "relationships" : [ {
-          "description" : "retrieve .c4ke/workspace.json",
-          "destinationId" : "23",
-          "id" : "36",
-          "sourceId" : "22",
-          "tags" : "Relationship"
-        } ],
-        "tags" : "Element,Container"
-      }, {
-        "description" : "Contains a .c4ke documentation directory",
-        "documentation" : { },
-        "id" : "23",
-        "name" : "Client Repository",
+        "id" : "16",
+        "name" : "GitHub Client Repository",
         "properties" : {
           "structurizr.dsl.identifier" : "github-client-repo"
         },
@@ -309,7 +263,7 @@
         "technology" : "GitHub Repo"
       } ],
       "documentation" : { },
-      "id" : "21",
+      "id" : "15",
       "name" : "GitHub",
       "properties" : {
         "structurizr.dsl.identifier" : "github"
@@ -319,7 +273,7 @@
   },
   "name" : "Name",
   "properties" : {
-    "structurizr.inspection.error" : "49",
+    "structurizr.inspection.error" : "34",
     "structurizr.inspection.info" : "0",
     "structurizr.inspection.ignore" : "0",
     "structurizr.inspection.warning" : "0"
@@ -335,8 +289,12 @@
         "rankSeparation" : 300,
         "vertices" : false
       },
-      "containerId" : "4",
+      "containerId" : "3",
       "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
         "id" : "5",
         "x" : 0,
         "y" : 0
@@ -364,30 +322,26 @@
         "id" : "11",
         "x" : 0,
         "y" : 0
-      }, {
-        "id" : "12",
-        "x" : 0,
-        "y" : 0
       } ],
       "externalContainerBoundariesVisible" : false,
       "generatedKey" : true,
       "key" : "Component-001",
-      "name" : "Component View: core - lib",
+      "name" : "Component View: Maniok - Core",
       "order" : 4,
       "relationships" : [ {
-        "id" : "29"
+        "id" : "20"
+      }, {
+        "id" : "22"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "24"
+      }, {
+        "id" : "25"
       }, {
         "id" : "30"
       }, {
         "id" : "31"
-      }, {
-        "id" : "32"
-      }, {
-        "id" : "33"
-      }, {
-        "id" : "34"
-      }, {
-        "id" : "35"
       } ]
     } ],
     "configuration" : {
@@ -410,31 +364,45 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "4",
+        "id" : "3",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "13",
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
         "x" : 0,
         "y" : 0
       } ],
       "externalSoftwareSystemBoundariesVisible" : false,
       "key" : "CoreContainerView",
-      "name" : "Container View: core",
+      "name" : "Container View: Maniok",
       "order" : 2,
       "relationships" : [ {
-        "id" : "24"
+        "id" : "17"
       }, {
-        "id" : "26"
+        "id" : "19"
+      }, {
+        "id" : "21"
+      }, {
+        "id" : "27"
+      }, {
+        "id" : "33"
       } ],
-      "softwareSystemId" : "3"
+      "softwareSystemId" : "2"
     }, {
       "automaticLayout" : {
         "applied" : false,
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
-        "rankDirection" : "TopBottom",
+        "rankDirection" : "LeftRight",
         "rankSeparation" : 300,
         "vertices" : false
       },
@@ -443,11 +411,11 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "22",
+        "id" : "2",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "23",
+        "id" : "16",
         "x" : 0,
         "y" : 0
       } ],
@@ -456,11 +424,13 @@
       "name" : "Container View: GitHub",
       "order" : 3,
       "relationships" : [ {
-        "id" : "27"
+        "id" : "18"
       }, {
-        "id" : "36"
+        "id" : "28"
+      }, {
+        "id" : "32"
       } ],
-      "softwareSystemId" : "21"
+      "softwareSystemId" : "15"
     } ],
     "systemContextViews" : [ {
       "automaticLayout" : {
@@ -468,7 +438,7 @@
         "edgeSeparation" : 0,
         "implementation" : "Graphviz",
         "nodeSeparation" : 300,
-        "rankDirection" : "TopBottom",
+        "rankDirection" : "LeftRight",
         "rankSeparation" : 300,
         "vertices" : false
       },
@@ -477,19 +447,27 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "3",
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
         "x" : 0,
         "y" : 0
       } ],
       "enterpriseBoundaryVisible" : true,
       "generatedKey" : true,
       "key" : "SystemContext-001",
-      "name" : "System Context View: core",
+      "name" : "System Context View: Maniok",
       "order" : 1,
       "relationships" : [ {
-        "id" : "25"
+        "id" : "18"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "33"
       } ],
-      "softwareSystemId" : "3"
+      "softwareSystemId" : "2"
     } ]
   }
 }

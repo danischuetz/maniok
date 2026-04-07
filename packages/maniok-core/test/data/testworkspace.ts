@@ -91,14 +91,14 @@ export const testWorkspace: SzrWorkspace = {
                         description:
                             'A web application for consumers of technical software documentation written using the Structurizr DSL',
                         id: '4',
-                        name: 'c4ke-webapp',
+                        name: 'maniok-webapp',
                         properties: {
-                            'structurizr.dsl.identifier': 'c4ke-webapp'
+                            'structurizr.dsl.identifier': 'maniok-webapp'
                         },
                         relationships: [
                             {
                                 description:
-                                    'retrieve .c4ke/workspace.json from client repo at given URL',
+                                    'retrieve .maniok/workspace.json from client repo at given URL',
                                 destinationId: '21',
                                 id: '31',
                                 sourceId: '4',
@@ -106,7 +106,7 @@ export const testWorkspace: SzrWorkspace = {
                             },
                             {
                                 description:
-                                    'retrieve .c4ke/workspace.json from client repo at given URL',
+                                    'retrieve .maniok/workspace.json from client repo at given URL',
                                 destinationId: '20',
                                 id: '32',
                                 linkedRelationshipId: '31',
@@ -152,7 +152,7 @@ export const testWorkspace: SzrWorkspace = {
                         id: '5',
                         name: 'dsl-exporter',
                         properties: {
-                            'structurizr.dsl.identifier': 'c4ke-dsl-exporter'
+                            'structurizr.dsl.identifier': 'maniok-dsl-exporter'
                         },
                         tags: 'Element,Container',
                         technology: 'node.js'
@@ -308,9 +308,9 @@ export const testWorkspace: SzrWorkspace = {
                             'VSCode Extension. Renders the documentation into a webview as it would be presented in the webapp',
 
                         id: '16',
-                        name: 'c4ke-preview',
+                        name: 'maniok-preview',
                         properties: {
-                            'structurizr.dsl.identifier': 'c4ke-preview'
+                            'structurizr.dsl.identifier': 'maniok-preview'
                         },
                         relationships: [
                             {
@@ -337,20 +337,22 @@ export const testWorkspace: SzrWorkspace = {
                 description:
                     'A software system to minimize friction when creating, maintaining and consuming technical software documentation',
                 id: '3',
-                name: 'c4ke',
+                name: 'maniok',
                 properties: {
-                    'structurizr.dsl.identifier': 'c4ke'
+                    'structurizr.dsl.identifier': 'maniok'
                 },
                 relationships: [
                     {
-                        description: 'retrieve .c4ke/workspace.json from client repo at given URL',
+                        description:
+                            'retrieve .maniok/workspace.json from client repo at given URL',
                         destinationId: '21',
                         id: '33',
                         linkedRelationshipId: '31',
                         sourceId: '3'
                     },
                     {
-                        description: 'retrieve .c4ke/workspace.json from client repo at given URL',
+                        description:
+                            'retrieve .maniok/workspace.json from client repo at given URL',
                         destinationId: '20',
                         id: '34',
                         linkedRelationshipId: '31',
@@ -405,7 +407,7 @@ export const testWorkspace: SzrWorkspace = {
                         },
                         relationships: [
                             {
-                                description: 'retrieve .c4ke/workspace.json',
+                                description: 'retrieve .maniok/workspace.json',
                                 destinationId: '22',
                                 id: '46',
                                 sourceId: '21',
@@ -415,7 +417,7 @@ export const testWorkspace: SzrWorkspace = {
                         tags: 'Element,Container'
                     },
                     {
-                        description: 'Contains a .c4ke documentation directory',
+                        description: 'Contains a .maniok documentation directory',
 
                         id: '22',
                         name: 'Client Repository',
@@ -509,7 +511,7 @@ export const testWorkspace: SzrWorkspace = {
                 externalContainerBoundariesVisible: false,
                 generatedKey: true,
                 key: 'Component-001',
-                name: 'Component View: c4ke - core',
+                name: 'Component View: maniok - core',
                 order: 5,
                 relationships: [
                     {
@@ -560,7 +562,7 @@ export const testWorkspace: SzrWorkspace = {
                 externalContainerBoundariesVisible: false,
                 generatedKey: true,
                 key: 'Component-002',
-                name: 'Component View: c4ke - dsl-exporter',
+                name: 'Component View: maniok - dsl-exporter',
                 order: 6
             }
         ],
@@ -617,7 +619,7 @@ export const testWorkspace: SzrWorkspace = {
                 externalSoftwareSystemBoundariesVisible: false,
                 generatedKey: true,
                 key: 'Container-001',
-                name: 'Container View: c4ke',
+                name: 'Container View: maniok',
                 order: 2,
                 relationships: [
                     {
@@ -764,7 +766,7 @@ export const testWorkspace: SzrWorkspace = {
                 enterpriseBoundaryVisible: true,
                 generatedKey: true,
                 key: 'SystemContext-001',
-                name: 'System Context View: c4ke',
+                name: 'System Context View: maniok',
                 order: 1,
                 relationships: [
                     {

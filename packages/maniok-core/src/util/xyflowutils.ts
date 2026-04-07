@@ -6,6 +6,7 @@ import type { LayoutModel } from '../model/layout/layout'
 import type { LayoutElementModel } from '../model/layout/layoutelement'
 import type { LayoutEdgeModel } from '../model/layout/layoutedge'
 import type { DiagramModel } from '../model/diagram/diagrammodel'
+import { ElementTypeEnum } from '../model/shared/elementtype'
 
 export class XYFlowUtils {
     static toNodesAndEdges(diagram: DiagramModel): { nodes: Node[]; edges: Edge[] } {
@@ -55,10 +56,17 @@ export class XYFlowUtils {
     static toNodes(elements: ElementModel[], parentId?: string): Node[] {
         let nodes: Node[] = []
         for (const element of elements) {
+            const type: string =
+                element.metaData.type == ElementTypeEnum.Person
+                    ? 'person'
+                    : element.children.length > 0
+                      ? 'group'
+                      : 'element'
+
             nodes.push({
                 id: element.id,
                 parentId: parentId,
-                type: element.children.length > 0 ? 'group' : 'element',
+                type: type,
                 data: {
                     metaData: {
                         ...element.metaData,

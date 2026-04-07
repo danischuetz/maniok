@@ -26,9 +26,9 @@
         DocumentView
     } from 'maniok-core'
 
-    import type { PageData } from './$types'
+    import type { PageProps } from './$types'
 
-    let { data }: PageData = $props()
+    let { data }: PageProps = $props()
 
     let workspace: SzrWorkspace | undefined = $derived.by(() => {
         try {

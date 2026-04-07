@@ -7,5 +7,9 @@
                 "cmd": "echo 'Exporting C4 model to JSON...' && structurizr-cli export -workspace .maniok/workspace.dsl -format json -output .maniok"
             }
         ]
+    },
+    "github.copilot.enable": {
+        "*": true,
+        "structurizr": true
     }
 }

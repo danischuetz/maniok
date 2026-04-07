@@ -10,7 +10,7 @@
     import type { NavigationContextModel } from '../../../model/navigation/navigationcontext'
     import { getContext } from 'svelte'
     import { Maximize, Minimize } from 'lucide-svelte'
-
+    import PersonComponent from './person.svelte'
     interface Props {
         class?: string
         diagram: DiagramModel
@@ -35,12 +35,18 @@
     let isFocussed: boolean = $derived(navigationContext.diagramFocusId == diagram.id)
 
     const fitViewOptions = {
-        padding: 0.1,
+        padding: {
+            top: 0.1,
+            right: 0.1,
+            bottom: 0.2,
+            left: 0.1
+        },
         includeHiddenNodes: true
     }
 
     const nodeTypes = {
         element: ElementComponent,
+        person: PersonComponent,
         group: GroupComponent
     }
 
