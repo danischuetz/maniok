@@ -1,6 +1,5 @@
-# Webapp
+# Maniok
 
-## List of possible features
+The git-native solution for C4 architecture documentation - like Docusaurus for architects, with C4 diagrams-as-code but without the setup overhead.
 
-- png/svg rendering for documentation/images
-    - allows to include any image in the documentation
+https://app.maniok.io
