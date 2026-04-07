@@ -7,11 +7,13 @@ export default defineConfig({
     plugins: [tailwindcss(), sveltekit()],
     resolve: {
         alias: {
-            'c4ke-lib': fileURLToPath(new URL('./packages/c4ke-lib/src/index.ts', import.meta.url))
+            'maniok-core': fileURLToPath(
+                new URL('./packages/maniok-core/src/index.ts', import.meta.url)
+            )
         }
     },
     optimizeDeps: {
-        exclude: ['c4ke-lib']
+        exclude: ['maniok-core']
     },
     server: {
         fs: {

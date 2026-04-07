@@ -3,7 +3,7 @@ workspace {
 
     model {
         consumer = person "Consumer"
-        editor = person "Editor"
+        architect = person "Architect"
 
         core = softwareSystem "core" "Open core of the c4ke documentation system" {
             !docs markdown/opencore.md

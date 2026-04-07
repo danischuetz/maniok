@@ -13,6 +13,7 @@ export { WorkspaceService } from './service/workspaceservice'
 export { DiagramService } from './service/diagramservice'
 export { MarkdownService } from './service/markdownservice'
 export { DocumentService } from './service/documentservice'
+export { NotificationService } from './service/notificationservice'
 
 export { default as NavigationProvider } from './components/navigation/navigationprovider.svelte'
 

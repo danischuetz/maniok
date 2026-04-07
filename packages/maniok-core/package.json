@@ -1,5 +1,5 @@
 {
-    "name": "c4ke-lib",
+    "name": "maniok-core",
     "version": "1.0.0",
     "description": "Core logic and components to view and navigate documentation described by a Structurizr workspace object",
     "license": "MIT",

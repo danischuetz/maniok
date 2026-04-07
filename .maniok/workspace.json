@@ -51,9 +51,9 @@
       "tags" : "Element,Person"
     }, {
       "id" : "2",
-      "name" : "Editor",
+      "name" : "Architect",
       "properties" : {
-        "structurizr.dsl.identifier" : "editor"
+        "structurizr.dsl.identifier" : "architect"
       },
       "tags" : "Element,Person"
     } ],

@@ -163,7 +163,7 @@ export const testWorkspace: SzrWorkspace = {
                                 id: '8',
                                 name: 'API',
                                 properties: {
-                                    'structurizr.dsl.identifier': 'c4ke-lib-api'
+                                    'structurizr.dsl.identifier': 'core-api'
                                 },
                                 relationships: [
                                     {
@@ -217,7 +217,7 @@ export const testWorkspace: SzrWorkspace = {
                                 id: '9',
                                 name: 'Diagram',
                                 properties: {
-                                    'structurizr.dsl.identifier': 'c4ke-lib-diagram'
+                                    'structurizr.dsl.identifier': 'core-diagram'
                                 },
                                 relationships: [
                                     {
@@ -236,7 +236,7 @@ export const testWorkspace: SzrWorkspace = {
                                 id: '10',
                                 name: 'Diagram Parser',
                                 properties: {
-                                    'structurizr.dsl.identifier': 'c4ke-lib-diagramparser'
+                                    'structurizr.dsl.identifier': 'core-diagramparser'
                                 },
                                 tags: 'Element,Component'
                             },
@@ -246,7 +246,7 @@ export const testWorkspace: SzrWorkspace = {
                                 id: '11',
                                 name: 'Diagram Navigation',
                                 properties: {
-                                    'structurizr.dsl.identifier': 'c4ke-lib-diagramnavigation'
+                                    'structurizr.dsl.identifier': 'core-diagramnavigation'
                                 },
                                 tags: 'Element,Component'
                             },
@@ -257,7 +257,7 @@ export const testWorkspace: SzrWorkspace = {
                                 id: '12',
                                 name: 'Layout Engine',
                                 properties: {
-                                    'structurizr.dsl.identifier': 'c4ke-lib-layoutEngine'
+                                    'structurizr.dsl.identifier': 'core-layoutEngine'
                                 },
                                 tags: 'Element,Component'
                             },
@@ -267,7 +267,7 @@ export const testWorkspace: SzrWorkspace = {
                                 id: '13',
                                 name: 'Document',
                                 properties: {
-                                    'structurizr.dsl.identifier': 'c4ke-lib-document'
+                                    'structurizr.dsl.identifier': 'core-document'
                                 },
                                 tags: 'Element,Component'
                             },
@@ -277,7 +277,7 @@ export const testWorkspace: SzrWorkspace = {
                                 id: '14',
                                 name: 'Workspace Parser',
                                 properties: {
-                                    'structurizr.dsl.identifier': 'c4ke-lib-documentparser'
+                                    'structurizr.dsl.identifier': 'core-documentparser'
                                 },
                                 tags: 'Element,Component'
                             },
@@ -287,7 +287,7 @@ export const testWorkspace: SzrWorkspace = {
                                 id: '15',
                                 name: 'Document Navigation',
                                 properties: {
-                                    'structurizr.dsl.identifier': 'c4ke-lib-documentnavigation'
+                                    'structurizr.dsl.identifier': 'core-documentnavigation'
                                 },
                                 tags: 'Element,Component'
                             }
@@ -296,9 +296,9 @@ export const testWorkspace: SzrWorkspace = {
                             'Core logic and components to view and navigate documentation described by a Structurizr workspace object',
 
                         id: '7',
-                        name: 'c4ke-lib',
+                        name: 'core',
                         properties: {
-                            'structurizr.dsl.identifier': 'c4ke-lib'
+                            'structurizr.dsl.identifier': 'core'
                         },
                         tags: 'Element,Container',
                         technology: 'node.js'
@@ -509,7 +509,7 @@ export const testWorkspace: SzrWorkspace = {
                 externalContainerBoundariesVisible: false,
                 generatedKey: true,
                 key: 'Component-001',
-                name: 'Component View: c4ke - c4ke-lib',
+                name: 'Component View: c4ke - core',
                 order: 5,
                 relationships: [
                     {
