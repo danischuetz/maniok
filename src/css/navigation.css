@@ -27,7 +27,7 @@
 
 /* Document Navigation */
 .document-tree {
-    @apply  pt-4 gap-6;
+    @apply pt-4 gap-6;
 }
 
 .document-tree ul {
@@ -35,7 +35,7 @@
 }
 
 .document-tree button {
-    @apply btn justify-start px-2 text-base text-surface-300-500;
+    @apply btn justify-start px-4 text-base text-surface-300-500;
 }
 
 .document-tree button.active {
@@ -43,7 +43,7 @@
 }
 
 .document-tree a {
-    @apply text-base flex px-2 py-1 flex-1 w-full justify-start;
+    @apply text-base flex px-4 py-1 flex-1 w-full justify-start;
 }
 
 .document-tree a.active {

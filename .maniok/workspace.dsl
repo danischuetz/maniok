@@ -21,7 +21,7 @@ workspace {
         }
 
         structurizr = softwareSystem "Structurizr" "Defines the Structurizr DSL and parses Structurizr documentation to workspace objects" "Java" {
-            structurizr-cli = container "Structurizr CLI" "Exports structurizr documentation to workspace.json object" "Java"
+            structurizr-docker = container "Structurizr Docker Image" "" "Docker"
         }
 
         github = softwareSystem "GitHub" {
@@ -38,8 +38,9 @@ workspace {
         webapp -> core-components "Render diagram & document models"
         webapp -> core-notificationservice "Show warnings, info, errors etc."
         webapp -> core-workspaceservice "Parse workspace JSON"
-
         webapp -> github-client-repo "Fetch documentation from client repo"
+
+        editor -> structurizr-docker "Run locally to parse workspace JSON on save and to provide live preview"
 
         core-components -> core-layoutservice "Calculate diagram layout"
         core-components -> core-markdownservice "Render Markdown"

@@ -3,7 +3,7 @@
   "description" : "Description",
   "documentation" : {
     "sections" : [ {
-      "content" : "# What is it?\n\nTODO: add editing interactions to architecture...\n\nThe git-native solution for C4 architecture documentation - like Docusaurus for architects, with C4 diagrams-as-code but without the setup overhead.\n\nThe whole documentation lives in a single file in your github repository, `.maniok/workspace.json`, which is then rendered by the maniok webapp.\n\nHere is how it works:\n\n![core system overview](embed:CoreContainerView)\n\n## GitHub\n\nFor a test, let's checkout the github container view:\n\n![github system overview](embed:GitHubContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enables AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## Requirements\n\n- Github hosted repositories only\n\n## Quick Start\n\n### Documentation Setup\n\n- In a repository root, create a folder called \".maniok\"\n- Download the [zipped default template](https://github.com/.../templates/default)\n- Extract it to the .maniok folder\n- Commit the changes\n- Et voila, your documentation is online!\n\n### Public Repositories\n\n- Visit app.maniok.io\n- Type your public repo URL\n\n### Private Repositories\n\n- Install the Maniok GitHub App for your repository\n- Register / Log-In to your Maniok account at app.maniok.io\n- Connect to your GitHub\n",
+      "content" : "# What is it?\n\nThe git-native solution for C4 architecture documentation - like Docusaurus for architects, without the setup & hosting overhead.\n\n- Model & document the architecture using Markdown and the Structurizr DSL\n- Document alongside code - documentation lives in your GitHub repositories\n- Viewers of your documentation visit [https://app.maniok.io](https://app.maniok.io) and enter the repo url\n\n# How does it work?\n\nThe documentation must be placed in a dedicated folder `.maniok`, located at the root of each documented Github repository. Running the editor docker image, the documentation is automatically exported to a single file `<repository root>/.maniok/workspace.json` on documentation change, when running the\n\nIn a nutshell:\n\n![core system overview](embed:CoreContainerView)\n\n## GitHub\n\nFor a test, let's checkout the github container view:\n\n![github system overview](embed:GitHubContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enables AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## Requirements\n\n- Github hosted repositories only\n\n## Quick Start\n\n### Documentation Setup\n\n- In a repository root, create a folder called \".maniok\"\n- Download the [zipped default template](https://github.com/.../templates/default)\n- Extract it to the .maniok folder\n- Commit the changes\n- Et voila, your documentation is online!\n\n### Public Repositories\n\n- Visit app.maniok.io\n- Type your public repo URL\n\n### Private Repositories\n\n- Install the Maniok GitHub App for your repository\n- Register / Log-In to your Maniok account at app.maniok.io\n- Connect to your GitHub\n",
       "format" : "Markdown",
       "order" : 1,
       "title" : ""
@@ -38,14 +38,14 @@
       }, {
         "description" : "Push documentation changes",
         "destinationId" : "16",
-        "id" : "32",
+        "id" : "36",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
         "description" : "Push documentation changes",
         "destinationId" : "15",
-        "id" : "33",
-        "linkedRelationshipId" : "32",
+        "id" : "37",
+        "linkedRelationshipId" : "36",
         "sourceId" : "1"
       } ],
       "tags" : "Element,Person"
@@ -117,13 +117,13 @@
           "relationships" : [ {
             "description" : "Calculate diagram layout",
             "destinationId" : "6",
-            "id" : "30",
+            "id" : "34",
             "sourceId" : "10",
             "tags" : "Relationship"
           }, {
             "description" : "Render Markdown",
             "destinationId" : "7",
-            "id" : "31",
+            "id" : "35",
             "sourceId" : "10",
             "tags" : "Relationship"
           } ],
@@ -206,6 +206,19 @@
         "properties" : {
           "structurizr.dsl.identifier" : "editor"
         },
+        "relationships" : [ {
+          "description" : "Run locally to parse workspace JSON on save and to provide live preview",
+          "destinationId" : "14",
+          "id" : "30",
+          "sourceId" : "12",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Run locally to parse workspace JSON on save and to provide live preview",
+          "destinationId" : "13",
+          "id" : "31",
+          "linkedRelationshipId" : "30",
+          "sourceId" : "12"
+        } ],
         "tags" : "Element,Container",
         "technology" : "Docker"
       } ],
@@ -228,19 +241,30 @@
         "id" : "29",
         "linkedRelationshipId" : "26",
         "sourceId" : "2"
+      }, {
+        "description" : "Run locally to parse workspace JSON on save and to provide live preview",
+        "destinationId" : "14",
+        "id" : "32",
+        "linkedRelationshipId" : "30",
+        "sourceId" : "2"
+      }, {
+        "description" : "Run locally to parse workspace JSON on save and to provide live preview",
+        "destinationId" : "13",
+        "id" : "33",
+        "linkedRelationshipId" : "30",
+        "sourceId" : "2"
       } ],
       "tags" : "Element,Software System"
     }, {
       "containers" : [ {
-        "description" : "Exports structurizr documentation to workspace.json object",
         "documentation" : { },
         "id" : "14",
-        "name" : "Structurizr CLI",
+        "name" : "Structurizr Docker Image",
         "properties" : {
-          "structurizr.dsl.identifier" : "structurizr-cli"
+          "structurizr.dsl.identifier" : "structurizr-docker"
         },
         "tags" : "Element,Container",
-        "technology" : "Java"
+        "technology" : "Docker"
       } ],
       "description" : "Defines the Structurizr DSL and parses Structurizr documentation to workspace objects",
       "documentation" : { },
@@ -273,7 +297,7 @@
   },
   "name" : "Name",
   "properties" : {
-    "structurizr.inspection.error" : "34",
+    "structurizr.inspection.error" : "36",
     "structurizr.inspection.info" : "0",
     "structurizr.inspection.ignore" : "0",
     "structurizr.inspection.warning" : "0"
@@ -339,9 +363,9 @@
       }, {
         "id" : "25"
       }, {
-        "id" : "30"
+        "id" : "34"
       }, {
-        "id" : "31"
+        "id" : "35"
       } ]
     } ],
     "configuration" : {
@@ -376,6 +400,10 @@
         "x" : 0,
         "y" : 0
       }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
         "id" : "15",
         "x" : 0,
         "y" : 0
@@ -393,7 +421,9 @@
       }, {
         "id" : "27"
       }, {
-        "id" : "33"
+        "id" : "31"
+      }, {
+        "id" : "37"
       } ],
       "softwareSystemId" : "2"
     }, {
@@ -428,7 +458,7 @@
       }, {
         "id" : "28"
       }, {
-        "id" : "32"
+        "id" : "36"
       } ],
       "softwareSystemId" : "15"
     } ],
@@ -451,6 +481,10 @@
         "x" : 0,
         "y" : 0
       }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
         "id" : "15",
         "x" : 0,
         "y" : 0
@@ -466,6 +500,8 @@
         "id" : "29"
       }, {
         "id" : "33"
+      }, {
+        "id" : "37"
       } ],
       "softwareSystemId" : "2"
     } ]

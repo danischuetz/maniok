@@ -1,12 +1,16 @@
 # What is it?
 
-TODO: add editing interactions to architecture...
+The git-native solution for C4 architecture documentation - like Docusaurus for architects, without the setup & hosting overhead.
 
-The git-native solution for C4 architecture documentation - like Docusaurus for architects, with C4 diagrams-as-code but without the setup overhead.
+- Model & document the architecture using Markdown and the Structurizr DSL
+- Document alongside code - documentation lives in your GitHub repositories
+- Viewers of your documentation visit [https://app.maniok.io](https://app.maniok.io) and enter the repo url
 
-The whole documentation lives in a single file in your github repository, `.maniok/workspace.json`, which is then rendered by the maniok webapp.
+# How does it work?
 
-Here is how it works:
+The documentation must be placed in a dedicated folder `.maniok`, located at the root of each documented Github repository. Running the editor docker image, the documentation is automatically exported to a single file `<repository root>/.maniok/workspace.json` on documentation change, when running the
+
+In a nutshell:
 
 ![core system overview](embed:CoreContainerView)
 

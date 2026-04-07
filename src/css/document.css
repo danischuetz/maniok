@@ -8,7 +8,7 @@
 }
 
 .markdown-body p code {
-    @apply bg-surface-500/40 p-0.5 rounded-sm font-mono text-sm;
+    @apply bg-surface-100/30 px-1 py-0.5 rounded-sm font-mono font-light text-sm;
 }
 
 .markdown-body h1 {
