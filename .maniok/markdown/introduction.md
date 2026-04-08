@@ -8,7 +8,7 @@ Based on an ODI (Outcome Driven Innovation) resarch of current pain points in do
 - Document alongside code - documentation lives in your GitHub repositories
 - Direct access [https://app.maniok.io](https://app.maniok.io) and the repository url
 
-For documentation to be discovered by the Maniok webapp, it must be placed in a dedicated folder `.maniok` at the root of each documented Github repository. Running the Maniok-Editor docker image, the documentation is automatically exported to a single file `<repository root>/.maniok/workspace.json` on save and can be previewed locally.
+For documentation to be discovered by the Maniok webapp, it must be placed in a dedicated folder `.maniok` at the root of each documented Github repository.
 
 ![Maniok Container View](embed:CoreContainerView)
 
@@ -39,6 +39,15 @@ This is a very first proof of concept to validate the concept and to collect fee
     - Navigation
         - Switching to chapter in other document node doesn't scroll to correct chapter
 - Editing with auto-export has to be set up manually, see chapter [Editing](#editing) (It is planned to either provide a docker image or a VSCode extension for export/preview)
+
+## Contact, Updates & Early Access
+
+You can contact me via
+
+- E-Mail: <daniel@danielschuetz.dev>
+- LinkedIn: <https://www.linkedin.com/in/schuetzdaniel>
+
+If you want to receive updates and be considered for early access to the developed tooling, you can leave your email address here: <https://forms.gle/pt5bWiQCqMBqNqmf7>
 
 # Quick Start
 

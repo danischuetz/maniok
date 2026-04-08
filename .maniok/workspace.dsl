@@ -14,6 +14,7 @@ workspace {
                 core-markdownservice = component "Markdown Service" "Renders markdown content to html"
                 core-notificationservice = component "Notification Service" "Enable notification registrations which should be shown to the user"
                 core-workspaceservice = component "Workspace Service" "Creates a Structurizr workspace model from a Structurizr workspace JSON"
+                core-repositoryservice = component "Repository Service" "Handles repository interactions and resource loading"
 
                 core-components = component "Maniok Component Library" "Svelte Components to present diagrams, documents and navigation" "Svelte"
             }
@@ -43,6 +44,7 @@ workspace {
         webapp -> core-components "Render diagram & document models"
         webapp -> core-notificationservice "Show warnings, info, errors etc."
         webapp -> core-workspaceservice "Parse workspace JSON"
+        webapp -> core-repositoryservice "Load resources from git repositories"
         webapp -> github-client-repo "Fetch documentation from client repo"
 
         editor -> structurizr-docker "Run locally to parse workspace JSON on save and to provide live preview"

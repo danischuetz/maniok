@@ -13,7 +13,8 @@
         BurgerMenu,
         DocumentService,
         LightSwitch,
-        Logo
+        Logo,
+        UrlSelector
     } from 'maniok-core'
     import {
         NavigationProvider,
@@ -30,14 +31,18 @@
 
     let { data }: PageProps = $props()
 
+    let repositoryUrl: string = $state('https://github.com/danischuetz/maniok')
+
+    function onRepositoryUrlConfirmation() {
+        if (!repositoryUrl) return
+        console.log('Repository URL confirmed:', repositoryUrl)
+    }
+
     let workspace: SzrWorkspace | undefined = $derived.by(() => {
         try {
             return WorkspaceService.parse(data.workspaceJson)
         } catch (error) {
-            NotificationService.notifyError({
-                title: 'Failed to load workspace',
-                description: error instanceof Error ? error.message : 'An unknown error occurred'
-            })
+            NotificationService.notifyError('Failed to load workspace', error)
             return undefined
         }
     })
@@ -48,10 +53,7 @@
         try {
             return DiagramService.parse(workspace)
         } catch (error) {
-            NotificationService.notifyError({
-                title: 'Failed to parse diagrams',
-                description: error instanceof Error ? error.message : 'An unknown error occurred'
-            })
+            NotificationService.notifyError('Failed to parse diagrams', error)
             return []
         }
     })
@@ -62,10 +64,7 @@
         try {
             return DocumentService.generateDocumentTree(workspace)
         } catch (error) {
-            NotificationService.notifyError({
-                title: 'Failed to generate document tree',
-                description: error instanceof Error ? error.message : 'An unknown error occurred'
-            })
+            NotificationService.notifyError('Failed to generate document tree', error)
             return undefined
         }
     })
@@ -80,33 +79,53 @@
     )
 </script>
 
-{#snippet navElements()}
-    <ModeNavigation />
-    <DiagramNavigation {diagrams} bind:selectedDiagram class="flex flex-col self-stretch" />
-    {#if documentRoot}
-        <DocumentNavigation {documentRoot} bind:selectedDocumentNode />
-    {/if}
-{/snippet}
-
 <NavigationProvider>
     <div class="flex flex-col w-screen h-screen app overflow-hidden">
         <!-- Title Bar -->
-        <header class="flex justify-between items-center w-full p-4 titlebar">
+        <header class="flex justify-between items-center w-full p-4 titlebar gap-4">
             <div class="flex items-center gap-4">
                 <BurgerMenu class="p-0 lg:hidden">
                     <Navigation class="navigation-burger">
-                        {@render navElements()}
+                        <ModeNavigation />
+                        <DiagramNavigation
+                            {diagrams}
+                            bind:selectedDiagram
+                            class="flex flex-col self-stretch"
+                        />
+                        <div class="flex flex-col">
+                            <UrlSelector
+                                class="m-2 h-8"
+                                {repositoryUrl}
+                                onConfirmation={onRepositoryUrlConfirmation}
+                            />
+                            {#if documentRoot}
+                                <DocumentNavigation {documentRoot} bind:selectedDocumentNode />
+                            {/if}
+                        </div>
                     </Navigation>
                 </BurgerMenu>
                 <Logo class="h-8 fill-primary-500" />
             </div>
+            <UrlSelector
+                class="flex-1 max-w-lg h-8 hidden lg:flex"
+                {repositoryUrl}
+                onConfirmation={onRepositoryUrlConfirmation}
+            />
             <LightSwitch class="size-8 stroke-1" />
         </header>
 
         <!-- Body -->
         <div class="w-full h-full flex flex-row overflow-hidden">
             <Navigation class="hidden lg:flex navigation">
-                {@render navElements()}
+                <ModeNavigation />
+                <DiagramNavigation
+                    {diagrams}
+                    bind:selectedDiagram
+                    class="flex flex-col self-stretch"
+                />
+                {#if documentRoot}
+                    <DocumentNavigation {documentRoot} bind:selectedDocumentNode />
+                {/if}
             </Navigation>
             <Content class="flex-1 content">
                 <DiagramView diagram={selectedDiagram} />

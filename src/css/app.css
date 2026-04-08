@@ -11,6 +11,7 @@
 @import './navigation.css';
 @import './diagram.css';
 @import './document.css';
+@import './repository.css';
 
 @custom-variant dark (&:where([data-mode="dark"], [data-mode="dark"] *));
 

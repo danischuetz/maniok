@@ -28,6 +28,8 @@ export { default as DiagramView } from './components/content/diagramview.svelte'
 export { default as DocumentView } from './components/content/documentview.svelte'
 export { default as DiagramFocusModal } from './components/content/diagramfocusmodal.svelte'
 
+export { default as UrlSelector } from './components/repository/urlselector.svelte'
+
 export { default as Toaster } from './components/util/toaster.svelte'
 export { default as LightSwitch } from './components/util/lightswitch.svelte'
 export { default as Logo } from './components/util/logo.svelte'

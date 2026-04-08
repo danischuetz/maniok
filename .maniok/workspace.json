@@ -3,7 +3,7 @@
   "description" : "Description",
   "documentation" : {
     "sections" : [ {
-      "content" : "# What is it?\n\nThe git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation is rendered from the structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/.maniok).\n\nBased on an ODI (Outcome Driven Innovation) resarch of current pain points in documenting software architecture.\n\n- Model and document architecture using Markdown and the Structurizr DSL\n- Document alongside code - documentation lives in your GitHub repositories\n- Direct access [https://app.maniok.io](https://app.maniok.io) and the repository url\n\nFor documentation to be discovered by the Maniok webapp, it must be placed in a dedicated folder `.maniok` at the root of each documented Github repository. Running the Maniok-Editor docker image, the documentation is automatically exported to a single file `<repository root>/.maniok/workspace.json` on save and can be previewed locally.\n\n![Maniok Container View](embed:CoreContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enable AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## POC\n\nThis is a very first proof of concept to validate the concept and to collect feedback.\n\n- It does currently work on **open source repositories only**\n- The Structurizr DSL is only partially supported (Markdown, SystemContextViews, ContainerViews, ComponentViews)\n- Known issues\n    - Diagrams\n        - Missing edge routing (on some diagrams edges collide with nodes)\n        - Edge label collisons (Sometimes labels hide other labels / label-edge association not clear)\n        - Edge label missing for multiple connections between same nodes\n    - Navigation\n        - Switching to chapter in other document node doesn't scroll to correct chapter\n- Editing with auto-export has to be set up manually, see chapter [Editing](#editing) (It is planned to either provide a docker image or a VSCode extension for export/preview)\n\n# Quick Start\n\n- In a public repository, create a folder called \".maniok\"\n- Download the [example documentation](https://github.com/danischuetz/maniok/blob/example.zip) (which is the documentation you are currently reading)\n- Extract it to the .maniok folder\n- Commit the changes\n- Visit [https://app.maniok.io](https://app.maniok.io) and type your repository url\n\n## Editing\n\nIn order for the documentation to be rendered it needs to be exported to a workspace.json file inside the `.maniok` directory.\n\nA workaround to automatically do that on save of any documentation file in VSCode is to install the `emeraldwalk run-on-save` extension and configure it to run the structurizr-cli export command.\n\n1. Install the structurizr-cli (e.g. using brew)\n2. Install the VSCode run on save extension from `emeraldwalk`\n3. Configure it accordingly ([example](https://github.com/danischuetz/maniok/blob/main/.vscode/settings.json))\n\nNow, the workspace.json should be generated on save (see terminal output for `Run On Save` to catch any errors)\n\n## Live Preview\n\nFor live preview, you can clone [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok) locally and rename the .env.example file to .env and have the workspace path within the file point to your workspace.json.\n",
+      "content" : "# What is it?\n\nThe git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation is rendered from the structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/.maniok).\n\nBased on an ODI (Outcome Driven Innovation) resarch of current pain points in documenting software architecture.\n\n- Model and document architecture using Markdown and the Structurizr DSL\n- Document alongside code - documentation lives in your GitHub repositories\n- Direct access [https://app.maniok.io](https://app.maniok.io) and the repository url\n\nFor documentation to be discovered by the Maniok webapp, it must be placed in a dedicated folder `.maniok` at the root of each documented Github repository.\n\n![Maniok Container View](embed:CoreContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enable AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## POC\n\nThis is a very first proof of concept to validate the concept and to collect feedback.\n\n- It does currently work on **open source repositories only**\n- The Structurizr DSL is only partially supported (Markdown, SystemContextViews, ContainerViews, ComponentViews)\n- Known issues\n    - Diagrams\n        - Missing edge routing (on some diagrams edges collide with nodes)\n        - Edge label collisons (Sometimes labels hide other labels / label-edge association not clear)\n        - Edge label missing for multiple connections between same nodes\n    - Navigation\n        - Switching to chapter in other document node doesn't scroll to correct chapter\n- Editing with auto-export has to be set up manually, see chapter [Editing](#editing) (It is planned to either provide a docker image or a VSCode extension for export/preview)\n\n## Contact, Updates & Early Access\n\nYou can contact me via\n\n- E-Mail: <daniel@danielschuetz.dev>\n- LinkedIn: <https://www.linkedin.com/in/schuetzdaniel>\n\nIf you want to receive updates and be considered for early access to the developed tooling, you can leave your email address here: <https://forms.gle/pt5bWiQCqMBqNqmf7>\n\n# Quick Start\n\n- In a public repository, create a folder called \".maniok\"\n- Download the [example documentation](https://github.com/danischuetz/maniok/blob/example.zip) (which is the documentation you are currently reading)\n- Extract it to the .maniok folder\n- Commit the changes\n- Visit [https://app.maniok.io](https://app.maniok.io) and type your repository url\n\n## Editing\n\nIn order for the documentation to be rendered it needs to be exported to a workspace.json file inside the `.maniok` directory.\n\nA workaround to automatically do that on save of any documentation file in VSCode is to install the `emeraldwalk run-on-save` extension and configure it to run the structurizr-cli export command.\n\n1. Install the structurizr-cli (e.g. using brew)\n2. Install the VSCode run on save extension from `emeraldwalk`\n3. Configure it accordingly ([example](https://github.com/danischuetz/maniok/blob/main/.vscode/settings.json))\n\nNow, the workspace.json should be generated on save (see terminal output for `Run On Save` to catch any errors)\n\n## Live Preview\n\nFor live preview, you can clone [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok) locally and rename the .env.example file to .env and have the workspace path within the file point to your workspace.json.\n",
       "format" : "Markdown",
       "order" : 1,
       "title" : ""
@@ -19,45 +19,45 @@
       },
       "relationships" : [ {
         "description" : "View documentation",
-        "destinationId" : "11",
-        "id" : "18",
+        "destinationId" : "12",
+        "id" : "19",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
         "description" : "View documentation",
         "destinationId" : "2",
-        "id" : "19",
-        "linkedRelationshipId" : "18",
+        "id" : "20",
+        "linkedRelationshipId" : "19",
         "sourceId" : "1"
       }, {
         "description" : "Edit & preview documentation",
-        "destinationId" : "12",
-        "id" : "20",
-        "sourceId" : "1",
-        "tags" : "Relationship"
-      }, {
-        "description" : "Push documentation changes",
-        "destinationId" : "17",
+        "destinationId" : "13",
         "id" : "21",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
         "description" : "Push documentation changes",
-        "destinationId" : "16",
+        "destinationId" : "18",
         "id" : "22",
-        "linkedRelationshipId" : "21",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Push documentation changes",
+        "destinationId" : "17",
+        "id" : "23",
+        "linkedRelationshipId" : "22",
         "sourceId" : "1"
       }, {
         "description" : "Model systems and write documentation",
-        "destinationId" : "14",
-        "id" : "23",
+        "destinationId" : "15",
+        "id" : "24",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
         "description" : "Model systems and write documentation",
-        "destinationId" : "13",
-        "id" : "24",
-        "linkedRelationshipId" : "23",
+        "destinationId" : "14",
+        "id" : "25",
+        "linkedRelationshipId" : "24",
         "sourceId" : "1"
       } ],
       "tags" : "Element,Person"
@@ -119,9 +119,18 @@
           },
           "tags" : "Element,Component"
         }, {
-          "description" : "Svelte Components to present diagrams, documents and navigation",
+          "description" : "Handles repository interactions and resource loading",
           "documentation" : { },
           "id" : "10",
+          "name" : "Repository Service",
+          "properties" : {
+            "structurizr.dsl.identifier" : "core-repositoryservice"
+          },
+          "tags" : "Element,Component"
+        }, {
+          "description" : "Svelte Components to present diagrams, documents and navigation",
+          "documentation" : { },
+          "id" : "11",
           "name" : "Maniok Component Library",
           "properties" : {
             "structurizr.dsl.identifier" : "core-components"
@@ -129,14 +138,14 @@
           "relationships" : [ {
             "description" : "Calculate diagram layout",
             "destinationId" : "6",
-            "id" : "39",
-            "sourceId" : "10",
+            "id" : "41",
+            "sourceId" : "11",
             "tags" : "Relationship"
           }, {
             "description" : "Render Markdown",
             "destinationId" : "7",
-            "id" : "40",
-            "sourceId" : "10",
+            "id" : "42",
+            "sourceId" : "11",
             "tags" : "Relationship"
           } ],
           "tags" : "Element,Component",
@@ -161,7 +170,7 @@
       }, {
         "description" : "Renders the documentation for a selected public GitHub repository",
         "documentation" : { },
-        "id" : "11",
+        "id" : "12",
         "name" : "Maniok Webapp",
         "properties" : {
           "structurizr.dsl.identifier" : "webapp"
@@ -169,74 +178,80 @@
         "relationships" : [ {
           "description" : "Build diagram model tree",
           "destinationId" : "4",
-          "id" : "25",
-          "sourceId" : "11",
+          "id" : "26",
+          "sourceId" : "12",
           "tags" : "Relationship"
         }, {
           "description" : "Build diagram model tree",
           "destinationId" : "3",
-          "id" : "26",
-          "linkedRelationshipId" : "25",
-          "sourceId" : "11"
+          "id" : "27",
+          "linkedRelationshipId" : "26",
+          "sourceId" : "12"
         }, {
           "description" : "Build document model tree",
           "destinationId" : "5",
-          "id" : "27",
-          "sourceId" : "11",
+          "id" : "28",
+          "sourceId" : "12",
           "tags" : "Relationship"
         }, {
           "description" : "Render diagram & document models",
-          "destinationId" : "10",
-          "id" : "28",
-          "sourceId" : "11",
+          "destinationId" : "11",
+          "id" : "29",
+          "sourceId" : "12",
           "tags" : "Relationship"
         }, {
           "description" : "Show warnings, info, errors etc.",
           "destinationId" : "8",
-          "id" : "29",
-          "sourceId" : "11",
+          "id" : "30",
+          "sourceId" : "12",
           "tags" : "Relationship"
         }, {
           "description" : "Parse workspace JSON",
           "destinationId" : "9",
-          "id" : "30",
-          "sourceId" : "11",
+          "id" : "31",
+          "sourceId" : "12",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Load resources from git repositories",
+          "destinationId" : "10",
+          "id" : "32",
+          "sourceId" : "12",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetch documentation from client repo",
+          "destinationId" : "18",
+          "id" : "33",
+          "sourceId" : "12",
           "tags" : "Relationship"
         }, {
           "description" : "Fetch documentation from client repo",
           "destinationId" : "17",
-          "id" : "31",
-          "sourceId" : "11",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Fetch documentation from client repo",
-          "destinationId" : "16",
-          "id" : "32",
-          "linkedRelationshipId" : "31",
-          "sourceId" : "11"
+          "id" : "34",
+          "linkedRelationshipId" : "33",
+          "sourceId" : "12"
         } ],
         "tags" : "Element,Container",
         "technology" : "SvelteKit"
       }, {
         "description" : "Docker image to support live preview and export-on-save",
         "documentation" : { },
-        "id" : "12",
+        "id" : "13",
         "name" : "Maniok Editor",
         "properties" : {
           "structurizr.dsl.identifier" : "editor"
         },
         "relationships" : [ {
           "description" : "Run locally to parse workspace JSON on save and to provide live preview",
-          "destinationId" : "15",
-          "id" : "35",
-          "sourceId" : "12",
+          "destinationId" : "16",
+          "id" : "37",
+          "sourceId" : "13",
           "tags" : "Relationship"
         }, {
           "description" : "Run locally to parse workspace JSON on save and to provide live preview",
-          "destinationId" : "13",
-          "id" : "36",
-          "linkedRelationshipId" : "35",
-          "sourceId" : "12"
+          "destinationId" : "14",
+          "id" : "38",
+          "linkedRelationshipId" : "37",
+          "sourceId" : "13"
         } ],
         "tags" : "Element,Container",
         "technology" : "Docker"
@@ -257,27 +272,27 @@
       },
       "relationships" : [ {
         "description" : "Fetch documentation from client repo",
-        "destinationId" : "17",
-        "id" : "33",
-        "linkedRelationshipId" : "31",
+        "destinationId" : "18",
+        "id" : "35",
+        "linkedRelationshipId" : "33",
         "sourceId" : "2"
       }, {
         "description" : "Fetch documentation from client repo",
+        "destinationId" : "17",
+        "id" : "36",
+        "linkedRelationshipId" : "33",
+        "sourceId" : "2"
+      }, {
+        "description" : "Run locally to parse workspace JSON on save and to provide live preview",
         "destinationId" : "16",
-        "id" : "34",
-        "linkedRelationshipId" : "31",
+        "id" : "39",
+        "linkedRelationshipId" : "37",
         "sourceId" : "2"
       }, {
         "description" : "Run locally to parse workspace JSON on save and to provide live preview",
-        "destinationId" : "15",
-        "id" : "37",
-        "linkedRelationshipId" : "35",
-        "sourceId" : "2"
-      }, {
-        "description" : "Run locally to parse workspace JSON on save and to provide live preview",
-        "destinationId" : "13",
-        "id" : "38",
-        "linkedRelationshipId" : "35",
+        "destinationId" : "14",
+        "id" : "40",
+        "linkedRelationshipId" : "37",
         "sourceId" : "2"
       } ],
       "tags" : "Element,Software System"
@@ -285,7 +300,7 @@
       "containers" : [ {
         "description" : "The Structurizr modelling language",
         "documentation" : { },
-        "id" : "14",
+        "id" : "15",
         "name" : "Structurizr DSL",
         "properties" : {
           "structurizr.dsl.identifier" : "structurizr-dsl"
@@ -294,7 +309,7 @@
         "technology" : "DSL"
       }, {
         "documentation" : { },
-        "id" : "15",
+        "id" : "16",
         "name" : "Structurizr Docker Image",
         "properties" : {
           "structurizr.dsl.identifier" : "structurizr-docker"
@@ -304,7 +319,7 @@
       } ],
       "description" : "Defines the Structurizr DSL and parses Structurizr documentation to workspace objects",
       "documentation" : { },
-      "id" : "13",
+      "id" : "14",
       "name" : "Structurizr",
       "properties" : {
         "structurizr.dsl.identifier" : "structurizr"
@@ -314,7 +329,7 @@
       "containers" : [ {
         "description" : "Contains a .maniok documentation directory",
         "documentation" : { },
-        "id" : "17",
+        "id" : "18",
         "name" : "GitHub Client Repository",
         "properties" : {
           "structurizr.dsl.identifier" : "github-client-repo"
@@ -323,7 +338,7 @@
         "technology" : "GitHub Repo"
       } ],
       "documentation" : { },
-      "id" : "16",
+      "id" : "17",
       "name" : "GitHub",
       "properties" : {
         "structurizr.dsl.identifier" : "github"
@@ -333,7 +348,7 @@
   },
   "name" : "Name",
   "properties" : {
-    "structurizr.inspection.error" : "36",
+    "structurizr.inspection.error" : "37",
     "structurizr.inspection.info" : "0",
     "structurizr.inspection.ignore" : "0",
     "structurizr.inspection.warning" : "0"
@@ -382,15 +397,17 @@
         "id" : "11",
         "x" : 0,
         "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
       } ],
       "externalContainerBoundariesVisible" : false,
       "key" : "CoreComponentView",
       "name" : "Component View: Maniok - Core",
       "order" : 4,
       "relationships" : [ {
-        "id" : "25"
-      }, {
-        "id" : "27"
+        "id" : "26"
       }, {
         "id" : "28"
       }, {
@@ -398,9 +415,13 @@
       }, {
         "id" : "30"
       }, {
-        "id" : "39"
+        "id" : "31"
       }, {
-        "id" : "40"
+        "id" : "32"
+      }, {
+        "id" : "41"
+      }, {
+        "id" : "42"
       } ]
     } ],
     "configuration" : {
@@ -427,10 +448,6 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "11",
-        "x" : 0,
-        "y" : 0
-      }, {
         "id" : "12",
         "x" : 0,
         "y" : 0
@@ -439,7 +456,11 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "16",
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "17",
         "x" : 0,
         "y" : 0
       } ],
@@ -448,19 +469,19 @@
       "name" : "Container View: Maniok",
       "order" : 2,
       "relationships" : [ {
-        "id" : "18"
+        "id" : "19"
       }, {
-        "id" : "20"
+        "id" : "21"
       }, {
-        "id" : "22"
+        "id" : "23"
       }, {
-        "id" : "24"
+        "id" : "25"
       }, {
-        "id" : "26"
+        "id" : "27"
       }, {
-        "id" : "32"
+        "id" : "34"
       }, {
-        "id" : "36"
+        "id" : "38"
       } ],
       "softwareSystemId" : "2"
     }, {
@@ -482,7 +503,7 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "17",
+        "id" : "18",
         "x" : 0,
         "y" : 0
       } ],
@@ -491,13 +512,13 @@
       "name" : "Container View: GitHub",
       "order" : 3,
       "relationships" : [ {
-        "id" : "19"
+        "id" : "20"
       }, {
-        "id" : "21"
+        "id" : "22"
       }, {
-        "id" : "33"
+        "id" : "35"
       } ],
-      "softwareSystemId" : "16"
+      "softwareSystemId" : "17"
     } ],
     "systemContextViews" : [ {
       "automaticLayout" : {
@@ -518,11 +539,11 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "13",
+        "id" : "14",
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "16",
+        "id" : "17",
         "x" : 0,
         "y" : 0
       } ],
@@ -531,15 +552,15 @@
       "name" : "System Context View: Maniok",
       "order" : 1,
       "relationships" : [ {
-        "id" : "19"
+        "id" : "20"
       }, {
-        "id" : "22"
+        "id" : "23"
       }, {
-        "id" : "24"
+        "id" : "25"
       }, {
-        "id" : "34"
+        "id" : "36"
       }, {
-        "id" : "38"
+        "id" : "40"
       } ],
       "softwareSystemId" : "2"
     } ]

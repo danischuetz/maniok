@@ -5,10 +5,10 @@ export class NotificationService {
         return toaster
     }
 
-    static notifyError({ title, description }: { title: string; description?: string }) {
+    static notifyError(title: string, error: unknown): void {
         toaster.error({
             title,
-            description
+            description: error instanceof Error ? error.message : 'An unknown error occurred'
         })
     }
 }
