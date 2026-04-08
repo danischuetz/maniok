@@ -5,7 +5,9 @@ workspace {
         user = person "User"
 
         maniok = softwareSystem "Maniok" "The maniok documentation system" {
+            !docs markdown/manioksystem.md
             core = container "Core" "Core logic and components to render and navigate written documentation and diagrams from a Structurizr workspace" "node.js" {
+                !docs markdown/maniokcore.md
                 core-diagramservice = component "Diagram Service" "Creates a diagram model tree from a Structurizr workspace"
                 core-documentservice = component "Document Service" "Creates a document model tree from a Structurizr workspace"
                 core-layoutservice = component "Diagram Layout Service" "Calculates a suitable layout for a layout model tree"
@@ -21,6 +23,7 @@ workspace {
         }
 
         structurizr = softwareSystem "Structurizr" "Defines the Structurizr DSL and parses Structurizr documentation to workspace objects" "Java" {
+            structurizr-dsl = container "Structurizr DSL" "The Structurizr modelling language" "DSL"
             structurizr-docker = container "Structurizr Docker Image" "" "Docker"
         }
 
@@ -31,6 +34,8 @@ workspace {
         # User interactions
         user -> webapp "View documentation"
         user -> editor "Edit & preview documentation"
+        user -> github-client-repo "Push documentation changes"
+        user -> structurizr-dsl "Model systems and write documentation"
 
         # Internals
         webapp -> core-diagramservice "Build diagram model tree"
@@ -44,13 +49,10 @@ workspace {
 
         core-components -> core-layoutservice "Calculate diagram layout"
         core-components -> core-markdownservice "Render Markdown"
-
-        # External
-        user -> github-client-repo "Push documentation changes"
     }
 
     views {
-        systemContext maniok {
+        systemContext maniok "SystemContextView" {
             include *
             autoLayout lr
         }
@@ -65,7 +67,7 @@ workspace {
             autoLayout lr
         }
 
-        component core {
+        component core "CoreComponentView" {
             include *
             autoLayout lr
         }

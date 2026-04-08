@@ -1,11 +1,15 @@
 /* Navigation */
 .btn-nav {
-    @apply p-0 m-0 text-surface-900-100;
+    @apply p-0 m-0 text-surface-900-100 active:bg-surface-500/20 active:text-primary-700-300;
 }
 
 /* Mode Navigation */
 .mode-nav-container {
     @apply gap-2 p-2 border-r border-surface-200-800;
+}
+
+.mode-nav-container button.active {
+    @apply bg-surface-500/20 text-primary-700-300;
 }
 
 /* Diagram Navigation */
@@ -27,7 +31,7 @@
 
 /* Document Navigation */
 .document-tree {
-    @apply pt-4 gap-6;
+    @apply pt-4;
 }
 
 .document-tree ul {
@@ -35,7 +39,7 @@
 }
 
 .document-tree button {
-    @apply btn justify-start px-4 text-base text-surface-300-500;
+    @apply btn justify-start px-4 pt-8 text-base text-surface-300-500;
 }
 
 .document-tree button.active {
@@ -43,11 +47,15 @@
 }
 
 .document-tree a {
-    @apply text-base flex px-4 py-1 flex-1 w-full justify-start;
+    @apply text-base flex px-4 py-1 flex-1 min-w-46 w-full justify-start;
 }
 
 .document-tree a.active {
     @apply bg-surface-500/20 text-primary-700-300;
+}
+
+.document-tree .node ul ul {
+    @apply pl-4;
 }
 
 .document-tree .node ul ul ul {

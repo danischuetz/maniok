@@ -1,14 +1,14 @@
 /* Markdown */
 .markdown-body {
-    @apply mt-2 lg:mt-16 mx-2 md:mx-4 lg:mx-8 xl:mx-16 2xl:mx-32 lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl;
+    @apply mt-2 lg:mt-8 mx-2 md:mx-4 lg:mx-8 xl:mx-16 2xl:mx-32 lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl mb-60;
 }
 
 .markdown-body blockquote {
     @apply border-l-4 border-surface-200-800 pl-4;
 }
 
-.markdown-body p code {
-    @apply bg-surface-100/30 px-1 py-0.5 rounded-sm font-mono font-light text-sm;
+.markdown-body :where(li, p) code {
+    @apply bg-secondary-100/30 mx-1 px-1 py-0.5 rounded-sm font-mono font-light text-sm;
 }
 
 .markdown-body h1 {
@@ -31,8 +31,8 @@
     @apply list-disc;
 }
 
-.mardown-body diagram-embed {
-    @apply my-4;
+.markdown-body diagram-embed {
+    @apply my-8;
 }
 
 .markdown-body :where(h1, h2, h3, h4, h5, h6, p):first-child:not(diagram-embed *) {
@@ -40,10 +40,14 @@
 }
 
 .markdown-body :where(h1, h2, h3, h4, h5, h6):not(diagram-embed *) {
-    @apply mb-0 mt-8;
+    @apply mb-6 mt-8;
 }
 
-.markdown-body :where(p, ul, ol, pre, blockquote):not(diagram-embed *) {
+.markdown-body :where(ul, ol):not(diagram-embed *) {
+    @apply mb-2;
+} 
+
+.markdown-body :where(p, pre, blockquote):not(diagram-embed *) {
     @apply m-0 my-4;
 }
 

@@ -31,7 +31,7 @@ export class LayoutService {
         graph.setGraph({
             rankdir: layoutModel.direction,
             ranksep: horizontal ? 30 : 20,
-            nodesep: horizontal ? 20 : 100,
+            nodesep: horizontal ? 10 : 10,
             ranker: 'network-simplex', // network-simplex, tight-tree or longest-path
             align: 'UL'
         })

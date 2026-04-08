@@ -104,7 +104,7 @@
         </header>
 
         <!-- Body -->
-        <div class="w-screen h-screen flex flex-row">
+        <div class="w-full h-full flex flex-row overflow-hidden">
             <Navigation class="hidden lg:flex navigation">
                 {@render navElements()}
             </Navigation>

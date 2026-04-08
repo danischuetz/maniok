@@ -32,7 +32,7 @@
 }
 
 .svelte-flow__edge-label {
-    @apply bg-surface-50-950 border border-surface-300-700  text-surface-800-200 w-28 text-[10px] p-0.5 m-0 rounded;
+    @apply dark:bg-surface-700 bg-surface-50 border border-surface-300-700  text-surface-900-100 w-28 text-[10px] p-0.5 m-0 rounded;
 }
 
 
@@ -45,7 +45,7 @@
 }
 
 .icon-person {
-    @apply stroke-1 size-12 stroke-primary-600-400;
+    @apply stroke-1 size-12 stroke-surface-950-50;
 }
 
 .body-person {
@@ -53,7 +53,7 @@
 }
 
 .name-person {
-    @apply text-sm font-bold text-primary-600-400;
+    @apply text-sm font-bold text-surface-950-50;
 }
 
 .element-body-base {
@@ -65,7 +65,7 @@
 }
 
 .element-body-external {
-    @apply bg-surface-400-600/10 border-surface-500/30 border;
+    @apply bg-secondary-300-700/30 border-surface-500/30 border;
 }
 
 .element-name-internal {
@@ -73,15 +73,15 @@
 }
 
 .element-name-external {
-    @apply text-xl font-bold text-surface-800-200;
+    @apply text-xl font-bold text-surface-900-100;
 }
 
 .element-type-internal {
-    @apply text-[8px] text-surface-800-200 text-left;
+    @apply text-[10px] text-surface-800-200 text-left;
 }
 
 .element-type-external {
-    @apply text-[8px] text-surface-700-300 text-left;
+    @apply text-[10px] text-surface-700-300 text-left;
 }
 
 .element-description-internal {

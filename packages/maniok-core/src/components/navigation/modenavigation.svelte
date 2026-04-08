@@ -31,6 +31,7 @@
             <button
                 onclick={() => switchTo(mode)}
                 class="btn btn-nav flex items-center justify-center"
+                class:active={mode === navigationContext.mode}
                 title={mode}
             >
                 <Icon class="lucide-icon-xl" />

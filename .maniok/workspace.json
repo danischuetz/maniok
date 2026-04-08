@@ -3,7 +3,7 @@
   "description" : "Description",
   "documentation" : {
     "sections" : [ {
-      "content" : "# What is it?\n\nThe git-native solution for C4 architecture documentation - like Docusaurus for architects, without the setup & hosting overhead.\n\n- Model & document the architecture using Markdown and the Structurizr DSL\n- Document alongside code - documentation lives in your GitHub repositories\n- Viewers of your documentation visit [https://app.maniok.io](https://app.maniok.io) and enter the repo url\n\n# How does it work?\n\nThe documentation must be placed in a dedicated folder `.maniok`, located at the root of each documented Github repository. Running the editor docker image, the documentation is automatically exported to a single file `<repository root>/.maniok/workspace.json` on documentation change, when running the\n\nIn a nutshell:\n\n![core system overview](embed:CoreContainerView)\n\n## GitHub\n\nFor a test, let's checkout the github container view:\n\n![github system overview](embed:GitHubContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enables AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## Requirements\n\n- Github hosted repositories only\n\n## Quick Start\n\n### Documentation Setup\n\n- In a repository root, create a folder called \".maniok\"\n- Download the [zipped default template](https://github.com/.../templates/default)\n- Extract it to the .maniok folder\n- Commit the changes\n- Et voila, your documentation is online!\n\n### Public Repositories\n\n- Visit app.maniok.io\n- Type your public repo URL\n\n### Private Repositories\n\n- Install the Maniok GitHub App for your repository\n- Register / Log-In to your Maniok account at app.maniok.io\n- Connect to your GitHub\n",
+      "content" : "# What is it?\n\nThe git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation is rendered from the structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok).\n\nBased on an ODI (Outcome Driven Innovation) resarch of current pain points in documenting software architecture.\n\n- Model and document architecture using Markdown and the Structurizr DSL\n- Document alongside code - documentation lives in your GitHub repositories\n- Direct access [https://app.maniok.io](https://app.maniok.io) and the repository url\n\nFor documentation to be discovered by the Maniok webapp, it must be placed in a dedicated folder `.maniok` at the root of each documented Github repository. Running the Maniok-Editor docker image, the documentation is automatically exported to a single file `<repository root>/.maniok/workspace.json` on save and can be previewed locally.\n\n![Maniok Container View](embed:CoreContainerView)\n\n## Features\n\n- Minimal setup\n- Minimal effort to maintain the documentation\n- Documentation lives in your git repositories\n    - Use your favorite IDE to edit the documentation\n    - Enable AI-driven workflows e.g. through the use of GitHub Copilot\n    - Use regular PRs to review documentation changes\n    - Update documentation alongside code\n    - Protects your IP - your data never touches our backends\n- Best-in-class diagrams auto-generated from your architecture\n- Embed interactive diagrams in written documentation\n\n## POC\n\nThis is a very first proof of concept to validate the concept and to collect feedback.\n\n- It does currently work on **open source repositories only**\n- The Structurizr DSL is only partially supported (Markdown, SystemContextViews, ContainerViews, ComponentViews)\n- Known issues\n    - Diagrams\n        - Missing edge routing (on some diagrams edges collide with nodes)\n        - Edge label collisons (Sometimes labels hide other labels / label-edge association not clear)\n        - Edge label missing for multiple connections between same nodes\n    - Navigation\n        - Switching to chapter in other document node doesn't scroll to correct chapter\n\n## Quick Start\n\n- In a public repository, create a folder called \".maniok\"\n- Download the [example documentation](https://github.com/danischuetz/maniok/blob/example.zip) (which is the documentation you are currently reading)\n- Extract it to the .maniok folder\n- Commit the changes\n- Visit [https://app.maniok.io](https://app.maniok.io) and type your repository url\n",
       "format" : "Markdown",
       "order" : 1,
       "title" : ""
@@ -20,32 +20,44 @@
       "relationships" : [ {
         "description" : "View documentation",
         "destinationId" : "11",
-        "id" : "17",
+        "id" : "18",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
         "description" : "View documentation",
         "destinationId" : "2",
-        "id" : "18",
-        "linkedRelationshipId" : "17",
+        "id" : "19",
+        "linkedRelationshipId" : "18",
         "sourceId" : "1"
       }, {
         "description" : "Edit & preview documentation",
         "destinationId" : "12",
-        "id" : "19",
+        "id" : "20",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Push documentation changes",
+        "destinationId" : "17",
+        "id" : "21",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
         "description" : "Push documentation changes",
         "destinationId" : "16",
-        "id" : "36",
+        "id" : "22",
+        "linkedRelationshipId" : "21",
+        "sourceId" : "1"
+      }, {
+        "description" : "Model systems and write documentation",
+        "destinationId" : "14",
+        "id" : "23",
         "sourceId" : "1",
         "tags" : "Relationship"
       }, {
-        "description" : "Push documentation changes",
-        "destinationId" : "15",
-        "id" : "37",
-        "linkedRelationshipId" : "36",
+        "description" : "Model systems and write documentation",
+        "destinationId" : "13",
+        "id" : "24",
+        "linkedRelationshipId" : "23",
         "sourceId" : "1"
       } ],
       "tags" : "Element,Person"
@@ -117,13 +129,13 @@
           "relationships" : [ {
             "description" : "Calculate diagram layout",
             "destinationId" : "6",
-            "id" : "34",
+            "id" : "39",
             "sourceId" : "10",
             "tags" : "Relationship"
           }, {
             "description" : "Render Markdown",
             "destinationId" : "7",
-            "id" : "35",
+            "id" : "40",
             "sourceId" : "10",
             "tags" : "Relationship"
           } ],
@@ -131,7 +143,14 @@
           "technology" : "Svelte"
         } ],
         "description" : "Core logic and components to render and navigate written documentation and diagrams from a Structurizr workspace",
-        "documentation" : { },
+        "documentation" : {
+          "sections" : [ {
+            "content" : "# Core Library Overview\n\nThe core library provides services to\n\n- Parse `workspace.json` to `SzrWorkspace` objects\n- Create `DiagramModel` tree from `SzrWorkspace`\n- Create `DocumentModel`tree from `SzrWorkspace`\n- Render `Markdown` to `html`\n- Create `SvelteFlow` nodes and edges from a `DiagramModel` tree\n- Create `LayoutTree` from `SvelteFlow` nodes and edges\n- Layout a `LayoutTree`\n\n![Maniok Core Component View](embed:CoreComponentView)\n",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
         "id" : "3",
         "name" : "Core",
         "properties" : {
@@ -150,50 +169,50 @@
         "relationships" : [ {
           "description" : "Build diagram model tree",
           "destinationId" : "4",
-          "id" : "20",
+          "id" : "25",
           "sourceId" : "11",
           "tags" : "Relationship"
         }, {
           "description" : "Build diagram model tree",
           "destinationId" : "3",
-          "id" : "21",
-          "linkedRelationshipId" : "20",
+          "id" : "26",
+          "linkedRelationshipId" : "25",
           "sourceId" : "11"
         }, {
           "description" : "Build document model tree",
           "destinationId" : "5",
-          "id" : "22",
+          "id" : "27",
           "sourceId" : "11",
           "tags" : "Relationship"
         }, {
           "description" : "Render diagram & document models",
           "destinationId" : "10",
-          "id" : "23",
+          "id" : "28",
           "sourceId" : "11",
           "tags" : "Relationship"
         }, {
           "description" : "Show warnings, info, errors etc.",
           "destinationId" : "8",
-          "id" : "24",
+          "id" : "29",
           "sourceId" : "11",
           "tags" : "Relationship"
         }, {
           "description" : "Parse workspace JSON",
           "destinationId" : "9",
-          "id" : "25",
+          "id" : "30",
+          "sourceId" : "11",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetch documentation from client repo",
+          "destinationId" : "17",
+          "id" : "31",
           "sourceId" : "11",
           "tags" : "Relationship"
         }, {
           "description" : "Fetch documentation from client repo",
           "destinationId" : "16",
-          "id" : "26",
-          "sourceId" : "11",
-          "tags" : "Relationship"
-        }, {
-          "description" : "Fetch documentation from client repo",
-          "destinationId" : "15",
-          "id" : "27",
-          "linkedRelationshipId" : "26",
+          "id" : "32",
+          "linkedRelationshipId" : "31",
           "sourceId" : "11"
         } ],
         "tags" : "Element,Container",
@@ -208,22 +227,29 @@
         },
         "relationships" : [ {
           "description" : "Run locally to parse workspace JSON on save and to provide live preview",
-          "destinationId" : "14",
-          "id" : "30",
+          "destinationId" : "15",
+          "id" : "35",
           "sourceId" : "12",
           "tags" : "Relationship"
         }, {
           "description" : "Run locally to parse workspace JSON on save and to provide live preview",
           "destinationId" : "13",
-          "id" : "31",
-          "linkedRelationshipId" : "30",
+          "id" : "36",
+          "linkedRelationshipId" : "35",
           "sourceId" : "12"
         } ],
         "tags" : "Element,Container",
         "technology" : "Docker"
       } ],
       "description" : "The maniok documentation system",
-      "documentation" : { },
+      "documentation" : {
+        "sections" : [ {
+          "content" : "# Origins\n\nUntil recently my go-to solution for documenting software architecture as a freelance software engineer was draw.io diagrams embedded in Google Docs. That worked fine for small projects and at the beginning of larger projects but soon became painful to maintain.\n\n- Drawing diagrams was time consuming, so only half the system was properly documented from the start\n- Small changes in the system required a lot of effort updating the documentation\n- Diagrams were C4-ish but often incomplete or overloaded\n\nSome online research led me to Structurizr and I was impressed with it's capabilities but taken aback by the setup/hosting effort and the UI, which seemed not representative enough for my customers.\n\nThe frustration of not having found something satisfying to my needs in a couple of days researching existing solutions and the discovery of some promising node libraries for diagrams and layout finally led to the start of this project\n\n**But first...**\n\n## An ODI research\n\nA couple of weeks into the first experiments, I spoke to a friend about the project who is an experienced team lead and former startup CTO. He cautiously tamed my optimistic excitement about the solutions I was working on and recommended to found this on more solid data in order to determine if I was actually solving the right problem. He recommended the book \"Jobs To Be Done\" by Tony Ulwick, which I read right away.\n\nTony Ulwick's system made a lot of sense and I began to structure the problem at hand - \"Documenting Software Architecture\" - into various steps and about sixty desired outcomes. I used Google Forms to perform a survey on those desired outcomes. It is hard to find participants without paying people to take the survey but in the end ten enthusiasts were willing to share their experience.\n\nThat's not enough for solid data but I saw a pattern which aligned well with my experience:\n\n- People who were using wysiwyg tools like draw.io and generic documents were happy with setup complexity, finding stuff and the quality of diagrams but were finding it hard to maintain their documentation over time\n- People already using diagrams-as-code were frustrated about setup complexity and quality of the rendered results\n\nThat and the different perspective on the problem space allowed me to see how to solve the problems of both groups through providing the best solution for each phase of the process.\n\n# Use Cases\n\nLet's look at a couple of user types and their needs:\n\n- Editors: Architects, Maintainers\n    - Edit documentation alongside code changes\n    - Use AI to improve documentation and for inline suggestions\n    - Create consistent and meaningful diagrams with the right amount of information\n    - Review/Merge documentation changes\n    - Maintain future documentation changes, e.g. alongside developing features\n    - Preview rendered documentation during editing\n    - Share documentation\n- Viewers: Team members, new hires, other departments\n    - Quick access to the documentation\n    - Easily understandable documentation\n    - Easily understandable diagrams\n    - Easily find information\n\n# Overview\n\nTo get the job \"Document Software Architecture\" done with as little friction as possible, we can leverage existing strengths of git and Structurizr:\n\n- All elementary editor needs can be met by using documentation-as-code in git repositories, allowing editors to use their favorite IDE and tooling to edit the documentation\n- By using C4 and the Structurizr DSL, the effort to maintain diagrams is minimized. Structurizr also supports embedding markdown documents associated with elements of the software system\n- A documentation frontend based on modern web technologies (XYFlow, dagrejs and unified/remark/rehype) allows us to create good UX and great looking diagrams for viewers and opens up a ton of possibilities for the future\n\nUsing the Structurizr DSL has another benefit - on export, the whole documentation is written to a single `workspace.json` file. This allows us to find the documentation for any repository for which we know where that file is.\n\nThis also paves the way for private repositories, at least for GitHub: Creating a GitHub App, clients can give the Maniok webapp granular access to the `workspace.json` file, using single file access.\n\n![Maniok System Context View](embed:SystemContextView)\n",
+          "format" : "Markdown",
+          "order" : 1,
+          "title" : ""
+        } ]
+      },
       "id" : "2",
       "name" : "Maniok",
       "properties" : {
@@ -231,34 +257,44 @@
       },
       "relationships" : [ {
         "description" : "Fetch documentation from client repo",
-        "destinationId" : "16",
-        "id" : "28",
-        "linkedRelationshipId" : "26",
+        "destinationId" : "17",
+        "id" : "33",
+        "linkedRelationshipId" : "31",
         "sourceId" : "2"
       }, {
         "description" : "Fetch documentation from client repo",
-        "destinationId" : "15",
-        "id" : "29",
-        "linkedRelationshipId" : "26",
+        "destinationId" : "16",
+        "id" : "34",
+        "linkedRelationshipId" : "31",
         "sourceId" : "2"
       }, {
         "description" : "Run locally to parse workspace JSON on save and to provide live preview",
-        "destinationId" : "14",
-        "id" : "32",
-        "linkedRelationshipId" : "30",
+        "destinationId" : "15",
+        "id" : "37",
+        "linkedRelationshipId" : "35",
         "sourceId" : "2"
       }, {
         "description" : "Run locally to parse workspace JSON on save and to provide live preview",
         "destinationId" : "13",
-        "id" : "33",
-        "linkedRelationshipId" : "30",
+        "id" : "38",
+        "linkedRelationshipId" : "35",
         "sourceId" : "2"
       } ],
       "tags" : "Element,Software System"
     }, {
       "containers" : [ {
+        "description" : "The Structurizr modelling language",
         "documentation" : { },
         "id" : "14",
+        "name" : "Structurizr DSL",
+        "properties" : {
+          "structurizr.dsl.identifier" : "structurizr-dsl"
+        },
+        "tags" : "Element,Container",
+        "technology" : "DSL"
+      }, {
+        "documentation" : { },
+        "id" : "15",
         "name" : "Structurizr Docker Image",
         "properties" : {
           "structurizr.dsl.identifier" : "structurizr-docker"
@@ -278,7 +314,7 @@
       "containers" : [ {
         "description" : "Contains a .maniok documentation directory",
         "documentation" : { },
-        "id" : "16",
+        "id" : "17",
         "name" : "GitHub Client Repository",
         "properties" : {
           "structurizr.dsl.identifier" : "github-client-repo"
@@ -287,7 +323,7 @@
         "technology" : "GitHub Repo"
       } ],
       "documentation" : { },
-      "id" : "15",
+      "id" : "16",
       "name" : "GitHub",
       "properties" : {
         "structurizr.dsl.identifier" : "github"
@@ -348,24 +384,23 @@
         "y" : 0
       } ],
       "externalContainerBoundariesVisible" : false,
-      "generatedKey" : true,
-      "key" : "Component-001",
+      "key" : "CoreComponentView",
       "name" : "Component View: Maniok - Core",
       "order" : 4,
       "relationships" : [ {
-        "id" : "20"
-      }, {
-        "id" : "22"
-      }, {
-        "id" : "23"
-      }, {
-        "id" : "24"
-      }, {
         "id" : "25"
       }, {
-        "id" : "34"
+        "id" : "27"
       }, {
-        "id" : "35"
+        "id" : "28"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "39"
+      }, {
+        "id" : "40"
       } ]
     } ],
     "configuration" : {
@@ -404,7 +439,7 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "15",
+        "id" : "16",
         "x" : 0,
         "y" : 0
       } ],
@@ -413,17 +448,19 @@
       "name" : "Container View: Maniok",
       "order" : 2,
       "relationships" : [ {
-        "id" : "17"
+        "id" : "18"
       }, {
-        "id" : "19"
+        "id" : "20"
       }, {
-        "id" : "21"
+        "id" : "22"
       }, {
-        "id" : "27"
+        "id" : "24"
       }, {
-        "id" : "31"
+        "id" : "26"
       }, {
-        "id" : "37"
+        "id" : "32"
+      }, {
+        "id" : "36"
       } ],
       "softwareSystemId" : "2"
     }, {
@@ -445,7 +482,7 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "16",
+        "id" : "17",
         "x" : 0,
         "y" : 0
       } ],
@@ -454,13 +491,13 @@
       "name" : "Container View: GitHub",
       "order" : 3,
       "relationships" : [ {
-        "id" : "18"
+        "id" : "19"
       }, {
-        "id" : "28"
+        "id" : "21"
       }, {
-        "id" : "36"
+        "id" : "33"
       } ],
-      "softwareSystemId" : "15"
+      "softwareSystemId" : "16"
     } ],
     "systemContextViews" : [ {
       "automaticLayout" : {
@@ -485,23 +522,24 @@
         "x" : 0,
         "y" : 0
       }, {
-        "id" : "15",
+        "id" : "16",
         "x" : 0,
         "y" : 0
       } ],
       "enterpriseBoundaryVisible" : true,
-      "generatedKey" : true,
-      "key" : "SystemContext-001",
+      "key" : "SystemContextView",
       "name" : "System Context View: Maniok",
       "order" : 1,
       "relationships" : [ {
-        "id" : "18"
+        "id" : "19"
       }, {
-        "id" : "29"
+        "id" : "22"
       }, {
-        "id" : "33"
+        "id" : "24"
       }, {
-        "id" : "37"
+        "id" : "34"
+      }, {
+        "id" : "38"
       } ],
       "softwareSystemId" : "2"
     } ]
