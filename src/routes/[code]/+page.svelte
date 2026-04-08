@@ -34,13 +34,25 @@
 
     let { data }: PageProps = $props()
 
-    let repositoryUrl: string = $state('https://github.com/danischuetz/maniok')
+    let repositoryUrl: string = $derived.by(() =>
+        data.repository ? RepositoryService.toUrl(data.repository) : ''
+    )
+
+    $effect(() => {
+        if (!data.repository) {
+            NotificationService.notifyError(
+                'No repository found at URL',
+                'Please enter a valid GitHub repository URL.'
+            )
+            goto(`/`)
+        }
+    })
+
     async function onRepositoryUrlConfirmation() {
         if (!repositoryUrl) return
 
         const repository: RepositoryModel | null =
             await RepositoryService.deriveFromUrl(repositoryUrl)
-        console.log('Repository:', repository)
         if (!repository) {
             NotificationService.notifyError(
                 'Invalid repository URL',
@@ -49,11 +61,9 @@
             return
         }
 
-        console.log(
-            `Derived repository: ${repository.provider}:${repository.url} from URL: ${repositoryUrl}`
-        )
-        const encoded: string = RepositoryService.encode(repository)
-        goto(`/${encoded}`)
+        const code: string = RepositoryService.encode(repository)
+        console.log(`Navigating to: ${code}`)
+        goto(`/${code}`)
     }
 
     let workspace: SzrWorkspace | undefined = $derived.by(() => {

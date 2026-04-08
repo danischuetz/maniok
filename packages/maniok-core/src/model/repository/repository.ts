@@ -1,4 +1,4 @@
-export type Repository = {
+export type RepositoryModel = {
     provider: string
     url: string
 }

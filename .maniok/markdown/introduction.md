@@ -21,7 +21,7 @@ For documentation to be discovered by the Maniok webapp, it must be placed in a 
     - Enable AI-driven workflows e.g. through the use of GitHub Copilot
     - Use regular PRs to review documentation changes
     - Update documentation alongside code
-    - Protects your IP - your data never touches our backends
+    - You own your data
 - Best-in-class diagrams auto-generated from your architecture
 - Embed interactive diagrams in written documentation
 
@@ -39,6 +39,7 @@ This is a very first proof of concept to validate the concept and to collect fee
     - Navigation
         - Switching to chapter in other document node doesn't scroll to correct chapter
 - Editing with auto-export has to be set up manually, see chapter [Editing](#editing) (It is planned to either provide a docker image or a VSCode extension for export/preview)
+- Branch currently fixed to "HEAD"
 
 ## Contact, Updates & Early Access
 
@@ -72,3 +73,5 @@ Now, the workspace.json should be generated on save (see terminal output for `Ru
 ## Live Preview
 
 For live preview, you can clone [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok) locally and rename the .env.example file to .env and have the workspace path within the file point to your workspace.json.
+
+After starting the dev server with `npm run dev` the documentation should be available at <http://localhost:5173>

@@ -4,6 +4,7 @@ export type { ElementMetaDataModel } from './model/diagram/elementmetadata'
 export type { RelationshipModel } from './model/diagram/relationship'
 export type { DocumentNodeModel } from './model/documentation/documentnode'
 export type { DocumentContentModel } from './model/documentation/documentcontent'
+export type { RepositoryModel } from './model/repository/repository'
 export type * from './model/szr/szrworkspace'
 
 export { ElementTypeEnum } from './model/shared/elementtype'
@@ -14,6 +15,7 @@ export { DiagramService } from './service/diagramservice'
 export { MarkdownService } from './service/markdownservice'
 export { DocumentService } from './service/documentservice'
 export { NotificationService } from './service/notificationservice'
+export { RepositoryService } from './service/repositoryservice'
 
 export { default as NavigationProvider } from './components/navigation/navigationprovider.svelte'
 

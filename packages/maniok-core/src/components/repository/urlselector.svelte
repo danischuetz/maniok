@@ -8,19 +8,18 @@
     let { class: className, repositoryUrl = $bindable(), onConfirmation }: Props = $props()
 </script>
 
-<form class="flex items-center focus-within urlselector {className}">
+<form
+    class="flex items-center focus-within urlselector {className}"
+    onsubmit={(e) => {
+        e.preventDefault()
+        onConfirmation()
+    }}
+>
     <input
         type="text"
         placeholder="Enter a GitHub repository URL"
         bind:value={repositoryUrl}
         class="urlselector-input"
     />
-    <button
-        type="submit"
-        onclick={onConfirmation}
-        disabled={!repositoryUrl}
-        class="urlselector-button"
-    >
-        Load
-    </button>
+    <button type="submit" disabled={!repositoryUrl} class="urlselector-button"> Load </button>
 </form>

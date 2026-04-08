@@ -8,10 +8,10 @@ describe('RepositoryService', () => {
             url: 'example/repo'
         }
 
-        const hash = RepositoryService.toHash(repository)
+        const hash = RepositoryService.encode(repository)
         console.log('Hash:', hash)
 
-        const decoded = RepositoryService.toRepository(hash)
+        const decoded = RepositoryService.decode(hash)
         expect(decoded).toEqual(repository)
     })
 })
