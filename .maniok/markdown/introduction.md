@@ -1,6 +1,6 @@
 # What is it?
 
-The git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation is rendered from the structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok).
+The git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation is rendered from the structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/.maniok).
 
 Based on an ODI (Outcome Driven Innovation) resarch of current pain points in documenting software architecture.
 
@@ -38,11 +38,28 @@ This is a very first proof of concept to validate the concept and to collect fee
         - Edge label missing for multiple connections between same nodes
     - Navigation
         - Switching to chapter in other document node doesn't scroll to correct chapter
+- Editing with auto-export has to be set up manually, see chapter [Editing](#editing) (It is planned to either provide a docker image or a VSCode extension for export/preview)
 
-## Quick Start
+# Quick Start
 
 - In a public repository, create a folder called ".maniok"
 - Download the [example documentation](https://github.com/danischuetz/maniok/blob/example.zip) (which is the documentation you are currently reading)
 - Extract it to the .maniok folder
 - Commit the changes
 - Visit [https://app.maniok.io](https://app.maniok.io) and type your repository url
+
+## Editing
+
+In order for the documentation to be rendered it needs to be exported to a workspace.json file inside the `.maniok` directory.
+
+A workaround to automatically do that on save of any documentation file in VSCode is to install the `emeraldwalk run-on-save` extension and configure it to run the structurizr-cli export command.
+
+1. Install the structurizr-cli (e.g. using brew)
+2. Install the VSCode run on save extension from `emeraldwalk`
+3. Configure it accordingly ([example](https://github.com/danischuetz/maniok/blob/main/.vscode/settings.json))
+
+Now, the workspace.json should be generated on save (see terminal output for `Run On Save` to catch any errors)
+
+## Live Preview
+
+For live preview, you can clone [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok) locally and rename the .env.example file to .env and have the workspace path within the file point to your workspace.json.

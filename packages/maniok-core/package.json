@@ -4,6 +4,7 @@
     "description": "Core logic and components to view and navigate documentation described by a Structurizr workspace object",
     "license": "MIT",
     "author": "Daniel Schütz",
+    "private": true,
     "type": "module",
     "svelte": "./dist/index.js",
     "types": "./dist/index.d.ts",
