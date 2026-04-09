@@ -1,31 +1,12 @@
 <script lang="ts">
     import type { RepositoryModel } from 'maniok-core'
-    import {
-        DocumentNavigation,
-        NotificationService,
-        BurgerMenu,
-        RepositoryService,
-        LightSwitch,
-        Logo,
-        UrlSelector
-    } from 'maniok-core'
-    import {
-        DocumentationProvider,
-        Navigation,
-        DiagramNavigation,
-        ModeNavigation,
-        Content,
-        DiagramView,
-        DiagramFocusModal,
-        DocumentView
-    } from 'maniok-core'
+    import { NotificationService, RepositoryService, Logo, UrlSelector } from 'maniok-core'
 
-    import type { PageProps } from './$types'
     import { goto } from '$app/navigation'
 
-    let { data }: PageProps = $props()
-
     let repositoryUrl: string = $state('')
+    let navigating: boolean = $state(false)
+
     async function onRepositoryUrlConfirmation() {
         if (!repositoryUrl) return
 
@@ -42,6 +23,27 @@
         const encoded: string = RepositoryService.encode(repository)
         goto(`/${encoded}`)
     }
+
+    async function handleConfirmation() {
+        navigating = true
+        await new Promise((resolve) => setTimeout(resolve, 400))
+        await onRepositoryUrlConfirmation()
+        navigating = false
+    }
+
+    async function onDemoClick() {
+        //focus the url selector
+        const urlSelector = document.querySelector('.urlselector-input') as HTMLInputElement
+        urlSelector?.focus()
+
+        const url = 'https://github.com/danischuetz/maniok'
+        repositoryUrl = ''
+        for (const char of url) {
+            repositoryUrl += char
+            await new Promise((resolve) => setTimeout(resolve, 40))
+        }
+        await handleConfirmation()
+    }
 </script>
 
 <div class="app flex flex-col items-center justify-center w-screen h-screen">
@@ -50,10 +52,40 @@
             <Logo class="max-h-32 w-full fill-primary-500" />
             <p class="text-lg">The git-native solution for C4 architecture documentation.</p>
         </div>
-        <UrlSelector
-            class="self-stretch"
-            bind:repositoryUrl
-            onConfirmation={onRepositoryUrlConfirmation}
-        />
+
+        <div class="flex flex-col gap-4 self-stretch">
+            <div class:navigating>
+                <UrlSelector
+                    class="self-stretch h-10"
+                    bind:repositoryUrl
+                    onConfirmation={handleConfirmation}
+                />
+            </div>
+            <button
+                class="btn font-bold preset-filled-surface-950-50 rounded-full self-end"
+                onclick={onDemoClick}>Wait, what? How?</button
+            >
+        </div>
     </div>
 </div>
+
+<style>
+    @keyframes btn-press {
+        0% {
+            transform: scale(1);
+        }
+        35% {
+            transform: scale(0.99);
+        }
+        70% {
+            transform: scale(1.06);
+        }
+        100% {
+            transform: scale(1);
+        }
+    }
+
+    .navigating :global(.urlselector-button) {
+        animation: btn-press 0.35s ease-out forwards;
+    }
+</style>

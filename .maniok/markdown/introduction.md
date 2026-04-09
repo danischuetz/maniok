@@ -2,8 +2,6 @@
 
 The git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation, including all diagrams, is rendered from the structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/.maniok).
 
-Based on an ODI (Outcome Driven Innovation) resarch of current pain points in documenting software architecture.
-
 - Model and document architecture using Markdown and the Structurizr DSL
 - Document alongside code - documentation lives in your GitHub repositories
 - Direct access [https://app.maniok.io](https://app.maniok.io) and the repository url
@@ -13,6 +11,8 @@ For documentation to be discovered by the Maniok webapp, it must be placed in a 
 ![Maniok Container View](embed:CoreContainerView)
 
 ## Features
+
+Based on an ODI (Outcome Driven Innovation) resarch of current pain points in documenting software architecture, Maniok features:
 
 - Minimal setup
 - Minimal effort to maintain the documentation

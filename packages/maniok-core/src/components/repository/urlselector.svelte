@@ -18,7 +18,7 @@
     <input
         name="repositoryUrl"
         type="text"
-        placeholder="Enter a GitHub repo URL"
+        placeholder="Enter a GitHub repo URL with Maniok documentation"
         bind:value={repositoryUrl}
         class="urlselector-input"
     />
