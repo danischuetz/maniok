@@ -16,6 +16,7 @@ workspace {
                 core-workspaceservice = component "Workspace Service" "Creates a Structurizr workspace model from a Structurizr workspace JSON"
                 core-repositoryservice = component "Repository Service" "Handles repository interactions and resource loading"
 
+                core-documentationprovider = component "Documentation Provider" "Context for all documentation components working on a Structurizr workspace"
                 core-components = component "Maniok Component Library" "Svelte Components to present diagrams, documents and navigation" "Svelte"
             }
 
@@ -39,13 +40,15 @@ workspace {
         user -> structurizr-dsl "Model systems and write documentation"
 
         # Internals
-        webapp -> core-diagramservice "Build diagram model tree"
-        webapp -> core-documentservice "Build document model tree"
-        webapp -> core-components "Render diagram & document models"
-        webapp -> core-notificationservice "Show warnings, info, errors etc."
-        webapp -> core-workspaceservice "Parse workspace JSON"
-        webapp -> core-repositoryservice "Load resources from git repositories"
+        core-documentationprovider -> core-diagramservice "Build diagram model tree"
+        core-documentationprovider -> core-documentservice "Build document model tree"
+        core-documentationprovider -> core-components "Render diagram & document models"
+        core-documentationprovider -> core-notificationservice "Show warnings, info, errors etc."
+        core-documentationprovider -> core-workspaceservice "Parse workspace JSON"
+        core-documentationprovider -> core-repositoryservice "Load resources from git repositories"
+        
         webapp -> github-client-repo "Fetch documentation from client repo"
+        webapp -> core-documentationprovider "Initialize from workspace JSON"
 
         editor -> structurizr-docker "Run locally to parse workspace JSON on save and to provide live preview"
 

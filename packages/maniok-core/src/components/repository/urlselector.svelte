@@ -16,6 +16,7 @@
     }}
 >
     <input
+        name="repositoryUrl"
         type="text"
         placeholder="Enter a GitHub repository URL"
         bind:value={repositoryUrl}

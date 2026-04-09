@@ -1,25 +1,16 @@
 <script lang="ts">
-    import type {
-        SzrWorkspace,
-        DiagramModel,
-        DocumentNodeModel,
-        DocumentContentModel,
-        RepositoryModel
-    } from 'maniok-core'
+    import type { RepositoryModel } from 'maniok-core'
     import {
-        WorkspaceService,
-        DiagramService,
         DocumentNavigation,
         NotificationService,
         BurgerMenu,
-        DocumentService,
         RepositoryService,
         LightSwitch,
         Logo,
         UrlSelector
     } from 'maniok-core'
     import {
-        NavigationProvider,
+        DocumentationProvider,
         Navigation,
         DiagramNavigation,
         ModeNavigation,
@@ -51,40 +42,9 @@
         const encoded: string = RepositoryService.encode(repository)
         goto(`/${encoded}`)
     }
-
-    let workspace: SzrWorkspace | undefined = $derived.by(() => {
-        try {
-            return WorkspaceService.parse(data.workspaceJson)
-        } catch (error) {
-            NotificationService.notifyError('Failed to load workspace', error)
-            return undefined
-        }
-    })
-
-    let diagrams: DiagramModel[] = $derived.by(() => {
-        if (!workspace) return []
-
-        try {
-            return DiagramService.parse(workspace)
-        } catch (error) {
-            NotificationService.notifyError('Failed to parse diagrams', error)
-            return []
-        }
-    })
-
-    let documentRoot: DocumentNodeModel | undefined = $derived.by(() => {
-        if (!workspace) return undefined
-
-        try {
-            return DocumentService.generateDocumentTree(workspace)
-        } catch (error) {
-            NotificationService.notifyError('Failed to generate document tree', error)
-            return undefined
-        }
-    })
 </script>
 
-<NavigationProvider {diagrams} {documentRoot}>
+<DocumentationProvider structurizrWorkspaceJson={data.workspaceJson}>
     <div class="flex flex-col w-screen h-screen app overflow-hidden">
         <!-- Title Bar -->
         <header class="flex justify-between items-center w-full p-4 titlebar gap-4">
@@ -99,9 +59,7 @@
                                 bind:repositoryUrl
                                 onConfirmation={onRepositoryUrlConfirmation}
                             />
-                            {#if documentRoot}
-                                <DocumentNavigation />
-                            {/if}
+                            <DocumentNavigation />
                         </div>
                     </Navigation>
                 </BurgerMenu>
@@ -120,9 +78,7 @@
             <Navigation class="hidden lg:flex navigation">
                 <ModeNavigation />
                 <DiagramNavigation class="flex flex-col self-stretch" />
-                {#if documentRoot}
-                    <DocumentNavigation />
-                {/if}
+                <DocumentNavigation />
             </Navigation>
             <Content class="flex-1 content">
                 <DiagramView />
@@ -131,4 +87,4 @@
             </Content>
         </div>
     </div>
-</NavigationProvider>
+</DocumentationProvider>

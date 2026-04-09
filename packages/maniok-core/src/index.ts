@@ -17,7 +17,7 @@ export { DocumentService } from './service/documentservice'
 export { NotificationService } from './service/notificationservice'
 export { RepositoryService } from './service/repositoryservice'
 
-export { default as NavigationProvider } from './components/navigation/navigationprovider.svelte'
+export { default as DocumentationProvider } from './components/documentationprovider.svelte'
 
 export { default as Navigation } from './components/navigation/navigation.svelte'
 export { default as DiagramNavigation } from './components/navigation/diagramnavigation.svelte'

@@ -74,4 +74,11 @@ Now, the workspace.json should be generated on save (see terminal output for `Ru
 
 For live preview, you can clone [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok) locally and rename the .env.example file to .env and have the workspace path within the file point to your workspace.json.
 
-After starting the dev server with `npm run dev` the documentation should be available at <http://localhost:5173>
+Install the package and start a dev server:
+
+```
+$ npm i
+$ npm run dev
+```
+
+The documentation should be available at <http://localhost:5173> **using `'local'` as the repository url**.

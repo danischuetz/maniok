@@ -59,7 +59,7 @@
     @apply overflow-x-auto;
     @apply p-4;
     @apply rounded-lg;
-    @apply bg-surface-200-800/50;
+    @apply bg-secondary-100/30;
 }
 
 .markdown-body a:not(diagram-embed *) {
