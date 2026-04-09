@@ -7,15 +7,17 @@
 
     interface Props {
         class?: string
-        diagrams?: DiagramModel[]
     }
 
-    let { class: className, diagrams = [] }: Props = $props()
+    let { class: className }: Props = $props()
 
     let navigationContext: NavigationContextModel = getContext('navigationContext')
-    let diagram: DiagramModel | undefined = $derived(
-        diagrams.find((candidate) => candidate.id === navigationContext.diagramFocusId)
-    )
+
+    let currentFocusId: string | undefined = $derived(navigationContext.diagramFocusId)
+    let diagram: DiagramModel | undefined = $derived.by(() => {
+        const currentFocusId = navigationContext.diagramFocusId
+        return navigationContext.diagrams.find((candidate) => candidate.id === currentFocusId)
+    })
 </script>
 
 <Dialog open={diagram != undefined}>

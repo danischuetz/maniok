@@ -62,7 +62,6 @@
         }
 
         const code: string = RepositoryService.encode(repository)
-        console.log(`Navigating to: ${code}`)
         goto(`/${code}`)
     }
 
@@ -96,18 +95,9 @@
             return undefined
         }
     })
-
-    let selectedDiagram: DiagramModel | undefined = $derived(
-        diagrams.length > 0 ? diagrams[0] : undefined
-    )
-    let selectedDocumentNode: DocumentNodeModel | undefined = $derived(documentRoot)
-
-    let content: DocumentContentModel | undefined = $derived(
-        selectedDocumentNode ? selectedDocumentNode.documentation : undefined
-    )
 </script>
 
-<NavigationProvider>
+<NavigationProvider {diagrams} {documentRoot}>
     <div class="flex flex-col w-screen h-screen app overflow-hidden">
         <!-- Title Bar -->
         <header class="flex justify-between items-center w-full p-4 titlebar gap-4">
@@ -115,11 +105,7 @@
                 <BurgerMenu class="p-0 lg:hidden">
                     <Navigation class="navigation-burger">
                         <ModeNavigation />
-                        <DiagramNavigation
-                            {diagrams}
-                            bind:selectedDiagram
-                            class="flex flex-col self-stretch"
-                        />
+                        <DiagramNavigation class="flex flex-col self-stretch" />
                         <div class="flex flex-col">
                             <UrlSelector
                                 class="m-2 h-8"
@@ -127,12 +113,14 @@
                                 onConfirmation={onRepositoryUrlConfirmation}
                             />
                             {#if documentRoot}
-                                <DocumentNavigation {documentRoot} bind:selectedDocumentNode />
+                                <DocumentNavigation />
                             {/if}
                         </div>
                     </Navigation>
                 </BurgerMenu>
-                <Logo class="h-8 fill-primary-500" />
+                <button onclick={() => goto(`/`)} class="flex items-center">
+                    <Logo class="h-8 fill-primary-500" />
+                </button>
             </div>
             <UrlSelector
                 class="flex-1 max-w-lg h-8 hidden lg:flex"
@@ -146,19 +134,15 @@
         <div class="w-full h-full flex flex-row overflow-hidden">
             <Navigation class="hidden lg:flex navigation">
                 <ModeNavigation />
-                <DiagramNavigation
-                    {diagrams}
-                    bind:selectedDiagram
-                    class="flex flex-col self-stretch"
-                />
+                <DiagramNavigation class="flex flex-col self-stretch" />
                 {#if documentRoot}
-                    <DocumentNavigation {documentRoot} bind:selectedDocumentNode />
+                    <DocumentNavigation />
                 {/if}
             </Navigation>
             <Content class="flex-1 content">
-                <DiagramView diagram={selectedDiagram} />
-                <DocumentView html={content?.html} {diagrams} />
-                <DiagramFocusModal {diagrams} />
+                <DiagramView />
+                <DocumentView />
+                <DiagramFocusModal />
             </Content>
         </div>
     </div>

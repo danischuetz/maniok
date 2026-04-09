@@ -1,26 +1,21 @@
 <script lang="ts">
     import { getContext } from 'svelte'
     import { mount, unmount } from 'svelte'
-    import type { DiagramModel } from '../../model/diagram/diagrammodel'
     import { ModeEnum, type NavigationContextModel } from '../../model/navigation/navigationcontext'
     import ModeWrapper from '../internal/mode/modewrapper.svelte'
     import Diagram from '../internal/diagram/diagram.svelte'
 
     interface Props {
         class?: string
-        html?: string
-        diagrams?: DiagramModel[]
     }
 
-    let { class: className, html, diagrams = [] }: Props = $props()
+    let { class: className }: Props = $props()
     let articleElement: HTMLElement | undefined = $state()
 
     let navigationContext: NavigationContextModel = $derived(getContext('navigationContext'))
 
     $effect(() => {
-        html
-        diagrams
-
+        const html: string | undefined = navigationContext.content?.html
         if (!articleElement || !html) return
 
         const mountedDiagrams: Array<ReturnType<typeof mount>> = []
@@ -32,7 +27,9 @@
             const diagramKey = placeholder.getAttribute('data-diagram-key')
             if (!diagramKey) continue
 
-            const diagram = diagrams.find((candidate) => candidate.id === diagramKey)
+            const diagram = navigationContext.diagrams?.find(
+                (candidate) => candidate.id === diagramKey
+            )
             if (!diagram) {
                 placeholder.textContent = `Diagram \"${diagramKey}\" not found`
                 continue
@@ -58,7 +55,7 @@
 
     $effect(() => {
         // Trigger recalculation of active heading when html changes
-        html
+        navigationContext.content
         navigationContext.mode
 
         const observedHeadings: HTMLElement[] = Array.from(
@@ -87,11 +84,11 @@
 </script>
 
 <ModeWrapper mode={ModeEnum.Documentation}>
-    {#if !html}
+    {#if !navigationContext.content}
         <p>No content available.</p>
     {:else}
         <article bind:this={articleElement} class="markdown-body min-h-full {className}">
-            {@html html}
+            {@html navigationContext.content!.html}
         </article>
     {/if}
 </ModeWrapper>

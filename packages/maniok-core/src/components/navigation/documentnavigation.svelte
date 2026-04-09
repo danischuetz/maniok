@@ -7,15 +7,9 @@
 
     interface Props {
         class?: string
-        documentRoot: DocumentNodeModel
-        selectedDocumentNode: DocumentNodeModel | undefined
     }
 
-    let {
-        class: className = '',
-        documentRoot,
-        selectedDocumentNode = $bindable()
-    }: Props = $props()
+    let { class: className = '' }: Props = $props()
 
     let navigationContext: NavigationContextModel = getContext('navigationContext')
 
@@ -49,7 +43,8 @@
                 <a
                     onclick={(e) => {
                         e.preventDefault()
-                        selectedDocumentNode = node
+                        navigationContext.selectedDocumentNode = node
+                        navigationContext.content = node.documentation
                         document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' })
                     }}
                     href={'#' + heading.id}
@@ -69,9 +64,10 @@
     <ul class="flex flex-col node">
         <button
             onclick={() => {
-                selectedDocumentNode = nodeModel
+                navigationContext.selectedDocumentNode = nodeModel
+                navigationContext.content = nodeModel.documentation
             }}
-            class:active={nodeModel === selectedDocumentNode}
+            class:active={nodeModel.id === navigationContext.selectedDocumentNode?.id}
         >
             {nodeModel.type ? `${nodeModel.type}: ${nodeModel.name}` : nodeModel.name}
         </button>
@@ -95,8 +91,10 @@
 {/snippet}
 
 <Modewrapper mode={ModeEnum.Documentation}>
-    <nav class="flex flex-col items-start document-tree {className}">
-        {@render node(documentRoot)}
-        {@render subTree(documentRoot)}
-    </nav>
+    {#if navigationContext.documentRoot}
+        <nav class="flex flex-col items-start document-tree {className}">
+            {@render node(navigationContext.documentRoot)}
+            {@render subTree(navigationContext.documentRoot)}
+        </nav>
+    {/if}
 </Modewrapper>

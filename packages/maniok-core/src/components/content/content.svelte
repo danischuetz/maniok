@@ -1,6 +1,5 @@
 <script lang="ts">
-    import { getContext, type Snippet } from 'svelte'
-    import type { NavigationContextModel } from '../../model/navigation/navigationcontext'
+    import { type Snippet } from 'svelte'
 
     interface Props {
         class?: string
@@ -8,7 +7,6 @@
     }
 
     let { class: className, children }: Props = $props()
-    let navigationContext: NavigationContextModel = $derived(getContext('navigationContext'))
 </script>
 
 <div class="content overflow-auto {className}">

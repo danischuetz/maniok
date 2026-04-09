@@ -1,27 +1,28 @@
 <script lang="ts">
+    import { getContext } from 'svelte'
     import { type DiagramModel } from '../../model/diagram/diagrammodel'
     import { DiagramTypeModel } from '../../model/diagram/diagramtype'
-    import { ModeEnum } from '../../model/navigation/navigationcontext'
+    import { ModeEnum, type NavigationContextModel } from '../../model/navigation/navigationcontext'
     import Modewrapper from '../internal/mode/modewrapper.svelte'
 
     interface Props {
         class?: string
-        diagrams: DiagramModel[]
-        selectedDiagram: DiagramModel | undefined
     }
 
-    let { class: className = '', diagrams, selectedDiagram = $bindable() }: Props = $props()
+    let { class: className = '' }: Props = $props()
+
+    let navigationContext: NavigationContextModel = getContext('navigationContext')
 
     let systemContextDiagrams = $derived(
-        diagrams.filter((d) => d.type === DiagramTypeModel.SystemContextDiagram)
+        navigationContext.diagrams.filter((d) => d.type === DiagramTypeModel.SystemContextDiagram)
     )
 
     let containerDiagrams = $derived(
-        diagrams.filter((d) => d.type === DiagramTypeModel.ContainerDiagram)
+        navigationContext.diagrams.filter((d) => d.type === DiagramTypeModel.ContainerDiagram)
     )
 
     let componentDiagrams = $derived(
-        diagrams.filter((d) => d.type === DiagramTypeModel.ComponentDiagram)
+        navigationContext.diagrams.filter((d) => d.type === DiagramTypeModel.ComponentDiagram)
     )
 </script>
 
@@ -29,12 +30,12 @@
     <ul>
         {#each diagrams as diagram (diagram.id)}
             <li>
-                {#if diagram === selectedDiagram}
+                {#if diagram.id === navigationContext.selectedDiagram?.id}
                     <p class="diagram-nav-selected">{kind}: {diagram.title}</p>
                 {:else}
                     <button
                         class="diagram-nav-selectable"
-                        onclick={() => (selectedDiagram = diagram)}
+                        onclick={() => (navigationContext.selectedDiagram = diagram)}
                     >
                         {kind}:
                         {diagram.title}

@@ -1,16 +1,18 @@
 <script lang="ts">
+    import { getContext } from 'svelte'
     import type { DiagramModel } from '../../model/diagram/diagrammodel'
-    import { ModeEnum } from '../../model/navigation/navigationcontext'
+    import { ModeEnum, type NavigationContextModel } from '../../model/navigation/navigationcontext'
     import Diagram from '../internal/diagram/diagram.svelte'
     import ModeWrapper from '../internal/mode/modewrapper.svelte'
     interface Props {
-        diagram?: DiagramModel | null
         class?: string
     }
 
-    let { class: className, diagram }: Props = $props()
+    let { class: className }: Props = $props()
+
+    let navigationContext: NavigationContextModel = getContext('navigationContext')
 </script>
 
 <ModeWrapper mode={ModeEnum.Diagrams}>
-    <Diagram class="w-full h-full {className}" {diagram} />
+    <Diagram class="w-full h-full {className}" diagram={navigationContext.selectedDiagram} />
 </ModeWrapper>
