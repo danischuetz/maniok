@@ -25,7 +25,7 @@
 
     let { data }: PageProps = $props()
 
-    let repositoryUrl: string = $state('https://github.com/danischuetz/maniok')
+    let repositoryUrl: string = $state('')
     async function onRepositoryUrlConfirmation() {
         if (!repositoryUrl) return
 
@@ -44,47 +44,16 @@
     }
 </script>
 
-<DocumentationProvider structurizrWorkspaceJson={data.workspaceJson}>
-    <div class="flex flex-col w-screen h-screen app overflow-hidden">
-        <!-- Title Bar -->
-        <header class="flex justify-between items-center w-full p-4 titlebar gap-4">
-            <div class="flex items-center gap-4">
-                <BurgerMenu class="p-0 lg:hidden">
-                    <Navigation class="navigation-burger">
-                        <ModeNavigation />
-                        <DiagramNavigation class="flex flex-col self-stretch" />
-                        <div class="flex flex-col">
-                            <UrlSelector
-                                class="m-2 h-8"
-                                bind:repositoryUrl
-                                onConfirmation={onRepositoryUrlConfirmation}
-                            />
-                            <DocumentNavigation />
-                        </div>
-                    </Navigation>
-                </BurgerMenu>
-                <Logo class="h-8 fill-primary-500" />
-            </div>
-            <UrlSelector
-                class="flex-1 max-w-lg h-8 hidden lg:flex"
-                bind:repositoryUrl
-                onConfirmation={onRepositoryUrlConfirmation}
-            />
-            <LightSwitch class="size-8 stroke-1" />
-        </header>
-
-        <!-- Body -->
-        <div class="w-full h-full flex flex-row overflow-hidden">
-            <Navigation class="hidden lg:flex navigation">
-                <ModeNavigation />
-                <DiagramNavigation class="flex flex-col self-stretch" />
-                <DocumentNavigation />
-            </Navigation>
-            <Content class="flex-1 content">
-                <DiagramView />
-                <DocumentView />
-                <DiagramFocusModal />
-            </Content>
+<div class="app flex flex-col items-center justify-center w-screen h-screen">
+    <div class="flex flex-col items-start gap-8 px-4">
+        <div class="flex flex-col items-start gap-2">
+            <Logo class="max-h-32 w-full fill-primary-500" />
+            <p class="text-lg">The git-native solution for C4 architecture documentation.</p>
         </div>
+        <UrlSelector
+            class="self-stretch"
+            bind:repositoryUrl
+            onConfirmation={onRepositoryUrlConfirmation}
+        />
     </div>
-</DocumentationProvider>
+</div>

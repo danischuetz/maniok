@@ -81,11 +81,11 @@
                     </Navigation>
                 </BurgerMenu>
                 <button onclick={() => goto(`/`)} class="flex items-center">
-                    <Logo class="h-8 fill-primary-500" />
+                    <Logo class="h-10 fill-primary-500" />
                 </button>
             </div>
             <UrlSelector
-                class="flex-1 max-w-lg h-8 hidden lg:flex"
+                class="flex-1 max-w-lg hidden lg:flex"
                 bind:repositoryUrl
                 onConfirmation={onRepositoryUrlConfirmation}
             />

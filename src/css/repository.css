@@ -1,11 +1,11 @@
 .urlselector {
-    @apply rounded-full bg-surface-100/50 dark:bg-surface-950 border border-surface-200-800 focus-within:bg-surface-50-950 focus-within:ring focus-within:ring-primary-500 overflow-clip;
+    @apply h-9 rounded-full bg-surface-100/50 dark:bg-surface-950 border border-surface-400-600 focus-within:bg-surface-50-950 focus-within:ring focus-within:ring-primary-500 overflow-clip;
 }
 
 .urlselector-input {
-    @apply outline-none pl-3 pr-2 flex-1 truncate focus:text-clip text-surface-800-200;
+    @apply outline-none pl-4 pr-2 flex-1 truncate focus:text-clip text-surface-800 dark:text-surface-100;
 }
 
 .urlselector-button {
-    @apply btn rounded-none h-full rounded-r-full pl-2 pr-3 m-0 bg-surface-700-300 text-surface-50-950 ;
+    @apply btn rounded-none h-full rounded-r-full pl-2 pr-3 m-0 bg-surface-700 dark:bg-surface-100 text-surface-50-950 ;
 }

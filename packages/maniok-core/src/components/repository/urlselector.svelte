@@ -18,7 +18,7 @@
     <input
         name="repositoryUrl"
         type="text"
-        placeholder="Enter a GitHub repository URL"
+        placeholder="Enter a GitHub repo URL"
         bind:value={repositoryUrl}
         class="urlselector-input"
     />

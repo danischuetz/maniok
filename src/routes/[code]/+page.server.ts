@@ -40,7 +40,11 @@ export const load: PageServerLoad = async ({ params }) => {
     try {
         workspaceJson = await RepositoryService.loadResource(repository, '.maniok/workspace.json')
     } catch (e) {
-        throw error(500, `Workspace file not found at ".maniok/workspace.json"`)
+        const errorMessage =
+            'Workspace file not found in repository "' +
+            RepositoryService.toUrl(repository) +
+            '/.maniok/workspace.json". Please make sure the file exists and is accessible.'
+        throw error(500, errorMessage)
     }
 
     return {
