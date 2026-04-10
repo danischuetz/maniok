@@ -9,7 +9,8 @@
         "preview": "vite preview",
         "prepare": "svelte-kit sync || echo ''",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
-        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch"
+        "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+        "exportexamples": "node ./scripts/exportexamples.mjs"
     },
     "devDependencies": {
         "@skeletonlabs/skeleton": "^4.13.0",
@@ -24,9 +25,10 @@
         "vite": "^7.3.1"
     },
     "dependencies": {
+        "@plausible-analytics/tracker": "^0.4.4",
         "@tailwindcss/vite": "^4.2.1",
-        "maniok-core": "file:packages/maniok-core",
         "lucide-svelte": "^0.577.0",
+        "maniok-core": "file:packages/maniok-core",
         "tailwindcss": "^4.2.1"
     }
 }

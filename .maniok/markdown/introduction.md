@@ -53,7 +53,7 @@ If you want to receive updates and be considered for early access to the develop
 # Quick Start
 
 - In a public repository, create a folder called ".maniok"
-- Download the [example documentation](https://github.com/danischuetz/maniok/blob/example.zip) (which is the documentation you are currently reading)
+- As a starting point, download the [maniok documentation](https://github.com/danischuetz/maniok/blob/main/examples/maniokdocs.zip) (which is the documentation you are currently reading)
 - Extract it to the .maniok folder
 - Commit the changes
 - Visit [https://app.maniok.io](https://app.maniok.io) and type your repository url
