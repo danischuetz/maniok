@@ -30,10 +30,11 @@ export const load: PageServerLoad = async ({ params }) => {
 
     const repository: RepositoryModel | null = RepositoryService.decode(params.code)
     if (!repository) {
-        return {
-            repository: null,
-            workspaceJson: ''
-        }
+        const errorMessage =
+            'Repository not found at "' +
+            RepositoryService.toUrl(repository) +
+            '". Please make sure the repository exists and is accessible.'
+        throw error(500, errorMessage)
     }
 
     let workspaceJson: string

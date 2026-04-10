@@ -56,19 +56,22 @@ If you want to receive updates and be considered for early access to the develop
 - As a starting point, download the [maniok documentation](https://github.com/danischuetz/maniok/blob/main/examples/maniokdocs.zip) (which is the documentation you are currently reading)
 - Extract it to the .maniok folder
 - Commit the changes
-- Visit [https://app.maniok.io](https://app.maniok.io) and type your repository url
+- View the documentation at [https://app.maniok.io](https://app.maniok.io), typing your repository url
+- Set up for [editing](#editing)
 
 ## Editing
 
 In order for the documentation to be rendered it needs to be exported to a workspace.json file inside the `.maniok` directory.
 
-A workaround to automatically do that on save of any documentation file in VSCode is to install the `emeraldwalk run-on-save` extension and configure it to run the structurizr-cli export command.
+To automatically do that on save of any documentation file in VSCode, install the `emeraldwalk run-on-save` extension and configure it to run the structurizr-cli export command:
 
 1. Install the structurizr-cli (e.g. using brew)
 2. Install the VSCode run on save extension from `emeraldwalk`
 3. Configure it accordingly ([example](https://github.com/danischuetz/maniok/blob/main/.vscode/settings.json))
 
 Now, the workspace.json should be generated on save (see terminal output for `Run On Save` to catch any errors)
+
+_That's a temporary workaround for the POC, this will be simplified ultimately through an own VSCode extension and/or docker image supporting auto-save and preview_
 
 ## Live Preview
 
