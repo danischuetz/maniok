@@ -26,8 +26,9 @@
                     const code = page.params.code
                     const isExampleDocumentation: boolean =
                         code === 'local' || code === 'Z2l0aHViOmRhbmlzY2h1ZXR6L21hbmlvaw'
+                    const isRoot: boolean = !code
                     return {
-                        type: isExampleDocumentation ? 'example' : 'custom'
+                        type: isRoot ? 'root' : isExampleDocumentation ? 'example' : 'custom'
                     }
                 }
                 return {}
