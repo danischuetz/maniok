@@ -1,0 +1,12 @@
+{
+	email tools@danielschuetz.dev
+}
+
+app.maniok.io {
+	encode zstd gzip
+	reverse_proxy app:3000
+}
+
+maniok.io, www.maniok.io {
+	redir https://app.maniok.io{uri} permanent
+}
