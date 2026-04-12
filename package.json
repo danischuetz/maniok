@@ -15,20 +15,20 @@
     "devDependencies": {
         "@skeletonlabs/skeleton": "^4.13.0",
         "@skeletonlabs/skeleton-svelte": "^4.13.0",
-        "@sveltejs/adapter-auto": "^7.0.1",
         "@sveltejs/kit": "^2.55.0",
         "@sveltejs/vite-plugin-svelte": "^6.2.4",
         "@types/node": "^25.5.0",
         "svelte": "^5.51.0",
         "svelte-check": "^4.4.2",
         "typescript": "^5.9.3",
-        "vite": "^7.3.1"
+        "vite": "^7.3.1",
+        "@sveltejs/adapter-node": "^5.5.4",
+        "@tailwindcss/vite": "^4.2.1",
+        "tailwindcss": "^4.2.1"
     },
     "dependencies": {
         "@plausible-analytics/tracker": "^0.4.4",
-        "@tailwindcss/vite": "^4.2.1",
         "lucide-svelte": "^0.577.0",
-        "maniok-core": "file:packages/maniok-core",
-        "tailwindcss": "^4.2.1"
+        "maniok-core": "file:packages/maniok-core"
     }
 }

@@ -1,4 +1,5 @@
 <script lang="ts">
+    import '../css/app.css'
     import { afterNavigate } from '$app/navigation'
     import { NotificationService, Toaster } from 'maniok-core'
     import type { LayoutProps } from './$types'

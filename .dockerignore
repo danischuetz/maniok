@@ -1,0 +1,41 @@
+# Version control and editor metadata
+
+.git/
+.github/
+.gitignore
+.vscode/
+
+# OS files
+
+.DS_Store
+Thumbs.db
+
+# Local dependencies and build caches
+
+node_modules/
+.svelte-kit/
+packages/maniok-core/node_modules/
+packages/maniok-core/.svelte-kit/
+build/
+.eslintcache
+\*.log
+
+# Local environment files
+
+.env
+.env.\*
+
+# Documentation and local-only project content
+
+\*.md
+docs/
+examples/
+
+# Package-local tests are not needed in the image context
+
+packages/maniok-core/test/
+
+# Keep the prebuilt local package output available for npm ci
+
+!packages/maniok-core/dist/
+!packages/maniok-core/dist/\*\*

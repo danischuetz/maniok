@@ -8,6 +8,6 @@
         "noEmit": true,
         "verbatimModuleSyntax": true
     },
-    "include": ["src/**/*", "test/**/*"],
+    "include": ["src/**/*"],
     "exclude": ["dist/**", "node_modules", ".svelte-kit/**"]
 }
