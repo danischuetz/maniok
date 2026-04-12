@@ -8,16 +8,17 @@
         children: Snippet
     }
 
+    let open = $state(false)
     let { class: className = '', children }: Props = $props()
 </script>
 
-<Popover>
+<Popover {open} onOpenChange={(value) => (open = value.open)}>
     <Popover.Trigger class="btn flex items-center justify-center {className} "
         ><Menu class="lucide-icon-sm" />
     </Popover.Trigger>
     <Portal>
         <Popover.Positioner>
-            <Popover.Content class="card">
+            <Popover.Content class="card" onclick={() => (open = false)}>
                 {@render children()}
             </Popover.Content>
         </Popover.Positioner>
