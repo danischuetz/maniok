@@ -62,8 +62,8 @@
                 />
             </div>
             <button
-                class="btn font-bold preset-filled-surface-950-50 rounded-full self-end"
-                onclick={onDemoClick}>Wait, what? How?</button
+                class="btn preset-filled-surface-950-50 rounded-full self-end"
+                onclick={onDemoClick}>Docs / Demo</button
             >
         </div>
     </div>
