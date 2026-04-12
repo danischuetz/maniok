@@ -1,4 +1,4 @@
-import type { DiagramModel } from '../../../dist'
+import type { DiagramModel } from '../diagram/diagrammodel'
 import type { DocumentContentModel } from '../documentation/documentcontent'
 import type { DocumentNodeModel } from '../documentation/documentnode'
 
