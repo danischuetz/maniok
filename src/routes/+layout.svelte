@@ -1,9 +1,9 @@
 <script lang="ts">
-    import '../css/app.css'
     import { afterNavigate } from '$app/navigation'
     import { NotificationService, Toaster } from 'maniok-core'
     import type { LayoutProps } from './$types'
     import { onMount } from 'svelte'
+    import type { CustomProperties } from '@plausible-analytics/tracker'
 
     let trackPageview: ((url?: string) => void) | undefined = undefined
 
@@ -17,7 +17,18 @@
         init({
             domain: 'app.maniok.io',
             outboundLinks: true,
-            autoCapturePageviews: false
+            autoCapturePageviews: false,
+            customProperties: (eventName): CustomProperties => {
+                if (eventName === 'pageview') {
+                    const isExampleDocumentation: boolean =
+                        document.URL === 'local' ||
+                        document.URL === 'Z2l0aHViOmRhbmlzY2h1ZXR6L21hbmlvaw'
+                    return {
+                        type: isExampleDocumentation ? 'example' : 'custom'
+                    }
+                }
+                return {}
+            }
         })
 
         trackPageview = (url?: string) => {
