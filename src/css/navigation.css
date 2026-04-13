@@ -65,3 +65,20 @@
 .document-tree .node ul ul ul {
     @apply pl-4;
 }
+
+/* Document Next Previous */
+.next-previous-container {
+    @apply m-2 md:mx-4 lg:mx-8 xl:mx-16 2xl:mx-32 lg:max-w-3xl xl:max-w-4xl 2xl:max-w-5xl;
+}
+
+.next-previous {
+    @apply text-surface-900-100 border border-surface-200/50 rounded-lg p-4;
+}
+
+.nextprevious-label {
+    @apply text-sm opacity-70;
+}
+
+.nextprevious-title {
+    @apply text-sm lg:text-xl;
+}

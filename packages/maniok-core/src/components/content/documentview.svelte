@@ -7,6 +7,7 @@
     } from '../../model/documentation/documentationcontext'
     import ModeWrapper from '../internal/mode/modewrapper.svelte'
     import Diagram from '../internal/diagram/diagram.svelte'
+    import DocumentNextPrevious from '../navigation/documentnextprevious.svelte'
 
     interface Props {
         class?: string
@@ -92,8 +93,11 @@
     {#if !documentationContext.content}
         <p>No content available.</p>
     {:else}
-        <article bind:this={articleElement} class="markdown-body min-h-full {className}">
-            {@html documentationContext.content!.html}
-        </article>
+        <div class="flex flex-col">
+            <article bind:this={articleElement} class="flex-1 markdown-body min-h-full {className}">
+                {@html documentationContext.content!.html}
+            </article>
+            <DocumentNextPrevious />
+        </div>
     {/if}
 </ModeWrapper>
