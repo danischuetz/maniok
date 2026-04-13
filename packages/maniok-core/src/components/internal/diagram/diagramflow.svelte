@@ -37,7 +37,7 @@
     const fitViewOptions = {
         padding: {
             top: 0.1,
-            right: 0.1,
+            right: 0.2,
             bottom: 0.2,
             left: 0.1
         },
@@ -108,7 +108,7 @@
 <div bind:this={containerElement} class="relative diagram-viewport w-full flex-col {className}">
     <button
         type="button"
-        class="btn-icon-diagram absolute right-0 top-0 z-50"
+        class="btn-icon-diagram absolute right-1 top-1 z-50"
         onclick={toggleFocus}
         aria-pressed={isFocussed}
     >

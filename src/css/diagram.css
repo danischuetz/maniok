@@ -1,6 +1,6 @@
 /* Diagram */
 .btn-icon-diagram {
-    @apply btn-icon w-5 h-5;
+    @apply btn-icon w-5 h-5 p-0.5 border border-surface-500 bg-surface-50-950;
 }
 
 .icon-diagram {
@@ -37,7 +37,7 @@
 
 
 .svelte-flow__node-group {
-    @apply bg-surface-100-900/25 border-surface-400-600 border rounded-lg;
+    @apply bg-surface-100/10 border-surface-400-600 border rounded-lg;
 }
 
 .group-label {
