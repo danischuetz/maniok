@@ -5,17 +5,17 @@
     interface Props {
         class?: string
         children: Snippet
-        onNavigation: () => void
+        onNavigation?: () => void
     }
 
-    let { class: className, children, onNavigation }: Props = $props()
+    let { class: className, children, onNavigation = () => {} }: Props = $props()
 
     let navigationContext: NavigationContextModel = $state({
         onNavigation: () => {}
     })
 
     $effect(() => {
-        navigationContext.onNavigation = onNavigation
+        navigationContext.onNavigation = onNavigation ?? (() => {})
     })
 
     setContext('navigationContext', navigationContext)

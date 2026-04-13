@@ -110,13 +110,13 @@
         </header>
 
         <!-- Body -->
-        <div class="w-full h-full flex flex-row overflow-hidden">
+        <div class="flex flex-1 overflow-hidden">
             <Navigation class="hidden lg:flex navigation">
                 <ModeNavigation />
                 <DiagramNavigation class="flex flex-col self-stretch" />
                 <DocumentNavigation />
             </Navigation>
-            <Content class="flex-1 content">
+            <Content class="flex-1 content overflow-y-auto">
                 <DiagramView />
                 <DocumentView />
                 <DiagramFocusModal />
