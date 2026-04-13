@@ -22,6 +22,7 @@
 
     import type { PageProps } from './$types'
     import { goto } from '$app/navigation'
+    import { Heart } from 'lucide-svelte'
 
     let { data }: PageProps = $props()
 
@@ -52,6 +53,17 @@
     }
 
     let onNavigation: () => void = $state(() => {})
+
+    let liked = $state(false)
+
+    $effect(() => {
+        liked = localStorage.getItem('liked') === 'true'
+    })
+
+    function like() {
+        liked = true
+        localStorage.setItem('liked', liked.toString())
+    }
 </script>
 
 <DocumentationProvider structurizrWorkspaceJson={data.workspaceJson}>
@@ -82,7 +94,24 @@
                 bind:repositoryUrl
                 onConfirmation={onRepositoryUrlConfirmation}
             />
-            <LightSwitch class="size-8 stroke-1" />
+            <div class="flex items-center gap-4">
+                <button
+                    class="btn pr-0 flex items-center rounded-full"
+                    onclick={async () => {
+                        if (!liked) {
+                            const { track } = await import('@plausible-analytics/tracker')
+                            track('like', {})
+                        }
+                        like()
+                    }}
+                >
+                    <span class="text-surface-400 hidden lg:block">
+                        {liked ? 'Thank you!' : "I'd use a production-ready version of this!"}
+                    </span>
+                    <Heart class="size-8 fill-primary-500 stroke-primary-500" />
+                </button>
+                <LightSwitch class="size-8 stroke-1" />
+            </div>
         </header>
 
         <!-- Body -->
