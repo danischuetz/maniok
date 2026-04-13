@@ -1,14 +1,14 @@
 # Origins
 
-Until recently my go-to solution for documenting software architecture as a freelance software engineer was draw.io diagrams embedded in Google Docs. That worked fine for small projects and at the beginning of larger projects but soon became painful to maintain.
+I've been mostly using draw.io diagrams embedded in Google Docs or Confluence to document software architecture. In larger projects, I've always found myself being annoyed about the maintenance effort and the decrease in documentation quality after some time had passed and systems were evolving.
 
-- Drawing diagrams was time consuming, so only half the system was properly documented from the start
+- Drawing diagrams was time consuming, so only half the system was properly documented
 - Small changes in the system required a lot of effort updating the documentation
 - Diagrams were C4-ish but often incomplete or overloaded
 
-Some online research led me to Structurizr and I was impressed with it's capabilities but taken aback by the setup/hosting effort and the UI, which seemed not representative enough for my customers.
+I started exploring existing solutions to find a more scalable solutions to serve my needs and was very impressed with the C4 modelling approach of Structurizr. That was exactly what I wanted - however, I just didn't like the way diagrams and markdown were rendered and there was still the effort of hosting the documentation for clients, protecting their IP (I work as a freelance software engineer).
 
-The frustration of not having found something satisfying to my needs in a couple of days researching existing solutions and the discovery of some promising node libraries for diagrams and layout finally led to the start of this project
+So I decided to build something new.
 
 **But first...**
 
@@ -16,7 +16,7 @@ The frustration of not having found something satisfying to my needs in a couple
 
 A couple of weeks into the first experiments, I spoke to a friend about the project who is an experienced team lead and former startup CTO. He cautiously tamed my optimistic excitement about the solutions I was working on and recommended to found this on more solid data in order to determine if I was actually solving the right problem. He recommended the book "Jobs To Be Done" by Tony Ulwick, which I read right away.
 
-Tony Ulwick's system made a lot of sense and I began to structure the problem at hand - "Documenting Software Architecture" - into various steps and about sixty desired outcomes. I used Google Forms to perform a survey on those desired outcomes. It is hard to find participants without paying people to take the survey but in the end ten enthusiasts were willing to share their experience.
+Tony Ulwick's system made a lot of sense and I began to structure the job at hand - "Documenting Software Architecture" - into various steps and about sixty desired outcomes. I used Google Forms to perform a survey on those desired outcomes. It is hard to find participants without paying people to take the survey but in the end ten enthusiasts were willing to share their experience.
 
 That's not enough for solid data but I saw a pattern which aligned well with my experience:
 

@@ -43,7 +43,7 @@
 }
 
 .document-tree p {
-    @apply btn justify-start px-4 pt-8 text-base text-surface-300-500;
+    @apply justify-start px-4 pt-8 text-base text-surface-300-500;
 }
 
 .navigation-burger .document-tree p {
