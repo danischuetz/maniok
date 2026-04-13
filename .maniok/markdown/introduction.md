@@ -1,18 +1,29 @@
 # What is it?
 
-The git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation, including all diagrams, is rendered from the structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/main/.maniok).
+The git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation, including all diagrams, is rendered from the Structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/main/.maniok).
 
 - Model and document architecture using Markdown and the Structurizr DSL
 - Document alongside code - documentation lives in your GitHub repositories
-- Direct access [https://app.maniok.io](https://app.maniok.io) and the repository url
+- Share the documentation using a simple link, generated from your repository url
 
-For documentation to be discovered by the Maniok webapp, it must be placed in a dedicated folder `.maniok` at the root of each documented Github repository.
+_For documentation to be discovered by the Maniok webapp, it must be placed in a dedicated folder `.maniok` at the root of each documented Github repository._
 
 ![Maniok Container View](embed:CoreContainerView)
 
-## Features
+## Disclaimer
 
-Based on an ODI (Outcome Driven Innovation) resarch of current pain points in documenting software architecture, Maniok features:
+This is a very early proof of concept based on an ODI (Outcome Driven Innovation) resarch of current pain points in documenting software architecture. It does work on **public repositories only**. See [Limitations and known issues](#limitations-and-known-issues) for further information.
+
+## Contact
+
+Any feedback is highly appreciated. Get in touch through:
+
+- E-Mail: <daniel@danielschuetz.dev>
+- LinkedIn: <https://www.linkedin.com/in/schuetzdaniel>
+
+If you want to receive updates and be considered for early access to the developed tooling, you can leave your email address here: <https://forms.gle/pt5bWiQCqMBqNqmf7>
+
+## Features
 
 - Minimal setup
 - Minimal effort to maintain the documentation
@@ -25,7 +36,7 @@ Based on an ODI (Outcome Driven Innovation) resarch of current pain points in do
 - Best-in-class diagrams auto-generated from your architecture
 - Embed interactive diagrams in written documentation
 
-## POC
+## Limitations and known issues
 
 This is a very first proof of concept to validate the concept and to collect feedback.
 
@@ -40,15 +51,6 @@ This is a very first proof of concept to validate the concept and to collect fee
         - Switching to chapter in other document node doesn't scroll to correct chapter
 - Editing with auto-export has to be set up manually, see chapter [Editing](#editing) (It is planned to either provide a docker image or a VSCode extension for export/preview)
 - Branch currently fixed to "HEAD"
-
-## Contact, Updates & Early Access
-
-You can contact me via
-
-- E-Mail: <daniel@danielschuetz.dev>
-- LinkedIn: <https://www.linkedin.com/in/schuetzdaniel>
-
-If you want to receive updates and be considered for early access to the developed tooling, you can leave your email address here: <https://forms.gle/pt5bWiQCqMBqNqmf7>
 
 # Quick Start
 
