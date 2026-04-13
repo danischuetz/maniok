@@ -4,9 +4,10 @@
     interface Props {
         class?: string
         children: Snippet
+        onNavigation: () => void
     }
 
-    let { class: className, children }: Props = $props()
+    let { class: className, children, onNavigation }: Props = $props()
 </script>
 
 <div class="flex {className}">

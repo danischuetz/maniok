@@ -74,6 +74,8 @@
 
         goto(`/${code}`)
     }
+
+    let onNavigation: () => void = $state(() => {})
 </script>
 
 <DocumentationProvider structurizrWorkspaceJson={data.workspaceJson}>
@@ -81,8 +83,8 @@
         <!-- Title Bar -->
         <header class="flex justify-between items-center w-full p-4 titlebar gap-4">
             <div class="flex items-center gap-4">
-                <BurgerMenu class="p-0 lg:hidden">
-                    <Navigation class="navigation-burger">
+                <BurgerMenu class="p-0 lg:hidden" {onNavigation}>
+                    <Navigation class="navigation-burger" {onNavigation}>
                         <ModeNavigation />
                         <DiagramNavigation class="flex flex-col self-stretch" />
                         <div class="flex flex-col">

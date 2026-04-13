@@ -1,7 +1,7 @@
 <script lang="ts">
     import { Dialog, Portal } from '@skeletonlabs/skeleton-svelte'
     import Diagram from '../internal/diagram/diagram.svelte'
-    import type { NavigationContextModel } from '../../model/navigation/navigationcontext'
+    import type { DocumentationContextModel } from '../../model/documentation/documentationcontext'
     import { getContext } from 'svelte'
     import type { DiagramModel } from '../../model/diagram/diagrammodel'
 
@@ -11,12 +11,12 @@
 
     let { class: className }: Props = $props()
 
-    let navigationContext: NavigationContextModel = getContext('navigationContext')
+    let documentationContext: DocumentationContextModel = getContext('documentationContext')
 
-    let currentFocusId: string | undefined = $derived(navigationContext.diagramFocusId)
+    let currentFocusId: string | undefined = $derived(documentationContext.diagramFocusId)
     let diagram: DiagramModel | undefined = $derived.by(() => {
-        const currentFocusId = navigationContext.diagramFocusId
-        return navigationContext.diagrams.find((candidate) => candidate.id === currentFocusId)
+        const currentFocusId = documentationContext.diagramFocusId
+        return documentationContext.diagrams.find((candidate) => candidate.id === currentFocusId)
     })
 </script>
 

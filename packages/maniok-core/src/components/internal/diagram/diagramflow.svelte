@@ -7,7 +7,7 @@
     import ElementComponent from './element.svelte'
     import GroupComponent from './group.svelte'
     import type { LayoutModel } from '../../../model/layout/layout'
-    import type { NavigationContextModel } from '../../../model/navigation/navigationcontext'
+    import type { DocumentationContextModel } from '../../../model/documentation/documentationcontext'
     import { getContext } from 'svelte'
     import { Maximize, Minimize } from 'lucide-svelte'
     import PersonComponent from './person.svelte'
@@ -31,8 +31,8 @@
     let aspectRatio: number = $state(1)
 
     let containerElement: HTMLElement | undefined = $state()
-    let navigationContext: NavigationContextModel = getContext('navigationContext')
-    let isFocussed: boolean = $derived(navigationContext.diagramFocusId == diagram.id)
+    let documentationContext: DocumentationContextModel = getContext('documentationContext')
+    let isFocussed: boolean = $derived(documentationContext.diagramFocusId == diagram.id)
 
     const fitViewOptions = {
         padding: {
@@ -101,7 +101,7 @@
     }
 
     async function toggleFocus() {
-        navigationContext.diagramFocusId = isFocussed ? undefined : diagram.id
+        documentationContext.diagramFocusId = isFocussed ? undefined : diagram.id
     }
 </script>
 

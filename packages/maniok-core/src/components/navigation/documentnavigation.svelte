@@ -2,7 +2,10 @@
     import { getContext } from 'svelte'
     import type { DocumentNodeModel } from '../../model/documentation/documentnode'
     import type { HeadingModel } from '../../model/documentation/heading'
-    import { ModeEnum, type NavigationContextModel } from '../../model/navigation/navigationcontext'
+    import {
+        ModeEnum,
+        type DocumentationContextModel
+    } from '../../model/documentation/documentationcontext'
     import Modewrapper from '../internal/mode/modewrapper.svelte'
 
     interface Props {
@@ -11,7 +14,7 @@
 
     let { class: className = '' }: Props = $props()
 
-    let navigationContext: NavigationContextModel = getContext('navigationContext')
+    let documentationContext: DocumentationContextModel = getContext('documentationContext')
 
     interface HeadingNode {
         heading: HeadingModel
@@ -43,12 +46,12 @@
                 <a
                     onclick={(e) => {
                         e.preventDefault()
-                        navigationContext.selectedDocumentNode = node
-                        navigationContext.content = node.documentation
+                        documentationContext.selectedDocumentNode = node
+                        documentationContext.content = node.documentation
                         document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' })
                     }}
                     href={'#' + heading.id}
-                    class:active={navigationContext.activeHeadingId === heading.id}
+                    class:active={documentationContext.activeHeadingId === heading.id}
                 >
                     {heading.text}
                 </a>
@@ -64,10 +67,10 @@
     <ul class="flex flex-col node">
         <button
             onclick={() => {
-                navigationContext.selectedDocumentNode = nodeModel
-                navigationContext.content = nodeModel.documentation
+                documentationContext.selectedDocumentNode = nodeModel
+                documentationContext.content = nodeModel.documentation
             }}
-            class:active={nodeModel.id === navigationContext.selectedDocumentNode?.id}
+            class:active={nodeModel.id === documentationContext.selectedDocumentNode?.id}
         >
             {nodeModel.type ? `${nodeModel.type}: ${nodeModel.name}` : nodeModel.name}
         </button>
@@ -91,10 +94,10 @@
 {/snippet}
 
 <Modewrapper mode={ModeEnum.Documentation}>
-    {#if navigationContext.documentRoot}
+    {#if documentationContext.documentRoot}
         <nav class="flex flex-col items-start document-tree {className}">
-            {@render node(navigationContext.documentRoot)}
-            {@render subTree(navigationContext.documentRoot)}
+            {@render node(documentationContext.documentRoot)}
+            {@render subTree(documentationContext.documentRoot)}
         </nav>
     {/if}
 </Modewrapper>

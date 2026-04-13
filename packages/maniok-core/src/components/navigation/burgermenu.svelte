@@ -6,10 +6,15 @@
     interface Props {
         class?: string
         children: Snippet
+        onNavigation: () => void
     }
 
     let open = $state(false)
-    let { class: className = '', children }: Props = $props()
+    let { class: className = '', children, onNavigation = $bindable() }: Props = $props()
+
+    onNavigation = () => {
+        open = false
+    }
 </script>
 
 <Popover {open} onOpenChange={(value) => (open = value.open)}>
@@ -18,7 +23,7 @@
     </Popover.Trigger>
     <Portal>
         <Popover.Positioner>
-            <Popover.Content class="card" onclick={() => (open = false)}>
+            <Popover.Content class="card" }>
                 {@render children()}
             </Popover.Content>
         </Popover.Positioner>

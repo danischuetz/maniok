@@ -2,7 +2,10 @@
     import { getContext } from 'svelte'
     import { type DiagramModel } from '../../model/diagram/diagrammodel'
     import { DiagramTypeModel } from '../../model/diagram/diagramtype'
-    import { ModeEnum, type NavigationContextModel } from '../../model/navigation/navigationcontext'
+    import {
+        ModeEnum,
+        type DocumentationContextModel
+    } from '../../model/documentation/documentationcontext'
     import Modewrapper from '../internal/mode/modewrapper.svelte'
 
     interface Props {
@@ -11,18 +14,20 @@
 
     let { class: className = '' }: Props = $props()
 
-    let navigationContext: NavigationContextModel = getContext('navigationContext')
+    let documentationContext: DocumentationContextModel = getContext('documentationContext')
 
     let systemContextDiagrams = $derived(
-        navigationContext.diagrams.filter((d) => d.type === DiagramTypeModel.SystemContextDiagram)
+        documentationContext.diagrams.filter(
+            (d) => d.type === DiagramTypeModel.SystemContextDiagram
+        )
     )
 
     let containerDiagrams = $derived(
-        navigationContext.diagrams.filter((d) => d.type === DiagramTypeModel.ContainerDiagram)
+        documentationContext.diagrams.filter((d) => d.type === DiagramTypeModel.ContainerDiagram)
     )
 
     let componentDiagrams = $derived(
-        navigationContext.diagrams.filter((d) => d.type === DiagramTypeModel.ComponentDiagram)
+        documentationContext.diagrams.filter((d) => d.type === DiagramTypeModel.ComponentDiagram)
     )
 </script>
 
@@ -30,12 +35,12 @@
     <ul>
         {#each diagrams as diagram (diagram.id)}
             <li>
-                {#if diagram.id === navigationContext.selectedDiagram?.id}
+                {#if diagram.id === documentationContext.selectedDiagram?.id}
                     <p class="diagram-nav-selected">{kind}: {diagram.title}</p>
                 {:else}
                     <button
                         class="diagram-nav-selectable"
-                        onclick={() => (navigationContext.selectedDiagram = diagram)}
+                        onclick={() => (documentationContext.selectedDiagram = diagram)}
                     >
                         {kind}:
                         {diagram.title}

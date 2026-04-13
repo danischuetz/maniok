@@ -1,6 +1,9 @@
 <script lang="ts">
     import { setContext, type Snippet } from 'svelte'
-    import { ModeEnum, type NavigationContextModel } from '../model/navigation/navigationcontext'
+    import {
+        ModeEnum,
+        type DocumentationContextModel
+    } from '../model/documentation/documentationcontext'
     import type { DiagramModel } from '../model/diagram/diagrammodel'
     import type { DocumentNodeModel } from '../model/documentation/documentnode'
     import type { SzrWorkspace } from '../model/szr/szrworkspace'
@@ -16,7 +19,7 @@
 
     let { children, structurizrWorkspaceJson }: Props = $props()
 
-    let navigationContext: NavigationContextModel = $state({
+    let documentationContext: DocumentationContextModel = $state({
         mode: ModeEnum.Documentation,
         diagrams: [],
         documentRoot: undefined,
@@ -27,7 +30,7 @@
         diagramFocusId: undefined
     })
 
-    setContext('navigationContext', navigationContext)
+    setContext('documentationContext', documentationContext)
 
     let workspace: SzrWorkspace | undefined = $derived.by(() => {
         try {
@@ -61,11 +64,11 @@
     })
 
     $effect(() => {
-        navigationContext.diagrams = diagrams
-        navigationContext.documentRoot = documentRoot
-        navigationContext.selectedDiagram = diagrams.length > 0 ? diagrams[0] : undefined
-        navigationContext.selectedDocumentNode = documentRoot
-        navigationContext.content = documentRoot ? documentRoot.documentation : undefined
+        documentationContext.diagrams = diagrams
+        documentationContext.documentRoot = documentRoot
+        documentationContext.selectedDiagram = diagrams.length > 0 ? diagrams[0] : undefined
+        documentationContext.selectedDocumentNode = documentRoot
+        documentationContext.content = documentRoot ? documentRoot.documentation : undefined
     })
 </script>
 

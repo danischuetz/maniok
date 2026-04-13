@@ -2,8 +2,8 @@
     import { getContext, type Snippet } from 'svelte'
     import type {
         ModeEnum,
-        NavigationContextModel
-    } from '../../../model/navigation/navigationcontext'
+        DocumentationContextModel
+    } from '../../../model/documentation/documentationcontext'
 
     interface Props {
         mode: ModeEnum
@@ -11,9 +11,11 @@
     }
 
     const { mode, children }: Props = $props()
-    let navigationContext: NavigationContextModel = $derived(getContext('navigationContext'))
+    let documentationContext: DocumentationContextModel = $derived(
+        getContext('documentationContext')
+    )
 </script>
 
-{#if navigationContext.mode === mode}
+{#if documentationContext.mode === mode}
     {@render children()}
 {/if}

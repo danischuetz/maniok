@@ -1,13 +1,13 @@
 import type { DiagramModel } from '../diagram/diagrammodel'
-import type { DocumentContentModel } from '../documentation/documentcontent'
-import type { DocumentNodeModel } from '../documentation/documentnode'
+import type { DocumentContentModel } from './documentcontent'
+import type { DocumentNodeModel } from './documentnode'
 
 export enum ModeEnum {
     Diagrams = 'Diagrams',
     Documentation = 'Documentation'
 }
 
-export interface NavigationContextModel {
+export interface DocumentationContextModel {
     mode: ModeEnum
     diagrams: DiagramModel[]
     documentRoot: DocumentNodeModel | undefined

@@ -1,7 +1,10 @@
 <script lang="ts">
     import { getContext } from 'svelte'
     import { mount, unmount } from 'svelte'
-    import { ModeEnum, type NavigationContextModel } from '../../model/navigation/navigationcontext'
+    import {
+        ModeEnum,
+        type DocumentationContextModel
+    } from '../../model/documentation/documentationcontext'
     import ModeWrapper from '../internal/mode/modewrapper.svelte'
     import Diagram from '../internal/diagram/diagram.svelte'
 
@@ -12,10 +15,12 @@
     let { class: className }: Props = $props()
     let articleElement: HTMLElement | undefined = $state()
 
-    let navigationContext: NavigationContextModel = $derived(getContext('navigationContext'))
+    let documentationContext: DocumentationContextModel = $derived(
+        getContext('documentationContext')
+    )
 
     $effect(() => {
-        const html: string | undefined = navigationContext.content?.html
+        const html: string | undefined = documentationContext.content?.html
         if (!articleElement || !html) return
 
         const mountedDiagrams: Array<ReturnType<typeof mount>> = []
@@ -27,7 +32,7 @@
             const diagramKey = placeholder.getAttribute('data-diagram-key')
             if (!diagramKey) continue
 
-            const diagram = navigationContext.diagrams?.find(
+            const diagram = documentationContext.diagrams?.find(
                 (candidate) => candidate.id === diagramKey
             )
             if (!diagram) {
@@ -55,8 +60,8 @@
 
     $effect(() => {
         // Trigger recalculation of active heading when html changes
-        navigationContext.content
-        navigationContext.mode
+        documentationContext.content
+        documentationContext.mode
 
         const observedHeadings: HTMLElement[] = Array.from(
             articleElement?.querySelectorAll('[id]') ?? []
@@ -70,7 +75,7 @@
                 else intersectingHeadingIds.delete(entry.target.id)
             }
 
-            navigationContext.activeHeadingId =
+            documentationContext.activeHeadingId =
                 intersectingHeadingIds.size > 0
                     ? observedHeadings
                           .map((el) => el.id)
@@ -84,11 +89,11 @@
 </script>
 
 <ModeWrapper mode={ModeEnum.Documentation}>
-    {#if !navigationContext.content}
+    {#if !documentationContext.content}
         <p>No content available.</p>
     {:else}
         <article bind:this={articleElement} class="markdown-body min-h-full {className}">
-            {@html navigationContext.content!.html}
+            {@html documentationContext.content!.html}
         </article>
     {/if}
 </ModeWrapper>
