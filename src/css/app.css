@@ -38,7 +38,7 @@
 }
 
 .navigation-burger {
-    @apply gap-1 rounded-md bg-surface-50-950 border border-surface-700-300 drop-shadow-md overflow-clip;
+    @apply gap-1 rounded-md bg-surface-50-950 border border-surface-700-300 drop-shadow-md;
 }
 
 .content {

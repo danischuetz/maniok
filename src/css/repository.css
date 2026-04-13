@@ -3,7 +3,7 @@
 }
 
 .urlselector-input {
-    @apply outline-none pl-4 pr-2 flex-1 truncate focus:text-clip text-surface-900-100 placeholder:text-surface-800-200;
+    @apply outline-none pl-4 pr-2 flex-1 truncate focus:text-clip text-surface-900-100 placeholder:text-surface-800-200 min-w-0;
 }
 
 .urlselector-button {

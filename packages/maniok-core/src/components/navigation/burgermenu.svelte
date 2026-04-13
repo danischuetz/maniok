@@ -22,8 +22,11 @@
         ><Menu class="lucide-icon-sm" />
     </Popover.Trigger>
     <Portal>
-        <Popover.Positioner>
-            <Popover.Content class="card">
+        <Popover.Positioner class="fixed inset-0 z-50">
+            <Popover.Content
+                class="card z-50 max-w-[calc(100vw-1rem)] max-h-[calc(100dvh-5rem)] overflow-x-hidden overflow-y-auto rounded-md"
+                style="width: max-content;"
+            >
                 {@render children()}
             </Popover.Content>
         </Popover.Positioner>

@@ -81,18 +81,18 @@
 <DocumentationProvider structurizrWorkspaceJson={data.workspaceJson}>
     <div class="flex flex-col w-screen h-screen app overflow-hidden">
         <!-- Title Bar -->
-        <header class="flex justify-between items-center w-full p-4 titlebar gap-4">
+        <header class="flex justify-between items-center p-4 titlebar gap-4 overflow-hidden">
             <div class="flex items-center gap-4">
                 <BurgerMenu class="p-0 lg:hidden" bind:onNavigation>
-                    <Navigation class="navigation-burger" {onNavigation}>
+                    <Navigation class="navigation-burger min-w-0 w-full" {onNavigation}>
                         <ModeNavigation />
-                        <DiagramNavigation class="flex flex-col self-stretch" />
-                        <div class="flex flex-col">
+                        <div class="flex flex-col min-w-0">
                             <UrlSelector
                                 class="m-2 h-8"
                                 bind:repositoryUrl
                                 onConfirmation={onRepositoryUrlConfirmation}
                             />
+                            <DiagramNavigation class="flex flex-col" />
                             <DocumentNavigation />
                         </div>
                     </Navigation>
