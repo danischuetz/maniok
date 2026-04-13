@@ -23,7 +23,7 @@
     </Popover.Trigger>
     <Portal>
         <Popover.Positioner>
-            <Popover.Content class="card" }>
+            <Popover.Content class="card">
                 {@render children()}
             </Popover.Content>
         </Popover.Positioner>

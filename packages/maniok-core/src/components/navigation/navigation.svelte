@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { type Snippet } from 'svelte'
+    import { setContext, type Snippet } from 'svelte'
+    import type { NavigationContextModel } from '../../model/navigation/navigationcontext'
 
     interface Props {
         class?: string
@@ -8,6 +9,16 @@
     }
 
     let { class: className, children, onNavigation }: Props = $props()
+
+    let navigationContext: NavigationContextModel = $state({
+        onNavigation: () => {}
+    })
+
+    $effect(() => {
+        navigationContext.onNavigation = onNavigation
+    })
+
+    setContext('navigationContext', navigationContext)
 </script>
 
 <div class="flex {className}">

@@ -7,6 +7,7 @@
         type DocumentationContextModel
     } from '../../model/documentation/documentationcontext'
     import Modewrapper from '../internal/mode/modewrapper.svelte'
+    import type { NavigationContextModel } from '../../model/navigation/navigationcontext'
 
     interface Props {
         class?: string
@@ -15,6 +16,7 @@
     let { class: className = '' }: Props = $props()
 
     let documentationContext: DocumentationContextModel = getContext('documentationContext')
+    let navigationContext: NavigationContextModel = getContext('navigationContext')
 
     let systemContextDiagrams = $derived(
         documentationContext.diagrams.filter(
@@ -40,7 +42,10 @@
                 {:else}
                     <button
                         class="diagram-nav-selectable"
-                        onclick={() => (documentationContext.selectedDiagram = diagram)}
+                        onclick={() => {
+                            documentationContext.selectedDiagram = diagram
+                            navigationContext.onNavigation()
+                        }}
                     >
                         {kind}:
                         {diagram.title}

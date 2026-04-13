@@ -42,16 +42,12 @@
     @apply w-full;
 }
 
-.document-tree button {
+.document-tree p {
     @apply btn justify-start px-4 pt-8 text-base text-surface-300-500;
 }
 
-.navigation-burger .document-tree button {
+.navigation-burger .document-tree p {
     @apply pt-4;
-}
-
-.document-tree button.active {
-    @apply text-primary-700-300;
 }
 
 .document-tree a {

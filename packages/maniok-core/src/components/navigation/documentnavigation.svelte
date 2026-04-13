@@ -7,6 +7,7 @@
         type DocumentationContextModel
     } from '../../model/documentation/documentationcontext'
     import Modewrapper from '../internal/mode/modewrapper.svelte'
+    import type { NavigationContextModel } from '../../model/navigation/navigationcontext'
 
     interface Props {
         class?: string
@@ -15,6 +16,7 @@
     let { class: className = '' }: Props = $props()
 
     let documentationContext: DocumentationContextModel = getContext('documentationContext')
+    let navigationContext: NavigationContextModel = getContext('navigationContext')
 
     interface HeadingNode {
         heading: HeadingModel
@@ -49,6 +51,7 @@
                         documentationContext.selectedDocumentNode = node
                         documentationContext.content = node.documentation
                         document.getElementById(heading.id)?.scrollIntoView({ behavior: 'smooth' })
+                        navigationContext.onNavigation()
                     }}
                     href={'#' + heading.id}
                     class:active={documentationContext.activeHeadingId === heading.id}
@@ -65,15 +68,9 @@
 
 {#snippet node(nodeModel: DocumentNodeModel)}
     <ul class="flex flex-col node">
-        <button
-            onclick={() => {
-                documentationContext.selectedDocumentNode = nodeModel
-                documentationContext.content = nodeModel.documentation
-            }}
-            class:active={nodeModel.id === documentationContext.selectedDocumentNode?.id}
-        >
+        <p>
             {nodeModel.type ? `${nodeModel.type}: ${nodeModel.name}` : nodeModel.name}
-        </button>
+        </p>
         {#if nodeModel.documentation?.headings}
             {@render headings(buildHeadingTree(nodeModel.documentation.headings), nodeModel)}
         {/if}
