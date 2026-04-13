@@ -1,6 +1,6 @@
 # What is it?
 
-The git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation, including all diagrams, is rendered from the structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/.maniok).
+The git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation, including all diagrams, is rendered from the structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/main/.maniok).
 
 - Model and document architecture using Markdown and the Structurizr DSL
 - Document alongside code - documentation lives in your GitHub repositories
