@@ -15,6 +15,14 @@
         trackPageview(to?.url.href)
     })
 
+    function getVisitType(): string {
+        const code = page.params.code
+        if (!code) return 'root'
+        if (code === 'local' || code === 'Z2l0aHViOmRhbmlzY2h1ZXR6L21hbmlvaw') return 'example_page'
+        if (page.error) return 'custom_page_failed'
+        return 'custom_page_succeeded'
+    }
+
     onMount(async () => {
         const { init, track } = await import('@plausible-analytics/tracker')
         init({
@@ -23,12 +31,8 @@
             autoCapturePageviews: false,
             customProperties: (eventName): CustomProperties => {
                 if (eventName === 'pageview') {
-                    const code = page.params.code
-                    const isExampleDocumentation: boolean =
-                        code === 'local' || code === 'Z2l0aHViOmRhbmlzY2h1ZXR6L21hbmlvaw'
-                    const isRoot: boolean = !code
                     return {
-                        type: isRoot ? 'root' : isExampleDocumentation ? 'example' : 'custom'
+                        type: getVisitType()
                     }
                 }
                 return {}

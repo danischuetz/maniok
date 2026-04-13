@@ -22,36 +22,12 @@
 
     import type { PageProps } from './$types'
     import { goto } from '$app/navigation'
-    import { onMount } from 'svelte'
-    import type { PlausibleEventOptions } from '@plausible-analytics/tracker'
 
-    let { data, params }: PageProps = $props()
+    let { data }: PageProps = $props()
 
     let repositoryUrl: string = $derived.by(() =>
         data.repository ? RepositoryService.toUrl(data.repository) : ''
     )
-
-    let trackFunction: ((eventName: string, options: PlausibleEventOptions) => void) | undefined =
-        undefined
-
-    onMount(async () => {
-        const { track } = await import('@plausible-analytics/tracker')
-        trackFunction = track
-    })
-
-    $effect(() => {
-        if (trackFunction === undefined) return
-        if (!data.repository && params.code !== 'local') return
-
-        const isExampleDocumentation: boolean =
-            params.code === 'local' || params.code === 'Z2l0aHViOmRhbmlzY2h1ZXR6L21hbmlvaw'
-
-        trackFunction('Visit Documentation', {
-            props: {
-                type: isExampleDocumentation ? 'example' : 'custom'
-            }
-        })
-    })
 
     async function onRepositoryUrlConfirmation() {
         if (!repositoryUrl) return
