@@ -27,6 +27,10 @@
     @apply h4;
 }
 
+.markdown-body ol {
+    @apply list-decimal;
+}
+
 .markdown-body ul {
     @apply list-disc;
 }

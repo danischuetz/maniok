@@ -1,8 +1,8 @@
 # What is it?
 
-The git-native solution for C4 architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation, including all diagrams, is rendered from the Structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/main/.maniok).
+The git-native solution for [C4](https://c4model.com/) architecture documentation. Like Docusaurus for architects without the setup overhead. This documentation, including all diagrams, is rendered from the Structurizr workspace at [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok/tree/main/.maniok).
 
-- Model and document architecture using Markdown and the Structurizr DSL
+- Model and document architecture using Markdown and the [Structurizr DSL](https://docs.structurizr.com/dsl)
 - Document alongside code - documentation lives in your GitHub repositories
 - Share the documentation using a simple link, generated from your repository url
 
@@ -62,6 +62,8 @@ This is a very first proof of concept to validate the concept and to collect fee
 - Set up for [editing](#editing)
 
 ## Editing
+
+The architecture is described in a workspace.dsl file as described in the [Structurizr DSL documentation](https://docs.structurizr.com/dsl). Markdown can be added anywhere alongside the workspace.dsl file and must be referenced in the workspace.dsl to be associated with the workspace or a specific software element.
 
 In order for the documentation to be rendered it needs to be exported to a workspace.json file inside the `.maniok` directory.
 
