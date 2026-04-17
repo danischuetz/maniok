@@ -10,6 +10,8 @@ For an example, check out the [Maniok documentation](https://app.maniok.io/Z2l0a
 
 Maniok is strcutured as a SvelteKit webapp built around a Node + Svelte core package at `packages/maniok-core`.
 
+Have a look at the [public project](https://github.com/users/danischuetz/projects/3) for an overview on features planned and in progress.
+
 ## How to use it
 
 Write [Structurizr](https://docs.structurizr.com/dsl) documentation and put it in a `.maniok` folder at the root of your repository for it to be accessible through the [Maniok webapp](https://app.maniok.io).
