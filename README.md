@@ -8,6 +8,8 @@ For an example, check out the [Maniok documentation](https://app.maniok.io/Z2l0a
 
 <img style="border-radius:6px;" alt="Maniok webapp screenshot" src="docs/webapp-screenshot.png" width="500">
 
+Maniok is strcutured as a SvelteKit webapp built around a Node + Svelte core package at `packages/maniok-core`.
+
 ## How to use it
 
 Write [Structurizr](https://docs.structurizr.com/dsl) documentation and put it in a `.maniok` folder at the root of your repository for it to be accessible through the [Maniok webapp](https://app.maniok.io).
@@ -27,7 +29,7 @@ The project is at a very early stage (Proof-of-concept) and has a limited featur
 
 Work on that milestone is in progress, [have a look](https://github.com/users/danischuetz/projects/3/views/2).
 
-The goal of this MVP is to enable the use of Maniok in a professional environment
+The goal of this MVP is to enable the use of Maniok in a professional context.
 
 # Structurizr Support
 
@@ -83,3 +85,25 @@ The goal of this MVP is to enable the use of Maniok in a professional environmen
 ## Styles & Themes
 
 At least currently, it is not the plan to support custom styling. This is an opinionated decision to focus on providing good styling automatically. Support for Maniok (CSS) themes other than already supported dark & bright modes might be added in the future but those will not be related to Structurizr Themes.
+
+# Editing & Dev Setup
+
+To run locally, clone the repository and run:
+
+```bash
+npm i
+npm run dev
+```
+
+Maniok should then be available on localhost:5173 supporting hot-reload for any source file changes.
+
+To run Maniok on a local workspace in the filesystem, use 'local' as the repository URL. By default, 'local' points to the maniok documentation. This path can be changed editing the `.env.example` file and renaming it to `.env`.
+
+# How to contribute
+
+As we are just getting started with this community, most welcome contributions would be to create and participate in discussions around how to collaborate, new features and the current roadmap.
+
+This will soon be extended, once first bug reports are coming in. Then we need to add:
+
+- Bug Issue Template
+- PR Template
