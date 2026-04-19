@@ -1,0 +1,16 @@
+{
+    "compilerOptions": {
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "forceConsistentCasingInFileNames": true,
+        "strict": true,
+        "skipLibCheck": true,
+        "noEmit": false,
+        "verbatimModuleSyntax": true,
+        "rootDir": "src",
+        "outDir": "dist",
+        "types": ["node"]
+    },
+    "include": ["src/**/*"],
+    "exclude": ["dist/**", "node_modules"]
+}

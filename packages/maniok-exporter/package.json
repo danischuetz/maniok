@@ -1,0 +1,28 @@
+{
+    "name": "maniok-exporter",
+    "version": "1.0.0",
+    "description": "Watches a structurizr workspace for changes and exports to workspace.json. Requires structurizr commands to be available on the system.",
+    "license": "MIT",
+    "author": "Daniel Schütz",
+    "private": true,
+    "type": "module",
+    "exports": {
+        ".": {
+            "default": "./dist/index.js",
+            "types": "./dist/index.d.ts"
+        }
+    },
+    "scripts": {
+        "build": "tsc"
+    },
+    "files": [
+        "dist"
+    ],
+    "devDependencies": {
+        "@types/node": "^25.6.0",
+        "typescript": "^6.0.3"
+    },
+    "dependencies": {
+        "chokidar": "^5.0.0"
+    }
+}

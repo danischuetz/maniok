@@ -1,6 +1,9 @@
 {
     "extends": "./.svelte-kit/tsconfig.json",
     "compilerOptions": {
+        "paths": {
+            "maniok-core": ["./packages/maniok-core/src/index.ts"]
+        },
         "rewriteRelativeImportExtensions": true,
         "allowJs": true,
         "checkJs": true,
