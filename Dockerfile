@@ -3,8 +3,10 @@
 # Node.js TypeScript Application
 # ========================================
 
-ARG NODE_VERSION=lts-alpine3.23
-FROM node:${NODE_VERSION} AS base
+ARG NODE_VERSION=25
+ARG NODE_BASE_IMAGE=node:${NODE_VERSION}-alpine3.22
+
+FROM ${NODE_BASE_IMAGE} AS nodebase
 
 WORKDIR /app
 
@@ -15,7 +17,7 @@ RUN addgroup -g 1001 -S nodeuser && \
 # ========================================
 # Production Dependencies Stage
 # ========================================
-FROM base AS deps
+FROM nodebase AS deps
 
 COPY package*.json ./
 COPY packages/maniok-core ./packages/maniok-core
@@ -27,7 +29,7 @@ RUN chown -R nodeuser:nodeuser /app
 # ========================================
 # Build Dependencies Stage
 # ========================================
-FROM base AS build-deps
+FROM nodebase AS build-deps
 COPY package*.json ./
 COPY packages/maniok-core ./packages/maniok-core
 RUN --mount=type=cache,target=/root/.npm,sharing=locked \
@@ -43,9 +45,46 @@ RUN npm run build
 RUN chown -R nodeuser:nodeuser /app
 
 # ========================================
-# Packaging Stage
+# Editing Stage
 # ========================================
-FROM node:${NODE_VERSION} AS production
+
+FROM structurizr/structurizr:2026.03.06 AS editor
+
+ARG NODE_VERSION
+
+WORKDIR /app
+
+# Slightly different command since structurizr image is debuan-based, not alpine-based
+RUN groupadd -g 1001 nodeuser && \
+    useradd -r -u 1001 -g nodeuser nodeuser && \
+    chown -R nodeuser:nodeuser /app
+
+RUN apt-get update \
+ && apt-get install -y curl ca-certificates gnupg \
+ && mkdir -p /etc/apt/keyrings \
+ && curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
+    | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg \
+ && echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_${NODE_VERSION}.x nodistro main" \
+    > /etc/apt/sources.list.d/nodesource.list \
+ && apt-get update \
+ && apt-get install -y nodejs \
+ && rm -rf /var/lib/apt/lists/*
+
+ENV NODE_ENV=production \
+    NODE_OPTIONS="--max-old-space-size=256" \
+    NPM_CONFIG_LOGLEVEL=silent
+
+COPY --from=deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
+COPY --from=deps --chown=nodeuser:nodeuser /app/package*.json ./
+COPY --from=build --chown=nodeuser:nodeuser /app/build ./build
+
+ENTRYPOINT []
+CMD ["node", "build/index.js"]
+
+# ========================================
+# Production Stage
+# ========================================
+FROM ${NODE_BASE_IMAGE} AS production
 
 WORKDIR /app
 
