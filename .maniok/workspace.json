@@ -372,13 +372,11 @@
   "views" : {
     "componentViews" : [ {
       "automaticLayout" : {
-        "applied" : false,
-        "edgeSeparation" : 0,
-        "implementation" : "Graphviz",
-        "nodeSeparation" : 300,
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
         "rankDirection" : "LeftRight",
-        "rankSeparation" : 300,
-        "vertices" : false
+        "rankSeparation" : 100,
+        "vertices" : true
       },
       "containerId" : "3",
       "elements" : [ {
@@ -447,19 +445,16 @@
       } ]
     } ],
     "configuration" : {
-      "branding" : { },
       "styles" : { },
       "terminology" : { }
     },
     "containerViews" : [ {
       "automaticLayout" : {
-        "applied" : false,
-        "edgeSeparation" : 0,
-        "implementation" : "Graphviz",
-        "nodeSeparation" : 300,
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
         "rankDirection" : "LeftRight",
-        "rankSeparation" : 300,
-        "vertices" : false
+        "rankSeparation" : 100,
+        "vertices" : true
       },
       "elements" : [ {
         "id" : "1",
@@ -508,13 +503,11 @@
       "softwareSystemId" : "2"
     }, {
       "automaticLayout" : {
-        "applied" : false,
-        "edgeSeparation" : 0,
-        "implementation" : "Graphviz",
-        "nodeSeparation" : 300,
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
         "rankDirection" : "LeftRight",
-        "rankSeparation" : 300,
-        "vertices" : false
+        "rankSeparation" : 100,
+        "vertices" : true
       },
       "elements" : [ {
         "id" : "1",
@@ -544,13 +537,11 @@
     } ],
     "systemContextViews" : [ {
       "automaticLayout" : {
-        "applied" : false,
-        "edgeSeparation" : 0,
-        "implementation" : "Graphviz",
-        "nodeSeparation" : 300,
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
         "rankDirection" : "LeftRight",
-        "rankSeparation" : 300,
-        "vertices" : false
+        "rankSeparation" : 100,
+        "vertices" : true
       },
       "elements" : [ {
         "id" : "1",

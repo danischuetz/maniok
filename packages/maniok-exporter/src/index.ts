@@ -1,16 +1,29 @@
-import { Watcher } from './watcher'
+import { Watcher } from './watcher.js'
 import { spawn } from 'child_process'
 import path from 'path'
 
-const workspaceDirectory: string = process.env.STRUCTURIZR_WORKSPACE_PATH ?? ''
+const workspaceDirectory: string = process.env.WORKSPACE_PATH ?? ''
 
 export async function exportWorkspace() {
     const dslFile = path.join(workspaceDirectory, 'workspace.dsl')
 
     return new Promise((resolve, reject) => {
+        console.log('Exporting workspace...')
+
         const child = spawn(
-            'structurizr',
-            ['export', '-w', dslFile, '-f', 'json', '-o', workspaceDirectory],
+            'java',
+            [
+                '-jar',
+                '--enable-native-access=ALL-UNNAMED',
+                '/usr/local/structurizr.war',
+                'export',
+                '-w',
+                dslFile,
+                '-f',
+                'json',
+                '-o',
+                workspaceDirectory
+            ],
             {
                 stdio: ['ignore', 'pipe', 'pipe']
             }
@@ -37,15 +50,18 @@ export async function exportWorkspace() {
 async function main() {
     if (!workspaceDirectory) {
         console.error(
-            'STRUCTURIZR_WORKSPACE_PATH environment variable is not set. Please set it to the path of the workspace directory.'
+            'WORKSPACE_PATH environment variable is not set. Please set it to the path of the workspace directory.'
         )
         process.exit(1)
     }
 
-    // Let's also check if the structurizr command is available
-
     const watcher = new Watcher()
     watcher.onChange = exportWorkspace
+
+    console.log('Performing initial workspace export...')
+    exportWorkspace()
+
+    console.log(`Watching workspace directory: ${workspaceDirectory}`)
     await watcher.watchDirectory(workspaceDirectory)
 }
 

@@ -45,6 +45,18 @@ RUN npm run build
 RUN chown -R nodeuser:nodeuser /app
 
 # ========================================
+# Exporter Build Stage
+# ========================================
+FROM nodebase AS exporter
+COPY packages/maniok-exporter ./packages/maniok-exporter
+
+RUN --mount=type=cache,target=/root/.npm,sharing=locked \
+    npm ci --prefix packages/maniok-exporter && \
+    npm cache clean --force --prefix packages/maniok-exporter
+
+RUN npm run build --prefix packages/maniok-exporter
+
+# ========================================
 # Editing Stage
 # ========================================
 
@@ -74,12 +86,17 @@ ENV NODE_ENV=production \
     NODE_OPTIONS="--max-old-space-size=256" \
     NPM_CONFIG_LOGLEVEL=silent
 
+ENV WORKSPACE_PATH=/workspace
+
 COPY --from=deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
 COPY --from=deps --chown=nodeuser:nodeuser /app/package*.json ./
 COPY --from=build --chown=nodeuser:nodeuser /app/build ./build
+COPY --from=exporter --chown=nodeuser:nodeuser /app/packages/maniok-exporter/dist ./packages/maniok-exporter/dist
+COPY --from=exporter --chown=nodeuser:nodeuser /app/packages/maniok-exporter/node_modules ./packages/maniok-exporter/node_modules
+COPY --chown=nodeuser:nodeuser scripts/editor-entrypoint.sh ./entrypoint.sh
+RUN chmod +x entrypoint.sh
 
-ENTRYPOINT []
-CMD ["node", "build/index.js"]
+ENTRYPOINT ["/app/entrypoint.sh"]
 
 # ========================================
 # Production Stage

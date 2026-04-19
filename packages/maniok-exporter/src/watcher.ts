@@ -6,6 +6,7 @@ export class Watcher {
     async watchDirectory(path: string) {
         const watcher = chokidar.watch(path, {
             ignoreInitial: true,
+            ignored: /\.json$/,
             awaitWriteFinish: { stabilityThreshold: 300 }
         })
 
@@ -15,9 +16,9 @@ export class Watcher {
             })
         }
 
-        watcher.on('change', (path) => this.onChange())
-        watcher.on('add', (path) => this.onChange())
-        watcher.on('unlink', (path) => this.onChange())
+        watcher.on('change', () => this.onChange())
+        watcher.on('add', () => this.onChange())
+        watcher.on('unlink', () => this.onChange())
 
         await new Promise((resolve) => {
             watcher.on('close', resolve)

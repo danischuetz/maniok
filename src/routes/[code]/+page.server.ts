@@ -11,7 +11,7 @@ async function loadFromLocalFile(filePath: string): Promise<string> {
         if ((e as NodeJS.ErrnoException).code === 'ENOENT') {
             error(
                 500,
-                `Workspace file not found at "${filePath}". Set the STRUCTURIZR_WORKSPACE_PATH environment variable to the correct path.`
+                `Workspace file not found at "${filePath}". Set the WORKSPACE_PATH environment variable to the correct path.`
             )
         }
         throw e
@@ -20,7 +20,7 @@ async function loadFromLocalFile(filePath: string): Promise<string> {
 
 export const load: PageServerLoad = async ({ params }) => {
     if (params.code === 'local') {
-        const workspacePath = env.STRUCTURIZR_WORKSPACE_PATH ?? '.maniok/workspace.json'
+        const workspacePath = env.WORKSPACE_PATH ?? '.maniok/workspace.json'
         const workspaceJson = await loadFromLocalFile(workspacePath)
         return {
             repository: null,
