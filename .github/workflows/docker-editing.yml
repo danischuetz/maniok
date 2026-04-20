@@ -1,5 +1,4 @@
-# Workflow to build and publish Docker image for Dockerfile.Editing
-name: Build & Publish Editing Image
+name: Build & Publish Maniok Preview Image
 
 on:
   workflow_dispatch:
@@ -15,6 +14,6 @@ jobs:
       packages: write
     uses: ./.github/workflows/docker-publish.yml
     with:
-      dockerfile: Dockerfile.Editing
-      image_name: editing
+      dockerfile: Dockerfile.Preview
+      image_name: maniok-preview
       tag: ${{ github.event.inputs.tag }}

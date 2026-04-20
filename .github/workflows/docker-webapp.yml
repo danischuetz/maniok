@@ -1,5 +1,4 @@
-# Workflow to build and publish Docker image for Dockerfile.Webapp
-name: Build & Publish Webapp Image
+name: Build & Publish Maniok Webapp Image
 
 on:
   workflow_dispatch:
@@ -16,5 +15,5 @@ jobs:
     uses: ./.github/workflows/docker-publish.yml
     with:
       dockerfile: Dockerfile.Webapp
-      image_name: webapp
+      image_name: maniok-webapp
       tag: ${{ github.event.inputs.tag }}
