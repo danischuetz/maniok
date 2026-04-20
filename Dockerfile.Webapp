@@ -21,8 +21,9 @@ FROM nodebase AS runtime-deps
 
 COPY package*.json ./
 COPY packages/maniok-core ./packages/maniok-core
+COPY packages/maniok-exporter ./packages/maniok-exporter
 RUN --mount=type=cache,target=/root/.npm,sharing=locked \
-    npm ci --omit=dev && \
+    npm_config_ignore_scripts=true npm ci --omit=dev && \
     npm cache clean --force
 RUN chown -R nodeuser:nodeuser /app
 
@@ -32,6 +33,7 @@ RUN chown -R nodeuser:nodeuser /app
 FROM nodebase AS build-deps
 COPY package*.json ./
 COPY packages/maniok-core ./packages/maniok-core
+COPY packages/maniok-exporter ./packages/maniok-exporter
 RUN --mount=type=cache,target=/root/.npm,sharing=locked \
     npm ci && \
     npm cache clean --force
