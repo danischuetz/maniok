@@ -21,7 +21,7 @@ jobs:
   deploy:
     needs: build-and-push
     runs-on: ubuntu-latest
-    environment: production
+    environment: "Hetzner Deployment"
 
     steps:
       - name: Start SSH agent
