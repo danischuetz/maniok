@@ -1,0 +1,17 @@
+# Workflow to build and publish Docker image for Dockerfile.Editing
+name: Build & Publish Editing Image
+
+on:
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to publish (must match git tag)'
+        required: true
+
+jobs:
+  build-and-push:
+    uses: ./.github/workflows/docker-publish.yml
+    with:
+      dockerfile: Dockerfile.Editing
+      image_name: editing
+      tag: ${{ github.event.inputs.tag }}
