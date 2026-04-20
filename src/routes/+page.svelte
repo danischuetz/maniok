@@ -10,6 +10,11 @@
     async function onRepositoryUrlConfirmation() {
         if (!repositoryUrl) return
 
+        if (repositoryUrl === 'local') {
+            goto('/local')
+            return
+        }
+
         const repository: RepositoryModel | null =
             await RepositoryService.deriveFromUrl(repositoryUrl)
         if (!repository) {

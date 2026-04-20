@@ -13,7 +13,8 @@
         }
     },
     "scripts": {
-        "build": "tsc"
+        "build": "tsc",
+        "prepare": "npm run build"
     },
     "files": [
         "dist"
@@ -23,6 +24,7 @@
         "typescript": "^6.0.3"
     },
     "dependencies": {
-        "chokidar": "^5.0.0"
+        "chokidar": "^5.0.0",
+        "maniok-core": "file:../maniok-core"
     }
 }

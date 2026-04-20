@@ -17,7 +17,7 @@ RUN addgroup -g 1001 -S nodeuser && \
 # ========================================
 # Production Dependencies Stage
 # ========================================
-FROM nodebase AS deps
+FROM nodebase AS runtime-deps
 
 COPY package*.json ./
 COPY packages/maniok-core ./packages/maniok-core
@@ -88,8 +88,8 @@ ENV NODE_ENV=production \
 
 ENV WORKSPACE_PATH=/workspace
 
-COPY --from=deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
-COPY --from=deps --chown=nodeuser:nodeuser /app/package*.json ./
+COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
+COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/package*.json ./
 COPY --from=build --chown=nodeuser:nodeuser /app/build ./build
 COPY --from=exporter --chown=nodeuser:nodeuser /app/packages/maniok-exporter/dist ./packages/maniok-exporter/dist
 COPY --from=exporter --chown=nodeuser:nodeuser /app/packages/maniok-exporter/node_modules ./packages/maniok-exporter/node_modules
@@ -113,8 +113,8 @@ ENV NODE_ENV=production \
     NODE_OPTIONS="--max-old-space-size=256" \
     NPM_CONFIG_LOGLEVEL=silent
 
-COPY --from=deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
-COPY --from=deps --chown=nodeuser:nodeuser /app/package*.json ./
+COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
+COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/package*.json ./
 COPY --from=build --chown=nodeuser:nodeuser /app/build ./build
 
 CMD ["node", "build/index.js"]
