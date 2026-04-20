@@ -17,3 +17,32 @@ jobs:
       dockerfile: Dockerfile.Webapp
       image_name: maniok-webapp
       tag: ${{ github.event.inputs.tag }}
+
+  deploy:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - name: Start SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Upload Caddyfile and compose.yml
+        run: |
+          scp -P "${{ secrets.SSH_PORT || 22 }}" Caddyfile compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/app/"
+
+      - name: Deploy on Hetzner
+        run: |
+          ssh -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" '
+            set -e
+            cd /opt/app
+            docker compose pull
+            docker compose up -d --remove-orphans
+          '
