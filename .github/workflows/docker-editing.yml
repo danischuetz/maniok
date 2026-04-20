@@ -3,6 +3,10 @@ name: Build & Publish Editing Image
 
 on:
   workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Tag to run workflow on'
+        required: true
 
 jobs:
   build-and-push:
@@ -13,3 +17,4 @@ jobs:
     with:
       dockerfile: Dockerfile.Editing
       image_name: editing
+      tag: ${{ github.event.inputs.tag }}

@@ -12,18 +12,29 @@ on:
         description: 'Image name (for GHCR tag)'
         required: true
         type: string
+      tag:
+        description: 'Git tag to deploy (must exist)'
+        required: true
+        type: string
 
 jobs:
   build-and-push:
-    # Only run for tag refs matching v* (e.g. v1.0.0)
-    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
     steps:
-      - name: Checkout repository
+      - name: Checkout repository at tag
         uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.tag }}
+
+      - name: Verify tag exists
+        run: |
+          if ! git rev-parse "refs/tags/${{ inputs.tag }}" >/dev/null 2>&1; then
+            echo "Tag ${{ inputs.tag }} does not exist!" >&2
+            exit 1
+          fi
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
@@ -35,17 +46,16 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Extract version from tag
-        id: extract_version
+      - name: Prepare image tag (strip v prefix)
+        id: prep_tag
         run: |
-          ref="${GITHUB_REF##*/}"
-          if [[ "$ref" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
-            version="${ref:1}"
-            echo "version=$version" >> "$GITHUB_OUTPUT"
+          tag="${{ inputs.tag }}"
+          if [[ "$tag" =~ ^v(.+) ]]; then
+            clean_tag="${tag:1}"
           else
-            echo "Tag does not match v<semver> pattern: $ref" >&2
-            exit 1
+            clean_tag="$tag"
           fi
+          echo "clean_tag=$clean_tag" >> "$GITHUB_OUTPUT"
 
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
@@ -54,5 +64,5 @@ jobs:
           file: ${{ inputs.dockerfile }}
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:${{ steps.extract_version.outputs.version }}
+            ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:${{ steps.prep_tag.outputs.clean_tag }}
             ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:latest
