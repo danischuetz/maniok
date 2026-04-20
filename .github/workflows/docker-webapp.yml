@@ -34,6 +34,17 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
+      - name: Download Caddyfile artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: Caddyfile
+          path: .
+      - name: Download compose.yml artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: compose.yml
+          path: .
+
       - name: Upload Caddyfile and compose.yml
         run: |
           scp -P "${{ secrets.SSH_PORT || 22 }}" Caddyfile compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/app/"
