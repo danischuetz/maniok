@@ -23,7 +23,9 @@ async function loadFromLocalFile(filePath: string): Promise<string> {
     }
 }
 
-export const load: PageServerLoad = async ({ params }) => {
+export const load: PageServerLoad = async ({ params, depends }) => {
+    depends('workspace:reload')
+
     if (params.code === 'local') {
         const workspaceJson = await loadFromLocalFile(`${workspacePath}/workspace.json`)
         return {

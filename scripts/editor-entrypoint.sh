@@ -15,7 +15,7 @@ trap cleanup SIGTERM SIGINT
 node build/index.js &
 APP_PID=$!
 
-node packages/maniok-exporter/dist/index.js &
+node packages/maniok-exporter/dist/main.js &
 EXPORTER_PID=$!
 
 # Exit if either process dies
