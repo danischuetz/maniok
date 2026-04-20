@@ -1,6 +1,7 @@
 <script lang="ts">
     import type { RepositoryModel } from 'maniok-core'
-    import { NotificationService, RepositoryService, Logo, UrlSelector } from 'maniok-core'
+    import { NotificationService, RepositoryService, Logo } from 'maniok-core'
+    import UrlSelector from '../lib/components/urlselector.svelte'
 
     import { goto } from '$app/navigation'
 
@@ -9,6 +10,11 @@
 
     async function onRepositoryUrlConfirmation() {
         if (!repositoryUrl) return
+
+        if (repositoryUrl === 'local') {
+            goto('/local')
+            return
+        }
 
         const repository: RepositoryModel | null =
             await RepositoryService.deriveFromUrl(repositoryUrl)
@@ -55,11 +61,7 @@
 
         <div class="flex flex-col gap-4 self-stretch">
             <div class:navigating>
-                <UrlSelector
-                    class="self-stretch h-10"
-                    bind:repositoryUrl
-                    onConfirmation={handleConfirmation}
-                />
+                <UrlSelector class="self-stretch h-10" {repositoryUrl} />
             </div>
             <button
                 class="btn preset-filled-surface-950-50 rounded-full self-end"

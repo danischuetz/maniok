@@ -7,7 +7,7 @@ workspace {
         maniok = softwareSystem "Maniok" "The maniok documentation system" {
             !docs markdown/manioksystem.md
             core = container "Core" "Core logic and components to render and navigate written documentation and diagrams from a Structurizr workspace" "node.js" {
-                !docs markdown/maniokcore.md
+                !docs markdown/maniokcore.md 
                 core-diagramservice = component "Diagram Service" "Creates a diagram model tree from a Structurizr workspace"
                 core-documentservice = component "Document Service" "Creates a document model tree from a Structurizr workspace"
                 core-layoutservice = component "Diagram Layout Service" "Calculates a suitable layout for a layout model tree"

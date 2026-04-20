@@ -23,27 +23,28 @@
         return 'custom_page_succeeded'
     }
 
-    onMount(async () => {
-        const { init, track } = await import('@plausible-analytics/tracker')
-        init({
-            domain: 'app.maniok.io',
-            outboundLinks: true,
-            autoCapturePageviews: false,
-            customProperties: (eventName): CustomProperties => {
-                if (eventName === 'pageview') {
-                    return {
-                        type: getVisitType()
+    onMount(() => {
+        import('@plausible-analytics/tracker').then(({ init, track }) => {
+            init({
+                domain: 'app.maniok.io',
+                outboundLinks: true,
+                autoCapturePageviews: false,
+                customProperties: (eventName): CustomProperties => {
+                    if (eventName === 'pageview') {
+                        return {
+                            type: getVisitType()
+                        }
                     }
+                    return {}
                 }
-                return {}
+            })
+
+            trackPageview = (url?: string) => {
+                track('pageview', { url: url ?? window.location.href })
             }
+
+            trackPageview(window.location.href)
         })
-
-        trackPageview = (url?: string) => {
-            track('pageview', { url: url ?? window.location.href })
-        }
-
-        trackPageview(window.location.href)
     })
 
     let { children }: LayoutProps = $props()

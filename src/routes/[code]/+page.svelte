@@ -1,13 +1,10 @@
 <script lang="ts">
-    import type { RepositoryModel } from 'maniok-core'
     import {
         DocumentNavigation,
-        NotificationService,
         BurgerMenu,
         RepositoryService,
         LightSwitch,
-        Logo,
-        UrlSelector
+        Logo
     } from 'maniok-core'
     import {
         DocumentationProvider,
@@ -22,7 +19,10 @@
 
     import type { PageProps } from './$types'
     import { goto } from '$app/navigation'
-    import { Heart } from 'lucide-svelte'
+    import { WorkspaceWatcher } from '../../lib/util/workspacewatcher'
+
+    import LikeButton from '../../lib/components/likebutton.svelte'
+    import UrlSelector from '../../lib/components/urlselector.svelte'
 
     let { data }: PageProps = $props()
 
@@ -30,40 +30,16 @@
         data.repository ? RepositoryService.toUrl(data.repository) : ''
     )
 
-    async function onRepositoryUrlConfirmation() {
-        if (!repositoryUrl) return
-        if (repositoryUrl === 'local') {
-            goto(`/local`)
-            return
-        }
-
-        const repository: RepositoryModel | null =
-            await RepositoryService.deriveFromUrl(repositoryUrl)
-        if (!repository) {
-            NotificationService.notifyError(
-                'Invalid repository URL',
-                new Error(`Could not derive repository from URL: ${repositoryUrl}`)
-            )
-            return
-        }
-
-        const code: string = RepositoryService.encode(repository)
-
-        goto(`/${code}`)
-    }
-
     let onNavigation: () => void = $state(() => {})
-
-    let liked = $state(false)
+    let workspaceWatcher: WorkspaceWatcher = new WorkspaceWatcher()
 
     $effect(() => {
-        liked = localStorage.getItem('liked') === 'true'
+        if (repositoryUrl === 'local') {
+            workspaceWatcher.startWatching()
+        } else {
+            workspaceWatcher.stopWatching()
+        }
     })
-
-    function like() {
-        liked = true
-        localStorage.setItem('liked', liked.toString())
-    }
 </script>
 
 <DocumentationProvider structurizrWorkspaceJson={data.workspaceJson}>
@@ -75,11 +51,7 @@
                     <Navigation class="navigation-burger min-w-0 w-full" {onNavigation}>
                         <ModeNavigation />
                         <div class="flex flex-col min-w-0">
-                            <UrlSelector
-                                class="m-2 h-8"
-                                bind:repositoryUrl
-                                onConfirmation={onRepositoryUrlConfirmation}
-                            />
+                            <UrlSelector class="m-2 h-8" {repositoryUrl} />
                             <DiagramNavigation class="flex flex-col" />
                             <DocumentNavigation />
                         </div>
@@ -89,27 +61,11 @@
                     <Logo class="h-10 fill-primary-500" />
                 </button>
             </div>
-            <UrlSelector
-                class="flex-1 max-w-lg hidden lg:flex"
-                bind:repositoryUrl
-                onConfirmation={onRepositoryUrlConfirmation}
-            />
+            <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
             <div class="flex items-center gap-4">
-                <button
-                    class="btn pr-0 flex items-center rounded-full"
-                    onclick={async () => {
-                        if (!liked) {
-                            const { track } = await import('@plausible-analytics/tracker')
-                            track('like', {})
-                        }
-                        like()
-                    }}
-                >
-                    <span class="text-surface-400 hidden lg:block">
-                        {liked ? 'Thank you!' : "I'd use a production-ready version of this!"}
-                    </span>
-                    <Heart class="size-8 fill-primary-500 stroke-primary-500" />
-                </button>
+                {#if repositoryUrl !== 'local'}
+                    <LikeButton />
+                {/if}
                 <LightSwitch class="size-8 stroke-1" />
             </div>
         </header>
