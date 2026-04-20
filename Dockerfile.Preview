@@ -17,6 +17,7 @@ RUN addgroup -g 1001 -S nodeuser && \
 # ========================================
 # Production Dependencies Stage
 # ========================================
+
 FROM nodebase AS webapp-runtime-deps
 
 COPY package*.json ./
@@ -30,6 +31,7 @@ RUN chown -R nodeuser:nodeuser /app
 # ========================================
 # Build Dependencies Stage
 # ========================================
+
 FROM nodebase AS build-deps
 COPY package*.json ./
 COPY packages/maniok-core ./packages/maniok-core
@@ -41,6 +43,7 @@ RUN --mount=type=cache,target=/root/.npm,sharing=locked \
 # ========================================
 # Build Stage
 # ========================================
+
 FROM build-deps AS build
 COPY --chown=nodeuser:nodeuser . .
 RUN npm run build

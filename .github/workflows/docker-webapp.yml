@@ -1,17 +1,19 @@
-# Workflow to build and publish Docker image for Dockerfile.Webapp
-name: Build & Publish Webapp Image
+name: Build & Publish Maniok Webapp Image
 
 on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to publish (must match git tag)'
+        description: 'Tag to run workflow on'
         required: true
 
 jobs:
   build-and-push:
+    permissions:
+      contents: read
+      packages: write
     uses: ./.github/workflows/docker-publish.yml
     with:
       dockerfile: Dockerfile.Webapp
-      image_name: webapp
+      image_name: maniok-webapp
       tag: ${{ github.event.inputs.tag }}

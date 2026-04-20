@@ -30,7 +30,7 @@
         "linkedRelationshipId" : "20",
         "sourceId" : "1"
       }, {
-        "description" : "Edit & preview documentation",
+        "description" : "Export & preview documentation",
         "destinationId" : "14",
         "id" : "22",
         "sourceId" : "1",
@@ -252,9 +252,9 @@
         "description" : "Docker image to support live preview and export-on-save",
         "documentation" : { },
         "id" : "14",
-        "name" : "Maniok Editor",
+        "name" : "Maniok Preview",
         "properties" : {
-          "structurizr.dsl.identifier" : "editor"
+          "structurizr.dsl.identifier" : "preview"
         },
         "relationships" : [ {
           "description" : "Run locally to parse workspace JSON on save and to provide live preview",

@@ -21,7 +21,7 @@ workspace {
             }
 
             webapp = container "Maniok Webapp" "Renders the documentation for a selected public GitHub repository" "SvelteKit"
-            editor = container "Maniok Editor" "Docker image to support live preview and export-on-save" "Docker"
+            preview = container "Maniok Preview" "Docker image to support live preview and export-on-save" "Docker"
         }
 
         structurizr = softwareSystem "Structurizr" "Defines the Structurizr DSL and parses Structurizr documentation to workspace objects" "Java" {
@@ -35,7 +35,7 @@ workspace {
 
         # User interactions
         user -> webapp "View documentation"
-        user -> editor "Edit & preview documentation"
+        user -> preview "Export & preview documentation"
         user -> github-client-repo "Push documentation changes"
         user -> structurizr-dsl "Model systems and write documentation"
 
@@ -50,7 +50,7 @@ workspace {
         webapp -> github-client-repo "Fetch documentation from client repo"
         webapp -> core-documentationprovider "Initialize from workspace JSON"
 
-        editor -> structurizr-docker "Run locally to parse workspace JSON on save and to provide live preview"
+        preview -> structurizr-docker "Run locally to parse workspace JSON on save and to provide live preview"
 
         core-components -> core-layoutservice "Calculate diagram layout"
         core-components -> core-markdownservice "Render Markdown"
