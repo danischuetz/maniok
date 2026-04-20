@@ -17,12 +17,13 @@ RUN addgroup -g 1001 -S nodeuser && \
 # ========================================
 # Production Dependencies Stage
 # ========================================
-FROM nodebase AS runtime-deps
+FROM nodebase AS webapp-runtime-deps
 
 COPY package*.json ./
 COPY packages/maniok-core ./packages/maniok-core
+COPY packages/maniok-exporter ./packages/maniok-exporter
 RUN --mount=type=cache,target=/root/.npm,sharing=locked \
-    npm ci --omit=dev && \
+    npm_config_ignore_scripts=true npm ci --omit=dev && \
     npm cache clean --force
 RUN chown -R nodeuser:nodeuser /app
 
@@ -32,6 +33,7 @@ RUN chown -R nodeuser:nodeuser /app
 FROM nodebase AS build-deps
 COPY package*.json ./
 COPY packages/maniok-core ./packages/maniok-core
+COPY packages/maniok-exporter ./packages/maniok-exporter
 RUN --mount=type=cache,target=/root/.npm,sharing=locked \
     npm ci && \
     npm cache clean --force
@@ -42,19 +44,8 @@ RUN --mount=type=cache,target=/root/.npm,sharing=locked \
 FROM build-deps AS build
 COPY --chown=nodeuser:nodeuser . .
 RUN npm run build
-RUN chown -R nodeuser:nodeuser /app
-
-# ========================================
-# Exporter Build Stage
-# ========================================
-FROM nodebase AS exporter
-COPY packages/maniok-exporter ./packages/maniok-exporter
-
-RUN --mount=type=cache,target=/root/.npm,sharing=locked \
-    npm ci --prefix packages/maniok-exporter && \
-    npm cache clean --force --prefix packages/maniok-exporter
-
 RUN npm run build --prefix packages/maniok-exporter
+RUN chown -R nodeuser:nodeuser /app
 
 # ========================================
 # Editing Stage
@@ -63,7 +54,6 @@ RUN npm run build --prefix packages/maniok-exporter
 FROM structurizr/structurizr:2026.03.06 AS editor
 
 ARG NODE_VERSION
-
 WORKDIR /app
 
 # Slightly different command since structurizr image is debuan-based, not alpine-based
@@ -86,35 +76,13 @@ ENV NODE_ENV=production \
     NODE_OPTIONS="--max-old-space-size=256" \
     NPM_CONFIG_LOGLEVEL=silent
 
-ENV WORKSPACE_PATH=/workspace
+ENV WORKSPACE_PATH=/usr/workspace
 
-COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
-COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/package*.json ./
+COPY --from=webapp-runtime-deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
+COPY --from=webapp-runtime-deps --chown=nodeuser:nodeuser /app/package*.json ./
 COPY --from=build --chown=nodeuser:nodeuser /app/build ./build
-COPY --from=exporter --chown=nodeuser:nodeuser /app/packages/maniok-exporter/dist ./packages/maniok-exporter/dist
-COPY --from=exporter --chown=nodeuser:nodeuser /app/packages/maniok-exporter/node_modules ./packages/maniok-exporter/node_modules
+COPY --from=build --chown=nodeuser:nodeuser /app/packages/maniok-exporter/dist ./packages/maniok-exporter/dist
 COPY --chown=nodeuser:nodeuser scripts/editor-entrypoint.sh ./entrypoint.sh
 RUN chmod +x entrypoint.sh
 
 ENTRYPOINT ["/app/entrypoint.sh"]
-
-# ========================================
-# Production Stage
-# ========================================
-FROM ${NODE_BASE_IMAGE} AS production
-
-WORKDIR /app
-
-RUN addgroup -g 1001 -S nodeuser && \
-    adduser -S nodeuser -u 1001 -G nodeuser && \
-    chown -R nodeuser:nodeuser /app
-
-ENV NODE_ENV=production \
-    NODE_OPTIONS="--max-old-space-size=256" \
-    NPM_CONFIG_LOGLEVEL=silent
-
-COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
-COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/package*.json ./
-COPY --from=build --chown=nodeuser:nodeuser /app/build ./build
-
-CMD ["node", "build/index.js"]
