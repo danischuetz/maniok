@@ -1,7 +1,7 @@
 <script lang="ts">
     import '../css/app.css'
 
-    import { afterNavigate, invalidate } from '$app/navigation'
+    import { afterNavigate } from '$app/navigation'
     import { page } from '$app/state'
     import { NotificationService, Toaster } from 'maniok-core'
     import type { LayoutProps } from './$types'
@@ -45,15 +45,6 @@
 
             trackPageview(window.location.href)
         })
-
-        let interval = setInterval(async () => {
-            const res = await fetch('/api/watcher')
-            const { hasChanged } = await res.json()
-            if (hasChanged) {
-                await invalidate('workspace:reload')
-            }
-        }, 500)
-        return () => clearInterval(interval)
     })
 
     let { children }: LayoutProps = $props()

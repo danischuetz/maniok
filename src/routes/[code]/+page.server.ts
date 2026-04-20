@@ -3,11 +3,8 @@ import { error } from '@sveltejs/kit'
 import { RepositoryService, type RepositoryModel } from 'maniok-core'
 import { promises as fs } from 'fs'
 import { env } from '$env/dynamic/private'
-import { Watcher } from 'maniok-exporter'
 
 const workspacePath = env.WORKSPACE_PATH ?? '.maniok'
-
-const watcher: Watcher = new Watcher()
 
 async function loadFromLocalFile(filePath: string): Promise<string> {
     try {
