@@ -3,10 +3,6 @@ name: Build & Publish Webapp Image
 
 on:
   workflow_dispatch:
-    inputs:
-      tag:
-        description: 'Tag to publish (must match git tag)'
-        required: true
 
 jobs:
   build-and-push:
@@ -17,4 +13,3 @@ jobs:
     with:
       dockerfile: Dockerfile.Webapp
       image_name: webapp
-      tag: ${{ github.event.inputs.tag }}

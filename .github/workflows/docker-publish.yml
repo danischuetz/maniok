@@ -12,14 +12,11 @@ on:
         description: 'Image name (for GHCR tag)'
         required: true
         type: string
-      tag:
-        description: 'Tag to publish (must match git tag)'
-        required: true
-        type: string
 
 jobs:
   build-and-push:
-    if: startsWith(github.ref, 'refs/tags/')
+    # Only run for tag refs matching v* (e.g. v1.0.0)
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -38,6 +35,18 @@ jobs:
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
 
+      - name: Extract version from tag
+        id: extract_version
+        run: |
+          ref="${GITHUB_REF##*/}"
+          if [[ "$ref" =~ ^v([0-9]+\.[0-9]+\.[0-9]+)$ ]]; then
+            version="${ref:1}"
+            echo "version=$version" >> "$GITHUB_OUTPUT"
+          else
+            echo "Tag does not match v<semver> pattern: $ref" >&2
+            exit 1
+          fi
+
       - name: Build and push Docker image
         uses: docker/build-push-action@v5
         with:
@@ -45,5 +54,5 @@ jobs:
           file: ${{ inputs.dockerfile }}
           push: true
           tags: |
-            ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:${{ inputs.tag }}
+            ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:${{ steps.extract_version.outputs.version }}
             ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:latest
