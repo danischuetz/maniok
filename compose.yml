@@ -1,6 +1,6 @@
 services:
   app:
-    image: ghcr.io/danischuetz/maniok-webapp:latest
+    image: ghcr.io/danischuetz/maniok/maniok-webapp:latest
     restart: unless-stopped
     environment:
       HOST: 0.0.0.0
