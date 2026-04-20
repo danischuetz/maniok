@@ -69,14 +69,12 @@ jobs:
             ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:latest
 
       - name: Upload Caddyfile
-        if: exists('Caddyfile')
         uses: actions/upload-artifact@v4
         with:
           name: Caddyfile
           path: Caddyfile
-          
+
       - name: Upload compose.yml
-        if: exists('compose.yml')
         uses: actions/upload-artifact@v4
         with:
           name: compose.yml
