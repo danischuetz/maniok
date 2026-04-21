@@ -8,7 +8,6 @@
 
     const capabilities: Capabilities = {
         urlSelection: true,
-        workspaceWatcher: false,
         likeButton: true
     }
 </script>

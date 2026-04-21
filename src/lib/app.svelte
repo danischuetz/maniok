@@ -19,7 +19,6 @@
     } from 'maniok-core'
 
     import { goto } from '$app/navigation'
-    import { WorkspaceWatcher } from './util/workspacewatcher'
     import LikeButton from './components/likebutton.svelte'
     import UrlSelector from './components/urlselector.svelte'
     import { defaultCapabilities, type Capabilities } from './model/capabilities'
@@ -37,15 +36,6 @@
     )
 
     let onNavigation: () => void = $state(() => {})
-    let workspaceWatcher: WorkspaceWatcher = new WorkspaceWatcher()
-
-    $effect(() => {
-        if (capabilities.workspaceWatcher) {
-            workspaceWatcher.startWatching()
-        } else {
-            workspaceWatcher.stopWatching()
-        }
-    })
 </script>
 
 {#snippet mobileMenu()}
@@ -53,7 +43,9 @@
         <Navigation class="navigation-burger min-w-0 w-full" {onNavigation}>
             <ModeNavigation />
             <div class="flex flex-col min-w-0">
-                <UrlSelector class="m-2 h-8" {repositoryUrl} />
+                {#if capabilities.urlSelection}
+                    <UrlSelector class="m-2 h-8" {repositoryUrl} />
+                {/if}
                 <DiagramNavigation class="flex flex-col" />
                 <DocumentNavigation />
             </div>
@@ -71,9 +63,11 @@
                     <Logo class="h-10 fill-primary-500" />
                 </button>
             </div>
-            <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
+            {#if capabilities.urlSelection}
+                <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
+            {/if}
             <div class="flex items-center gap-4">
-                {#if repositoryUrl !== 'local'}
+                {#if capabilities.likeButton}
                     <LikeButton />
                 {/if}
                 <LightSwitch class="size-8 stroke-1" />
