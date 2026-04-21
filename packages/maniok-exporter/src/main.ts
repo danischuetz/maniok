@@ -13,10 +13,15 @@ async function main() {
 
     const watcher = new Watcher()
     const exporter = new Exporter()
-    watcher.onChange = () => exporter.exportWorkspace(workspaceDirectory)
+    watcher.onChange = () =>
+        exporter.exportWorkspace(workspaceDirectory).catch((err) => {
+            console.error(err)
+        })
 
     console.log('Performing initial workspace export...')
-    exporter.exportWorkspace(workspaceDirectory)
+    exporter.exportWorkspace(workspaceDirectory).catch((err) => {
+        console.error(err)
+    })
 
     console.log(`Watching workspace directory: ${workspaceDirectory}`)
     await watcher.watchDirectory(workspaceDirectory)
