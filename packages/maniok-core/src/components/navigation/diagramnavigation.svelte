@@ -38,7 +38,7 @@
         {#each diagrams as diagram (diagram.id)}
             <li>
                 {#if diagram.id === documentationContext.selectedDiagram?.id}
-                    <p class="diagram-nav-selected">{kind}: {diagram.title}</p>
+                    <p class="diagram-nav-selected">{diagram.title}</p>
                 {:else}
                     <button
                         class="diagram-nav-selectable"
@@ -47,7 +47,6 @@
                             navigationContext.onNavigation()
                         }}
                     >
-                        {kind}:
                         {diagram.title}
                     </button>
                 {/if}

@@ -136,5 +136,5 @@
         proOptions={{ hideAttribution: true }}
     ></SvelteFlow>
 
-    <p class="diagram-label">{diagram.type}: {diagram.title}</p>
+    <p class="diagram-label">{diagram.title}</p>
 </div>

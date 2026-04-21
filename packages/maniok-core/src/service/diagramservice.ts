@@ -129,14 +129,9 @@ export class DiagramService {
             }
         }
 
-        // Diagram title
-        const colonIndex = view.name.indexOf(':')
-        const diagramTitle =
-            colonIndex !== -1 ? view.name.substring(colonIndex + 2).trim() : view.name
-
         return {
             id: view.key,
-            title: diagramTitle,
+            title: DiagramService.deriveDiagramTitle(view),
             direction: DiagramService.getDirection(view),
             elements: elements,
             relationships: relationships
@@ -179,6 +174,28 @@ export class DiagramService {
                 return DirectionEnum.BottomTop
             default:
                 return DirectionEnum.LeftRight
+        }
+    }
+
+    private static deriveDiagramTitle(view: SzrView): string {
+        if (view.title) return view.title
+
+        const type: ElementTypeEnum = DiagramService.getElementType(view)
+
+        const colonIndex = view.name.lastIndexOf(':')
+        const name: string =
+            colonIndex !== -1 ? view.name.substring(colonIndex + 2).trim() : view.name
+
+        return type + ': ' + name
+    }
+
+    private static getElementType(view: SzrView): ElementTypeEnum {
+        if ('softwareSystemId' in view) {
+            return ElementTypeEnum.SoftwareSystem
+        } else if ('containerId' in view) {
+            return ElementTypeEnum.Container
+        } else {
+            return ElementTypeEnum.Component
         }
     }
 }

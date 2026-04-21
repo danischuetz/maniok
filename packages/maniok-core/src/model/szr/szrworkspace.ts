@@ -71,7 +71,8 @@ const viewBaseSchema = z.object({
     externalContainerBoundariesVisible: z.boolean().optional(),
     externalSoftwareSystemBoundariesVisible: z.boolean().optional(),
     enterpriseBoundaryVisible: z.boolean().optional(),
-    generatedKey: z.boolean().optional()
+    generatedKey: z.boolean().optional(),
+    title: z.string().optional()
 })
 
 const systemContextViewSchema = viewBaseSchema.extend({
