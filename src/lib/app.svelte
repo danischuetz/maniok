@@ -1,0 +1,97 @@
+<script lang="ts">
+    import {
+        DocumentNavigation,
+        BurgerMenu,
+        RepositoryService,
+        LightSwitch,
+        Logo,
+        type RepositoryModel
+    } from 'maniok-core'
+    import {
+        DocumentationProvider,
+        Navigation,
+        DiagramNavigation,
+        ModeNavigation,
+        Content,
+        DiagramView,
+        DiagramFocusModal,
+        DocumentView
+    } from 'maniok-core'
+
+    import { goto } from '$app/navigation'
+    import { WorkspaceWatcher } from './util/workspacewatcher'
+    import LikeButton from './components/likebutton.svelte'
+    import UrlSelector from './components/urlselector.svelte'
+    import { defaultCapabilities, type Capabilities } from './model/capabilities'
+
+    interface Props {
+        capabilities?: Capabilities
+        repository?: RepositoryModel
+        workspaceJson: string
+    }
+
+    let { capabilities = defaultCapabilities, repository, workspaceJson }: Props = $props()
+
+    let repositoryUrl: string = $derived.by(() =>
+        repository ? RepositoryService.toUrl(repository) : ''
+    )
+
+    let onNavigation: () => void = $state(() => {})
+    let workspaceWatcher: WorkspaceWatcher = new WorkspaceWatcher()
+
+    $effect(() => {
+        if (capabilities.workspaceWatcher) {
+            workspaceWatcher.startWatching()
+        } else {
+            workspaceWatcher.stopWatching()
+        }
+    })
+</script>
+
+{#snippet mobileMenu()}
+    <BurgerMenu class="p-0 lg:hidden" bind:onNavigation>
+        <Navigation class="navigation-burger min-w-0 w-full" {onNavigation}>
+            <ModeNavigation />
+            <div class="flex flex-col min-w-0">
+                <UrlSelector class="m-2 h-8" {repositoryUrl} />
+                <DiagramNavigation class="flex flex-col" />
+                <DocumentNavigation />
+            </div>
+        </Navigation>
+    </BurgerMenu>
+{/snippet}
+
+<DocumentationProvider structurizrWorkspaceJson={workspaceJson}>
+    <div class="flex flex-col w-screen h-screen app overflow-hidden">
+        <!-- Title Bar -->
+        <header class="flex justify-between items-center p-4 titlebar gap-4 overflow-hidden">
+            <div class="flex items-center gap-4">
+                {@render mobileMenu()}
+                <button onclick={() => goto(`/`)} class="flex items-center">
+                    <Logo class="h-10 fill-primary-500" />
+                </button>
+            </div>
+            <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
+            <div class="flex items-center gap-4">
+                {#if repositoryUrl !== 'local'}
+                    <LikeButton />
+                {/if}
+                <LightSwitch class="size-8 stroke-1" />
+            </div>
+        </header>
+
+        <!-- Body -->
+        <div class="flex flex-1 overflow-hidden">
+            <Navigation class="hidden lg:flex navigation">
+                <ModeNavigation />
+                <DiagramNavigation class="flex flex-col self-stretch" />
+                <DocumentNavigation />
+            </Navigation>
+            <Content class="flex-1 content overflow-y-auto">
+                <DiagramView />
+                <DocumentView />
+                <DiagramFocusModal />
+            </Content>
+        </div>
+    </div>
+</DocumentationProvider>
