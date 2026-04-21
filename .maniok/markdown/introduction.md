@@ -21,8 +21,6 @@ Any feedback is highly appreciated. Get in touch through:
 - E-Mail: <daniel@danielschuetz.dev>
 - LinkedIn: <https://www.linkedin.com/in/schuetzdaniel>
 
-If you want to receive updates and be considered for early access to the developed tooling, you can leave your email address here: <https://forms.gle/pt5bWiQCqMBqNqmf7>
-
 ## Features
 
 - Minimal setup
