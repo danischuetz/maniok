@@ -3,9 +3,10 @@
 
     import App from '../../../lib/app.svelte'
     import type { CapabilitiesModel } from '../../../lib/model/capabilities'
-    import Selectable from '../../../lib/components/selectable.svelte'
+    import Selectable from '../../../lib/components/utilities/selectable.svelte'
     import type { SelectableModel } from '../../../lib/model/selectable'
     import { goto } from '$app/navigation'
+    import Exampledisclaimer from '../../../lib/components/modal/exampledisclaimer.svelte'
 
     let { data, params }: PageProps = $props()
 
@@ -52,6 +53,7 @@
     <div class="flex items-start md:items-center gap-2 p-1 flex-col md:flex-row">
         <span class="pl-2">Select an example:</span>
         <Selectable {selectables} bind:selected />
+        <Exampledisclaimer repository={selected.value} />
     </div>
 {/snippet}
 

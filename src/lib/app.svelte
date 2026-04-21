@@ -19,8 +19,8 @@
     } from 'maniok-core'
 
     import { goto } from '$app/navigation'
-    import LikeButton from './components/likebutton.svelte'
-    import UrlSelector from './components/urlselector.svelte'
+    import LikeButton from './components/utilities/likebutton.svelte'
+    import UrlSelector from './components/utilities/urlselector.svelte'
     import { type CapabilitiesModel } from './model/capabilities'
     import type { Snippet } from 'svelte'
 

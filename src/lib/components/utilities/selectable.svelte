@@ -1,5 +1,5 @@
 <script lang="ts">
-    import type { SelectableModel } from '../model/selectable'
+    import type { SelectableModel } from '../../model/selectable'
     import { Popover, Portal } from '@skeletonlabs/skeleton-svelte'
     import { ChevronDown } from 'lucide-svelte'
 

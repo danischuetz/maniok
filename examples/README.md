@@ -28,6 +28,4 @@ Just add any of those directories as `PATH` to the maniok-preview command from a
 
 ## Disclaimer
 
-These docs are AI-generated and might get things absolutely wrong.
-
-They’re meant to showcase C4 architecture documentation using Maniok and are by no means complete or accurate and have not been reviewed by the maintainers of those repositories.
+The documentation for the listed repositories is AI-generated using the `maniok-architecture-prompt.md` and are meant to give examples for C4 architecture documentation using Maniok. They are by no means complete or accurate and have not been reviewed by the maintainers of those repositories.
