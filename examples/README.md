@@ -1,4 +1,4 @@
-# Maniok C4 Documentation Prompt
+# Maniok C4 Architecture Prompt
 
 To quickly get started with Maniok, C4 and the Structurizr DSL, I've prepared a prompt at `maniok-architecture-prompt.md`!
 

@@ -14,7 +14,7 @@ export class WorkspaceWatcher {
             if (hasChanged) {
                 await invalidate('workspace:reload')
             }
-        }, 500)
+        }, 200)
     }
 
     public stopWatching() {

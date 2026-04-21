@@ -1,4 +1,5 @@
 import { Watcher } from 'maniok-exporter'
+import path from 'path'
 
 const watcher: Watcher = new Watcher()
 let hasChanged: boolean = false
@@ -6,7 +7,11 @@ watcher.onChange = async () => {
     hasChanged = true
 }
 if (process.env.WORKSPACE_PATH) {
-    watcher.watchDirectory(process.env.WORKSPACE_PATH)
+    watcher
+        .watchFileOrDirectory(path.join(process.env.WORKSPACE_PATH, 'workspace.json'))
+        .catch((err) => {
+            console.error('Error watching workspace directory: ', err)
+        })
 } else {
     console.warn('WORKSPACE_PATH environment variable is not set, nothing to watch.')
 }

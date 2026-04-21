@@ -3,11 +3,13 @@ import chokidar from 'chokidar'
 export class Watcher {
     onChange: () => void = () => {}
 
-    async watchDirectory(path: string) {
+    async watchFileOrDirectory(path: string, fileToIgnore: string = '') {
         const watcher = chokidar.watch(path, {
             ignoreInitial: true,
-            ignored: /\.json$/,
-            awaitWriteFinish: { stabilityThreshold: 300 }
+            ignored: (path, stats) => {
+                if (!fileToIgnore) return false
+                return path.includes(fileToIgnore)
+            }
         })
 
         for (const signal of ['SIGTERM', 'SIGINT']) {

@@ -24,7 +24,7 @@
     import LikeButton from '../../lib/components/likebutton.svelte'
     import UrlSelector from '../../lib/components/urlselector.svelte'
 
-    let { data }: PageProps = $props()
+    let { data, params }: PageProps = $props()
 
     let repositoryUrl: string = $derived.by(() =>
         data.repository ? RepositoryService.toUrl(data.repository) : ''
@@ -34,7 +34,7 @@
     let workspaceWatcher: WorkspaceWatcher = new WorkspaceWatcher()
 
     $effect(() => {
-        if (repositoryUrl === 'local') {
+        if (params.code === 'local') {
             workspaceWatcher.startWatching()
         } else {
             workspaceWatcher.stopWatching()

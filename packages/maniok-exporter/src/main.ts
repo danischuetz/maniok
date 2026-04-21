@@ -24,7 +24,7 @@ async function main() {
     })
 
     console.log(`Watching workspace directory: ${workspaceDirectory}`)
-    await watcher.watchDirectory(workspaceDirectory)
+    await watcher.watchFileOrDirectory(workspaceDirectory, 'workspace.json')
 }
 
 main().catch((err) => {
