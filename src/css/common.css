@@ -7,6 +7,10 @@
     @apply size-12 stroke-1 p-2;
 }
 
+.code {
+    @apply bg-secondary-100/20 text-surface-900-100 px-2 py-1 rounded-sm font-mono font-light text-sm;
+}
+
 /* Accessibility: Hide elements visually but keep them for screen readers */
 .a11y-hidden {
     @apply absolute w-px h-px overflow-hidden whitespace-nowrap border-0 -m-1 p-0;
