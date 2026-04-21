@@ -78,18 +78,18 @@
                     <Logo class="h-10 fill-primary-500" />
                 </button>
             </div>
-            {#if capabilities.urlSelection}
-                <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
-            {/if}
-            <div class="hidden lg:block">
-                {#if customComponent}
-                    {@render customComponent()}
-                {/if}
-            </div>
-            <div class="flex items-center gap-4">
+            <div class="flex flex-1 items-center justify-end gap-4">
                 {#if capabilities.likeButton}
                     <LikeButton />
                 {/if}
+                {#if capabilities.urlSelection}
+                    <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
+                {/if}
+                <div class="hidden lg:block">
+                    {#if customComponent}
+                        {@render customComponent()}
+                    {/if}
+                </div>
                 <LightSwitch class="size-8 stroke-1" />
             </div>
         </header>

@@ -50,10 +50,16 @@
         }
         await handleConfirmation()
     }
+
+    function onExampleClick() {
+        goto('/examples/paperless-ngx')
+    }
 </script>
 
-<div class="app flex flex-col items-center justify-center w-screen h-screen">
-    <div class="flex flex-col items-start gap-16 px-4">
+<div
+    class="app flex flex-col items-center justify-start md:justify-center w-screen min-h-screen overflow-auto py-4 lg:py-8"
+>
+    <div class="flex flex-col items-start gap-8 lg:gap-16 px-4">
         <div class="flex flex-col items-start gap-2">
             <Logo class="max-h-32 w-full fill-primary-500" />
             <p class="text-lg">The git-native solution for C4 architecture documentation.</p>
@@ -66,8 +72,9 @@
             <div class="flex items-center gap-2 self-end">
                 <button class="btn underline rounded-full" onclick={onDemoClick}>Docs / Demo</button
                 >
-                <button class="btn rounded-full preset-filled-surface-950-50" onclick={onDemoClick}
-                    >Examples</button
+                <button
+                    class="btn rounded-full preset-filled-surface-950-50"
+                    onclick={onExampleClick}>Examples</button
                 >
             </div>
         </div>

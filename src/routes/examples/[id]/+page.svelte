@@ -1,5 +1,7 @@
 <script lang="ts">
     import type { PageProps } from './$types'
+    import { onMount } from 'svelte'
+    import { NotificationService } from 'maniok-core'
 
     import App from '../../../lib/app.svelte'
     import type { CapabilitiesModel } from '../../../lib/model/capabilities'
@@ -40,6 +42,12 @@
 
     let selected: SelectableModel = $derived.by(() => {
         return selectables.find((s) => s.id === params.id) ?? selectables[0]
+    })
+
+    onMount(() => {
+        NotificationService.notifyInfo(
+            'This example was AI-generated from a public GitHub repository using the Maniok architecture documentation prompt!'
+        )
     })
 
     $effect(() => {
