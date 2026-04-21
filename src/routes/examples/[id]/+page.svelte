@@ -49,7 +49,10 @@
 </script>
 
 {#snippet exampleSelector()}
-    <Selectable {selectables} bind:selected />
+    <div class="flex items-start md:items-center gap-2 p-1 flex-col md:flex-row">
+        <span class="pl-2">Select an example:</span>
+        <Selectable {selectables} bind:selected />
+    </div>
 {/snippet}
 
 <App

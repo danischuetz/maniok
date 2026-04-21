@@ -13,18 +13,18 @@
 </script>
 
 <Popover positioning={{ placement: 'bottom-start' }}>
-    <Popover.Trigger class="btn bg-bg-4 flex items-center space-x-3 {className}">
-        <span class="text-base">{selected.title}</span>
+    <Popover.Trigger class="selectable-selected {className}">
+        <span class="selectable-selected-title">{selected.title}</span>
         <ChevronDown />
     </Popover.Trigger>
     <Portal>
         <Popover.Positioner>
-            <Popover.Content class="card bg-bg-4 p-1 flex flex-col">
+            <Popover.Content class="selectable-popup flex flex-col items-start z-100">
                 <Popover.Context>
                     {#snippet children(popover)}
                         {#each selectables as selectable (selectable.id)}
                             <button
-                                class="px-4 py-2 text-left text-base rounded hover:preset-tonal"
+                                class="selectable-item"
                                 onclick={() => {
                                     selected = selectable
                                     popover().setOpen(false)
