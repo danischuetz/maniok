@@ -1,0 +1,588 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : {
+    "sections" : [ {
+      "content" : "# Paperless-ngx Overview\n\n![System Context](embed:paperless-system-context)\n\nPaperless-ngx is a document management repository that combines a Django backend in `src/`, an Angular frontend in `src-ui/`, and Docker packaging in `docker/` to turn scanned or uploaded files into a searchable archive.\n\n## Purpose\n\nThe repository implements document ingestion, OCR and parsing, metadata extraction, full-text search, workflows, sharing, user management, and optional AI-assisted suggestions. It also includes operational assets for local development, container image builds, and documented deployment variants.\n\n## Main Runtime And Build-Time Parts\n\n- The Angular UI in `src-ui/` is built with pnpm and Angular CLI, then copied into `src/documents/static/frontend/` during the Docker build.\n- The Django application in `src/` exposes REST endpoints, an OpenAPI schema, session and token authentication, and WebSocket status updates.\n- Background execution is split across a Celery worker, a Celery beat scheduler, and a `document_consumer` management command, all supervised by s6 in the container image.\n- Persistent data is split between relational metadata storage and filesystem-backed document storage.\n\n## Important Integrations\n\n- Redis is required for Celery and Django Channels.\n- A relational database is required for metadata, with SQLite, PostgreSQL, and MariaDB represented in repository configuration.\n- IMAP and OAuth-capable mail providers are optional inputs for automated mail ingestion.\n- Apache Tika and Gotenberg are optional services for parsing and document conversion.\n- OpenAI or Ollama can be configured for optional AI chat, suggestion, and indexing features.\n\n## Deeper Documentation\n\n- `docs/system.md` describes the repository as a software system and its major runtime boundaries.\n- `docs/containers/backend.md` explains the backend container and its internal component split.\n- `docs/containers/processing.md` focuses on task execution and ingestion processes.\n\n![Container View](embed:paperless-containers)",
+      "format" : "Markdown",
+      "order" : 1,
+      "title" : ""
+    } ]
+  },
+  "id" : 0,
+  "model" : {
+    "people" : [ {
+      "description" : "Uploads, searches, reviews, and manages archived documents through the Paperless-ngx web interface.",
+      "id" : "1",
+      "name" : "User",
+      "properties" : {
+        "structurizr.dsl.identifier" : "user"
+      },
+      "relationships" : [ {
+        "description" : "Uses via browser",
+        "destinationId" : "9",
+        "id" : "17",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Uses via browser",
+        "destinationId" : "8",
+        "id" : "18",
+        "linkedRelationshipId" : "17",
+        "sourceId" : "1"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "Required broker and pub/sub backend used for Celery and Django Channels.",
+      "documentation" : { },
+      "id" : "2",
+      "name" : "Redis",
+      "properties" : {
+        "structurizr.dsl.identifier" : "redis"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "SQLite, PostgreSQL, or MariaDB database configured for Paperless-ngx metadata.",
+      "documentation" : { },
+      "id" : "3",
+      "name" : "Relational Database",
+      "properties" : {
+        "structurizr.dsl.identifier" : "database"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "Optional IMAP/OAuth-enabled email service used for incoming mail ingestion.",
+      "documentation" : { },
+      "id" : "4",
+      "name" : "Mail Provider",
+      "properties" : {
+        "structurizr.dsl.identifier" : "mailProvider"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "Optional text extraction service for office documents and email parsing.",
+      "documentation" : { },
+      "id" : "5",
+      "name" : "Apache Tika",
+      "properties" : {
+        "structurizr.dsl.identifier" : "tika"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "Optional document conversion service used alongside Tika.",
+      "documentation" : { },
+      "id" : "6",
+      "name" : "Gotenberg",
+      "properties" : {
+        "structurizr.dsl.identifier" : "gotenberg"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "Optional OpenAI or Ollama service used for chat, suggestions, and vector-based AI features.",
+      "documentation" : { },
+      "id" : "7",
+      "name" : "LLM Provider",
+      "properties" : {
+        "structurizr.dsl.identifier" : "llmProvider"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "containers" : [ {
+        "description" : "Angular single-page application from src-ui, compiled during the Docker build and served as static assets.",
+        "documentation" : { },
+        "id" : "9",
+        "name" : "Web UI",
+        "properties" : {
+          "structurizr.dsl.identifier" : "ui"
+        },
+        "relationships" : [ {
+          "description" : "Calls REST API and opens WebSocket connections",
+          "destinationId" : "10",
+          "id" : "19",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Uses authentication, profile, settings, and administration APIs",
+          "destinationId" : "11",
+          "id" : "43",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Uses document, search, workflow, and task APIs",
+          "destinationId" : "12",
+          "id" : "44",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Uses mail account, rule, and processed-mail APIs",
+          "destinationId" : "13",
+          "id" : "45",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Angular 21, TypeScript"
+      }, {
+        "components" : [ {
+          "description" : "Shared authentication, user management, configuration, URL routing, API versioning, and application settings.",
+          "documentation" : { },
+          "id" : "11",
+          "name" : "Core Platform",
+          "properties" : {
+            "structurizr.dsl.identifier" : "corePlatform"
+          },
+          "relationships" : [ {
+            "description" : "Routes shared API and configuration flows into document capabilities",
+            "destinationId" : "12",
+            "id" : "39",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Provides shared authentication and configuration context",
+            "destinationId" : "13",
+            "id" : "40",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "paperless package"
+        }, {
+          "description" : "Document APIs, workflows, search, metadata management, ingestion orchestration, and task definitions.",
+          "documentation" : { },
+          "id" : "12",
+          "name" : "Documents Domain",
+          "properties" : {
+            "structurizr.dsl.identifier" : "documentsDomain"
+          },
+          "relationships" : [ {
+            "description" : "Invokes optional AI matching, suggestions, and chat",
+            "destinationId" : "14",
+            "id" : "41",
+            "sourceId" : "12",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "documents package"
+        }, {
+          "description" : "Mail account APIs, OAuth callback handling, and IMAP ingestion logic that submits document consumption tasks.",
+          "documentation" : { },
+          "id" : "13",
+          "name" : "Mail Integration",
+          "properties" : {
+            "structurizr.dsl.identifier" : "mailIntegration"
+          },
+          "relationships" : [ {
+            "description" : "Queues document consumption tasks for email attachments",
+            "destinationId" : "12",
+            "id" : "42",
+            "sourceId" : "13",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "paperless_mail package"
+        }, {
+          "description" : "Optional AI classification, matching, chat, embeddings, and LLM index maintenance.",
+          "documentation" : { },
+          "id" : "14",
+          "name" : "AI Services",
+          "properties" : {
+            "structurizr.dsl.identifier" : "aiServices"
+          },
+          "tags" : "Element,Component",
+          "technology" : "paperless_ai package"
+        } ],
+        "description" : "Django ASGI application that serves the SPA shell, exposes REST and OpenAPI endpoints, handles authentication, and provides WebSocket status updates.",
+        "documentation" : {
+          "sections" : [ {
+            "content" : "# Backend Container\n\n![Backend Components](embed:paperless-backend-components)\n\nThe web application container is the main request-handling runtime. It is backed by Django, served through Granian in ASGI mode, and exposes REST endpoints, schema endpoints, authentication flows, and WebSocket endpoints.\n\n## Component Split\n\n- Core Platform: code in the `paperless` package provides shared settings, URL routing, authentication, user and group APIs, static entry views, and cross-cutting configuration.\n- Documents Domain: code in the `documents` package owns the largest feature area, including document CRUD, search, workflows, bulk operations, task definitions, and ingestion orchestration.\n- Mail Integration: code in `paperless_mail` exposes mail account and rule APIs, OAuth callback handling, and the logic that submits document consumption work for fetched attachments.\n- AI Services: code in `paperless_ai` adds optional chat, vector indexing, metadata suggestions, and model-provider integration.\n\n## Evidence\n\n- `src/paperless/urls.py` registers routes from `documents.views`, `paperless.views`, and `paperless_mail.views`.\n- `src/paperless/views.py` covers application configuration, profile, token, and administration endpoints.\n- `src/documents/views.py` contains document APIs, search, bulk actions, system status, and AI chat streaming.\n- `src/paperless/settings/__init__.py` wires REST framework, OpenAPI generation, Channels, and static file serving.",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "10",
+        "name" : "Web Application",
+        "properties" : {
+          "structurizr.dsl.identifier" : "backend"
+        },
+        "relationships" : [ {
+          "description" : "Queues long-running document and maintenance jobs",
+          "destinationId" : "15",
+          "id" : "20",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Reads from and writes to metadata",
+          "destinationId" : "3",
+          "id" : "21",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Uses channel layer and status integration",
+          "destinationId" : "2",
+          "id" : "23",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Serves uploaded and archived files",
+          "destinationId" : "16",
+          "id" : "25",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Completes optional OAuth callback flows for mail accounts",
+          "destinationId" : "4",
+          "id" : "26",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Sends optional AI chat and suggestion requests",
+          "destinationId" : "7",
+          "id" : "28",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Python 3.12, Django, Django REST Framework, Channels, Granian"
+      }, {
+        "description" : "Celery worker, Celery beat scheduler, and the document_consumer management process supervised by s6 inside the application image.",
+        "documentation" : {
+          "sections" : [ {
+            "content" : "# Background Processing\n\n![Container View](embed:paperless-containers)\n\nBackground processing is modeled as one container because the repository implements several cooperating long-running processes that are packaged and supervised together in the same application image.\n\n## Runtime Roles\n\n- Celery worker executes long-running tasks from `documents.tasks` and `paperless_mail.tasks`.\n- Celery beat schedules recurring work such as mail polling and maintenance jobs.\n- The `document_consumer` management command watches the consumption directory and submits ingestion work.\n- Flower is present as an optional operational service when enabled.\n\n## Processing Responsibilities\n\n- Consume files from watched folders and email attachments.\n- Perform OCR, parsing, barcode handling, workflow triggering, and archive generation.\n- Train classifiers, update search and LLM indexes, and run maintenance or sanity checks.\n- Interact with Redis, the relational database, document storage, and optional parsing and AI services.\n\n## Evidence\n\n- `docker/rootfs/etc/s6-overlay/s6-rc.d/svc-worker/run` starts Celery workers.\n- `docker/rootfs/etc/s6-overlay/s6-rc.d/svc-scheduler/run` starts Celery beat.\n- `docker/rootfs/etc/s6-overlay/s6-rc.d/svc-consumer/run` starts `manage.py document_consumer`.\n- `src/documents/tasks.py` and `src/paperless_mail/tasks.py` define the main task entry points.",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "15",
+        "name" : "Background Processing",
+        "properties" : {
+          "structurizr.dsl.identifier" : "worker"
+        },
+        "relationships" : [ {
+          "description" : "Reads from and writes to metadata",
+          "destinationId" : "3",
+          "id" : "30",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Uses Celery broker and shared pub/sub infrastructure",
+          "destinationId" : "2",
+          "id" : "31",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Reads from and writes to document files",
+          "destinationId" : "16",
+          "id" : "32",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Fetches messages from configured mail accounts",
+          "destinationId" : "4",
+          "id" : "33",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Extracts text from supported formats when enabled",
+          "destinationId" : "5",
+          "id" : "34",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Converts documents to PDF when enabled",
+          "destinationId" : "6",
+          "id" : "36",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Builds optional AI-assisted suggestions and vector indexes",
+          "destinationId" : "7",
+          "id" : "38",
+          "sourceId" : "15",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Python 3.12, Celery, Django management commands, s6-overlay"
+      }, {
+        "description" : "Persistent filesystem locations for consumed files, stored originals, generated archive files, thumbnails, data, and exports.",
+        "documentation" : { },
+        "id" : "16",
+        "name" : "Document Storage",
+        "properties" : {
+          "structurizr.dsl.identifier" : "storage"
+        },
+        "tags" : "Element,Container",
+        "technology" : "Filesystem volumes"
+      } ],
+      "description" : "Document management system that ingests, OCRs, classifies, stores, and serves searchable documents.",
+      "documentation" : {
+        "sections" : [ {
+          "content" : "# Paperless-ngx System\n\n![Container View](embed:paperless-containers)\n\nPaperless-ngx is modeled here as a single software system because the repository ships one cohesive application image and one codebase, even though that image supervises several runtime processes.\n\n## System Responsibilities\n\n- Provide a browser-based document archive and administration experience.\n- Accept files from direct uploads, watched consumption folders, and email ingestion.\n- Persist document metadata and files, including generated archive artifacts.\n- Run long-lived and scheduled processing such as OCR, classifier training, indexing, and mail polling.\n- Integrate with optional external services for parsing, conversion, and AI features.\n\n## Why These Containers Exist\n\n- The web UI is a separately built Angular application with its own package manager, test tooling, and build pipeline.\n- The web application is the primary HTTP and WebSocket entry point and owns authentication, APIs, and the SPA shell.\n- Background processing is operationally distinct in the container image through dedicated s6 service definitions for worker, scheduler, and consumer roles.\n- Document storage is persistent and separate from the relational metadata database in both Docker and runtime configuration.\n\n## Repository Evidence\n\n- `Dockerfile` builds the frontend, installs Python dependencies, and assembles the runtime image.\n- `docker/rootfs/etc/s6-overlay/s6-rc.d/` defines supervised runtime services.\n- `src/manage.py`, `src/paperless/asgi.py`, and `src/paperless/celery.py` define entry points.\n- `docker/compose/` provides supported deployment combinations for Redis, databases, and optional Tika services.",
+          "format" : "Markdown",
+          "order" : 1,
+          "title" : ""
+        } ]
+      },
+      "id" : "8",
+      "name" : "Paperless-ngx",
+      "properties" : {
+        "structurizr.dsl.identifier" : "paperless"
+      },
+      "relationships" : [ {
+        "description" : "Reads from and writes to metadata",
+        "destinationId" : "3",
+        "id" : "22",
+        "linkedRelationshipId" : "21",
+        "sourceId" : "8"
+      }, {
+        "description" : "Uses channel layer and status integration",
+        "destinationId" : "2",
+        "id" : "24",
+        "linkedRelationshipId" : "23",
+        "sourceId" : "8"
+      }, {
+        "description" : "Completes optional OAuth callback flows for mail accounts",
+        "destinationId" : "4",
+        "id" : "27",
+        "linkedRelationshipId" : "26",
+        "sourceId" : "8"
+      }, {
+        "description" : "Sends optional AI chat and suggestion requests",
+        "destinationId" : "7",
+        "id" : "29",
+        "linkedRelationshipId" : "28",
+        "sourceId" : "8"
+      }, {
+        "description" : "Extracts text from supported formats when enabled",
+        "destinationId" : "5",
+        "id" : "35",
+        "linkedRelationshipId" : "34",
+        "sourceId" : "8"
+      }, {
+        "description" : "Converts documents to PDF when enabled",
+        "destinationId" : "6",
+        "id" : "37",
+        "linkedRelationshipId" : "36",
+        "sourceId" : "8"
+      } ],
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.inspection.error" : "31",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "containerId" : "10",
+      "elements" : [ {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "14",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "paperless-backend-components",
+      "name" : "Component View: Paperless-ngx - Web Application",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "39"
+      }, {
+        "id" : "40"
+      }, {
+        "id" : "41"
+      }, {
+        "id" : "42"
+      }, {
+        "id" : "43"
+      }, {
+        "id" : "44"
+      }, {
+        "id" : "45"
+      } ]
+    } ],
+    "configuration" : {
+      "styles" : { },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "15",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "16",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "paperless-containers",
+      "name" : "Container View: Paperless-ngx",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "17"
+      }, {
+        "id" : "19"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "21"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "25"
+      }, {
+        "id" : "26"
+      }, {
+        "id" : "28"
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "31"
+      }, {
+        "id" : "32"
+      }, {
+        "id" : "33"
+      }, {
+        "id" : "34"
+      }, {
+        "id" : "36"
+      }, {
+        "id" : "38"
+      } ],
+      "softwareSystemId" : "8"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "paperless-system-context",
+      "name" : "System Context View: Paperless-ngx",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "18"
+      }, {
+        "id" : "22"
+      }, {
+        "id" : "24"
+      }, {
+        "id" : "27"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "35"
+      }, {
+        "id" : "37"
+      } ],
+      "softwareSystemId" : "8"
+    } ]
+  }
+}

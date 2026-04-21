@@ -1,0 +1,500 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : {
+    "sections" : [ {
+      "content" : "# Repository Overview\n\n![System Context](embed:fbq-system-context)\n\nThis repository contains FileBrowser Quantum, a self-hosted web file management application. The codebase is split into a Go backend under `backend` and a Vue 3 frontend under `frontend`, with Docker assets and test scenarios under `_docker`.\n\nIts primary purpose is to expose configured filesystem sources through a responsive web interface and API. The application supports file browsing, previews, indexed search, sharing, user administration, API tokens, and optional authentication and office integrations.\n\nThe main runtime and build-time parts are:\n\n- A Go backend binary started from `backend/main.go` and orchestrated through `backend/cmd`.\n- A Vue/Vite frontend built from `frontend` and copied into `backend/http/dist` and `backend/http/embed`.\n- Local persistent storage for settings, users, shares, access rules, tokens, and index data.\n- Configured file sources defined in YAML configuration and accessed through filesystem adapters.\n- Optional integrations for OIDC, LDAP, WebDAV clients, Swagger API browsing, and OnlyOffice editing.\n\nThe repository evidence for this model comes from the root README, the makefile build targets, the Go module and frontend package configuration, the HTTP router, and integration-specific code in the backend.\n\nDeeper documentation is available here:\n\n- `docs/system.md` for the overall software system.\n- `docs/containers/backend.md` for the main backend runtime responsibilities.\n- `docs/containers/web-ui.md` for the browser client and frontend build role.",
+      "format" : "Markdown",
+      "order" : 1,
+      "title" : ""
+    } ]
+  },
+  "id" : 0,
+  "model" : {
+    "people" : [ {
+      "description" : "Browses files, previews content, creates shares, and administers the application.",
+      "id" : "1",
+      "name" : "User",
+      "properties" : {
+        "structurizr.dsl.identifier" : "user"
+      },
+      "relationships" : [ {
+        "description" : "Uses to manage files",
+        "destinationId" : "6",
+        "id" : "14",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Uses in a web browser",
+        "destinationId" : "7",
+        "id" : "15",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "Directories and mounted filesystems exposed through FileBrowser Quantum.",
+      "documentation" : { },
+      "id" : "2",
+      "name" : "Configured File Sources",
+      "properties" : {
+        "structurizr.dsl.identifier" : "sources"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "External identity provider used for OpenID Connect login when enabled.",
+      "documentation" : { },
+      "id" : "3",
+      "name" : "OIDC Provider",
+      "properties" : {
+        "structurizr.dsl.identifier" : "oidcProvider"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "External directory used for LDAP authentication when enabled.",
+      "documentation" : { },
+      "id" : "4",
+      "name" : "LDAP Directory",
+      "properties" : {
+        "structurizr.dsl.identifier" : "ldapDirectory"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "External document editing service used for browser-based office editing when configured.",
+      "documentation" : { },
+      "id" : "5",
+      "name" : "OnlyOffice Document Server",
+      "properties" : {
+        "structurizr.dsl.identifier" : "onlyOfficeServer"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "containers" : [ {
+        "description" : "Vue single-page application for login, file browsing, tools, settings, and share flows.",
+        "documentation" : {
+          "sections" : [ {
+            "content" : "# Web UI\n\n![Container View](embed:fbq-containers)\n\nThe Web UI is a Vue 3 single-page application in `frontend`. It provides the browser experience for login, file browsing, settings, tools, public share access, and embedded navigation.\n\nThe repository shows a clear separation between frontend source and runtime hosting:\n\n- `frontend/src/main.ts` creates the Vue application, installs router and i18n, and mounts the SPA.\n- `frontend/src/router/index.ts` defines the main user-facing routes for login, files, tools, settings, and public share paths.\n- `frontend/package.json` and `frontend/vite.config.ts` define the frontend build and its output behavior.\n- The build script copies the compiled assets into `backend/http/dist` and `backend/http/embed`, which the Go backend serves.\n\nThis container does not own direct persistence or external integrations. Instead, it depends on backend endpoints for authentication state, file operations, settings, search, previews, share handling, and optional office integration setup.",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "7",
+        "name" : "Web UI",
+        "properties" : {
+          "structurizr.dsl.identifier" : "webUi"
+        },
+        "relationships" : [ {
+          "description" : "Calls JSON API, SSE, and share endpoints",
+          "destinationId" : "8",
+          "id" : "16",
+          "sourceId" : "7",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Vue 3, TypeScript, Vue Router, Vite"
+      }, {
+        "components" : [ {
+          "description" : "Routes browser requests, API endpoints, public share endpoints, server-sent events, Swagger, and WebDAV access.",
+          "documentation" : { },
+          "id" : "9",
+          "name" : "HTTP and WebDAV Interface",
+          "properties" : {
+            "structurizr.dsl.identifier" : "httpInterface"
+          },
+          "relationships" : [ {
+            "description" : "Uses for authentication and permission checks",
+            "destinationId" : "10",
+            "id" : "26",
+            "sourceId" : "9",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Uses for file operations, search, previews, and metadata",
+            "destinationId" : "11",
+            "id" : "27",
+            "sourceId" : "9",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Uses for application state",
+            "destinationId" : "12",
+            "id" : "28",
+            "sourceId" : "9",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Coordinates editor configuration and callbacks",
+            "destinationId" : "5",
+            "id" : "29",
+            "sourceId" : "9",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go net/http"
+        }, {
+          "description" : "Authenticates users via password, OIDC, LDAP, proxy, and token flows and enforces permissions.",
+          "documentation" : { },
+          "id" : "10",
+          "name" : "Authentication and Access Control",
+          "properties" : {
+            "structurizr.dsl.identifier" : "authAccess"
+          },
+          "relationships" : [ {
+            "description" : "Loads users, shares, rules, and tokens",
+            "destinationId" : "12",
+            "id" : "30",
+            "sourceId" : "10",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Uses for OIDC sign-in",
+            "destinationId" : "3",
+            "id" : "31",
+            "sourceId" : "10",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Uses for LDAP authentication",
+            "destinationId" : "4",
+            "id" : "32",
+            "sourceId" : "10",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go auth and HTTP middleware"
+        }, {
+          "description" : "Indexes configured sources, serves search and metadata, and generates previews for media and documents.",
+          "documentation" : { },
+          "id" : "11",
+          "name" : "Content and Preview Services",
+          "properties" : {
+            "structurizr.dsl.identifier" : "contentServices"
+          },
+          "relationships" : [ {
+            "description" : "Reads and writes index metadata",
+            "destinationId" : "12",
+            "id" : "33",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Reads files and directories",
+            "destinationId" : "2",
+            "id" : "34",
+            "sourceId" : "11",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Go indexing, preview, ffmpeg"
+        }, {
+          "description" : "Persists settings, users, shares, tokens, access rules, and indexing metadata.",
+          "documentation" : { },
+          "id" : "12",
+          "name" : "Persistence Layer",
+          "properties" : {
+            "structurizr.dsl.identifier" : "persistenceLayer"
+          },
+          "relationships" : [ {
+            "description" : "Reads and writes",
+            "destinationId" : "13",
+            "id" : "35",
+            "sourceId" : "12",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "BoltDB/Storm and SQLite"
+        } ],
+        "description" : "Go runtime that loads configuration, serves the SPA and APIs, handles authentication, indexes sources, and generates previews.",
+        "documentation" : {
+          "sections" : [ {
+            "content" : "# Backend Application\n\n![Backend Components](embed:fbq-backend-components)\n\nThe backend application is the main runtime unit in this repository. It is compiled from the Go module in `backend` and is responsible for both serving the product and coordinating the supporting services behind it.\n\nThe main internal responsibilities visible in the code are:\n\n- The HTTP and WebDAV interface in `backend/http`, including API endpoints, public share routes, SSE endpoints, Swagger, and static asset delivery.\n- Authentication and access control in `backend/auth` and HTTP middleware, covering password login, API tokens, OIDC, LDAP, proxy auth, and permission enforcement.\n- Content and preview services in `backend/indexing`, `backend/preview`, and `backend/ffmpeg`, covering indexed search, scanner scheduling, metadata lookup, and thumbnail or preview generation.\n- Persistence in `backend/database`, which initializes local storage and exposes stores for users, shares, access rules, settings, and indexing metadata.\n\nStartup in `backend/cmd/root.go` shows the runtime flow clearly: load settings, initialize persistent storage, initialize indexing, start preview generation, initialize icons and manifest assets, and finally start the HTTP server.\n\nThe backend also mediates optional integrations. OIDC and LDAP are invoked from auth-related HTTP flows, and OnlyOffice callbacks and editor configuration are exposed through office-specific endpoints.",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "8",
+        "name" : "Backend Application",
+        "properties" : {
+          "structurizr.dsl.identifier" : "backendApp"
+        },
+        "relationships" : [ {
+          "description" : "Reads and writes settings, users, shares, tokens, and index data",
+          "destinationId" : "13",
+          "id" : "17",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Reads and writes managed files",
+          "destinationId" : "2",
+          "id" : "18",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Delegates OIDC login to",
+          "destinationId" : "3",
+          "id" : "20",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Authenticates users against",
+          "destinationId" : "4",
+          "id" : "22",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Uses for office editing when configured",
+          "destinationId" : "5",
+          "id" : "24",
+          "sourceId" : "8",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Go 1.25, net/http, embedded frontend assets"
+      }, {
+        "description" : "Local persistent storage for application state and file indexing metadata.",
+        "documentation" : { },
+        "id" : "13",
+        "name" : "Metadata Store",
+        "properties" : {
+          "structurizr.dsl.identifier" : "metadataStore"
+        },
+        "tags" : "Element,Container",
+        "technology" : "BoltDB/Storm and SQLite"
+      } ],
+      "description" : "Self-hosted web-based file manager for browsing, searching, previewing, sharing, and administering files.",
+      "documentation" : {
+        "sections" : [ {
+          "content" : "# FileBrowser Quantum\n\n![Container View](embed:fbq-containers)\n\nFileBrowser Quantum is delivered as a backend-led web application. The Go runtime owns startup, configuration loading, authentication, HTTP routing, WebDAV support, preview generation, and indexing. The frontend is a separately built SPA that is served by the backend at runtime.\n\nRepository evidence for this split includes:\n\n- `backend/main.go`, which starts the CLI and server runtime.\n- `backend/cmd/root.go`, which initializes configuration, databases, indexing, preview generation, and the HTTP server.\n- `frontend/package.json` and `frontend/vite.config.ts`, which show the Vite-based frontend build and the copy into backend asset directories.\n- `makefile`, which builds frontend and backend separately and combines them for local and Docker execution.\n\nThe system has a small set of explicit external dependencies in the repository:\n\n- Configured filesystem sources that hold the managed content.\n- OIDC and LDAP identity systems used when those auth methods are enabled.\n- OnlyOffice Document Server for browser-based document editing.\n\nThe design is intentionally backend-centric. The SPA handles presentation and client-side navigation, while the backend remains the single integration point for storage, authentication, search, previews, and external services.",
+          "format" : "Markdown",
+          "order" : 1,
+          "title" : ""
+        } ]
+      },
+      "id" : "6",
+      "name" : "FileBrowser Quantum",
+      "properties" : {
+        "structurizr.dsl.identifier" : "filebrowser"
+      },
+      "relationships" : [ {
+        "description" : "Reads and writes managed files",
+        "destinationId" : "2",
+        "id" : "19",
+        "linkedRelationshipId" : "18",
+        "sourceId" : "6"
+      }, {
+        "description" : "Delegates OIDC login to",
+        "destinationId" : "3",
+        "id" : "21",
+        "linkedRelationshipId" : "20",
+        "sourceId" : "6"
+      }, {
+        "description" : "Authenticates users against",
+        "destinationId" : "4",
+        "id" : "23",
+        "linkedRelationshipId" : "22",
+        "sourceId" : "6"
+      }, {
+        "description" : "Uses for office editing when configured",
+        "destinationId" : "5",
+        "id" : "25",
+        "linkedRelationshipId" : "24",
+        "sourceId" : "6"
+      } ],
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.inspection.error" : "24",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "containerId" : "8",
+      "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "fbq-backend-components",
+      "name" : "Component View: FileBrowser Quantum - Backend Application",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "26"
+      }, {
+        "id" : "27"
+      }, {
+        "id" : "28"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "31"
+      }, {
+        "id" : "32"
+      }, {
+        "id" : "33"
+      }, {
+        "id" : "34"
+      }, {
+        "id" : "35"
+      } ]
+    } ],
+    "configuration" : {
+      "styles" : { },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "fbq-containers",
+      "name" : "Container View: FileBrowser Quantum",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "15"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "17"
+      }, {
+        "id" : "18"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "22"
+      }, {
+        "id" : "24"
+      } ],
+      "softwareSystemId" : "6"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "fbq-system-context",
+      "name" : "System Context View: FileBrowser Quantum",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "14"
+      }, {
+        "id" : "19"
+      }, {
+        "id" : "21"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "25"
+      } ],
+      "softwareSystemId" : "6"
+    } ]
+  }
+}

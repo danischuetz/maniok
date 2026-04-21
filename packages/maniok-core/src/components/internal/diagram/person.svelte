@@ -13,7 +13,7 @@
 {/if}
 <div class="flex flex-col items-center body-person">
     <User class="icon-person" />
-    <span class="name-person">{metaData.title}</span>
+    <span class="text-center name-person">{metaData.title}</span>
 </div>
 {#if targetPosition}
     <Handle class="opacity-0" type="target" position={targetPosition} />

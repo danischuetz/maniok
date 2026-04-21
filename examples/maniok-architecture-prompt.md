@@ -340,15 +340,23 @@ If a README exists:
 
 Create more docs for systems, containers, and components where useful.
 
-Attach docs using valid `!docs` statements only.
+## CRITICAL: Attach docs using valid `!docs` statements only.
+
+Docs syntax is:
+
+!docs <relative-path-to-markdown>
+
+Docs related to a specific element (software system, container or component) MUST be attached inside the corresponding element braces.
 
 ## CRITICAL: REQUIRED in every markdown document
 
 Every markdown document must contain at least one embedded view using this Maniok syntax:
 
-    [View Title](embed:<ViewKey>)
+    ![View Title](embed:<ViewKey>)
 
 Every embedded `<ViewKey>` must exist in `workspace.dsl`.
+
+The link must be prefixed with an exclamation mark
 
 ## Validation rules before output
 
