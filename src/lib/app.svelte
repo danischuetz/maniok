@@ -21,15 +21,27 @@
     import { goto } from '$app/navigation'
     import LikeButton from './components/likebutton.svelte'
     import UrlSelector from './components/urlselector.svelte'
-    import { defaultCapabilities, type Capabilities } from './model/capabilities'
+    import { type CapabilitiesModel } from './model/capabilities'
+    import type { Snippet } from 'svelte'
 
     interface Props {
-        capabilities?: Capabilities
+        capabilities?: CapabilitiesModel
         repository?: RepositoryModel
         workspaceJson: string
+        customComponent?: Snippet
     }
 
-    let { capabilities = defaultCapabilities, repository, workspaceJson }: Props = $props()
+    export const defaultCapabilities: CapabilitiesModel = {
+        urlSelection: true,
+        likeButton: true
+    }
+
+    let {
+        capabilities = defaultCapabilities,
+        repository,
+        workspaceJson,
+        customComponent
+    }: Props = $props()
 
     let repositoryUrl: string = $derived.by(() =>
         repository ? RepositoryService.toUrl(repository) : ''
@@ -45,6 +57,9 @@
             <div class="flex flex-col min-w-0">
                 {#if capabilities.urlSelection}
                     <UrlSelector class="m-2 h-8" {repositoryUrl} />
+                {/if}
+                {#if customComponent}
+                    {@render customComponent()}
                 {/if}
                 <DiagramNavigation class="flex flex-col" />
                 <DocumentNavigation />
@@ -66,6 +81,11 @@
             {#if capabilities.urlSelection}
                 <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
             {/if}
+            <div class="hidden lg:block">
+                {#if customComponent}
+                    {@render customComponent()}
+                {/if}
+            </div>
             <div class="flex items-center gap-4">
                 {#if capabilities.likeButton}
                     <LikeButton />

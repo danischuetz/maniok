@@ -4,11 +4,11 @@
     import { onMount } from 'svelte'
 
     import App from '../../lib/app.svelte'
-    import type { Capabilities } from '../../lib/model/capabilities'
+    import type { CapabilitiesModel } from '../../lib/model/capabilities'
 
     let { data }: PageProps = $props()
 
-    const capabilities: Capabilities = {
+    const capabilities: CapabilitiesModel = {
         urlSelection: false,
         likeButton: false
     }

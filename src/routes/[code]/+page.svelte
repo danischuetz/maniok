@@ -1,14 +1,10 @@
-<script lang="ts">
+<CapabilitiesModel"ts">
     import type { PageProps } from './$types'
 
     import App from '../../lib/app.svelte'
     import type { Capabilities } from '../../lib/model/capabilities'
 
-    let { data }: PageProps = $props()
-
-    const capabilities: Capabilities = {
-        urlSelection: true,
-        likeButton: true
+    let { data }: PCapabilitiesModel      likeButton: true
     }
 </script>
 

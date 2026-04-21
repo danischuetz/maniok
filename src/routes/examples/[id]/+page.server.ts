@@ -2,8 +2,7 @@ import type { PageServerLoad } from './$types'
 import { error } from '@sveltejs/kit'
 import { promises as fs } from 'fs'
 import { env } from '$env/dynamic/private'
-
-const workspacePath = env.WORKSPACE_PATH ?? '.maniok'
+import path from 'path'
 
 async function loadFromLocalFile(filePath: string): Promise<string> {
     try {
@@ -19,9 +18,10 @@ async function loadFromLocalFile(filePath: string): Promise<string> {
     }
 }
 
-export const load: PageServerLoad = async ({ depends }) => {
-    depends('workspace:reload')
-    const workspaceJson = await loadFromLocalFile(`${workspacePath}/workspace.json`)
+export const load: PageServerLoad = async ({ params }) => {
+    const exampleId: string = params.id
+    const examplePath: string = path.join('examples', 'generated', exampleId, 'workspace.json')
+    const workspaceJson = await loadFromLocalFile(examplePath)
     return {
         repository: null,
         workspaceJson

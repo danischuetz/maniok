@@ -1,9 +1,4 @@
-export type Capabilities = {
+export type CapabilitiesModel = {
     urlSelection: boolean
     likeButton: boolean
-}
-
-export const defaultCapabilities: Capabilities = {
-    urlSelection: true,
-    likeButton: true
 }
