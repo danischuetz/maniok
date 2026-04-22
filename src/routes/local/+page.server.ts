@@ -15,7 +15,7 @@ async function loadFromLocalFile(filePath: string): Promise<string> {
                 `Workspace file not found at "${filePath}". Set the WORKSPACE_PATH environment variable to the correct path.`
             )
         }
-        throw e
+        throw error(500, `Error loading workspace file at "${filePath}": ${(e as Error).message}`)
     }
 }
 

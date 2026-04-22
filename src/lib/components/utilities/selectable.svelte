@@ -19,7 +19,7 @@
     </Popover.Trigger>
     <Portal>
         <Popover.Positioner>
-            <Popover.Content class="selectable-popup flex flex-col items-start z-100">
+            <Popover.Content class="selectable-popup flex flex-col items-start z-40">
                 <Popover.Context>
                     {#snippet children(popover)}
                         {#each selectables as selectable (selectable.id)}

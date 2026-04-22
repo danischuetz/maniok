@@ -14,7 +14,7 @@
     <Portal>
         <Popover.Positioner>
             <Popover.Content
-                class="selectable-popup max-w-[calc(100vw-1rem)] max-h-[calc(100dvh-5rem)] overflow-x-hidden overflow-y-auto p-4 flex flex-col items-start gap-4 z-100"
+                class="selectable-popup max-w-[calc(100vw-1rem)] max-h-[calc(100dvh-5rem)] overflow-x-hidden overflow-y-auto p-4 flex flex-col items-start gap-4 z-41"
             >
                 <span class="max-w-xs">
                     The documentation for this repository was AI-generated using the

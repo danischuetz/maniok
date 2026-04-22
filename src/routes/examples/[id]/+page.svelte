@@ -8,7 +8,7 @@
     import Selectable from '../../../lib/components/utilities/selectable.svelte'
     import type { SelectableModel } from '../../../lib/model/selectable'
     import { goto } from '$app/navigation'
-    import Exampledisclaimer from '../../../lib/components/modal/exampledisclaimer.svelte'
+    import ExampleDisclaimer from '../../../lib/components/modal/exampledisclaimer.svelte'
 
     let { data, params }: PageProps = $props()
 
@@ -45,14 +45,14 @@
     })
 
     onMount(() => {
-        NotificationService.notifyInfo(
+        NotificationService.notifySuccess(
             'This example was AI-generated from a public GitHub repository using the Maniok architecture documentation prompt!'
         )
     })
 
     $effect(() => {
-        if (selected) {
-            goto(`/examples/${selected.id}`)
+        if (selected && selected.id !== params.id) {
+            goto(`/examples/${selected.id}`, { replaceState: true })
         }
     })
 </script>
@@ -63,7 +63,7 @@
         <Selectable {selectables} bind:selected />
 
         <div class="flex gap-2">
-            <Exampledisclaimer repository={selected.value} />
+            <ExampleDisclaimer repository={selected.value} />
             <button onclick={() => goto(`/`)} class="btn preset-filled-primary-500"
                 >Get Started!</button
             >

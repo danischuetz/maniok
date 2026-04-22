@@ -15,12 +15,12 @@
 
     onMount(() => {
         const interval = setInterval(async () => {
-            const res = await fetch('/local/workspacechanged')
+            const res = await fetch('/local/workspacechanged', { cache: 'no-store' })
             const { hasChanged } = await res.json()
             if (hasChanged) {
                 await invalidate('workspace:reload')
             }
-        }, 200)
+        }, 500)
 
         return () => clearInterval(interval)
     })
