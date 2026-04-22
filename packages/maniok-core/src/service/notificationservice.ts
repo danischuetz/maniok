@@ -14,8 +14,14 @@ export class NotificationService {
 
     static notifySuccess(message: string): void {
         toaster.success({
+            title: message
+        })
+    }
+
+    static notifyInfo(message: string): void {
+        toaster.info({
             title: message,
-            duration: 10000
+            duration: 3000
         })
     }
 }

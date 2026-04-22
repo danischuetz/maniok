@@ -37,3 +37,8 @@
 .selectable-item {
     @apply px-4 py-2 active:bg-surface-200-800 text-surface-900-100 self-stretch text-left hover:bg-surface-200/50;
 }
+
+/* Toaster */
+[data-scope="toast"][data-part="root"][data-type="info"] {
+    @apply border-surface-500 bg-surface-50 dark:bg-surface-800 text-surface-950-50 font-normal;
+}

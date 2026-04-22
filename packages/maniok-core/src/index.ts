@@ -5,6 +5,7 @@ export type { RelationshipModel } from './model/diagram/relationship'
 export type { DocumentNodeModel } from './model/documentation/documentnode'
 export type { DocumentContentModel } from './model/documentation/documentcontent'
 export type { RepositoryModel } from './model/repository/repository'
+export type { NavigationContextModel } from './model/navigation/navigationcontext'
 export type * from './model/szr/szrworkspace'
 
 export { ElementTypeEnum } from './model/shared/elementtype'

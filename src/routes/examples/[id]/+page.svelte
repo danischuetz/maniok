@@ -19,7 +19,7 @@
     }
 
     onMount(() => {
-        NotificationService.notifySuccess(
+        NotificationService.notifyInfo(
             'This example was AI-generated from a public GitHub repository using the Maniok architecture documentation prompt!'
         )
     })

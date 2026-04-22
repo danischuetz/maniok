@@ -74,6 +74,14 @@
     let { children }: LayoutProps = $props()
 </script>
 
-{@render children()}
+<div class="flex min-h-screen flex-col">
+    <div class="flex-1">
+        {@render children()}
+    </div>
+
+    <footer class="flex justify-center px-4 py-1">
+        <a class="a underline" href="/privacy">Privacy Policy</a>
+    </footer>
+</div>
 
 <Toaster toaster={NotificationService.getToasterInstance()} />
