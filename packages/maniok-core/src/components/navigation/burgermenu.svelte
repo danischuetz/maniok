@@ -24,7 +24,7 @@
     <Portal>
         <Popover.Positioner>
             <Popover.Content
-                class="card z-50 max-w-[calc(100vw-1rem)] max-h-[calc(100dvh-5rem)] overflow-x-hidden overflow-y-auto rounded-md"
+                class="card z-40 max-w-[calc(100vw-1rem)] max-h-[calc(100dvh-5rem)] overflow-x-hidden overflow-y-auto rounded-md"
                 style="width: max-content;"
             >
                 {@render children()}

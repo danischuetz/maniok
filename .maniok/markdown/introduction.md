@@ -6,22 +6,22 @@ The git-native solution for [C4](https://c4model.com/) architecture documentatio
 - Document alongside code - documentation lives in your GitHub repositories
 - Share the documentation using a simple link, generated from your repository url
 
-_For documentation to be discovered by the Maniok webapp, it must be placed in a dedicated folder `.maniok` at the root of each documented Github repository._
-
 ![Maniok Container View](embed:CoreContainerView)
 
-## Disclaimer
+# Quick Start
 
-This is a very early proof of concept based on an ODI (Outcome Driven Innovation) resarch of current pain points in documenting software architecture. It does work on **public repositories only**. See [Limitations and known issues](#limitations-and-known-issues) for further information.
+1. Run the [Maniok Architecture Prompt](https://github.com/danischuetz/maniok/blob/main/examples/maniok-architecture-prompt.md) in your repository to generate a C4 model from your codebase
+    - Or create a [Structurizr](https://docs.structurizr.com/dsl) workspace yourself and put it in a `.maniok` folder at the root of your repository (**the workspace must be named workspace.dsl**)
+2. Pull & run the Maniok-Preview Docker image, replacing `PATH` with the path to the created .maniok folder
+    ```
+    docker pull ghcr.io/danischuetz/maniok/maniok-preview:latest
+    docker tag ghcr.io/danischuetz/maniok/maniok-preview maniok-preview
+    docker run -t --rm -p 8080:8080 -v PATH:/usr/workspace maniok-preview:latest
+    ```
+3. Open the URL http://localhost:8080 in your browser and start editing. Maniok-Preview automatically exports your workspace and supports hot-reload! 🚀
+4. Optional: Publish the changes, view and share the documentation via [https://app.maniok.io](https://app.maniok.io) (public repositories only atm)
 
-## Contact
-
-Any feedback is highly appreciated. Get in touch through:
-
-- E-Mail: <daniel@danielschuetz.dev>
-- LinkedIn: <https://www.linkedin.com/in/schuetzdaniel>
-
-## Features
+# Features
 
 - Minimal setup
 - Minimal effort to maintain the documentation
@@ -34,7 +34,17 @@ Any feedback is highly appreciated. Get in touch through:
 - Best-in-class diagrams auto-generated from your architecture
 - Embed interactive diagrams in written documentation
 
-## Limitations and known issues
+# Community
+
+Join us on GitHub to start a discussion, ask a question, or suggest a feature: <https://github.com/danischuetz/maniok/discussions>!
+
+## Contact
+
+- GitHub: <https://github.com/danischuetz/maniok>
+- LinkedIn: <https://www.linkedin.com/in/schuetzdaniel>
+- E-Mail: <daniel@danielschuetz.dev>
+
+# Limitations and known issues
 
 This is a very first proof of concept to validate the concept and to collect feedback.
 
@@ -49,41 +59,3 @@ This is a very first proof of concept to validate the concept and to collect fee
         - Switching to chapter in other document node doesn't scroll to correct chapter
 - Editing with auto-export has to be set up manually, see chapter [Editing](#editing) (It is planned to either provide a docker image or a VSCode extension for export/preview)
 - Branch currently fixed to "HEAD"
-
-# Quick Start
-
-- In a public repository, create a folder called ".maniok"
-- As a starting point, download the [maniok documentation](https://github.com/danischuetz/maniok/blob/main/examples/maniokdocs.zip) (which is the documentation you are currently reading)
-- Extract it to the .maniok folder
-- Commit the changes
-- View the documentation at [https://app.maniok.io](https://app.maniok.io), typing your repository url
-- Set up for [editing](#editing)
-
-## Editing
-
-The architecture is described in a workspace.dsl file as described in the [Structurizr DSL documentation](https://docs.structurizr.com/dsl). Markdown can be added anywhere alongside the workspace.dsl file and must be referenced in the workspace.dsl to be associated with the workspace or a specific software element.
-
-In order for the documentation to be rendered it needs to be exported to a workspace.json file inside the `.maniok` directory.
-
-To automatically do that on save of any documentation file in VSCode, install the `emeraldwalk run-on-save` extension and configure it to run the structurizr-cli export command:
-
-1. Install the structurizr-cli (e.g. using brew)
-2. Install the VSCode run on save extension from `emeraldwalk`
-3. Configure it accordingly ([example](https://github.com/danischuetz/maniok/blob/main/.vscode/settings.json))
-
-Now, the workspace.json should be generated on save (see terminal output for `Run On Save` to catch any errors)
-
-_That's a temporary workaround for the POC, this will be simplified ultimately through an own VSCode extension and/or docker image supporting auto-save and preview_
-
-## Live Preview
-
-For live preview, you can clone [https://github.com/danischuetz/maniok](https://github.com/danischuetz/maniok) locally and rename the .env.example file to .env and have the workspace path within the file point to your workspace.json.
-
-Install the package and start a dev server:
-
-```
-$ npm i
-$ npm run dev
-```
-
-The documentation should be available at <http://localhost:5173> **using `'local'` as the repository url**.

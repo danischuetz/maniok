@@ -108,7 +108,7 @@
 <div bind:this={containerElement} class="relative diagram-viewport w-full flex-col {className}">
     <button
         type="button"
-        class="btn-icon-diagram absolute right-1 top-1 z-50"
+        class="btn-icon-diagram absolute right-1 top-1 z-30"
         onclick={toggleFocus}
         aria-pressed={isFocussed}
     >

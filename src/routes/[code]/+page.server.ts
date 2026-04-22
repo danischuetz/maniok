@@ -2,7 +2,7 @@ import type { PageServerLoad } from './$types'
 import { error } from '@sveltejs/kit'
 import { RepositoryService, type RepositoryModel } from 'maniok-core'
 
-export const load: PageServerLoad = async ({ params, depends }) => {
+export const load: PageServerLoad = async ({ params }) => {
     const repository: RepositoryModel | null = RepositoryService.decode(params.code)
     if (!repository) {
         const errorMessage =
