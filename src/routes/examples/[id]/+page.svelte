@@ -34,8 +34,7 @@
         const repository: RepositoryModel | null = await RepositoryService.deriveFromUrl(
             'https://github.com/danischuetz/maniok'
         )
-        const encoded: string = RepositoryService.encode(repository!)
-        goto(`/${encoded}`)
+        goto(`/${repository?.provider}/${repository?.org}/${repository?.name}`)
     }
 </script>
 
