@@ -4,8 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to run workflow on'
+        description: 'Tag to run workflow on (required for production)'
+        required: false
+      environment:
+        description: 'Environment to deploy to [staging, production]'
         required: true
+        type: choice
+        options:
+          - staging
+          - production
 
 jobs:
   build-and-push:
