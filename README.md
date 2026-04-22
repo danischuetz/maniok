@@ -12,22 +12,28 @@ Maniok is strcutured as a SvelteKit webapp built around a Node + Svelte core pac
 
 Have a look at the [public project](https://github.com/users/danischuetz/projects/3) for an overview on features planned and in progress.
 
-## How to use it
+## Getting Started
 
-Write [Structurizr](https://docs.structurizr.com/dsl) documentation and put it in a `.maniok` folder at the root of your repository for it to be accessible through the [Maniok webapp](https://app.maniok.io).
-
-<span style="color: orange; font-style: italic;">Note: The webapp only works on public GitHub repositories currently. To test Maniok on private repositories you can run maniok on a local workspace following the editing instructions from the [docs](https://app.maniok.io/Z2l0aHViOmRhbmlzY2h1ZXR6L21hbmlvaw).</span>
+1. Run the [Maniok Architecture Prompt](https://github.com/danischuetz/maniok/blob/main/examples/maniok-architecture-prompt.md) in your repository to generate a C4 model from your codebase
+    - Or create a [Structurizr](https://docs.structurizr.com/dsl) workspace yourself and put it in a `.maniok` folder at the root of your repository (**the workspace must be named workspace.dsl**)
+2. Pull & run the Maniok-Preview Docker image, replacing `PATH` with the path to the created .maniok folder
+    ```
+    docker pull ghcr.io/danischuetz/maniok/maniok-preview:latest
+    docker tag ghcr.io/danischuetz/maniok/maniok-preview maniok-preview
+    docker run -t --rm -p 8080:8080 -v PATH:/usr/workspace maniok-preview:latest
+    ```
+3. Open the URL http://localhost:8080 in your browser and start editing. Maniok-Preview automatically exports your workspace and supports hot-reload! 🚀
+4. Optional: Publish the changes, view and share the documentation via [https://app.maniok.io](https://app.maniok.io) (public repositories only atm)
 
 ## Current State & Restrictions
 
-The project is at a very early stage (Proof-of-concept) and has a limited feature set. That is about to change (see [MVP](#mvp---v100)) but currently:
+The project is at a very early stage (Proof-of-concept) and has a limited feature set. That is about to change but currently:
 
 - It does currently work on **open source repositories only**
 - Diagram layout doesn't work well in all cases and for uni-directional flows only
-- Editing with auto-export has to be set up manually, see chapter [Editing](#editing) (It is planned to either provide a docker image or a VSCode extension for export/preview)
-- Branch currently fixed to "HEAD"
+- On [https://app.maniok.io](https://app.maniok.io), the branch on viewed repositories is currently fixed to "HEAD"
 
-# MVP - v1.0.0
+# MVP
 
 Work on that milestone is in progress, [have a look](https://github.com/users/danischuetz/projects/3/views/2).
 
@@ -105,7 +111,7 @@ To run Maniok on a local workspace in the filesystem, use 'local' as the reposit
 
 As we are just getting started with this community, most welcome contributions would be to create and participate in discussions around how to collaborate, new features and the current roadmap.
 
-This will soon be extended, once first bug reports are coming in. Then we need to add:
+This will soon be extended, once first bug reports and feature requests are coming in. Then we need to add:
 
 - Bug Issue Template
 - PR Template

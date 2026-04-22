@@ -52,7 +52,7 @@
     }
 
     function onExampleClick() {
-        goto('/examples/paperless-ngx')
+        goto('/examples/bitcoin')
     }
 </script>
 
@@ -104,6 +104,13 @@
                 <li>
                     Open the URL http://localhost:8080 in your browser and start editing.
                     Maniok-Preview automatically exports your workspace and supports hot-reload! 🚀
+                </li>
+                <li>
+                    Optional: Publish the changes and view/share the documentation through <a
+                        class="a underline"
+                        href="https://app.maniok.io">https://app.maniok.io</a
+                    >
+                    (public repositories only atm)
                 </li>
             </ol>
         </div>

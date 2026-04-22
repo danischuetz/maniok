@@ -1,0 +1,440 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : {
+    "sections" : [ {
+      "content" : "# Bitcoin Core Overview\n\n![Containers](embed:bitcoin-core-containers)\n\nThis repository is the Bitcoin Core source tree. According to the root README, it builds software that connects to the Bitcoin peer-to-peer network, downloads and fully validates blocks and transactions, and optionally includes wallet and graphical user interface support.\n\n## Purpose\n\nBitcoin Core is the reference full node implementation for the Bitcoin network in this repository. It is responsible for consensus validation, peer-to-peer networking, local chainstate and mempool management, RPC and REST access, optional wallet support, and operator-facing desktop and command-line tools.\n\n## Main Runtime and Build-Time Parts\n\nThe top-level CMake build defines real executable entry points for the headless node (`bitcoind`), command-line RPC client (`bitcoin-cli`), raw transaction editor (`bitcoin-tx`), desktop GUI (`bitcoin-qt`), wrapper executable (`bitcoin`), and optional wallet and multiprocess binaries (`bitcoin-wallet`, `bitcoin-node`, `bitcoin-gui`).\n\nUnder those executables, the build composes several shared libraries and subprojects:\n\n- `bitcoin_common` for shared configuration, chain parameter, script, signing, and RPC support code.\n- `bitcoin_node` for node runtime behavior such as P2P networking, validation, RPC server, REST, indexes, and startup.\n- `bitcoin_wallet` for optional wallet storage, RPC methods, SQLite-backed persistence, and spending logic.\n- `bitcoin_ipc` plus `src/ipc` when multiprocess support is enabled.\n- Vendored or subtree-managed dependencies including `secp256k1`, `leveldb`, `minisketch`, `univalue`, and `crc32c`.\n\n## Important Integrations\n\n- The node exchanges blocks, transactions, addresses, and peer messages with the wider Bitcoin network.\n- Operators and automation call the node through JSON-RPC, primarily using `bitcoin-cli`.\n- When configured with `-signer=<cmd>`, the node can delegate signing-related operations to an external signer or hardware-wallet integration.\n- Optional multiprocess builds add IPC-capable binaries (`bitcoin-node`, `bitcoin-gui`) backed by the `src/ipc` code and the multiprocess documentation in `doc/multiprocess.md`.\n\n## Testing and Verification Surfaces\n\nThe repository separates unit tests in `src/test` from higher-level integration surfaces in `test`. The root README points to `ctest` for unit tests, while `test/functional/test_runner.py` drives functional and regression scenarios against the built binaries.\n\n## Where To Go Deeper\n\n- `README.md` for project scope and operator-facing summary.\n- `src/CMakeLists.txt` for executable and library boundaries.\n- `doc/multiprocess.md` and `doc/design/multiprocess.md` for IPC and multiprocess design notes.\n- `doc/JSON-RPC-interface.md` for RPC behavior.\n- `src/test/README.md` and `test/README.md` for test layers.\n",
+      "format" : "Markdown",
+      "order" : 1,
+      "title" : ""
+    } ]
+  },
+  "id" : 0,
+  "model" : {
+    "people" : [ {
+      "id" : "1",
+      "name" : "Node Operator",
+      "properties" : {
+        "structurizr.dsl.identifier" : "operator"
+      },
+      "relationships" : [ {
+        "description" : "Runs top-level commands",
+        "destinationId" : "5",
+        "id" : "14",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Uses for direct RPC calls",
+        "destinationId" : "10",
+        "id" : "15",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Uses for desktop wallet and node monitoring",
+        "destinationId" : "11",
+        "id" : "16",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Uses for offline wallet maintenance",
+        "destinationId" : "12",
+        "id" : "17",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "Peer-to-peer network of other Bitcoin nodes.",
+      "documentation" : { },
+      "id" : "2",
+      "name" : "Bitcoin Network",
+      "properties" : {
+        "structurizr.dsl.identifier" : "bitcoin_network"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "description" : "Optional signer command or hardware-wallet integration used for external signing flows.",
+      "documentation" : { },
+      "id" : "3",
+      "name" : "External Signer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "external_signer"
+      },
+      "tags" : "Element,Software System"
+    }, {
+      "containers" : [ {
+        "description" : "Routes high-level commands to the appropriate executable, and selects monolithic or multiprocess binaries when requested.",
+        "documentation" : { },
+        "id" : "5",
+        "name" : "bitcoin Wrapper",
+        "properties" : {
+          "structurizr.dsl.identifier" : "wrapper"
+        },
+        "relationships" : [ {
+          "description" : "Uses for offline transaction construction",
+          "destinationId" : "13",
+          "id" : "18",
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Launches node commands",
+          "destinationId" : "6",
+          "id" : "19",
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Launches gui commands",
+          "destinationId" : "11",
+          "id" : "20",
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Launches rpc commands",
+          "destinationId" : "10",
+          "id" : "21",
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Launches wallet commands",
+          "destinationId" : "12",
+          "id" : "22",
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Launches tx commands",
+          "destinationId" : "13",
+          "id" : "23",
+          "sourceId" : "5",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "C++20 executable"
+      }, {
+        "components" : [ {
+          "description" : "Manages peer connections, address management, transport, and message relay.",
+          "documentation" : { },
+          "id" : "7",
+          "name" : "P2P Networking",
+          "properties" : {
+            "structurizr.dsl.identifier" : "p2p"
+          },
+          "relationships" : [ {
+            "description" : "Exchanges blocks, transactions, addresses, and peer messages",
+            "destinationId" : "2",
+            "id" : "27",
+            "sourceId" : "7",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Submits peer data for validation and relay decisions",
+            "destinationId" : "8",
+            "id" : "28",
+            "sourceId" : "7",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "C++"
+        }, {
+          "description" : "Performs consensus and policy checks and maintains chainstate, mempool, and indexes.",
+          "documentation" : { },
+          "id" : "8",
+          "name" : "Validation and Chainstate",
+          "properties" : {
+            "structurizr.dsl.identifier" : "validation"
+          },
+          "relationships" : [ {
+            "description" : "Announces accepted blocks and transactions",
+            "destinationId" : "7",
+            "id" : "29",
+            "sourceId" : "8",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "C++"
+        }, {
+          "description" : "Exposes HTTP RPC and REST endpoints for administration, blockchain queries, mining, wallet operations, and transaction submission.",
+          "documentation" : { },
+          "id" : "9",
+          "name" : "RPC and REST Services",
+          "properties" : {
+            "structurizr.dsl.identifier" : "rpc_services"
+          },
+          "relationships" : [ {
+            "description" : "Queries node state and submits actions",
+            "destinationId" : "8",
+            "id" : "30",
+            "sourceId" : "9",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Invokes the configured signer command when needed",
+            "destinationId" : "3",
+            "id" : "32",
+            "sourceId" : "9",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "C++"
+        } ],
+        "description" : "Validates blocks and transactions, maintains chainstate and mempool, participates in the Bitcoin P2P network, and serves RPC, REST, and optional ZMQ interfaces.",
+        "documentation" : {
+          "sections" : [ {
+            "content" : "# Node Service\n\n![Node Components](embed:bitcoin-core-node-components)\n\nThe node service is the main runtime boundary in the repository. In build terms, `src/CMakeLists.txt` assembles the `bitcoin_node` library from the networking, validation, storage, startup, index, RPC, REST, and policy sources, then links that library into `bitcoind` and, when IPC is enabled, into `bitcoin-node`.\n\n## Component Mapping\n\n### P2P Networking\n\nThis part is evidenced by files such as `net.cpp`, `net_processing.cpp`, `addrman.cpp`, `banman.cpp`, `headerssync.cpp`, `i2p.cpp`, `mapport.cpp`, and related `node` helpers. It owns peer connections, transport state, peer discovery, address handling, and message relay.\n\n### Validation and Chainstate\n\nThis part is evidenced by `validation.cpp`, `txdb.cpp`, `txmempool.cpp`, `versionbits.cpp`, the `index/` sources, and the `node/chainstate.cpp` and `kernel/` sources included in the node target. It is responsible for consensus and policy checks, mempool acceptance, UTXO and block index persistence, and higher-level node state transitions.\n\n### RPC and REST Services\n\nThis part is evidenced by `httprpc.cpp`, `httpserver.cpp`, `rest.cpp`, and the `rpc/` directory sources added to `bitcoin_node`. It exposes administrative and data access surfaces for blockchain, mempool, mining, transaction, networking, and optional wallet operations.\n\n## Adjacent Concerns\n\n- Optional wallet features are linked into the node when `bitcoin_wallet` is available.\n- Optional ZMQ notifications are added through `src/zmq` when `WITH_ZMQ` is enabled.\n- External signing is supported through the signer command interface documented in `doc/external-signer.md`.\n- The multiprocess build adds IPC support from `src/ipc`, but the current codebase still shares most node behavior through the same `bitcoin_node` library.\n",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "6",
+        "name" : "Node Service (bitcoind / bitcoin-node)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "node_service"
+        },
+        "relationships" : [ {
+          "description" : "Exchanges blocks, transactions, addresses, and peer messages",
+          "destinationId" : "2",
+          "id" : "25",
+          "sourceId" : "6",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Invokes signer command for external signing flows",
+          "destinationId" : "3",
+          "id" : "26",
+          "sourceId" : "6",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "C++20 executable"
+      }, {
+        "description" : "Command-line client for JSON-RPC requests to a running node, with IPC-aware startup options.",
+        "documentation" : { },
+        "id" : "10",
+        "name" : "RPC Client (bitcoin-cli)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "cli"
+        },
+        "relationships" : [ {
+          "description" : "Calls JSON-RPC",
+          "destinationId" : "6",
+          "id" : "24",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Sends RPC requests",
+          "destinationId" : "9",
+          "id" : "31",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "C++20 executable"
+      }, {
+        "description" : "Qt desktop application for wallet and node operations. The IPC-enabled build adds bitcoin-gui alongside bitcoin-qt.",
+        "documentation" : { },
+        "id" : "11",
+        "name" : "Desktop GUI (bitcoin-qt / bitcoin-gui)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "gui"
+        },
+        "tags" : "Element,Container",
+        "technology" : "Qt 6 and C++20 executable"
+      }, {
+        "description" : "Offline utility for creating, inspecting, dumping, and restoring wallet files.",
+        "documentation" : { },
+        "id" : "12",
+        "name" : "Wallet Tool (bitcoin-wallet)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "wallet_tool"
+        },
+        "tags" : "Element,Container",
+        "technology" : "C++20 executable"
+      }, {
+        "description" : "Offline utility for creating and modifying raw transactions.",
+        "documentation" : { },
+        "id" : "13",
+        "name" : "Transaction Tool (bitcoin-tx)",
+        "properties" : {
+          "structurizr.dsl.identifier" : "tx_tool"
+        },
+        "tags" : "Element,Container",
+        "technology" : "C++20 executable"
+      } ],
+      "description" : "Reference Bitcoin full node, wallet, GUI, and operator tooling built from this repository.",
+      "documentation" : {
+        "sections" : [ {
+          "content" : "# Bitcoin Core System\n\n![Containers](embed:bitcoin-core-containers)\n\nThe repository models cleanly as one software system with multiple operator-facing executables built from a common CMake workspace. The build is centered on the top-level `CMakeLists.txt` and `src/CMakeLists.txt`, where options such as `BUILD_DAEMON`, `BUILD_CLI`, `BUILD_GUI`, `ENABLE_WALLET`, `ENABLE_IPC`, `WITH_ZMQ`, and `BUILD_TESTS` decide which binaries and supporting libraries are present.\n\n## Primary Executable Boundaries\n\n- `bitcoind` is the main headless node executable and links the `bitcoin_node` library plus the optional wallet library.\n- `bitcoin-node` is the IPC-enabled node executable built when multiprocess support is enabled.\n- `bitcoin-cli` is a separate RPC client executable.\n- `bitcoin-qt` is the Qt desktop application, and `bitcoin-gui` is the IPC-enabled variant built when IPC is enabled.\n- `bitcoin-wallet` and `bitcoin-tx` are offline operator tools for wallet-file maintenance and raw transaction manipulation.\n- `bitcoin` is a wrapper executable that dispatches to the other binaries and can choose monolithic or multiprocess variants.\n\n## Architectural Shape\n\nMost runtime behavior is implemented in reusable libraries rather than directly in the executable entry points. This keeps the executable main files small and shifts the architectural weight into shared code such as `bitcoin_node`, `bitcoin_common`, `bitcoin_wallet`, and the optional IPC support.\n\nThat split is the key service boundary in this repository: operator-facing binaries are thin entry points, while the node, wallet, and IPC concerns live in reusable modules under `src`.\n\n## Notes On Optionality\n\nNot every container is built in every configuration. GUI, wallet, IPC, ZMQ, benchmarking, fuzzing, and kernel-oriented utilities are all controlled through CMake options. The model therefore documents the supported runtime shape of the repository, not a single mandatory build preset.\n",
+          "format" : "Markdown",
+          "order" : 1,
+          "title" : ""
+        } ]
+      },
+      "id" : "4",
+      "name" : "Bitcoin Core",
+      "properties" : {
+        "structurizr.dsl.identifier" : "bitcoin_core"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.inspection.error" : "23",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "containerId" : "6",
+      "elements" : [ {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "bitcoin-core-node-components",
+      "name" : "Component View: Bitcoin Core - Node Service (bitcoind / bitcoin-node)",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "27"
+      }, {
+        "id" : "28"
+      }, {
+        "id" : "29"
+      }, {
+        "id" : "30"
+      }, {
+        "id" : "31"
+      }, {
+        "id" : "32"
+      } ]
+    } ],
+    "configuration" : {
+      "styles" : { },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "13",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "bitcoin-core-containers",
+      "name" : "Container View: Bitcoin Core",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "14"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "17"
+      }, {
+        "id" : "18"
+      }, {
+        "id" : "19"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "21"
+      }, {
+        "id" : "22"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "24"
+      }, {
+        "id" : "25"
+      }, {
+        "id" : "26"
+      } ],
+      "softwareSystemId" : "4"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "bitcoin-core-system-context",
+      "name" : "System Context View: Bitcoin Core",
+      "order" : 1,
+      "softwareSystemId" : "4"
+    } ]
+  }
+}

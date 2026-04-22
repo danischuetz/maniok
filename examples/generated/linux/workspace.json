@@ -1,0 +1,322 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : {
+    "sections" : [ {
+      "content" : "# Linux Kernel Repository Overview\n\n![Repository Container View](embed:linux-kernel-containers)\n\nThis repository is the Linux kernel source tree. It contains the code, configuration model, documentation, and build rules needed to produce a bootable Linux kernel, optional loadable modules, and a set of companion userspace tools and self-tests.\n\nIts primary purpose is to define and build the operating system kernel that manages hardware, memory, processes, filesystems, networking, and security services for Linux systems. The repository also includes subsystem documentation, maintainer metadata, and developer tooling that support ongoing kernel development.\n\nThe main runtime and build-time parts visible in the repository are:\n\n- The build and configuration system rooted in the top-level `Makefile`, `Kbuild`, `Kconfig`, and `scripts/`.\n- The bootable kernel image assembled from architecture-specific code and core subsystems such as `init/`, `kernel/`, `mm/`, `fs/`, `net/`, `block/`, `security/`, and `crypto/`.\n- Loadable kernel modules, primarily sourced from `drivers/` and selected subsystems.\n- Userspace tools and self-tests under `tools/`, including `perf`, tracing tools, selftests, and boot configuration helpers.\n\nImportant integrations evidenced in the repository include userspace programs invoking kernel services, developers configuring and building the tree, and the build system producing the kernel image, modules, and tools from shared configuration data.\n\nDeeper documentation is available in the system-level description and the container-specific pages for the build system and kernel image.\n",
+      "format" : "Markdown",
+      "order" : 1,
+      "title" : ""
+    } ]
+  },
+  "id" : 0,
+  "model" : {
+    "people" : [ {
+      "description" : "Configures, builds, tests, and extends the kernel.",
+      "id" : "1",
+      "name" : "Kernel Developer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "developer"
+      },
+      "relationships" : [ {
+        "description" : "Configures, builds, tests, and extends",
+        "destinationId" : "3",
+        "id" : "11",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Runs",
+        "destinationId" : "4",
+        "id" : "13",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "description" : "Programs and services that consume Linux kernel system calls and device interfaces.",
+      "documentation" : { },
+      "id" : "2",
+      "name" : "Userspace Programs",
+      "properties" : {
+        "structurizr.dsl.identifier" : "userspace"
+      },
+      "relationships" : [ {
+        "description" : "Uses kernel services via system calls and device interfaces",
+        "destinationId" : "3",
+        "id" : "12",
+        "sourceId" : "2",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Invokes",
+        "destinationId" : "8",
+        "id" : "17",
+        "sourceId" : "2",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Software System"
+    }, {
+      "containers" : [ {
+        "components" : [ {
+          "description" : "Collects configuration options and dependencies from the top-level Kconfig and subsystem Kconfig files.",
+          "documentation" : { },
+          "id" : "5",
+          "name" : "Kconfig Definitions",
+          "properties" : {
+            "structurizr.dsl.identifier" : "kconfigDefs"
+          },
+          "relationships" : [ {
+            "description" : "Supplies configuration symbols",
+            "destinationId" : "6",
+            "id" : "18",
+            "sourceId" : "5",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Kconfig"
+        }, {
+          "description" : "Recursively descends into subsystem directories and assembles the configured build outputs.",
+          "documentation" : { },
+          "id" : "6",
+          "name" : "Kbuild Rules",
+          "properties" : {
+            "structurizr.dsl.identifier" : "kbuildRules"
+          },
+          "tags" : "Element,Component",
+          "technology" : "GNU Make"
+        }, {
+          "description" : "Generate headers, check dependencies, and support build orchestration from scripts/.",
+          "documentation" : { },
+          "id" : "7",
+          "name" : "Build Scripts",
+          "properties" : {
+            "structurizr.dsl.identifier" : "buildScripts"
+          },
+          "relationships" : [ {
+            "description" : "Supports generation and dependency tracking",
+            "destinationId" : "6",
+            "id" : "19",
+            "sourceId" : "7",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "Shell scripts and Make include files"
+        } ],
+        "description" : "Uses the top-level Makefile, Kbuild, Kconfig, and scripts to configure and compile the kernel, modules, and shipped tools.",
+        "documentation" : {
+          "sections" : [ {
+            "content" : "# Build and Configuration System\n\n![Build Components](embed:linux-build-components)\n\nThe build and configuration system is the clearest internally structured container in this repository.\n\nIts responsibilities are to select configuration options, derive generated headers and dependency metadata, and recursively descend into subsystem directories to assemble the requested outputs.\n\nThe main internal parts are:\n\n- Kconfig definitions, starting at the top-level `Kconfig` and continuing through subsystem-specific `Kconfig` files.\n- Kbuild rules, rooted in the top-level `Makefile` and `Kbuild`, which determine preparation steps and directory descent.\n- Build scripts under `scripts/`, which provide generated-file helpers, dependency tracking, and supporting build logic.\n\nThis container produces three artifact families visible in the repository: the kernel image, loadable modules, and tools under `tools/`.\n",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "4",
+        "name" : "Build and Configuration System",
+        "properties" : {
+          "structurizr.dsl.identifier" : "buildSystem"
+        },
+        "relationships" : [ {
+          "description" : "Produces",
+          "destinationId" : "8",
+          "id" : "14",
+          "sourceId" : "4",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Builds",
+          "destinationId" : "9",
+          "id" : "15",
+          "sourceId" : "4",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Builds",
+          "destinationId" : "10",
+          "id" : "16",
+          "sourceId" : "4",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "GNU Make, Kconfig, shell scripts"
+      }, {
+        "description" : "Bootable kernel assembled from architecture code and core subsystems such as init, kernel, mm, fs, net, block, security, and crypto.",
+        "documentation" : {
+          "sections" : [ {
+            "content" : "# Kernel Image\n\n![Repository Container View](embed:linux-kernel-containers)\n\nThe kernel image is the bootable runtime artifact assembled by the build system.\n\nRepository evidence for this container includes the startup path in `init/main.c`, architecture-specific code under `arch/`, and the top-level build descent into major core subsystems such as `kernel/`, `mm/`, `fs/`, `security/`, `crypto/`, `block/`, and `net/`.\n\nIts core responsibility is to initialize the system and provide kernel services for process management, memory management, filesystems, networking, device management, security enforcement, and module loading.\n\nLoadable kernel modules extend this container at runtime, while userspace programs interact with it through system calls and device interfaces.\n",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "8",
+        "name" : "Kernel Image",
+        "properties" : {
+          "structurizr.dsl.identifier" : "kernelImage"
+        },
+        "tags" : "Element,Container",
+        "technology" : "C and Rust"
+      }, {
+        "description" : "Optional kernel extensions built from drivers and selected subsystems, including external module builds via KBUILD_EXTMOD.",
+        "documentation" : { },
+        "id" : "9",
+        "name" : "Loadable Kernel Modules",
+        "properties" : {
+          "structurizr.dsl.identifier" : "kernelModules"
+        },
+        "tags" : "Element,Container",
+        "technology" : "C and Rust kernel modules"
+      }, {
+        "description" : "Userspace tooling and selftests built from tools/ for performance analysis, debugging, tracing, boot configuration, and validation.",
+        "documentation" : { },
+        "id" : "10",
+        "name" : "Kernel Tools and Selftests",
+        "properties" : {
+          "structurizr.dsl.identifier" : "kernelTools"
+        },
+        "tags" : "Element,Container",
+        "technology" : "C, Python, shell, GNU Make"
+      } ],
+      "description" : "Linux kernel source tree, its build system, and the runtime artifacts produced from it.",
+      "documentation" : {
+        "sections" : [ {
+          "content" : "# Linux Kernel Repository System\n\n![System Context](embed:linux-kernel-context)\n\nThe repository centers on one software system: the Linux kernel source tree together with the build logic and artifacts it produces.\n\nAt the system boundary, two external actors are directly evidenced by the repository:\n\n- Kernel developers configure, build, test, and extend the kernel.\n- Userspace programs consume kernel services through system calls and kernel-managed interfaces.\n\nInternally, the repository separates concerns between build orchestration, the bootable kernel image, loadable modules, and shipped userspace tools. This separation is visible in the top-level build files and the major source directories referenced by `Kconfig`, `Kbuild`, and the top-level `Makefile`.\n\nUse the container view for the main build/runtime units and the build system component view for the most explicit internal structure.\n",
+          "format" : "Markdown",
+          "order" : 1,
+          "title" : ""
+        } ]
+      },
+      "id" : "3",
+      "name" : "Linux Kernel Repository",
+      "properties" : {
+        "structurizr.dsl.identifier" : "linuxKernel"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.inspection.error" : "11",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "containerId" : "4",
+      "elements" : [ {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "linux-build-components",
+      "name" : "Component View: Linux Kernel Repository - Build and Configuration System",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "18"
+      }, {
+        "id" : "19"
+      } ]
+    } ],
+    "configuration" : {
+      "styles" : { },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "linux-kernel-containers",
+      "name" : "Container View: Linux Kernel Repository",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "13"
+      }, {
+        "id" : "14"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "17"
+      } ],
+      "softwareSystemId" : "3"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "linux-kernel-context",
+      "name" : "System Context View: Linux Kernel Repository",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "11"
+      }, {
+        "id" : "12"
+      } ],
+      "softwareSystemId" : "3"
+    } ]
+  }
+}

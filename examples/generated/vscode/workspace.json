@@ -1,0 +1,380 @@
+{
+  "configuration" : { },
+  "description" : "Description",
+  "documentation" : {
+    "sections" : [ {
+      "content" : "# Code - OSS Overview\n\n![System Context](embed:code-oss-system-context)\n\nThis repository is the open-source development home for Code - OSS, the source base used to build Visual Studio Code. It combines an Electron desktop application, a browser-based workbench, extension runtime infrastructure, remote server support, bundled first-party extensions, and a standalone Rust CLI.\n\nIts primary purpose is to deliver the edit-build-debug experience described in the repository README while keeping the implementation layered. The attached project instructions describe the main source architecture as `base`, `platform`, `editor`, `workbench`, `code`, `server`, and `sessions`, with built-in extensions under `extensions`.\n\nKey responsibilities in this repository:\n\n- Boot the desktop application from Electron entry points in `src/main.ts` and `src/vs/code/electron-main/main.ts`.\n- Assemble the renderer workbench in `src/vs/workbench/workbench.desktop.main.ts` from browser UI, services, and feature contributions.\n- Run extensions in a separate Node.js extension host process from `src/vs/workbench/api/node/extensionHostProcess.ts`.\n- Provide remote and web-serving behavior from `src/server-main.ts` and `src/vs/server/node/server.main.ts`.\n- Ship and build first-party extensions from the `extensions` folder.\n- Offer a standalone Rust CLI from the `cli` folder for launching the editor, serving web, and tunnel-related commands.\n\nMain runtime and build-time parts:\n\n- `src/` contains the product source, including Electron, workbench, extension-host, and server code.\n- `extensions/` contains bundled extensions that are built and later loaded through the extension runtime.\n- `cli/` contains the Rust command-line application.\n- `build/` contains gulp tasks, compilation helpers, packaging logic, and CI-oriented build scripts.\n- `scripts/` contains development launchers such as `scripts/code.sh`.\n- `test/` and `src/vs/*/test/` contain unit and integration test infrastructure.\n\nImportant integrations visible in the repository include Electron for the desktop runtime, Node.js HTTP and WebSocket handling for remote access, built-in extension loading, dev tunnel dependencies, and product configuration that wires in services such as GitHub Copilot defaults through `product.json`.\n\nDeeper documentation:\n\n- [System Runtime](system.md)\n- [Desktop Workbench](desktop-workbench.md)",
+      "format" : "Markdown",
+      "order" : 1,
+      "title" : ""
+    } ]
+  },
+  "id" : 0,
+  "model" : {
+    "people" : [ {
+      "description" : "Uses Code - OSS locally and through its command-line and remote capabilities.",
+      "id" : "1",
+      "name" : "Developer",
+      "properties" : {
+        "structurizr.dsl.identifier" : "developer"
+      },
+      "relationships" : [ {
+        "description" : "Runs commands with",
+        "destinationId" : "12",
+        "id" : "13",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      }, {
+        "description" : "Runs commands with",
+        "destinationId" : "2",
+        "id" : "14",
+        "linkedRelationshipId" : "13",
+        "sourceId" : "1"
+      }, {
+        "description" : "Uses for editing, navigation, debugging, search, and extension-driven workflows",
+        "destinationId" : "4",
+        "id" : "15",
+        "sourceId" : "1",
+        "tags" : "Relationship"
+      } ],
+      "tags" : "Element,Person"
+    } ],
+    "softwareSystems" : [ {
+      "containers" : [ {
+        "description" : "Electron main process that bootstraps the application, coordinates single-instance behavior, and provides native desktop services.",
+        "documentation" : { },
+        "id" : "3",
+        "name" : "Desktop Main Process",
+        "properties" : {
+          "structurizr.dsl.identifier" : "desktopMain"
+        },
+        "relationships" : [ {
+          "description" : "Creates windows for and brokers native capabilities to",
+          "destinationId" : "4",
+          "id" : "17",
+          "sourceId" : "3",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "TypeScript and Electron"
+      }, {
+        "components" : [ {
+          "description" : "Bootstraps the desktop workbench and browser-facing UI.",
+          "documentation" : { },
+          "id" : "5",
+          "name" : "Workbench Shell",
+          "properties" : {
+            "structurizr.dsl.identifier" : "workbenchShell"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "6",
+            "id" : "22",
+            "sourceId" : "5",
+            "tags" : "Relationship"
+          }, {
+            "description" : "Loads",
+            "destinationId" : "7",
+            "id" : "23",
+            "sourceId" : "5",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "src/vs/workbench/browser and electron-browser"
+        }, {
+          "description" : "Registers desktop services such as dialogs, lifecycle, updates, search, tunnels, telemetry, and extension management.",
+          "documentation" : { },
+          "id" : "6",
+          "name" : "Workbench Services",
+          "properties" : {
+            "structurizr.dsl.identifier" : "workbenchServices"
+          },
+          "relationships" : [ {
+            "description" : "Uses",
+            "destinationId" : "8",
+            "id" : "24",
+            "sourceId" : "6",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "src/vs/workbench/services"
+        }, {
+          "description" : "Loads feature contributions such as files, terminal, debug, remote, chat, tasks, and webview.",
+          "documentation" : { },
+          "id" : "7",
+          "name" : "Workbench Contributions",
+          "properties" : {
+            "structurizr.dsl.identifier" : "workbenchContributions"
+          },
+          "tags" : "Element,Component",
+          "technology" : "src/vs/workbench/contrib"
+        }, {
+          "description" : "Registers the main-process remote service used to start extension host processes from the workbench.",
+          "documentation" : { },
+          "id" : "8",
+          "name" : "Extension Host Starter Bridge",
+          "properties" : {
+            "structurizr.dsl.identifier" : "extensionHostStarterBridge"
+          },
+          "relationships" : [ {
+            "description" : "Starts",
+            "destinationId" : "9",
+            "id" : "25",
+            "sourceId" : "8",
+            "tags" : "Relationship"
+          } ],
+          "tags" : "Element,Component",
+          "technology" : "src/vs/workbench/services/extensions/electron-browser"
+        } ],
+        "description" : "Renderer-side workbench that assembles the editor UI, desktop services, and feature contributions.",
+        "documentation" : {
+          "sections" : [ {
+            "content" : "# Desktop Workbench\n\n![Workbench Components](embed:code-oss-workbench-components)\n\nThe desktop workbench container is the clearest place in this repository where component-level structure is directly visible.\n\nThe `Workbench Shell` component corresponds to the desktop workbench bootstrap around `src/vs/workbench/workbench.desktop.main.ts` and the browser-facing workbench code it imports. Its role is to assemble the renderer application that users interact with.\n\nThe `Workbench Services` component is visible through the large block of service registrations imported from `src/vs/workbench/services/...` and supporting platform services. These services cover native dialogs, lifecycle, host integration, extension management, search, secrets, tunnels, telemetry, and more.\n\nThe `Workbench Contributions` component is visible through the imported contribution modules under `src/vs/workbench/contrib/...`. These contribution modules add feature areas such as files, extensions, remote development, terminal, debug, chat, tasks, and webview.\n\nThe `Extension Host Starter Bridge` component is a narrow boundary between renderer code and main-process extension host startup. In `src/vs/workbench/services/extensions/electron-browser/extensionHostStarter.ts`, the workbench registers the remote service used to talk to the main process when starting extension hosts.\n\nThis is intentionally the only component view in the model. Other parts of the repository are better represented as containers because the source tree shows clear runtime/process boundaries, while this container explicitly exposes at least three meaningful internal parts in code.",
+            "format" : "Markdown",
+            "order" : 1,
+            "title" : ""
+          } ]
+        },
+        "id" : "4",
+        "name" : "Desktop Workbench",
+        "properties" : {
+          "structurizr.dsl.identifier" : "desktopWorkbench"
+        },
+        "relationships" : [ {
+          "description" : "Starts and communicates with over IPC",
+          "destinationId" : "9",
+          "id" : "18",
+          "sourceId" : "4",
+          "tags" : "Relationship"
+        }, {
+          "description" : "Connects to for remote workspace and web/agent scenarios",
+          "destinationId" : "10",
+          "id" : "19",
+          "sourceId" : "4",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "TypeScript, Web APIs, and Electron renderer"
+      }, {
+        "description" : "Node.js process that loads extensions, patches the runtime for compatibility, and communicates with the workbench over IPC.",
+        "documentation" : { },
+        "id" : "9",
+        "name" : "Extension Host Process",
+        "properties" : {
+          "structurizr.dsl.identifier" : "extensionHost"
+        },
+        "relationships" : [ {
+          "description" : "Loads and runs",
+          "destinationId" : "11",
+          "id" : "20",
+          "sourceId" : "9",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "TypeScript and Node.js"
+      }, {
+        "description" : "HTTP and WebSocket server that hosts the remote extension host agent, serves remote resources, and can spawn the server CLI.",
+        "documentation" : { },
+        "id" : "10",
+        "name" : "Remote Server",
+        "properties" : {
+          "structurizr.dsl.identifier" : "remoteServer"
+        },
+        "relationships" : [ {
+          "description" : "Serves remote extension resources from",
+          "destinationId" : "11",
+          "id" : "21",
+          "sourceId" : "10",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "TypeScript and Node.js"
+      }, {
+        "description" : "First-party extensions bundled from the extensions folder and loaded through the extension host.",
+        "documentation" : { },
+        "id" : "11",
+        "name" : "Built-in Extensions",
+        "properties" : {
+          "structurizr.dsl.identifier" : "builtInExtensions"
+        },
+        "tags" : "Element,Container",
+        "technology" : "TypeScript, JSON, and extension manifests"
+      }, {
+        "description" : "Standalone Rust CLI that launches desktop binaries and supports version, web, agent-host, update, and tunnel commands.",
+        "documentation" : { },
+        "id" : "12",
+        "name" : "Code CLI",
+        "properties" : {
+          "structurizr.dsl.identifier" : "codeCli"
+        },
+        "relationships" : [ {
+          "description" : "Launches desktop binaries and forwards command-line arguments to",
+          "destinationId" : "3",
+          "id" : "16",
+          "sourceId" : "12",
+          "tags" : "Relationship"
+        } ],
+        "tags" : "Element,Container",
+        "technology" : "Rust, Tokio, and Clap"
+      } ],
+      "description" : "Open-source development repository for the Visual Studio Code product.",
+      "documentation" : {
+        "sections" : [ {
+          "content" : "# Code - OSS Runtime Structure\n\n![Runtime Containers](embed:code-oss-runtime-containers)\n\nThe repository produces multiple runtime executables and process boundaries rather than a single monolith.\n\nThe desktop entry path starts in `src/main.ts`, which configures Electron and imports `src/vs/code/electron-main/main.js`. The Electron main process then creates services such as configuration, lifecycle, files, logging, policy, tunnels, and protocol handling before starting the application bootstrap.\n\nThe renderer-side workbench is assembled in `src/vs/workbench/workbench.desktop.main.ts`. That module pulls together desktop browser code, service registrations, and many workbench contributions such as files, debug, remote, terminal, chat, tasks, and webview support.\n\nThe extension host runs as a separate Node.js process from `src/vs/workbench/api/node/extensionHostProcess.ts`. The code explicitly patches process behavior, sets compatibility guards, establishes IPC, and then initializes the extension host main runtime.\n\nThe remote server path starts in `src/server-main.ts`, which decides whether to spawn CLI behavior or an HTTP/WebSocket server. `src/vs/server/node/server.main.ts` sets up server data folders, built-in extension paths, and creates the remote extension host agent server.\n\nThe bundled extensions container is justified by the dedicated `extensions/` workspace with its own package manifest and build path. These extensions are part of the shipped product and are loaded through the extension runtime rather than being treated as ordinary source folders.\n\nThe Rust CLI in `cli/` is a separate executable with its own Cargo manifest and command modules. Its entry point in `cli/src/bin/code/main.rs` can launch the desktop editor and exposes commands for updates, web serving, agent host flows, and tunnels.\n\nBuild configuration evidence:\n\n- Root `package.json` drives development watch tasks, compile checks, gulp builds, web builds, hygiene, and performance scripts.\n- `build/gulpfile.ts` orchestrates client transpilation, typechecking, extension compilation, and watch tasks.\n- `build/package.json` contains build-only dependencies and typecheck/test scripts for build infrastructure.\n\nService boundary evidence:\n\n- The project instructions describe a layered architecture from `base` to `platform` to `editor` to `workbench`.\n- The Electron main process uses service collection and instantiation patterns to register platform services.\n- The workbench registers remote services such as the extension host starter instead of directly instantiating process-launch logic in UI code.",
+          "format" : "Markdown",
+          "order" : 1,
+          "title" : ""
+        } ]
+      },
+      "id" : "2",
+      "name" : "Code - OSS",
+      "properties" : {
+        "structurizr.dsl.identifier" : "codeOss"
+      },
+      "tags" : "Element,Software System"
+    } ]
+  },
+  "name" : "Name",
+  "properties" : {
+    "structurizr.inspection.error" : "15",
+    "structurizr.inspection.info" : "0",
+    "structurizr.inspection.ignore" : "0",
+    "structurizr.inspection.warning" : "0"
+  },
+  "views" : {
+    "componentViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "containerId" : "4",
+      "elements" : [ {
+        "id" : "5",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "6",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "7",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "8",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalContainerBoundariesVisible" : false,
+      "key" : "code-oss-workbench-components",
+      "name" : "Component View: Code - OSS - Desktop Workbench",
+      "order" : 3,
+      "relationships" : [ {
+        "id" : "22"
+      }, {
+        "id" : "23"
+      }, {
+        "id" : "24"
+      }, {
+        "id" : "25"
+      } ]
+    } ],
+    "configuration" : {
+      "styles" : { },
+      "terminology" : { }
+    },
+    "containerViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "3",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "4",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "9",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "10",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "11",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "12",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "externalSoftwareSystemBoundariesVisible" : false,
+      "key" : "code-oss-runtime-containers",
+      "name" : "Container View: Code - OSS",
+      "order" : 2,
+      "relationships" : [ {
+        "id" : "13"
+      }, {
+        "id" : "15"
+      }, {
+        "id" : "16"
+      }, {
+        "id" : "17"
+      }, {
+        "id" : "18"
+      }, {
+        "id" : "19"
+      }, {
+        "id" : "20"
+      }, {
+        "id" : "21"
+      } ],
+      "softwareSystemId" : "2"
+    } ],
+    "systemContextViews" : [ {
+      "automaticLayout" : {
+        "edgeSeparation" : 50,
+        "nodeSeparation" : 50,
+        "rankDirection" : "LeftRight",
+        "rankSeparation" : 100,
+        "vertices" : true
+      },
+      "elements" : [ {
+        "id" : "1",
+        "x" : 0,
+        "y" : 0
+      }, {
+        "id" : "2",
+        "x" : 0,
+        "y" : 0
+      } ],
+      "enterpriseBoundaryVisible" : true,
+      "key" : "code-oss-system-context",
+      "name" : "System Context View: Code - OSS",
+      "order" : 1,
+      "relationships" : [ {
+        "id" : "14"
+      } ],
+      "softwareSystemId" : "2"
+    } ]
+  }
+}

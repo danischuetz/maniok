@@ -17,13 +17,6 @@ docker run -t --rm -p 8080:8080 -v PATH:/usr/workspace maniok-preview:latest
 
 The `generated` directory showcases AI-generated example documentation using the `maniok-architecture-prompt.md` for some popular open source projects.
 
-Documentation has been generated for:
-
-- https://github.com/paperless-ngx/paperless-ngx
-- https://github.com/Fincept-Corporation/FinceptTerminal
-- https://github.com/jamiepine/voicebox
-- https://github.com/gtsteffaniak/filebrowser
-
 Just add any of those directories as `PATH` to the maniok-preview command from above to view the generated examples.
 
 ## Disclaimer

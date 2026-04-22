@@ -19,14 +19,14 @@
 
     const selectables = [
         {
-            id: 'filebrowser',
-            title: 'Filebrowser',
-            value: 'https://github.com/gtsteffaniak/filebrowser'
+            id: 'bitcoin',
+            title: 'Bitcoin',
+            value: 'https://github.com/bitcoin/bitcoin'
         },
         {
-            id: 'finceptterminal',
-            title: 'Fincept Terminal',
-            value: 'https://github.com/Fincept-Corporation/FinceptTerminal'
+            id: 'linux',
+            title: 'Linux Kernel',
+            value: 'https://github.com/torvalds/linux'
         },
         {
             id: 'paperless-ngx',
@@ -34,9 +34,9 @@
             value: 'https://github.com/paperless-ngx/paperless-ngx'
         },
         {
-            id: 'voicebox',
-            title: 'Voicebox',
-            value: 'https://github.com/jamiepine/voicebox'
+            id: 'vscode',
+            title: 'Visual Studio Code',
+            value: 'https://github.com/microsoft/vscode'
         }
     ]
 
