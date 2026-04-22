@@ -1,4 +1,5 @@
 export type RepositoryModel = {
     provider: string
-    url: string
+    org: string
+    name: string
 }

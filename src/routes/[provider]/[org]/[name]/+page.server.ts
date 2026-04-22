@@ -1,9 +1,14 @@
-import type { PageServerLoad } from './$types'
+import type { PageServerLoad } from '../$types'
 import { error } from '@sveltejs/kit'
 import { RepositoryService, type RepositoryModel } from 'maniok-core'
 
 export const load: PageServerLoad = async ({ params }) => {
-    const repository: RepositoryModel | null = RepositoryService.decode(params.code)
+    const repository: RepositoryModel = {
+        provider: params.provider,
+        org: params.org!,
+        name: params.name!
+    }
+
     if (!repository) {
         const errorMessage =
             'Repository not found at "' +

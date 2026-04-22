@@ -28,12 +28,16 @@
     })
 
     function getVisitType(): string {
-        const code = page.params.code
-        if (code) {
-            if (code === 'local') return 'local_page'
+        if (page.route.id === '/local') return 'local_page'
 
-            const repository: RepositoryModel = RepositoryService.decode(code)
-            if (repository.url === 'danielschuetz/maniok') return 'example_page'
+        if (page.params.provider) {
+            const repository: RepositoryModel = {
+                provider: page.params.provider,
+                org: page.params.org!,
+                name: page.params.name!
+            }
+            if (repository.org === 'danielschuetz' && repository.name === 'maniok')
+                return 'example_page'
             else if (page.error) return 'custom_page_failed'
             else return 'custom_page_succeeded'
         }

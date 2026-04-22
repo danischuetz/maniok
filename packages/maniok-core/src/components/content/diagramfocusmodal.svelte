@@ -22,9 +22,9 @@
 
 <Dialog open={diagram != undefined}>
     <Portal>
-        <Dialog.Backdrop class="fixed inset-0 z-10 dialog-focus-modal-backdrop" />
+        <Dialog.Backdrop class="fixed inset-0 z-40 dialog-focus-modal-backdrop" />
         <Dialog.Positioner
-            class="fixed inset-0 z-20 flex items-center dialog-focus-modal-positioner"
+            class="fixed inset-0 z-50 flex items-center justify-center dialog-focus-modal-positioner"
         >
             <Dialog.Content class="relative w-full dialog-focus-modal-content {className}">
                 {#if diagram}

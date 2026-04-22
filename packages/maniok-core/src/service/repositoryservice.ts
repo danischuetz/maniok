@@ -7,12 +7,13 @@ export class RepositoryService {
         )
         if (githubMatch) {
             // Test if this is a valid GitHub repository
-            const [, owner, repo] = githubMatch
-            const response = await fetch(`https://api.github.com/repos/${owner}/${repo}`)
+            const [, org, name] = githubMatch
+            const response = await fetch(`https://api.github.com/repos/${org}/${name}`)
             if (response.status !== 200) return null
             return {
-                provider: 'github',
-                url: `${owner}/${repo}`
+                provider: 'gh',
+                org: org,
+                name: name
             }
         }
         return null
@@ -20,28 +21,16 @@ export class RepositoryService {
 
     static toUrl(repository: RepositoryModel): string {
         switch (repository.provider) {
-            case 'github':
-                return `https://github.com/${repository.url}`
+            case 'gh':
+                return `https://github.com/${repository.org}/${repository.name}`
             default:
                 throw new Error(`Unsupported repository provider: ${repository.provider}`)
         }
     }
 
-    static encode(repository: RepositoryModel): string {
-        return btoa(this.stringify(repository))
-            .replace(/\+/g, '-')
-            .replace(/\//g, '_')
-            .replace(/=+$/, '')
-    }
-
-    static decode(encoded: string): RepositoryModel {
-        const raw = atob(encoded.replace(/-/g, '+').replace(/_/g, '/'))
-        return this.parse(raw)
-    }
-
     static async loadResource(repository: RepositoryModel, path: string): Promise<string> {
-        if (repository.provider === 'github') {
-            const url = `https://raw.githubusercontent.com/${repository.url}/HEAD/${path}`
+        if (repository.provider === 'gh') {
+            const url = `https://raw.githubusercontent.com/${repository.org}/${repository.name}/HEAD/${path}`
             const res = await fetch(url)
             if (!res.ok) {
                 throw new Error(`Failed to load resource from ${url}: ${res.statusText}`)
@@ -52,14 +41,5 @@ export class RepositoryService {
                 new Error(`Unsupported repository provider: ${repository.provider}`)
             )
         }
-    }
-
-    private static stringify(repository: RepositoryModel): string {
-        return `${repository.provider}:${repository.url}`
-    }
-
-    private static parse(repositoryString: string): RepositoryModel {
-        const [provider, url] = repositoryString.split(':')
-        return { provider, url }
     }
 }

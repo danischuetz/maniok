@@ -26,9 +26,7 @@
             return
         }
 
-        const code: string = RepositoryService.encode(repository)
-
-        goto(`/${code}`)
+        goto(`/${repository.provider}/${repository.org}/${repository.name}`)
     }
 </script>
 
