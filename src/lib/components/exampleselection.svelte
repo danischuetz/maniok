@@ -10,6 +10,6 @@
     })
 </script>
 
-<div class="flex items-start md:items-center gap-2 p-1 flex-col md:flex-row">
+<div class="flex items-start md:items-center gap-2 flex-col md:flex-row">
     <Selectable selectables={examples} bind:selected={$selectedExample} placeholder="Examples" />
 </div>

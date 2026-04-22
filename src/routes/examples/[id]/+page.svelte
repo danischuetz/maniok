@@ -9,6 +9,8 @@
     import ExampleDisclaimer from '$lib/components/modal/exampledisclaimer.svelte'
     import ExampleSelection from '$lib/components/exampleselection.svelte'
     import { selectedExample, selectFromId } from '$lib/state/examplepage'
+    import type { RepositoryModel } from 'maniok-core'
+    import { RepositoryService } from 'maniok-core'
 
     let { data, params }: PageProps = $props()
 
@@ -27,18 +29,27 @@
     $effect(() => {
         selectFromId(params.id)
     })
+
+    async function goToDocs() {
+        const repository: RepositoryModel | null = await RepositoryService.deriveFromUrl(
+            'https://github.com/danischuetz/maniok'
+        )
+        const encoded: string = RepositoryService.encode(repository!)
+        goto(`/${encoded}`)
+    }
 </script>
 
 {#snippet exampleSelector()}
     <div class="flex items-start md:items-center gap-2 p-1 flex-col md:flex-row">
-        <span class="pl-2">Select an example:</span>
-        <ExampleSelection />
-
         <div class="flex gap-2">
-            <ExampleDisclaimer repository={exampleRepositoryUrl} />
+            <button onclick={goToDocs} class="btn preset-filled">Docs</button>
             <button onclick={() => goto(`/`)} class="btn preset-filled-primary-500"
                 >Get Started!</button
             >
+        </div>
+        <span class="pl-2">Select an <ExampleDisclaimer repository={exampleRepositoryUrl} /></span>
+        <div class="flex gap-2">
+            <ExampleSelection />
         </div>
     </div>
 {/snippet}

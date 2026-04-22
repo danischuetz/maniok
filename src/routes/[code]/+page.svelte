@@ -3,6 +3,7 @@
 
     import App from '$lib/app.svelte'
     import type { CapabilitiesModel } from '$lib/model/capabilities'
+    import ExampleSelection from '$lib/components/exampleselection.svelte'
 
     let { data }: PageProps = $props()
 
@@ -11,4 +12,17 @@
     }
 </script>
 
-<App {capabilities} repository={data.repository ?? undefined} workspaceJson={data.workspaceJson} />
+{#snippet exampleSelector()}
+    <div class="flex items-start md:items-center gap-2 p-1 flex-col md:flex-row">
+        <div class="flex gap-2 lg:pr-8">
+            <ExampleSelection />
+        </div>
+    </div>
+{/snippet}
+
+<App
+    {capabilities}
+    repository={data.repository ?? undefined}
+    workspaceJson={data.workspaceJson}
+    customComponent={exampleSelector}
+/>

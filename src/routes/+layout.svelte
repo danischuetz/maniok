@@ -22,7 +22,7 @@
     })
 
     $effect(() => {
-        if (page.url.pathname === '/') {
+        if (!page.url.pathname.includes('/examples/')) {
             $selectedExample = undefined
         }
     })
