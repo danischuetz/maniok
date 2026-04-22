@@ -61,7 +61,13 @@
     <div class="flex items-start md:items-center gap-2 p-1 flex-col md:flex-row">
         <span class="pl-2">Select an example:</span>
         <Selectable {selectables} bind:selected />
-        <Exampledisclaimer repository={selected.value} />
+
+        <div class="flex gap-2">
+            <Exampledisclaimer repository={selected.value} />
+            <button onclick={() => goto(`/`)} class="btn preset-filled-primary-500"
+                >Get Started!</button
+            >
+        </div>
     </div>
 {/snippet}
 
