@@ -47,6 +47,15 @@ RUN npm run build
 RUN chown -R nodeuser:nodeuser /app
 
 # ========================================
+# Filtered Example Assets Stage
+# ========================================
+FROM nodebase AS example-assets
+
+COPY --chown=nodeuser:nodeuser examples/generated ./examples/generated
+RUN find ./examples/generated -type f ! -name 'workspace.json' -delete && \
+    find ./examples/generated -depth -type d -empty -delete
+
+# ========================================
 # Production Stage
 # ========================================
 FROM ${NODE_BASE_IMAGE} AS production
@@ -59,10 +68,12 @@ RUN addgroup -g 1001 -S nodeuser && \
 
 ENV NODE_ENV=production \
     NODE_OPTIONS="--max-old-space-size=256" \
+    EXAMPLES_PATH=/app/examples/generated \
     NPM_CONFIG_LOGLEVEL=silent
 
 COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/node_modules ./node_modules
 COPY --from=runtime-deps --chown=nodeuser:nodeuser /app/package*.json ./
 COPY --from=build --chown=nodeuser:nodeuser /app/build ./build
+COPY --from=example-assets --chown=nodeuser:nodeuser /app/examples/generated ./examples/generated
 
 CMD ["node", "build/index.js"]
