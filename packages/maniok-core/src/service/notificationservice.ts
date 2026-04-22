@@ -11,4 +11,11 @@ export class NotificationService {
             description: error instanceof Error ? error.message : 'An unknown error occurred'
         })
     }
+
+    static notifyInfo(message: string): void {
+        toaster.success({
+            title: message,
+            duration: 10000
+        })
+    }
 }

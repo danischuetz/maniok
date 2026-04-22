@@ -7,8 +7,29 @@
     @apply size-12 stroke-1 p-2;
 }
 
+.code {
+    @apply bg-secondary-100/20 text-surface-900-100 px-2 py-1 rounded-sm font-mono font-light text-sm;
+}
+
 /* Accessibility: Hide elements visually but keep them for screen readers */
 .a11y-hidden {
     @apply absolute w-px h-px overflow-hidden whitespace-nowrap border-0 -m-1 p-0;
     @apply [clip:rect(0,0,0,0)] [clip-path:inset(100%)];
+}
+
+/* Selectable */
+.selectable-selected {
+    @apply btn border border-surface-500 px-2;
+}
+
+.selectable-selected-title {
+    @apply text-base text-surface-800-200;
+}
+
+.selectable-popup {
+    @apply card bg-surface-50-950 border border-surface-500 rounded-md;
+}
+
+.selectable-item {
+    @apply px-4 py-2 active:bg-surface-200-800 text-surface-900-100 self-stretch text-left hover:bg-surface-200/50;
 }

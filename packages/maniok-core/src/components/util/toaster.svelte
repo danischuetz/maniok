@@ -17,7 +17,10 @@
                 <Toast.Title>{toast.title}</Toast.Title>
                 <Toast.Description class="break-all">{toast.description}</Toast.Description>
             </Toast.Message>
-            <Toast.CloseTrigger onclick={() => toaster.dismiss(toast.id)} />
+            <Toast.CloseTrigger
+                class="absolute right-1 bottom-1"
+                onclick={() => toaster.dismiss(toast.id)}
+            />
         </Toast>
     {/snippet}
 </Toast.Group>
