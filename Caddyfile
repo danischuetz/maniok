@@ -7,6 +7,11 @@ app.maniok.io {
 	reverse_proxy app:3000
 }
 
+staging.maniok.io {
+    encode zstd gzip
+    reverse_proxy app_staging:3000
+}
+
 maniok.io, www.maniok.io {
 	redir https://app.maniok.io{uri} permanent
 }

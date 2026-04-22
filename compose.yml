@@ -8,6 +8,16 @@ services:
       ORIGIN: https://app.maniok.io
     expose:
       - "3000"
+      
+  app_staging:
+    image: ghcr.io/danischuetz/maniok/maniok-webapp:staging
+    restart: unless-stopped
+    environment:
+      HOST: 0.0.0.0
+      PORT: 3000
+      ORIGIN: https://staging.maniok.io
+    expose:
+      - "3000"
 
   caddy:
     image: caddy:2

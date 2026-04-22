@@ -4,8 +4,15 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'Tag to run workflow on'
+        description: 'Tag to run workflow on (required for production)'
+        required: false
+      environment:
+        description: 'Environment to deploy to [staging, production]'
         required: true
+        type: choice
+        options:
+          - staging
+          - production
 
 jobs:
   build-and-push:
@@ -17,6 +24,7 @@ jobs:
       dockerfile: Dockerfile.Webapp
       image_name: maniok-webapp
       tag: ${{ github.event.inputs.tag }}
+      environment: ${{ github.event.inputs.environment }}
 
   deploy:
     needs: build-and-push
@@ -49,11 +57,22 @@ jobs:
         run: |
           scp -P "${{ secrets.SSH_PORT || 22 }}" Caddyfile compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/app/"
 
-      - name: Deploy on Hetzner
+      - name: Deploy staging on Hetzner
+        if: github.event.inputs.environment == 'staging'
         run: |
           ssh -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" '
             set -e
             cd /opt/app
-            docker compose pull
-            docker compose up -d --remove-orphans
+            docker compose pull app_staging
+            docker compose up -d --force-recreate app_staging caddy
+          '
+
+      - name: Deploy production on Hetzner
+        if: github.event.inputs.environment == 'production'
+        run: |
+          ssh -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" '
+            set -e
+            cd /opt/app
+            docker compose pull app
+            docker compose up -d --force-recreate app caddy
           '

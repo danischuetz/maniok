@@ -13,7 +13,11 @@ on:
         required: true
         type: string
       tag:
-        description: 'Git tag to deploy (must exist)'
+        description: 'Git tag or ref to deploy (tag required for production)'
+        required: false
+        type: string
+      environment:
+        description: 'Environment to deploy to [staging, production]'
         required: true
         type: string
 
@@ -24,13 +28,28 @@ jobs:
       contents: read
       packages: write
     steps:
+      - name: Resolve source ref
+        id: resolve_ref
+        run: |
+          if [[ -n "${{ inputs.tag }}" ]]; then
+            echo "ref=${{ inputs.tag }}" >> "$GITHUB_OUTPUT"
+          else
+            echo "ref=${{ github.ref_name }}" >> "$GITHUB_OUTPUT"
+          fi
+
       - name: Checkout repository at tag
         uses: actions/checkout@v4
         with:
-          ref: ${{ inputs.tag }}
+          ref: ${{ steps.resolve_ref.outputs.ref }}
 
       - name: Verify tag exists
+        if: inputs.environment == 'production'
         run: |
+          if [[ -z "${{ inputs.tag }}" ]]; then
+            echo "Production deployments require a git tag." >&2
+            exit 1
+          fi
+
           if ! git rev-parse "refs/tags/${{ inputs.tag }}" >/dev/null 2>&1; then
             echo "Tag ${{ inputs.tag }} does not exist!" >&2
             exit 1
@@ -47,6 +66,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Prepare image tag (strip v prefix)
+        if: inputs.environment == 'production'
         id: prep_tag
         run: |
           tag="${{ inputs.tag }}"
@@ -57,7 +77,8 @@ jobs:
           fi
           echo "clean_tag=$clean_tag" >> "$GITHUB_OUTPUT"
 
-      - name: Build and push Docker image
+      - name: Build and push Docker image (production)
+        if: inputs.environment == 'production'
         uses: docker/build-push-action@v5
         with:
           context: .
@@ -67,6 +88,17 @@ jobs:
           tags: |
             ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:${{ steps.prep_tag.outputs.clean_tag }}
             ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:latest
+      
+      - name: Build and push Docker image (staging)
+        if: inputs.environment == 'staging'
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: ${{ inputs.dockerfile }}
+          push: true
+          platforms: linux/amd64,linux/arm64
+          tags: |
+            ghcr.io/${{ github.repository }}/${{ inputs.image_name }}:staging
 
       - name: Upload Caddyfile
         uses: actions/upload-artifact@v4
