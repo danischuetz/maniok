@@ -29,7 +29,6 @@ build/
 
 \*.md
 docs/
-examples/
 
 # Package-local tests are not needed in the image context
 
