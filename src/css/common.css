@@ -26,6 +26,10 @@
     @apply text-base text-surface-800-200;
 }
 
+.selectable-selected-placeholder {
+    @apply text-base text-surface-400-600;
+}
+
 .selectable-popup {
     @apply card bg-surface-50-950 border border-surface-500 rounded-md;
 }

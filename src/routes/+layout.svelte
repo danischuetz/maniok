@@ -3,10 +3,16 @@
 
     import { afterNavigate } from '$app/navigation'
     import { page } from '$app/state'
-    import { NotificationService, Toaster } from 'maniok-core'
+    import {
+        NotificationService,
+        RepositoryService,
+        Toaster,
+        type RepositoryModel
+    } from 'maniok-core'
     import type { LayoutProps } from './$types'
     import { onMount } from 'svelte'
     import type { CustomProperties } from '@plausible-analytics/tracker'
+    import { selectedExample } from '$lib/state/examplepage'
 
     let trackPageview: ((url?: string) => void) | undefined = undefined
 
@@ -15,12 +21,30 @@
         trackPageview(to?.url.href)
     })
 
+    $effect(() => {
+        if (page.url.pathname === '/') {
+            $selectedExample = undefined
+        }
+    })
+
     function getVisitType(): string {
         const code = page.params.code
-        if (!code) return 'root'
-        if (code === 'local' || code === 'Z2l0aHViOmRhbmlzY2h1ZXR6L21hbmlvaw') return 'example_page'
-        if (page.error) return 'custom_page_failed'
-        return 'custom_page_succeeded'
+        if (code) {
+            if (code === 'local') return 'local_page'
+
+            const repository: RepositoryModel = RepositoryService.decode(code)
+            if (repository.url === 'danielschuetz/maniok') return 'example_page'
+            else if (page.error) return 'custom_page_failed'
+            else return 'custom_page_succeeded'
+        }
+
+        const id = page.params.id
+        if (id) {
+            if (page.error) return 'example_page_failed'
+            else return `example_page_${id}`
+        }
+
+        return 'root'
     }
 
     onMount(() => {

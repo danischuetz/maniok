@@ -52,11 +52,6 @@ workspace {
     }
 
     views {
-        systemContext bitcoin_core "bitcoin-core-system-context" {
-            include *
-            autoLayout lr
-        }
-
         container bitcoin_core "bitcoin-core-containers" {
             include *
             autoLayout lr

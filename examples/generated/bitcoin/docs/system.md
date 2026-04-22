@@ -1,7 +1,5 @@
 # Bitcoin Core System
 
-![Containers](embed:bitcoin-core-containers)
-
 The repository models cleanly as one software system with multiple operator-facing executables built from a common CMake workspace. The build is centered on the top-level `CMakeLists.txt` and `src/CMakeLists.txt`, where options such as `BUILD_DAEMON`, `BUILD_CLI`, `BUILD_GUI`, `ENABLE_WALLET`, `ENABLE_IPC`, `WITH_ZMQ`, and `BUILD_TESTS` decide which binaries and supporting libraries are present.
 
 ## Primary Executable Boundaries

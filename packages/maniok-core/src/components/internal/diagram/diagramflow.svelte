@@ -125,7 +125,7 @@
         height={fitViewPort ? height : undefined}
         {nodeTypes}
         minZoom={0.2}
-        maxZoom={10}
+        maxZoom={2}
         preventScrolling={false}
         panOnDrag={false}
         nodesFocusable={false}

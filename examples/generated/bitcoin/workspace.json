@@ -261,7 +261,7 @@
       "description" : "Reference Bitcoin full node, wallet, GUI, and operator tooling built from this repository.",
       "documentation" : {
         "sections" : [ {
-          "content" : "# Bitcoin Core System\n\n![Containers](embed:bitcoin-core-containers)\n\nThe repository models cleanly as one software system with multiple operator-facing executables built from a common CMake workspace. The build is centered on the top-level `CMakeLists.txt` and `src/CMakeLists.txt`, where options such as `BUILD_DAEMON`, `BUILD_CLI`, `BUILD_GUI`, `ENABLE_WALLET`, `ENABLE_IPC`, `WITH_ZMQ`, and `BUILD_TESTS` decide which binaries and supporting libraries are present.\n\n## Primary Executable Boundaries\n\n- `bitcoind` is the main headless node executable and links the `bitcoin_node` library plus the optional wallet library.\n- `bitcoin-node` is the IPC-enabled node executable built when multiprocess support is enabled.\n- `bitcoin-cli` is a separate RPC client executable.\n- `bitcoin-qt` is the Qt desktop application, and `bitcoin-gui` is the IPC-enabled variant built when IPC is enabled.\n- `bitcoin-wallet` and `bitcoin-tx` are offline operator tools for wallet-file maintenance and raw transaction manipulation.\n- `bitcoin` is a wrapper executable that dispatches to the other binaries and can choose monolithic or multiprocess variants.\n\n## Architectural Shape\n\nMost runtime behavior is implemented in reusable libraries rather than directly in the executable entry points. This keeps the executable main files small and shifts the architectural weight into shared code such as `bitcoin_node`, `bitcoin_common`, `bitcoin_wallet`, and the optional IPC support.\n\nThat split is the key service boundary in this repository: operator-facing binaries are thin entry points, while the node, wallet, and IPC concerns live in reusable modules under `src`.\n\n## Notes On Optionality\n\nNot every container is built in every configuration. GUI, wallet, IPC, ZMQ, benchmarking, fuzzing, and kernel-oriented utilities are all controlled through CMake options. The model therefore documents the supported runtime shape of the repository, not a single mandatory build preset.\n",
+          "content" : "# Bitcoin Core System\n\nThe repository models cleanly as one software system with multiple operator-facing executables built from a common CMake workspace. The build is centered on the top-level `CMakeLists.txt` and `src/CMakeLists.txt`, where options such as `BUILD_DAEMON`, `BUILD_CLI`, `BUILD_GUI`, `ENABLE_WALLET`, `ENABLE_IPC`, `WITH_ZMQ`, and `BUILD_TESTS` decide which binaries and supporting libraries are present.\n\n## Primary Executable Boundaries\n\n- `bitcoind` is the main headless node executable and links the `bitcoin_node` library plus the optional wallet library.\n- `bitcoin-node` is the IPC-enabled node executable built when multiprocess support is enabled.\n- `bitcoin-cli` is a separate RPC client executable.\n- `bitcoin-qt` is the Qt desktop application, and `bitcoin-gui` is the IPC-enabled variant built when IPC is enabled.\n- `bitcoin-wallet` and `bitcoin-tx` are offline operator tools for wallet-file maintenance and raw transaction manipulation.\n- `bitcoin` is a wrapper executable that dispatches to the other binaries and can choose monolithic or multiprocess variants.\n\n## Architectural Shape\n\nMost runtime behavior is implemented in reusable libraries rather than directly in the executable entry points. This keeps the executable main files small and shifts the architectural weight into shared code such as `bitcoin_node`, `bitcoin_common`, `bitcoin_wallet`, and the optional IPC support.\n\nThat split is the key service boundary in this repository: operator-facing binaries are thin entry points, while the node, wallet, and IPC concerns live in reusable modules under `src`.\n\n## Notes On Optionality\n\nNot every container is built in every configuration. GUI, wallet, IPC, ZMQ, benchmarking, fuzzing, and kernel-oriented utilities are all controlled through CMake options. The model therefore documents the supported runtime shape of the repository, not a single mandatory build preset.\n",
           "format" : "Markdown",
           "order" : 1,
           "title" : ""
@@ -277,7 +277,7 @@
   },
   "name" : "Name",
   "properties" : {
-    "structurizr.inspection.error" : "23",
+    "structurizr.inspection.error" : "24",
     "structurizr.inspection.info" : "0",
     "structurizr.inspection.ignore" : "0",
     "structurizr.inspection.warning" : "0"
@@ -320,7 +320,7 @@
       "externalContainerBoundariesVisible" : false,
       "key" : "bitcoin-core-node-components",
       "name" : "Component View: Bitcoin Core - Node Service (bitcoind / bitcoin-node)",
-      "order" : 3,
+      "order" : 2,
       "relationships" : [ {
         "id" : "27"
       }, {
@@ -387,7 +387,7 @@
       "externalSoftwareSystemBoundariesVisible" : false,
       "key" : "bitcoin-core-containers",
       "name" : "Container View: Bitcoin Core",
-      "order" : 2,
+      "order" : 1,
       "relationships" : [ {
         "id" : "14"
       }, {
@@ -415,25 +415,6 @@
       }, {
         "id" : "26"
       } ],
-      "softwareSystemId" : "4"
-    } ],
-    "systemContextViews" : [ {
-      "automaticLayout" : {
-        "edgeSeparation" : 50,
-        "nodeSeparation" : 50,
-        "rankDirection" : "LeftRight",
-        "rankSeparation" : 100,
-        "vertices" : true
-      },
-      "elements" : [ {
-        "id" : "4",
-        "x" : 0,
-        "y" : 0
-      } ],
-      "enterpriseBoundaryVisible" : true,
-      "key" : "bitcoin-core-system-context",
-      "name" : "System Context View: Bitcoin Core",
-      "order" : 1,
       "softwareSystemId" : "4"
     } ]
   }

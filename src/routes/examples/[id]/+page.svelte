@@ -5,43 +5,18 @@
 
     import App from '$lib/app.svelte'
     import type { CapabilitiesModel } from '$lib/model/capabilities'
-    import Selectable from '$lib/components/utilities/selectable.svelte'
-    import type { SelectableModel } from '$lib/model/selectable'
     import { goto } from '$app/navigation'
     import ExampleDisclaimer from '$lib/components/modal/exampledisclaimer.svelte'
+    import ExampleSelection from '$lib/components/exampleselection.svelte'
+    import { selectedExample, selectFromId } from '$lib/state/examplepage'
 
     let { data, params }: PageProps = $props()
+
+    let exampleRepositoryUrl: string = $derived($selectedExample?.value || '')
 
     const capabilities: CapabilitiesModel = {
         urlSelection: false
     }
-
-    const selectables = [
-        {
-            id: 'bitcoin',
-            title: 'Bitcoin',
-            value: 'https://github.com/bitcoin/bitcoin'
-        },
-        {
-            id: 'linux',
-            title: 'Linux Kernel',
-            value: 'https://github.com/torvalds/linux'
-        },
-        {
-            id: 'paperless-ngx',
-            title: 'Paperless-ngx',
-            value: 'https://github.com/paperless-ngx/paperless-ngx'
-        },
-        {
-            id: 'vscode',
-            title: 'Visual Studio Code',
-            value: 'https://github.com/microsoft/vscode'
-        }
-    ]
-
-    let selected: SelectableModel = $derived.by(() => {
-        return selectables.find((s) => s.id === params.id) ?? selectables[0]
-    })
 
     onMount(() => {
         NotificationService.notifySuccess(
@@ -50,19 +25,17 @@
     })
 
     $effect(() => {
-        if (selected && selected.id !== params.id) {
-            goto(`/examples/${selected.id}`, { replaceState: true })
-        }
+        selectFromId(params.id)
     })
 </script>
 
 {#snippet exampleSelector()}
     <div class="flex items-start md:items-center gap-2 p-1 flex-col md:flex-row">
         <span class="pl-2">Select an example:</span>
-        <Selectable {selectables} bind:selected />
+        <ExampleSelection />
 
         <div class="flex gap-2">
-            <ExampleDisclaimer repository={selected.value} />
+            <ExampleDisclaimer repository={exampleRepositoryUrl} />
             <button onclick={() => goto(`/`)} class="btn preset-filled-primary-500"
                 >Get Started!</button
             >

@@ -6,15 +6,25 @@
     interface Props {
         class?: string
         selectables: Array<SelectableModel>
-        selected: SelectableModel
+        selected: SelectableModel | undefined
+        placeholder: string
     }
 
-    let { class: className = '', selectables, selected = $bindable() }: Props = $props()
+    let {
+        class: className = '',
+        selectables,
+        selected = $bindable(),
+        placeholder = ''
+    }: Props = $props()
 </script>
 
 <Popover positioning={{ placement: 'bottom-start' }}>
     <Popover.Trigger class="selectable-selected {className}">
-        <span class="selectable-selected-title">{selected.title}</span>
+        {#if selected}
+            <span class="selectable-selected-title">{selected.title}</span>
+        {:else}
+            <span class="selectable-selected-placeholder">{placeholder}</span>
+        {/if}
         <ChevronDown />
     </Popover.Trigger>
     <Portal>

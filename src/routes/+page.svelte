@@ -4,6 +4,7 @@
     import UrlSelector from '$lib/components/utilities/urlselector.svelte'
 
     import { goto } from '$app/navigation'
+    import ExampleSelection from '$lib/components/exampleselection.svelte'
 
     let repositoryUrl: string = $state('')
     let navigating: boolean = $state(false)
@@ -50,10 +51,6 @@
         }
         await handleConfirmation()
     }
-
-    function onExampleClick() {
-        goto('/examples/bitcoin')
-    }
 </script>
 
 <div
@@ -70,12 +67,10 @@
                 <UrlSelector class="self-stretch h-10" {repositoryUrl} />
             </div>
             <div class="flex items-center gap-2 self-end">
-                <button class="btn underline rounded-full" onclick={onDemoClick}>Docs / Demo</button
+                <button class="btn preset-filled-surface-950-50 rounded-full" onclick={onDemoClick}
+                    >Docs / Demo</button
                 >
-                <button
-                    class="btn rounded-full preset-filled-surface-950-50"
-                    onclick={onExampleClick}>Examples</button
-                >
+                <ExampleSelection />
             </div>
         </div>
 
