@@ -3,14 +3,13 @@
     import { invalidate } from '$app/navigation'
     import { onMount } from 'svelte'
 
-    import App from '../../lib/app.svelte'
-    import type { CapabilitiesModel } from '../../lib/model/capabilities'
+    import App from '$lib/app.svelte'
+    import type { CapabilitiesModel } from '$lib/model/capabilities'
 
     let { data }: PageProps = $props()
 
     const capabilities: CapabilitiesModel = {
-        urlSelection: false,
-        likeButton: false
+        urlSelection: false
     }
 
     onMount(() => {

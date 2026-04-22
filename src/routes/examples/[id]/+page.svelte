@@ -3,18 +3,17 @@
     import { onMount } from 'svelte'
     import { NotificationService } from 'maniok-core'
 
-    import App from '../../../lib/app.svelte'
-    import type { CapabilitiesModel } from '../../../lib/model/capabilities'
-    import Selectable from '../../../lib/components/utilities/selectable.svelte'
-    import type { SelectableModel } from '../../../lib/model/selectable'
+    import App from '$lib/app.svelte'
+    import type { CapabilitiesModel } from '$lib/model/capabilities'
+    import Selectable from '$lib/components/utilities/selectable.svelte'
+    import type { SelectableModel } from '$lib/model/selectable'
     import { goto } from '$app/navigation'
-    import ExampleDisclaimer from '../../../lib/components/modal/exampledisclaimer.svelte'
+    import ExampleDisclaimer from '$lib/components/modal/exampledisclaimer.svelte'
 
     let { data, params }: PageProps = $props()
 
     const capabilities: CapabilitiesModel = {
-        urlSelection: false,
-        likeButton: false
+        urlSelection: false
     }
 
     const selectables = [

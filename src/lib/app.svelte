@@ -19,7 +19,6 @@
     } from 'maniok-core'
 
     import { goto } from '$app/navigation'
-    import LikeButton from './components/utilities/likebutton.svelte'
     import UrlSelector from './components/utilities/urlselector.svelte'
     import { type CapabilitiesModel } from './model/capabilities'
     import type { Snippet } from 'svelte'
@@ -32,8 +31,7 @@
     }
 
     export const defaultCapabilities: CapabilitiesModel = {
-        urlSelection: true,
-        likeButton: true
+        urlSelection: true
     }
 
     let {
@@ -79,9 +77,6 @@
                 </button>
             </div>
             <div class="flex flex-1 items-center justify-end gap-4">
-                {#if capabilities.likeButton}
-                    <LikeButton />
-                {/if}
                 {#if capabilities.urlSelection}
                     <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
                 {/if}

@@ -1,7 +1,7 @@
 <script lang="ts">
     import type { RepositoryModel } from 'maniok-core'
     import { NotificationService, RepositoryService, Logo } from 'maniok-core'
-    import UrlSelector from '../lib/components/utilities/urlselector.svelte'
+    import UrlSelector from '$lib/components/utilities/urlselector.svelte'
 
     import { goto } from '$app/navigation'
 

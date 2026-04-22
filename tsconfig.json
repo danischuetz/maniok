@@ -1,20 +1,7 @@
 {
     "extends": "./.svelte-kit/tsconfig.json",
     "compilerOptions": {
-        "paths": {
-            "maniok-core": ["./packages/maniok-core/src/index.ts"]
-        },
-        "rewriteRelativeImportExtensions": true,
-        "allowJs": true,
-        "checkJs": true,
-        "esModuleInterop": true,
-        "forceConsistentCasingInFileNames": true,
-        "resolveJsonModule": true,
-        "skipLibCheck": true,
-        "sourceMap": true,
-        "strict": true,
-        "moduleResolution": "bundler",
-        "verbatimModuleSyntax": true
+        "strict": true
     }
     // Path aliases are handled by https://svelte.dev/docs/kit/configuration#alias
     // except $lib which is handled by https://svelte.dev/docs/kit/configuration#files
