@@ -24,4 +24,4 @@ jobs:
       dockerfile: Dockerfile.Preview
       image_name: maniok-preview
       tag: ${{ github.event.inputs.tag }}
-      environment: production
+      environment: ${{ github.event.inputs.environment }}
