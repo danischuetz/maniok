@@ -21,8 +21,11 @@
     }
 
     onMount(() => {
-        NotificationService.notifyInfo(
-            'This example was AI-generated from a public GitHub repository using the Maniok architecture documentation prompt!'
+        NotificationService.notifyError(
+            'Disclaimer',
+            new Error(
+                'This example was AI-generated from a public GitHub repository using the Maniok architecture documentation prompt!'
+            )
         )
     })
 

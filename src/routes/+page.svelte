@@ -65,11 +65,11 @@
             <div class:navigating>
                 <UrlSelector class="self-stretch h-10" {repositoryUrl} />
             </div>
-            <div class="flex items-center gap-2 self-end">
+            <div class="flex items-start gap-2 self-end">
                 <button class="btn preset-filled-surface-950-50 rounded-full" onclick={onDemoClick}
                     >Docs / Demo</button
                 >
-                <ExampleSelection />
+                <ExampleSelection showAI={true} />
             </div>
         </div>
 
@@ -77,11 +77,21 @@
             <h4 class="h4">Quick Start</h4>
             <ol class="flex flex-col max-w-3xl list-decimal list-outside pl-5 gap-2">
                 <li>
-                    Run the <a
-                        class="a underline"
-                        href="https://github.com/danischuetz/maniok/blob/main/examples/maniok-architecture-prompt.md"
-                        >Maniok Architecture Prompt</a
-                    > in your repository to generate a C4 model from your codebase
+                    Create a <a class="a underline" href="https://docs.structurizr.com/dsl"
+                        >Structurizr</a
+                    >
+                    workspace and in a <code>.maniok</code> folder at the root of your repository.
+                    <code>.maniok/workspace.dsl</code> is the entrypoint to the documentation.
+                    <ul class="list-disc list-outside pl-5 mt-2">
+                        <li>
+                            You can also run the <a
+                                class="a underline"
+                                href="https://github.com/danischuetz/maniok/blob/main/examples/maniok-architecture-prompt.md"
+                                >Maniok Architecture Prompt</a
+                            > in your repository to generate a C4 model from your codebase as a starting
+                            point.
+                        </li>
+                    </ul>
                 </li>
                 <li>
                     Pull & run the Maniok-Preview Docker image, replacing `PATH` with the path to

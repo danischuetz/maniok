@@ -32,7 +32,7 @@
 }
 
 .svelte-flow__edge-label {
-    @apply dark:bg-surface-700 bg-surface-50 border border-surface-300-700  text-surface-900-100 w-28 text-[10px] p-0.5 m-0 rounded;
+    @apply dark:bg-surface-800 bg-surface-50 border border-surface-300  text-surface-900-100 w-28 text-[10px] p-0.5 m-0 rounded;
 }
 
 
