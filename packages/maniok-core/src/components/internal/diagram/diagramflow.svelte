@@ -1,5 +1,11 @@
 <script lang="ts">
-    import { SvelteFlow, useSvelteFlow, type Node, type Edge } from '@xyflow/svelte'
+    import {
+        SvelteFlow,
+        useSvelteFlow,
+        useUpdateNodeInternals,
+        type Node,
+        type Edge
+    } from '@xyflow/svelte'
 
     import type { DiagramModel } from '../../../model/diagram/diagrammodel'
     import { XYFlowUtils } from '../../../util/xyflowutils'
@@ -51,7 +57,7 @@
     }
 
     const { fitView } = useSvelteFlow()
-
+    const updateNodeInternals = useUpdateNodeInternals()
     // Update Nodes and Edges whenever the diagram changes
     $effect(() => {
         const { nodes: newNodes, edges: newEdges } = XYFlowUtils.toNodesAndEdges(diagram)
@@ -79,7 +85,11 @@
     })
 
     async function layoutNodes() {
-        const layoutModel: LayoutModel = XYFlowUtils.toLayoutModel(nodes, edges, diagram.direction)
+        const layoutModel: LayoutModel = XYFlowUtils.toLayoutModel(
+            nodes,
+            diagram.relationships,
+            diagram.direction
+        )
         const layoutEngine = new LayoutService()
         layoutEngine.layout(layoutModel)
 
@@ -94,6 +104,11 @@
         aspectRatio = initialWidth / initialHeight
 
         nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]
+
+        console.log('Nodes after layout:', nodes)
+        nodes = [...XYFlowUtils.setSourceAndTargetPositions(nodes, edges, diagram.direction)]
+        console.log('Nodes after setting source and target positions:', nodes)
+        updateNodeInternals(nodes.map((node) => node.id))
 
         requestAnimationFrame(() => {
             fitView(fitViewOptions)
