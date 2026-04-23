@@ -80,7 +80,7 @@
                     Create a <a class="a underline" href="https://docs.structurizr.com/dsl"
                         >Structurizr</a
                     >
-                    workspace and in a <code>.maniok</code> folder at the root of your repository.
+                    workspace in a <code>.maniok</code> folder at the root of your repository.
                     <code>.maniok/workspace.dsl</code> is the entrypoint to the documentation.
                     <ul class="list-disc list-outside pl-5 mt-2">
                         <li>
