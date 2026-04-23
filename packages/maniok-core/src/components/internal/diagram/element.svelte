@@ -3,12 +3,11 @@
     import type { ElementMetaDataModel } from '../../../model/diagram/elementmetadata'
     import { type NodeProps, Handle, Position } from '@xyflow/svelte'
 
-    let { data }: NodeProps = $props()
+    let { data, width, height }: NodeProps = $props()
 
     let metaData: ElementMetaDataModel = $derived(data.metaData as ElementMetaDataModel)
     let connections = $derived(data.connections as Array<ConnectionModel>)
 
-    const handleSpacing = 20
     let cssElementClassExtension = $derived.by(() => {
         return metaData.external ? 'external' : 'internal'
     })
@@ -17,12 +16,27 @@
         return connections.filter((conn) => conn.position === position).length
     }
 
-    function getHandleOffset(connection: ConnectionModel): number {
+    function getStyle(connection: ConnectionModel): string {
         const total = getNumConnections(connection.position as Position)
         const index = connections
             .filter((conn) => conn.position === connection.position)
             .findIndex((conn) => conn.id === connection.id)
-        return (index - (total - 1) / 2) * handleSpacing
+
+        const from: string =
+            connection.position === Position.Top || connection.position === Position.Bottom
+                ? 'left'
+                : 'top'
+        const mainDimension: number =
+            connection.position === Position.Top || connection.position === Position.Bottom
+                ? (width ?? 100)
+                : (height ?? 100)
+
+        console.log('(index + 1) * mainDimension / (total + 1)', index, mainDimension, total)
+
+        const offset = ((index + 1) * mainDimension) / (total + 1)
+        const style = `${from}: ${offset}px;`
+        console.log('style', style)
+        return style
     }
 </script>
 
@@ -32,7 +46,7 @@
         type={connection.type as 'source' | 'target'}
         position={connection.position as Position}
         id={connection.id}
-        style={`top: calc(50% + ${getHandleOffset(connection)}px);`}
+        style={getStyle(connection)}
     />
 {/each}
 <div class="flex flex-col space-y-2 element-body-base element-body-{cssElementClassExtension}">
