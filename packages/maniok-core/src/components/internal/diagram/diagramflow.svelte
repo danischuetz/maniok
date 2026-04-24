@@ -17,6 +17,7 @@
     import { getContext } from 'svelte'
     import { Maximize, Minimize } from 'lucide-svelte'
     import PersonComponent from './person.svelte'
+    import CustomEdge from './edge.svelte'
     interface Props {
         class?: string
         diagram: DiagramModel
@@ -56,8 +57,13 @@
         group: GroupComponent
     }
 
+    const edgeTypes = {
+        custom: CustomEdge
+    }
+
     const { fitView } = useSvelteFlow()
     const updateNodeInternals = useUpdateNodeInternals()
+
     // Update Nodes and Edges whenever the diagram changes
     $effect(() => {
         const { nodes: newNodes, edges: newEdges } = XYFlowUtils.toNodesAndEdges(diagram)
@@ -104,10 +110,7 @@
         aspectRatio = initialWidth / initialHeight
 
         nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]
-
-        console.log('Nodes after layout:', nodes)
         nodes = [...XYFlowUtils.setSourceAndTargetPositions(nodes, edges, diagram.direction)]
-        console.log('Nodes after setting source and target positions:', nodes)
         updateNodeInternals(nodes.map((node) => node.id))
 
         requestAnimationFrame(() => {
@@ -139,6 +142,7 @@
         bind:edges
         height={fitViewPort ? height : undefined}
         {nodeTypes}
+        {edgeTypes}
         minZoom={0.2}
         maxZoom={2}
         preventScrolling={false}
