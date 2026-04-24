@@ -12,7 +12,9 @@
 
 {#each connections as connection}
     <Handle
-        class={connection.type === 'target' ? 'opacity-0' : ''}
+        class="handle {connection.type === 'target'
+            ? 'opacity-0'
+            : (connection.isReverseEdge ?? 'handle-reverse')}"
         type={connection.type as 'source' | 'target'}
         position={connection.position as Position}
         id={connection.id}

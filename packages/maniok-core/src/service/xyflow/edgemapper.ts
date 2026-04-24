@@ -1,6 +1,7 @@
 import { type Node, type Edge, Position, MarkerType } from '@xyflow/svelte'
 import { type RelationshipModel } from '../../model/diagram/relationship'
 import type { ConnectionModel } from '../../model/diagram/connection'
+import type { ElementMetaDataModel } from '../../model/diagram/elementmetadata'
 
 export class EdgeMapper {
     static toEdges(nodes: Node[], relationships: RelationshipModel[]): Edge[] {
@@ -30,6 +31,13 @@ export class EdgeMapper {
                 type: 'target'
             })
 
+            const sourceNodeMetaData: ElementMetaDataModel = sourceNode.data
+                .metaData as ElementMetaDataModel
+            const targetNodeMetaData: ElementMetaDataModel = targetNode.data
+                .metaData as ElementMetaDataModel
+            const connectsExternally: boolean =
+                (sourceNodeMetaData.external && targetNodeMetaData.external) || false
+
             return {
                 id: relationship.id,
                 source: sourceNode.id,
@@ -37,6 +45,9 @@ export class EdgeMapper {
                 sourceHandle: sourceId,
                 targetHandle: targetId,
                 label: relationship.description ?? '',
+                data: {
+                    connectsExternally: connectsExternally
+                },
                 type: 'custom'
             }
         })

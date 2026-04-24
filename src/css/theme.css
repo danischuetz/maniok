@@ -179,7 +179,7 @@
 	--color-error-contrast-900: var(--color-error-contrast-light);
 	--color-error-contrast-950: var(--color-error-contrast-light);
 	--color-surface-50: oklch(100% 0 none);
-	--color-surface-100: oklch(83.7% 0.01 271.4deg);
+	--color-surface-100: oklch(98% 0.01 271.4deg);
 	--color-surface-200: oklch(71.5% 0.01 271.25deg);
 	--color-surface-300: oklch(61% 0.01 271.09deg);
 	--color-surface-400: oklch(52% 0.01 270.89deg);

@@ -54,6 +54,17 @@ export class ConnectionPositioner {
 
             const isReverseEdge = edgeDirection !== diagramDirection
 
+            sourceConnection.isReverseEdge = isReverseEdge
+            targetConnection.isReverseEdge = isReverseEdge
+
+            const connectsExternally: boolean =
+                (edge.data as { connectsExternally?: boolean }).connectsExternally || false
+            const color = connectsExternally
+                ? 'var(--color-edge-external)'
+                : isReverseEdge
+                  ? 'var(--color-edge-reverse)'
+                  : 'var(--color-edge)'
+
             edge.data = {
                 ...edge.data,
                 isReverseEdge
@@ -63,7 +74,7 @@ export class ConnectionPositioner {
                 type: MarkerType.ArrowClosed,
                 width: 20,
                 height: 20,
-                color: isReverseEdge ? 'var(--color-edge-reverse)' : 'var(--color-edge)',
+                color: color,
                 strokeWidth: 1
             }
         })

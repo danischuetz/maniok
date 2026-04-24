@@ -1,7 +1,8 @@
 /* Additional color definitions */
 
 @theme {
-    --color-edge: var(--color-secondary-500);
-    --color-edge-reverse: var(--color-tertiary-500);
+    --color-edge: light-dark(var(--color-surface-400), var(--color-surface-200));
+    --color-edge-external: light-dark(var(--color-surface-600), var(--color-surface-400));
+    --color-edge-reverse: light-dark(var(--color-surface-200), var(--color-surface-500));
     --color-surface-300-500: light-dark(var(--color-surface-300), var(--color-surface-500));
 }

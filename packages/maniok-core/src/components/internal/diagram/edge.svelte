@@ -32,7 +32,9 @@
 </script>
 
 <BaseEdge
-    class={isReverseEdge ? 'edge edge-reverse' : 'edge'}
+    class="edge {isReverseEdge ? 'edge-reverse' : ''} {data?.connectsExternally
+        ? 'edge-external'
+        : ''}"
     path={edgePath}
     {markerStart}
     {markerEnd}

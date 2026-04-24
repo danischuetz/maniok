@@ -28,21 +28,32 @@
 }
 
 .edge {
-    @apply stroke-edge stroke-1;
+    @apply stroke-edge stroke-1 drop-shadow-md ;
 }
 
 .edge-reverse {
-    @apply stroke-edge-reverse stroke-1;
+    @apply stroke-edge-reverse;
+}
+
+.edge-external {
+    @apply stroke-edge-external;
 }
 
 .edge-label {
-    @apply dark:bg-surface-800 bg-surface-50 border border-edge text-edge max-w-28 text-[10px] p-0.5 m-0 rounded;
+    @apply dark:bg-surface-500 bg-surface-50 border border-edge/20 text-surface-900-100 max-w-28 text-[10px] p-0.5 m-0 rounded shadow-md shadow-black/5;
 }
 
 .edge-label-reverse {
-   @apply border-edge-reverse text-edge-reverse ;
+   @apply dark:bg-surface-600 bg-surface-100 border-edge-reverse/20;
 }
 
+.handle {
+    @apply size-2 bg-edge rounded-full border-none;
+}
+
+.handle-reverse {
+    @apply bg-edge-reverse;
+}
 
 .svelte-flow__node-group {
     @apply bg-surface-100/10 border-surface-400-600 border rounded-lg;
@@ -65,7 +76,7 @@
 }
 
 .element-body-base {
-    @apply rounded min-w-46 max-w-52 p-2;
+    @apply rounded min-w-46 max-w-52 p-2 shadow-md ;
 }
 
 .element-body-internal {
