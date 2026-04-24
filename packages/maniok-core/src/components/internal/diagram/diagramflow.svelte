@@ -8,7 +8,7 @@
     } from '@xyflow/svelte'
 
     import type { DiagramModel } from '../../../model/diagram/diagrammodel'
-    import { XYFlowUtils } from '../../../util/xyflowutils'
+    import { XYFlowService } from '../../../service/xyflowservice'
     import { LayoutService } from '../../../service/layoutservice'
     import ElementComponent from './element.svelte'
     import GroupComponent from './group.svelte'
@@ -66,7 +66,7 @@
 
     // Update Nodes and Edges whenever the diagram changes
     $effect(() => {
-        const { nodes: newNodes, edges: newEdges } = XYFlowUtils.toNodesAndEdges(diagram)
+        const { nodes: newNodes, edges: newEdges } = XYFlowService.toNodesAndEdges(diagram)
         nodes = [...newNodes]
         edges = [...newEdges]
 
@@ -91,7 +91,7 @@
     })
 
     async function layoutNodes() {
-        const layoutModel: LayoutModel = XYFlowUtils.toLayoutModel(
+        const layoutModel: LayoutModel = XYFlowService.toLayoutModel(
             nodes,
             diagram.relationships,
             diagram.direction
@@ -109,8 +109,8 @@
         )
         aspectRatio = initialWidth / initialHeight
 
-        nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]
-        nodes = [...XYFlowUtils.setSourceAndTargetPositions(nodes, edges, diagram.direction)]
+        nodes = [...XYFlowService.applyLayoutToNodes(nodes, layoutModel)]
+        nodes = [...XYFlowService.setSourceAndTargetPositions(nodes, edges, diagram.direction)]
         updateNodeInternals(nodes.map((node) => node.id))
 
         requestAnimationFrame(() => {

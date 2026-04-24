@@ -16,7 +16,7 @@
         type={connection.type as 'source' | 'target'}
         position={connection.position as Position}
         id={connection.id}
-        style={UIUtils.getStyle(connection, connections, width, height)}
+        style={UIUtils.getStyle(connection, connections, width, height, 0.5)}
     />
 {/each}
 <div class="flex flex-col items-center body-person">

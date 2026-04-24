@@ -10,7 +10,8 @@ export class UIUtils {
         connection: ConnectionModel,
         connections: Array<ConnectionModel>,
         width?: number,
-        height?: number
+        height?: number,
+        spread: number = 1
     ): string {
         const total = UIUtils.getNumConnections(connections, connection.position as Position)
         const index = connections
@@ -26,7 +27,9 @@ export class UIUtils {
                 ? (width ?? 100)
                 : (height ?? 100)
 
-        const offset = ((index + 1) * mainDimension) / (total + 1)
+        const offset =
+            ((index + 1) * mainDimension * spread) / (total + 1) +
+            (mainDimension * (1 - spread)) / 2
         const style = `${from}: ${offset}px;`
         return style
     }
