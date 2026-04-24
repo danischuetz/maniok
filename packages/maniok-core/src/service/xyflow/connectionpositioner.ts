@@ -1,4 +1,4 @@
-import { type Node, type Edge, Position } from '@xyflow/svelte'
+import { type Node, type Edge, Position, MarkerType } from '@xyflow/svelte'
 import type { ConnectionModel } from '../../model/diagram/connection'
 import { DirectionEnum } from '../../model/shared/direction'
 import { ConnectionSorter } from './connectionsorter'
@@ -8,8 +8,8 @@ export class ConnectionPositioner {
     static setSourceAndTargetPositions(
         nodes: Node[],
         edges: Edge[],
-        direction: DirectionEnum
-    ): Node[] {
+        diagramDirection: DirectionEnum
+    ): { nodes: Node[]; edges: Edge[] } {
         edges.forEach((edge) => {
             const sourceNode = nodes.find((node) => node.id === edge.source)
             const targetNode = nodes.find((node) => node.id === edge.target)
@@ -21,7 +21,7 @@ export class ConnectionPositioner {
                 sourceNode,
                 targetNode,
                 nodes,
-                direction
+                diagramDirection
             )
 
             const sourceConnections = sourceNode.data.connections as ConnectionModel[]
@@ -51,19 +51,37 @@ export class ConnectionPositioner {
                     targetConnection.position = Position.Bottom
                     break
             }
+
+            const isReverseEdge = edgeDirection !== diagramDirection
+
+            edge.data = {
+                ...edge.data,
+                isReverseEdge
+            }
+
+            edge.markerEnd = {
+                type: MarkerType.ArrowClosed,
+                width: 20,
+                height: 20,
+                color: isReverseEdge ? 'var(--color-edge-reverse)' : 'var(--color-edge)',
+                strokeWidth: 1
+            }
         })
 
         ConnectionSorter.sortConnectionsPerPosition(nodes, edges)
 
-        return nodes.map((node) => ({
-            ...node,
-            data: {
-                ...node.data,
-                connections: ((node.data.connections as ConnectionModel[] | undefined) ?? []).map(
-                    (connection) => ({ ...connection })
-                )
-            }
-        }))
+        return {
+            nodes: nodes.map((node) => ({
+                ...node,
+                data: {
+                    ...node.data,
+                    connections: (
+                        (node.data.connections as ConnectionModel[] | undefined) ?? []
+                    ).map((connection) => ({ ...connection }))
+                }
+            })),
+            edges: edges.map((edge) => ({ ...edge }))
+        }
     }
 
     static getEdgeDirection(

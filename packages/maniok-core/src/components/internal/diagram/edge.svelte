@@ -24,7 +24,21 @@
             targetPosition
         })
     )
+
+    let isReverseEdge: boolean = $derived.by(() => {
+        if (!data) return false
+        return (data.isReverseEdge as boolean) ?? false
+    })
 </script>
 
-<BaseEdge path={edgePath} {markerStart} {markerEnd} />
-<EdgeLabel class="edge-label" x={labelX} y={labelY}>{label}</EdgeLabel>
+<BaseEdge
+    class={isReverseEdge ? 'edge edge-reverse' : 'edge'}
+    path={edgePath}
+    {markerStart}
+    {markerEnd}
+/>
+<EdgeLabel
+    class={isReverseEdge ? 'edge-label edge-label-reverse' : 'edge-label'}
+    x={labelX}
+    y={labelY}>{label}</EdgeLabel
+>

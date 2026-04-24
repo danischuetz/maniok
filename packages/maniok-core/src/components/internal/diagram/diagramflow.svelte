@@ -110,7 +110,13 @@
         aspectRatio = initialWidth / initialHeight
 
         nodes = [...XYFlowService.applyLayoutToNodes(nodes, layoutModel)]
-        nodes = [...XYFlowService.setSourceAndTargetPositions(nodes, edges, diagram.direction)]
+        const positioned = XYFlowService.setSourceAndTargetPositions(
+            nodes,
+            edges,
+            diagram.direction
+        )
+        nodes = [...positioned.nodes]
+        edges = [...positioned.edges]
         updateNodeInternals(nodes.map((node) => node.id))
 
         requestAnimationFrame(() => {

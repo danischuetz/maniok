@@ -37,18 +37,7 @@ export class EdgeMapper {
                 sourceHandle: sourceId,
                 targetHandle: targetId,
                 label: relationship.description ?? '',
-                data: {
-                    startLabel: relationship.description ?? '',
-                    endLabel: ''
-                },
-                type: 'custom',
-                markerEnd: {
-                    type: MarkerType.ArrowClosed,
-                    width: 20,
-                    height: 20,
-                    color: 'var(--color-surface-950-50)',
-                    strokeWidth: 1
-                }
+                type: 'custom'
             }
         })
 

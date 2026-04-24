@@ -27,12 +27,20 @@
     --background-color-default: transparent;
 }
 
-.svelte-flow__edge-path {
-    @apply stroke-surface-500 stroke-1;
+.edge {
+    @apply stroke-edge stroke-1;
+}
+
+.edge-reverse {
+    @apply stroke-edge-reverse stroke-1;
 }
 
 .edge-label {
-    @apply dark:bg-surface-800 bg-surface-50 border border-surface-300 text-surface-900-100 max-w-28 text-[10px] p-0.5 m-0 rounded;
+    @apply dark:bg-surface-800 bg-surface-50 border border-edge text-edge max-w-28 text-[10px] p-0.5 m-0 rounded;
+}
+
+.edge-label-reverse {
+   @apply border-edge-reverse text-edge-reverse ;
 }
 
 

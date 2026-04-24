@@ -35,7 +35,7 @@ export class XYFlowService {
         nodes: Node[],
         edges: Edge[],
         direction: DirectionEnum
-    ): Node[] {
+    ): { nodes: Node[]; edges: Edge[] } {
         return ConnectionPositioner.setSourceAndTargetPositions(nodes, edges, direction)
     }
 }
