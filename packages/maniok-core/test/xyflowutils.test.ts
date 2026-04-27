@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest'
-import { createNestedDiagram } from './utils/testDiagrams'
+import { createMultiConnectionDiagram, createNestedDiagram } from './utils/testDiagrams'
 import { XYFlowUtils } from '../src/util/xyflowutils'
 import type { Edge, Node } from '@xyflow/svelte'
 import { DiagramUtils } from '../src/util/diagramutils'
@@ -18,7 +18,8 @@ describe('xyflowutils', () => {
     it('should create edges for all relationships in the diagram', () => {
         const diagram = createNestedDiagram(DirectionEnum.LeftRight)
 
-        const edges: Edge[] = XYFlowUtils.toEdges(diagram.relationships)
+        const nodes: Node[] = XYFlowUtils.toNodes(diagram.elements)
+        const edges: Edge[] = XYFlowUtils.toEdges(nodes, diagram.relationships)
         expect(edges.length).toBe(diagram.relationships.length)
     })
 
@@ -26,7 +27,7 @@ describe('xyflowutils', () => {
         const diagram = createNestedDiagram(DirectionEnum.LeftRight)
 
         const nodes: Node[] = XYFlowUtils.toNodes(diagram.elements)
-        const edges: Edge[] = XYFlowUtils.toEdges(diagram.relationships)
+        const edges: Edge[] = XYFlowUtils.toEdges(nodes, diagram.relationships)
 
         edges.forEach((edge) => {
             const sourceNode = nodes.find((node) => node.id === edge.source)
@@ -37,19 +38,19 @@ describe('xyflowutils', () => {
         })
     })
 
-    it('should set proper source and target positions according to the diagram direction', () => {
-        const diagram = createNestedDiagram(DirectionEnum.LeftRight)
+    it('should set unique edge source and taget handle ids for multiple connections', () => {
+        const diagram = createMultiConnectionDiagram(DirectionEnum.LeftRight)
 
-        const { nodes, edges } = XYFlowUtils.toNodesAndEdges(diagram)
+        const nodes: Node[] = XYFlowUtils.toNodes(diagram.elements)
+        const edges: Edge[] = XYFlowUtils.toEdges(nodes, diagram.relationships)
 
-        XYFlowUtils.setSourceAndTargetPositions(nodes, edges, diagram.direction)
+        const sourceIds = edges.map((edge) => edge.sourceHandle)
+        const targetIds = edges.map((edge) => edge.targetHandle)
 
-        edges.forEach((edge) => {
-            const sourceNode = nodes.find((node) => node.id === edge.source)!
-            const targetNode = nodes.find((node) => node.id === edge.target)!
+        const uniqueSourceIds = new Set(sourceIds)
+        const uniqueTargetIds = new Set(targetIds)
 
-            expect(sourceNode.sourcePosition).toBe('right')
-            expect(targetNode.targetPosition).toBe('left')
-        })
+        expect(uniqueSourceIds.size).toBe(edges.length)
+        expect(uniqueTargetIds.size).toBe(edges.length)
     })
 })

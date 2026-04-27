@@ -1,20 +1,27 @@
 <script lang="ts">
+    import type { ConnectionModel } from '../../../model/diagram/connection'
     import type { ElementMetaDataModel } from '../../../model/diagram/elementmetadata'
-    import { type NodeProps, Handle } from '@xyflow/svelte'
+    import { type NodeProps, Handle, Position } from '@xyflow/svelte'
     import { User } from 'lucide-svelte'
-
-    let { data, sourcePosition, targetPosition }: NodeProps = $props()
+    import { UIUtils } from '../../../util/uiutils'
+    let { data, width, height }: NodeProps = $props()
 
     let metaData: ElementMetaDataModel = $derived(data.metaData as ElementMetaDataModel)
+    let connections = $derived((data.connections as Array<ConnectionModel>) ?? [])
 </script>
 
-{#if sourcePosition}
-    <Handle type="source" position={sourcePosition} />
-{/if}
+{#each connections as connection}
+    <Handle
+        class="handle {connection.type === 'target'
+            ? 'opacity-0'
+            : (connection.isReverseEdge ?? 'handle-reverse')}"
+        type={connection.type as 'source' | 'target'}
+        position={connection.position as Position}
+        id={connection.id}
+        style={UIUtils.getStyle(connection, connections, width, height, 0.5)}
+    />
+{/each}
 <div class="flex flex-col items-center body-person">
     <User class="icon-person" />
     <span class="text-center name-person">{metaData.title}</span>
 </div>
-{#if targetPosition}
-    <Handle class="opacity-0" type="target" position={targetPosition} />
-{/if}

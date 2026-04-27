@@ -1,8 +1,14 @@
 <script lang="ts">
-    import { SvelteFlow, useSvelteFlow, type Node, type Edge } from '@xyflow/svelte'
+    import {
+        SvelteFlow,
+        useSvelteFlow,
+        useUpdateNodeInternals,
+        type Node,
+        type Edge
+    } from '@xyflow/svelte'
 
     import type { DiagramModel } from '../../../model/diagram/diagrammodel'
-    import { XYFlowUtils } from '../../../util/xyflowutils'
+    import { XYFlowService } from '../../../service/xyflowservice'
     import { LayoutService } from '../../../service/layoutservice'
     import ElementComponent from './element.svelte'
     import GroupComponent from './group.svelte'
@@ -11,6 +17,7 @@
     import { getContext } from 'svelte'
     import { Maximize, Minimize } from 'lucide-svelte'
     import PersonComponent from './person.svelte'
+    import CustomEdge from './edge.svelte'
     interface Props {
         class?: string
         diagram: DiagramModel
@@ -50,11 +57,16 @@
         group: GroupComponent
     }
 
+    const edgeTypes = {
+        custom: CustomEdge
+    }
+
     const { fitView } = useSvelteFlow()
+    const updateNodeInternals = useUpdateNodeInternals()
 
     // Update Nodes and Edges whenever the diagram changes
     $effect(() => {
-        const { nodes: newNodes, edges: newEdges } = XYFlowUtils.toNodesAndEdges(diagram)
+        const { nodes: newNodes, edges: newEdges } = XYFlowService.toNodesAndEdges(diagram)
         nodes = [...newNodes]
         edges = [...newEdges]
 
@@ -79,7 +91,11 @@
     })
 
     async function layoutNodes() {
-        const layoutModel: LayoutModel = XYFlowUtils.toLayoutModel(nodes, edges, diagram.direction)
+        const layoutModel: LayoutModel = XYFlowService.toLayoutModel(
+            nodes,
+            diagram.relationships,
+            diagram.direction
+        )
         const layoutEngine = new LayoutService()
         layoutEngine.layout(layoutModel)
 
@@ -93,7 +109,15 @@
         )
         aspectRatio = initialWidth / initialHeight
 
-        nodes = [...XYFlowUtils.applyLayoutToNodes(nodes, layoutModel)]
+        nodes = [...XYFlowService.applyLayoutToNodes(nodes, layoutModel)]
+        const positioned = XYFlowService.setSourceAndTargetPositions(
+            nodes,
+            edges,
+            diagram.direction
+        )
+        nodes = [...positioned.nodes]
+        edges = [...positioned.edges]
+        updateNodeInternals(nodes.map((node) => node.id))
 
         requestAnimationFrame(() => {
             fitView(fitViewOptions)
@@ -124,6 +148,7 @@
         bind:edges
         height={fitViewPort ? height : undefined}
         {nodeTypes}
+        {edgeTypes}
         minZoom={0.2}
         maxZoom={2}
         preventScrolling={false}
