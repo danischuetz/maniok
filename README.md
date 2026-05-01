@@ -4,7 +4,7 @@ The git-native solution for C4 architecture documentation - like Docusaurus for 
 
 Maniok is an interactive webapp to inspect git-hosted Structurizr documentation. It renders C4 diagrams embedded in written documentation (Markdown) to create comprehensive technical documentation which can be easily maintained.
 
-For an example, check out the [Maniok documentation](https://app.maniok.io/Z2l0aHViOmRhbmlzY2h1ZXR6L21hbmlvaw)!
+For an example, check out the [Maniok documentation](https://app.maniok.io/gh/danischuetz/maniok)!
 
 <img style="border-radius:6px;" alt="Maniok webapp screenshot" src="docs/webapp-screenshot.png" width="500">
 
