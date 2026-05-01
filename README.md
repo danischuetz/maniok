@@ -14,8 +14,8 @@ Have a look at the [public project](https://github.com/users/danischuetz/project
 
 ## Getting Started
 
-1. Run the [Maniok Architecture Prompt](https://github.com/danischuetz/maniok/blob/main/examples/maniok-architecture-prompt.md) in your repository to generate a C4 model from your codebase
-    - Or create a [Structurizr](https://docs.structurizr.com/dsl) workspace yourself and put it in a `.maniok` folder at the root of your repository (**the workspace must be named workspace.dsl**)
+1. Create a [Structurizr](https://docs.structurizr.com/dsl) workspace and put it in a `.maniok` folder at the root of your repository
+    - Or, run the [Maniok Architecture Prompt](https://github.com/danischuetz/maniok/blob/main/examples/maniok-architecture-prompt.md) in your repository to generate a C4 model from your codebase
 2. Pull & run the Maniok-Preview Docker image, replacing `PATH` with the path to the created .maniok folder
     ```
     docker pull ghcr.io/danischuetz/maniok/maniok-preview:latest
