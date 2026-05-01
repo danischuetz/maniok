@@ -27,11 +27,10 @@ Have a look at the [public project](https://github.com/users/danischuetz/project
 
 ## Current State & Restrictions
 
-The project is at a very early stage (Proof-of-concept) and has a limited feature set. That is about to change but currently:
+The project is at a very early stage (Proof-of-concept) and has a limited feature set:
 
-- It does currently work on **open source repositories only**
-- Diagram layout doesn't work well in all cases and for uni-directional flows only
-- On [https://app.maniok.io](https://app.maniok.io), the branch on viewed repositories is currently fixed to "HEAD"
+- Public sharing via <https://app.maniok.io> currently works on open source repositories only
+- On [https://app.maniok.io](https://app.maniok.io), the branch on viewed repositories is fixed to "HEAD"
 
 # MVP
 
