@@ -11,14 +11,14 @@
     } from 'maniok-core'
     import type { LayoutProps } from './$types'
     import { onMount } from 'svelte'
-    import type { CustomProperties } from '@plausible-analytics/tracker'
+    // import type { CustomProperties } from '@plausible-analytics/tracker'
     import { selectedExample } from '$lib/state/examplepage'
 
     let trackPageview: ((url?: string) => void) | undefined = undefined
 
     afterNavigate(({ to }) => {
         if (!trackPageview) return
-        trackPageview(to?.url.href)
+        // trackPageview(to?.url.href)
     })
 
     $effect(() => {
@@ -51,29 +51,27 @@
         return 'root'
     }
 
-    onMount(() => {
-        import('@plausible-analytics/tracker').then(({ init, track }) => {
-            init({
-                domain: 'app.maniok.io',
-                outboundLinks: true,
-                autoCapturePageviews: false,
-                customProperties: (eventName): CustomProperties => {
-                    if (eventName === 'pageview') {
-                        return {
-                            type: getVisitType()
-                        }
-                    }
-                    return {}
-                }
-            })
-
-            trackPageview = (url?: string) => {
-                track('pageview', { url: url ?? window.location.href })
-            }
-
-            trackPageview(window.location.href)
-        })
-    })
+    // onMount(() => {
+    //     import('@plausible-analytics/tracker').then(({ init, track }) => {
+    //         init({
+    //             domain: 'app.maniok.io',
+    //             outboundLinks: true,
+    //             autoCapturePageviews: false,
+    //             customProperties: (eventName): CustomProperties => {
+    //                 if (eventName === 'pageview') {
+    //                     return {
+    //                         type: getVisitType()
+    //                     }
+    //                 }
+    //                 return {}
+    //             }
+    //         })
+    //         trackPageview = (url?: string) => {
+    //             track('pageview', { url: url ?? window.location.href })
+    //         }
+    //         trackPageview(window.location.href)
+    //     })
+    // })
 
     let { children }: LayoutProps = $props()
 </script>

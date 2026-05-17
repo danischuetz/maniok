@@ -11,14 +11,9 @@
         <section class="flex flex-col gap-2">
             <h2 class="h4">Analytics</h2>
             <p>
-                We load Plausible Analytics in the browser to measure aggregate usage of the site
-                like page views. We do not use cookies or any other tracking technologies, and we do
-                not collect personally identifiable information. For further information see the <a
-                    class="a underline"
-                    href="https://plausible.io/data-policy"
-                    target="_blank"
-                    rel="noopener noreferrer">Plausible Data Policy</a
-                >.
+                We load analytics in the browser to measure aggregate usage of the site like page
+                views. We do not use cookies or any other tracking technologies, and we do not
+                collect personally identifiable information.
             </p>
         </section>
 

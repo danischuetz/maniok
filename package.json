@@ -27,7 +27,6 @@
         "vite": "^7.3.1"
     },
     "dependencies": {
-        "@plausible-analytics/tracker": "^0.4.4",
         "lucide-svelte": "^0.577.0",
         "maniok-core": "file:packages/maniok-core",
         "maniok-exporter": "file:packages/maniok-exporter"
