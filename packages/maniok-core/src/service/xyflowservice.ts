@@ -11,6 +11,7 @@ import { LayoutExtractor } from './xyflow/layoutextractor'
 import { ConnectionPositioner } from './xyflow/connectionpositioner'
 import { ConnectionSorter } from './xyflow/connectionsorter'
 import { NodePositionResolver } from './xyflow/nodepositionresolver'
+import { EdgeLabelPositioner } from './xyflow/edgelabelpositioner'
 
 export class XYFlowService {
     static toNodesAndEdges(diagram: DiagramModel): { nodes: Node[]; edges: Edge[] } {
@@ -36,6 +37,11 @@ export class XYFlowService {
         edges: Edge[],
         direction: DirectionEnum
     ): { nodes: Node[]; edges: Edge[] } {
-        return ConnectionPositioner.setSourceAndTargetPositions(nodes, edges, direction)
+        const positioned = ConnectionPositioner.setSourceAndTargetPositions(nodes, edges, direction)
+
+        return {
+            nodes: positioned.nodes,
+            edges: EdgeLabelPositioner.positionLabels(positioned.nodes, positioned.edges)
+        }
     }
 }
