@@ -9,6 +9,7 @@
 
     import type { DiagramModel } from '../../../model/diagram/diagrammodel'
     import { XYFlowService } from '../../../service/xyflowservice'
+    import type { EdgeLabelSizeById } from '../../../service/xyflowservice'
     import { LayoutService } from '../../../service/layoutservice'
     import ElementComponent from './element.svelte'
     import GroupComponent from './group.svelte'
@@ -51,6 +52,8 @@
         includeHiddenNodes: true
     }
 
+    const EDGE_LABEL_SELECTOR = '.svelte-flow__edge-label[data-edge-id]'
+
     const nodeTypes = {
         element: ElementComponent,
         person: PersonComponent,
@@ -61,7 +64,7 @@
         custom: CustomEdge
     }
 
-    const { fitView } = useSvelteFlow()
+    const { fitView, getZoom } = useSvelteFlow()
     const updateNodeInternals = useUpdateNodeInternals()
 
     // Update Nodes and Edges whenever the diagram changes
@@ -91,6 +94,8 @@
     })
 
     async function layoutNodes() {
+        const measuredLabelSizes = readEdgeLabelSizesFromDom()
+
         const layoutModel: LayoutModel = XYFlowService.toLayoutModel(
             nodes,
             diagram.relationships,
@@ -116,12 +121,49 @@
             diagram.direction
         )
         nodes = [...positioned.nodes]
-        edges = [...positioned.edges]
+        edges = [
+            ...XYFlowService.positionEdgeLabels(
+                positioned.nodes,
+                positioned.edges,
+                measuredLabelSizes
+            )
+        ]
         updateNodeInternals(nodes.map((node) => node.id))
 
         requestAnimationFrame(() => {
             fitView(fitViewOptions)
         })
+    }
+
+    function readEdgeLabelSizesFromDom(): EdgeLabelSizeById {
+        if (!containerElement) return {}
+
+        const currentEdgesWithLabels = edges.filter(
+            (edge) => String(edge.label ?? '').trim().length > 0
+        )
+        if (currentEdgesWithLabels.length === 0) return {}
+
+        const knownEdgeIds = new Set(currentEdgesWithLabels.map((edge) => edge.id))
+        const measuredById: EdgeLabelSizeById = {}
+
+        const zoom = getZoom()
+        const flowZoom = Number.isFinite(zoom) && zoom > 0 ? zoom : 1
+        const labelElements = containerElement.querySelectorAll<HTMLElement>(EDGE_LABEL_SELECTOR)
+
+        labelElements.forEach((element) => {
+            const edgeId = element.dataset.edgeId
+            if (!edgeId || !knownEdgeIds.has(edgeId)) return
+
+            const rect = element.getBoundingClientRect()
+            if (rect.width <= 0 || rect.height <= 0) return
+
+            measuredById[edgeId] = {
+                width: rect.width / flowZoom,
+                height: rect.height / flowZoom
+            }
+        })
+
+        return measuredById
     }
 
     async function toggleFocus() {

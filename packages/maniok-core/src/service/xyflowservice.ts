@@ -1,16 +1,15 @@
 import { type Node, type Edge } from '@xyflow/svelte'
-import { type ElementModel } from '../model/diagram/element'
 import { type RelationshipModel } from '../model/diagram/relationship'
 import { DirectionEnum } from '../model/shared/direction'
 import type { LayoutModel } from '../model/layout/layout'
 import type { DiagramModel } from '../model/diagram/diagrammodel'
-import type { ConnectionModel } from '../model/diagram/connection'
 import { NodeMapper } from './xyflow/nodemapper'
 import { EdgeMapper } from './xyflow/edgemapper'
 import { LayoutExtractor } from './xyflow/layoutextractor'
 import { ConnectionPositioner } from './xyflow/connectionpositioner'
-import { ConnectionSorter } from './xyflow/connectionsorter'
-import { NodePositionResolver } from './xyflow/nodepositionresolver'
+import { EdgeLabelPositioner, type EdgeLabelSizeById } from './xyflow/edgelabelpositioner'
+
+export type { EdgeLabelSize, EdgeLabelSizeById } from './xyflow/edgelabelpositioner'
 
 export class XYFlowService {
     static toNodesAndEdges(diagram: DiagramModel): { nodes: Node[]; edges: Edge[] } {
@@ -37,5 +36,13 @@ export class XYFlowService {
         direction: DirectionEnum
     ): { nodes: Node[]; edges: Edge[] } {
         return ConnectionPositioner.setSourceAndTargetPositions(nodes, edges, direction)
+    }
+
+    static positionEdgeLabels(
+        nodes: Node[],
+        edges: Edge[],
+        measuredLabelSizes: EdgeLabelSizeById = {}
+    ): Edge[] {
+        return EdgeLabelPositioner.positionLabels(nodes, edges, measuredLabelSizes)
     }
 }

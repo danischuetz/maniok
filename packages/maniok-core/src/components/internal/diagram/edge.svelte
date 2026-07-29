@@ -2,6 +2,7 @@
     import { getBezierPath, BaseEdge, EdgeLabel, type EdgeProps } from '@xyflow/svelte'
 
     let {
+        id,
         sourceX,
         sourceY,
         sourcePosition,
@@ -25,6 +26,18 @@
         })
     )
 
+    let resolvedLabelX: number = $derived.by(() => {
+        if (!data) return labelX
+        const placedLabelX = (data.labelX as number | undefined) ?? undefined
+        return placedLabelX ?? labelX
+    })
+
+    let resolvedLabelY: number = $derived.by(() => {
+        if (!data) return labelY
+        const placedLabelY = (data.labelY as number | undefined) ?? undefined
+        return placedLabelY ?? labelY
+    })
+
     let isReverseEdge: boolean = $derived.by(() => {
         if (!data) return false
         return (data.isReverseEdge as boolean) ?? false
@@ -40,7 +53,8 @@
     {markerEnd}
 />
 <EdgeLabel
+    data-edge-id={id}
     class={isReverseEdge ? 'edge-label edge-label-reverse' : 'edge-label'}
-    x={labelX}
-    y={labelY}>{label}</EdgeLabel
+    x={resolvedLabelX}
+    y={resolvedLabelY}>{label}</EdgeLabel
 >
