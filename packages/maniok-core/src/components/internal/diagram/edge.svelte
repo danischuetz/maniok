@@ -2,6 +2,7 @@
     import { getBezierPath, BaseEdge, EdgeLabel, type EdgeProps } from '@xyflow/svelte'
 
     let {
+        id,
         sourceX,
         sourceY,
         sourcePosition,
@@ -52,6 +53,7 @@
     {markerEnd}
 />
 <EdgeLabel
+    data-edge-id={id}
     class={isReverseEdge ? 'edge-label edge-label-reverse' : 'edge-label'}
     x={resolvedLabelX}
     y={resolvedLabelY}>{label}</EdgeLabel

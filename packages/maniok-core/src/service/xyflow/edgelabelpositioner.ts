@@ -14,17 +14,6 @@ type Rectangle = {
     height: number
 }
 
-type EdgeLabelData = {
-    labelX?: number
-    labelY?: number
-}
-
-type EdgeLabelPlacement = {
-    point: Point
-    score: number
-    rectangle: Rectangle
-}
-
 type EdgeGeometry = {
     sourcePoint: Point
     sourcePosition: Position
@@ -39,84 +28,111 @@ type BezierCurve = {
     target: Point
 }
 
-type LabelEstimate = {
+export type EdgeLabelSize = {
     width: number
     height: number
 }
 
-const LABEL_MAX_WIDTH = 112
-const LABEL_CHARACTER_WIDTH = 6
-const LABEL_LINE_HEIGHT = 16
-const LABEL_HORIZONTAL_INSET = 6
-const LABEL_VERTICAL_INSET = 6
+export type EdgeLabelSizeById = Record<string, EdgeLabelSize | undefined>
+
+const LABEL_MIN_DISTANCE = 4
 const BEZIER_CURVATURE = 0.25
+const SEARCH_STEP = 4
+const MAX_SEARCH_RADIUS = 240
 
-const NODE_OVERLAP_WEIGHT = 1_000_000
-const LABEL_OVERLAP_WEIGHT = 100_000
-const DISPLACEMENT_WEIGHT = 0.02
-const EDGE_NODE_MARGIN = 2
-
-const BASE_CANDIDATE_FACTORS = [0.35, 0.5, 0.65]
-const CANDIDATE_NORMAL_OFFSETS = [0, 18, -18, 36, -36, 52, -52]
+const SEARCH_DIRECTIONS: Point[] = [
+    { x: 1, y: 0 },
+    { x: 1, y: 1 },
+    { x: 0, y: 1 },
+    { x: -1, y: 1 },
+    { x: -1, y: 0 },
+    { x: -1, y: -1 },
+    { x: 0, y: -1 },
+    { x: 1, y: -1 }
+]
 
 export class EdgeLabelPositioner {
-    static positionLabels(nodes: Node[], edges: Edge[]): Edge[] {
+    static positionLabels(
+        nodes: Node[],
+        edges: Edge[],
+        measuredLabelSizes: EdgeLabelSizeById = {}
+    ): Edge[] {
         const nodeById = new Map(nodes.map((node) => [node.id, node]))
         const nodeObstacles = this.createNodeObstacles(nodes)
         const placedLabelRectangles: Rectangle[] = []
 
         return edges.map((edge) => {
             const labelText = String(edge.label ?? '').trim()
-            if (!labelText) return { ...edge }
+            if (!labelText) return this.clearLabelPosition(edge)
 
             const geometry = this.toEdgeGeometry(edge, nodeById)
-            if (!geometry) return { ...edge }
+            if (!geometry) return this.clearLabelPosition(edge)
 
-            const labelEstimate = this.estimateLabelBox(labelText)
+            const labelSize = this.resolveLabelSize(measuredLabelSizes[edge.id])
+            if (!labelSize) return this.clearLabelPosition(edge)
+
             const curve = this.createBezierCurve(geometry)
-            const defaultPoint = this.getBezierPoint(curve, 0.5)
-            const candidates = this.createCandidates(curve)
-            const bestPlacement = this.pickBestPlacement({
-                candidates,
-                labelEstimate,
-                defaultPoint,
-                nodeObstacles,
-                placedLabelRectangles
-            })
+            const center = this.getBezierPoint(curve, 0.5)
+            const centerRectangle = this.toCenteredRectangle(center, labelSize)
 
-            placedLabelRectangles.push(bestPlacement.rectangle)
+            const candidate = this.findValidPlacement(center, labelSize, nodeObstacles, placedLabelRectangles)
+            const chosenPoint = candidate ?? center
+            const chosenRectangle = candidate
+                ? this.toCenteredRectangle(candidate, labelSize)
+                : centerRectangle
+
+            placedLabelRectangles.push(chosenRectangle)
 
             return {
                 ...edge,
                 data: {
                     ...(edge.data ?? {}),
-                    labelX: bestPlacement.point.x,
-                    labelY: bestPlacement.point.y
+                    labelX: chosenPoint.x,
+                    labelY: chosenPoint.y
                 }
             }
         })
     }
 
+    private static resolveLabelSize(labelSize: EdgeLabelSize | undefined): EdgeLabelSize | undefined {
+        if (!labelSize) return undefined
+
+        const width = this.resolveDimension(labelSize.width)
+        const height = this.resolveDimension(labelSize.height)
+        if (!width || !height) return undefined
+
+        return {
+            width,
+            height
+        }
+    }
+
+    private static clearLabelPosition(edge: Edge): Edge {
+        const data = (edge.data ?? {}) as Record<string, unknown>
+
+        if (!('labelX' in data) && !('labelY' in data)) {
+            return { ...edge }
+        }
+
+        const { labelX: _, labelY: __, ...rest } = data
+
+        return {
+            ...edge,
+            data: rest
+        }
+    }
+
     private static createNodeObstacles(nodes: Node[]): Rectangle[] {
         return nodes
-            .map((node) => {
-                const nodeRectangle = this.toAbsoluteNodeRectangle(node, nodes)
-                if (!nodeRectangle) return undefined
-
-                return {
-                    x: nodeRectangle.x - EDGE_NODE_MARGIN,
-                    y: nodeRectangle.y - EDGE_NODE_MARGIN,
-                    width: nodeRectangle.width + EDGE_NODE_MARGIN * 2,
-                    height: nodeRectangle.height + EDGE_NODE_MARGIN * 2
-                }
-            })
+            .filter((node) => node.type !== 'group')
+            .map((node) => this.toAbsoluteNodeRectangle(node, nodes))
             .filter((rectangle): rectangle is Rectangle => rectangle !== undefined)
     }
 
     private static toAbsoluteNodeRectangle(node: Node, nodes: Node[]): Rectangle | undefined {
         const width = this.getNodeWidth(node)
         const height = this.getNodeHeight(node)
-        if (width <= 0 || height <= 0) return undefined
+        if (!width || !height) return undefined
 
         const position = NodePositionResolver.getAbsoluteNodePosition(node, nodes)
 
@@ -128,18 +144,20 @@ export class EdgeLabelPositioner {
         }
     }
 
-    private static getNodeWidth(node: Node): number {
-        return this.resolveDimension(node.measured?.width) ??
+    private static getNodeWidth(node: Node): number | undefined {
+        return (
+            this.resolveDimension(node.measured?.width) ??
             this.resolveDimension(node.width) ??
-            this.resolveDimension((node.data as { layoutWidth?: number }).layoutWidth) ??
-            0
+            this.resolveDimension((node.data as { layoutWidth?: number }).layoutWidth)
+        )
     }
 
-    private static getNodeHeight(node: Node): number {
-        return this.resolveDimension(node.measured?.height) ??
+    private static getNodeHeight(node: Node): number | undefined {
+        return (
+            this.resolveDimension(node.measured?.height) ??
             this.resolveDimension(node.height) ??
-            this.resolveDimension((node.data as { layoutHeight?: number }).layoutHeight) ??
-            0
+            this.resolveDimension((node.data as { layoutHeight?: number }).layoutHeight)
+        )
     }
 
     private static resolveDimension(value: number | undefined): number | undefined {
@@ -208,7 +226,7 @@ export class EdgeLabelPositioner {
         const absoluteNodePosition = NodePositionResolver.getAbsoluteNodePosition(node, allNodes)
         const width = this.getNodeWidth(node)
         const height = this.getNodeHeight(node)
-        if (width <= 0 || height <= 0) return undefined
+        if (!width || !height) return undefined
 
         const connections = (node.data.connections as ConnectionModel[] | undefined) ?? []
         const sideConnections = connections.filter((candidate) => candidate.position === position)
@@ -266,27 +284,6 @@ export class EdgeLabelPositioner {
         }
 
         return ((params.sideConnectionIndex + 1) * mainDimension) / (params.sideConnectionCount + 1)
-    }
-
-    private static estimateLabelBox(labelText: string): LabelEstimate {
-        const charactersPerLine = Math.max(
-            1,
-            Math.floor((LABEL_MAX_WIDTH - LABEL_HORIZONTAL_INSET) / LABEL_CHARACTER_WIDTH)
-        )
-        const labelLength = labelText.length
-        const lineCount = Math.max(1, Math.ceil(labelLength / charactersPerLine))
-
-        return {
-            width: Math.min(
-                LABEL_MAX_WIDTH,
-                Math.max(
-                    LABEL_HORIZONTAL_INSET,
-                    Math.min(labelLength, charactersPerLine) * LABEL_CHARACTER_WIDTH +
-                        LABEL_HORIZONTAL_INSET
-                )
-            ),
-            height: lineCount * LABEL_LINE_HEIGHT + LABEL_VERTICAL_INSET
-        }
     }
 
     private static createBezierCurve(geometry: EdgeGeometry): BezierCurve {
@@ -347,117 +344,73 @@ export class EdgeLabelPositioner {
         }
     }
 
-    private static getBezierTangent(curve: BezierCurve, t: number): Point {
-        const oneMinusT = 1 - t
-
-        return {
-            x:
-                3 * oneMinusT ** 2 * (curve.sourceControl.x - curve.source.x) +
-                6 * oneMinusT * t * (curve.targetControl.x - curve.sourceControl.x) +
-                3 * t ** 2 * (curve.target.x - curve.targetControl.x),
-            y:
-                3 * oneMinusT ** 2 * (curve.sourceControl.y - curve.source.y) +
-                6 * oneMinusT * t * (curve.targetControl.y - curve.sourceControl.y) +
-                3 * t ** 2 * (curve.target.y - curve.targetControl.y)
-        }
-    }
-
-    private static createCandidates(curve: BezierCurve): Point[] {
-        const candidates: Point[] = []
-
-        for (const factor of BASE_CANDIDATE_FACTORS) {
-            const basePoint = this.getBezierPoint(curve, factor)
-            const tangent = this.getBezierTangent(curve, factor)
-            const tangentLength = Math.hypot(tangent.x, tangent.y)
-            const normal =
-                tangentLength > 0
-                    ? { x: -tangent.y / tangentLength, y: tangent.x / tangentLength }
-                    : { x: 0, y: 1 }
-
-            for (const normalOffset of CANDIDATE_NORMAL_OFFSETS) {
-                candidates.push({
-                    x: basePoint.x + normal.x * normalOffset,
-                    y: basePoint.y + normal.y * normalOffset
-                })
-            }
-        }
-
-        return this.uniquePoints(candidates)
-    }
-
-    private static uniquePoints(points: Point[]): Point[] {
-        const keyToPoint = new Map<string, Point>()
-
-        points.forEach((point) => {
-            const key = `${Math.round(point.x * 10)}:${Math.round(point.y * 10)}`
-            if (!keyToPoint.has(key)) keyToPoint.set(key, point)
-        })
-
-        return Array.from(keyToPoint.values())
-    }
-
-    private static pickBestPlacement(params: {
-        candidates: Point[]
-        labelEstimate: LabelEstimate
-        defaultPoint: Point
-        nodeObstacles: Rectangle[]
+    private static findValidPlacement(
+        center: Point,
+        labelSize: EdgeLabelSize,
+        nodeObstacles: Rectangle[],
         placedLabelRectangles: Rectangle[]
-    }): EdgeLabelPlacement {
-        let bestPlacement: EdgeLabelPlacement | undefined
+    ): Point | undefined {
+        const centerRect = this.toCenteredRectangle(center, labelSize)
+        if (this.isPlacementValid(centerRect, nodeObstacles, placedLabelRectangles)) {
+            return center
+        }
 
-        params.candidates.forEach((candidate, index) => {
-            const rectangle = this.toCenteredRectangle(candidate, params.labelEstimate)
-            const nodeOverlapArea = this.getTotalOverlapArea(rectangle, params.nodeObstacles)
-            const labelOverlapArea = this.getTotalOverlapArea(rectangle, params.placedLabelRectangles)
-            const displacement =
-                (candidate.x - params.defaultPoint.x) ** 2 + (candidate.y - params.defaultPoint.y) ** 2
+        for (let radius = SEARCH_STEP; radius <= MAX_SEARCH_RADIUS; radius += SEARCH_STEP) {
+            for (const direction of SEARCH_DIRECTIONS) {
+                const candidate = {
+                    x: center.x + direction.x * radius,
+                    y: center.y + direction.y * radius
+                }
+                const candidateRect = this.toCenteredRectangle(candidate, labelSize)
 
-            const score =
-                nodeOverlapArea * NODE_OVERLAP_WEIGHT +
-                labelOverlapArea * LABEL_OVERLAP_WEIGHT +
-                displacement * DISPLACEMENT_WEIGHT +
-                index * Number.EPSILON
-
-            const placement: EdgeLabelPlacement = {
-                point: candidate,
-                score,
-                rectangle
-            }
-
-            if (!bestPlacement || placement.score < bestPlacement.score) {
-                bestPlacement = placement
-            }
-        })
-
-        if (!bestPlacement) {
-            return {
-                point: params.defaultPoint,
-                score: 0,
-                rectangle: this.toCenteredRectangle(params.defaultPoint, params.labelEstimate)
+                if (this.isPlacementValid(candidateRect, nodeObstacles, placedLabelRectangles)) {
+                    return candidate
+                }
             }
         }
 
-        return bestPlacement
+        return undefined
     }
 
-    private static toCenteredRectangle(center: Point, estimate: LabelEstimate): Rectangle {
+    private static isPlacementValid(
+        labelRect: Rectangle,
+        nodeObstacles: Rectangle[],
+        placedLabelRectangles: Rectangle[]
+    ): boolean {
+        return (
+            !this.overlapsAny(labelRect, nodeObstacles, LABEL_MIN_DISTANCE) &&
+            !this.overlapsAny(labelRect, placedLabelRectangles, LABEL_MIN_DISTANCE)
+        )
+    }
+
+    private static toCenteredRectangle(center: Point, size: EdgeLabelSize): Rectangle {
         return {
-            x: center.x - estimate.width / 2,
-            y: center.y - estimate.height / 2,
-            width: estimate.width,
-            height: estimate.height
+            x: center.x - size.width / 2,
+            y: center.y - size.height / 2,
+            width: size.width,
+            height: size.height
         }
     }
 
-    private static getTotalOverlapArea(rectangle: Rectangle, obstacles: Rectangle[]): number {
-        return obstacles.reduce((area, obstacle) => area + this.getOverlapArea(rectangle, obstacle), 0)
+    private static overlapsAny(rectangle: Rectangle, obstacles: Rectangle[], margin: number): boolean {
+        return obstacles.some((obstacle) =>
+            this.overlaps(rectangle, this.expandRectangle(obstacle, margin))
+        )
     }
 
-    private static getOverlapArea(left: Rectangle, right: Rectangle): number {
+    private static expandRectangle(rectangle: Rectangle, margin: number): Rectangle {
+        return {
+            x: rectangle.x - margin,
+            y: rectangle.y - margin,
+            width: rectangle.width + margin * 2,
+            height: rectangle.height + margin * 2
+        }
+    }
+
+    private static overlaps(left: Rectangle, right: Rectangle): boolean {
         const horizontalOverlap = Math.min(left.x + left.width, right.x + right.width) - Math.max(left.x, right.x)
         const verticalOverlap = Math.min(left.y + left.height, right.y + right.height) - Math.max(left.y, right.y)
 
-        if (horizontalOverlap <= 0 || verticalOverlap <= 0) return 0
-        return horizontalOverlap * verticalOverlap
+        return horizontalOverlap > 0 && verticalOverlap > 0
     }
 }
