@@ -48,7 +48,8 @@ export class EdgeMapper {
                 data: {
                     connectsExternally: connectsExternally
                 },
-                type: 'custom'
+                type: 'custom',
+                zIndex: 4
             }
         })
 

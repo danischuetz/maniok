@@ -40,7 +40,7 @@
 }
 
 .edge-label {
-    @apply dark:bg-surface-500 bg-surface-50 border border-edge/20 text-surface-900-100 max-w-28 text-[10px] p-0.5 m-0 rounded shadow-md shadow-black/5;
+    @apply dark:bg-surface-500 bg-surface-50 border border-edge/80 text-surface-900-100 max-w-28 text-xs p-0.5 m-0 rounded shadow-md shadow-black/5;
 }
 
 .edge-label-reverse {
@@ -96,17 +96,17 @@
 }
 
 .element-type-internal {
-    @apply text-[10px] text-surface-800-200 text-left;
+    @apply text-xs text-surface-800-200 text-left;
 }
 
 .element-type-external {
-    @apply text-[10px] text-surface-700-300 text-left;
+    @apply text-xs text-surface-700-300 text-left;
 }
 
 .element-description-internal {
-    @apply text-xs font-light text-surface-900-100 leading-tight;
+    @apply text-xs text-surface-900-100 leading-tight;
 }
 
 .element-description-external {
-    @apply text-xs font-light text-surface-900-100 leading-tight;
+    @apply text-xs text-surface-900-100 leading-tight;
 }
