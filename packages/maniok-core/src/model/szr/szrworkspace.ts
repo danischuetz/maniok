@@ -8,7 +8,7 @@ const documentationSchema = z.object({
     sections: z
         .array(
             z.object({
-                content: z.string(),
+                content: z.string().optional(),
                 filename: z.string().optional(),
                 format: z.string(),
                 order: z.number().int(),
