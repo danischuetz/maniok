@@ -3,7 +3,7 @@
     import type { ElementMetaDataModel } from '../../../model/diagram/elementmetadata'
     import { type NodeProps, Handle, Position } from '@xyflow/svelte'
     import { UIUtils } from '../../../util/uiutils'
-    let { data, width, height }: NodeProps = $props()
+    let { data }: NodeProps = $props()
 
     let metaData: ElementMetaDataModel = $derived(data.metaData as ElementMetaDataModel)
     let connections = $derived(data.connections as Array<ConnectionModel>)
@@ -21,7 +21,12 @@
         type={connection.type as 'source' | 'target'}
         position={connection.position as Position}
         id={connection.id}
-        style={UIUtils.getStyle(connection, connections, width, height)}
+        style={UIUtils.getStyle(
+            connection,
+            connections,
+            data.layoutWidth as number,
+            data.layoutHeight as number
+        )}
     />
 {/each}
 <div class="flex flex-col space-y-2 element-body-base element-body-{cssElementClassExtension}">

@@ -43,14 +43,31 @@ export class NodeMapper {
     static applyLayoutToNodes(nodes: Node[], layoutModel: LayoutModel): Node[] {
         return nodes.map((node) => {
             const layoutElement = layoutModel.layoutElements.find((e) => e.id === node.id)!
+
+            const position = {
+                x: layoutElement.x,
+                y: layoutElement.y
+            }
+
+            if (node.type === 'group') {
+                return {
+                    ...node,
+                    position,
+                    width: layoutElement.width,
+                    height: layoutElement.height
+                }
+            }
+
             return {
                 ...node,
-                position: {
-                    x: layoutElement.x,
-                    y: layoutElement.y
-                },
-                width: layoutElement.width,
-                height: layoutElement.height
+                position,
+                width: undefined,
+                height: undefined,
+                data: {
+                    ...node.data,
+                    layoutWidth: layoutElement.width,
+                    layoutHeight: layoutElement.height
+                }
             }
         })
     }
