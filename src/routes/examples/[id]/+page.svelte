@@ -50,9 +50,9 @@
             >
         </div>
         <span class="pl-2">Select an <ExampleDisclaimer repository={exampleRepositoryUrl} /></span>
-        <div class="flex gap-2">
+        <!-- <div class="flex gap-2">
             <ExampleSelection />
-        </div>
+        </div> -->
     </div>
 {/snippet}
 

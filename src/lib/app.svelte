@@ -76,17 +76,17 @@
                     <Logo class="h-10 fill-primary-500" />
                 </button>
             </div>
-            <div class="flex flex-1 items-center justify-end gap-4">
-                {#if capabilities.urlSelection}
-                    <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
-                {/if}
+            <!-- <div class="flex flex-1 items-center justify-end gap-4">
                 <div class="hidden lg:block">
                     {#if customComponent}
-                        {@render customComponent()}
+                    {@render customComponent()}
                     {/if}
                 </div>
-                <LightSwitch class="size-8 stroke-1" />
-            </div>
+            </div> -->
+            {#if capabilities.urlSelection}
+                <UrlSelector class="flex-1 max-w-lg hidden lg:flex" {repositoryUrl} />
+            {/if}
+            <LightSwitch class="size-8 stroke-1" />
         </header>
 
         <!-- Body -->

@@ -69,7 +69,7 @@
                 <button class="btn preset-filled-surface-950-50 rounded-full" onclick={onDemoClick}
                     >Docs / Demo</button
                 >
-                <ExampleSelection showAI={true} />
+                <!-- <ExampleSelection showAI={true} /> -->
             </div>
         </div>
 

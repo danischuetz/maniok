@@ -24,5 +24,5 @@
     {capabilities}
     repository={data.repository ?? undefined}
     workspaceJson={data.workspaceJson}
-    customComponent={exampleSelector}
+    // customComponent={exampleSelector}
 />
