@@ -8,11 +8,11 @@
 }
 
 .code {
-    @apply bg-secondary-100/20 text-surface-900-100 px-2 py-1 rounded-sm font-mono font-light text-sm;
+    @apply dark:bg-surface-950 bg-surface-200 text-surface-900-100 px-2 py-1 rounded-sm font-mono font-light text-sm;
 }
 
 code {
-    @apply bg-secondary-100/20 text-surface-900-100 px-2 py-1 rounded-sm font-mono font-light text-sm;
+    @apply dark:bg-surface-950 bg-surface-200 px-2 py-1 rounded-sm font-mono font-light text-sm;
 }
 
 /* Accessibility: Hide elements visually but keep them for screen readers */
