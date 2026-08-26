@@ -17,8 +17,8 @@
 
 [data-mode="dark"] .app {
     background: radial-gradient(circle at 20% 20%,
-            oklch(from var(--color-surface-900) l c h),
-            oklch(from var(--color-surface-800) l c h / 0.3));
+            oklch(from var(--color-surface-800) l c h),
+            oklch(from var(--color-surface-700) l c h / 0.3));
 }
 
 [data-mode="light"] .app {
