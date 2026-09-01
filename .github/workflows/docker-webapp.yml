@@ -55,14 +55,14 @@ jobs:
 
       - name: Upload Caddyfile and compose.yml
         run: |
-          scp -P "${{ secrets.SSH_PORT || 22 }}" Caddyfile compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/app/"
+            scp -P "${{ secrets.SSH_PORT || 22 }}" Caddyfile compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/maniok/"
 
       - name: Deploy staging on Hetzner
         if: github.event.inputs.environment == 'staging'
         run: |
           ssh -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" '
             set -e
-            cd /opt/app
+              cd /opt/maniok
             docker compose pull app_staging
             docker compose up -d --force-recreate app_staging caddy
           '
@@ -72,7 +72,7 @@ jobs:
         run: |
           ssh -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" '
             set -e
-            cd /opt/app
+              cd /opt/maniok
             docker compose pull app
             docker compose up -d --force-recreate app caddy
           '
