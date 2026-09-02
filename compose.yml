@@ -1,5 +1,5 @@
 services:
-  app:
+  maniok_production:
     image: ghcr.io/danischuetz/maniok/maniok-webapp:latest
     restart: unless-stopped
     environment:
@@ -8,8 +8,10 @@ services:
       ORIGIN: https://app.maniok.io
     expose:
       - "3000"
+    networks:
+      - web
       
-  app_staging:
+  maniok_staging:
     image: ghcr.io/danischuetz/maniok/maniok-webapp:staging
     restart: unless-stopped
     environment:
@@ -18,20 +20,9 @@ services:
       ORIGIN: https://staging.maniok.io
     expose:
       - "3000"
+    networks:
+      - web
 
-  caddy:
-    image: caddy:2
-    restart: unless-stopped
-    depends_on:
-      - app
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      - ./Caddyfile:/etc/caddy/Caddyfile:ro
-      - caddy_data:/data
-      - caddy_config:/config
-
-volumes:
-  caddy_data:
-  caddy_config:
+networks:
+  web:
+    external: true

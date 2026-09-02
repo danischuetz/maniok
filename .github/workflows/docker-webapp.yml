@@ -42,20 +42,15 @@ jobs:
           mkdir -p ~/.ssh
           ssh-keyscan -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_HOST }}" >> ~/.ssh/known_hosts
 
-      - name: Download Caddyfile artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: Caddyfile
-          path: .
       - name: Download compose.yml artifact
         uses: actions/download-artifact@v4
         with:
           name: compose.yml
           path: .
 
-      - name: Upload Caddyfile and compose.yml
+      - name: Upload compose.yml
         run: |
-            scp -P "${{ secrets.SSH_PORT || 22 }}" Caddyfile compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/maniok/"
+            scp -P "${{ secrets.SSH_PORT || 22 }}" compose.yml "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:/opt/maniok/"
 
       - name: Deploy staging on Hetzner
         if: github.event.inputs.environment == 'staging'
@@ -63,8 +58,8 @@ jobs:
           ssh -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" '
             set -e
               cd /opt/maniok
-            docker compose pull app_staging
-            docker compose up -d --force-recreate app_staging caddy
+            docker compose pull maniok_staging
+            docker compose up -d --force-recreate maniok_staging
           '
 
       - name: Deploy production on Hetzner
@@ -73,6 +68,6 @@ jobs:
           ssh -p "${{ secrets.SSH_PORT || 22 }}" "${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}" '
             set -e
               cd /opt/maniok
-            docker compose pull app
-            docker compose up -d --force-recreate app caddy
+            docker compose pull maniok_production
+            docker compose up -d --force-recreate maniok_production
           '
